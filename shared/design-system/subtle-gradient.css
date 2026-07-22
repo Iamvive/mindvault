@@ -1,0 +1,76 @@
+/* ============================================================
+   Subtle Gradient Design System — Core Tokens
+   ============================================================ */
+:root {
+  /* -- Brand & Accent -- */
+  --sg-primary: #e60023;
+  --sg-on-primary: #ffffff;
+  --sg-primary-pressed: #cc001f;
+
+  /* -- Ink / Text -- */
+  --sg-ink: #000000;
+  --sg-ink-soft: #211922;
+  --sg-body: #33332e;
+  --sg-charcoal: #262622;
+  --sg-mute: #62625b;
+  --sg-ash: #91918c;
+  --sg-stone: #c8c8c1;
+
+  /* -- Surfaces -- */
+  --sg-canvas: #ffffff;
+  --sg-surface-soft: #fbfbf9;
+  --sg-surface-card: #f6f6f3;
+  --sg-surface-dark: #262622;
+  --sg-secondary-bg: #e5e5e0;
+  --sg-secondary-pressed: #c8c8c1;
+  --sg-on-secondary: #000000;
+
+  /* -- Lines -- */
+  --sg-hairline: #dadad3;
+  --sg-hairline-soft: #e5e5e0;
+
+  /* -- Focus Ring -- */
+  --sg-focus-outer: #435ee5;
+  --sg-focus-inner: #ffffff;
+
+  /* -- Gradients -- */
+  --gradient-page: linear-gradient(180deg, #ffffff 0%, #fbfbf9 60%, #f6f6f3 100%);
+  --gradient-wash-blush: linear-gradient(135deg, #f7ede9 0%, #efe1e8 100%);
+  --gradient-wash-sage:  linear-gradient(135deg, #eef1ea 0%, #e2ebe4 100%);
+  --gradient-wash-slate: linear-gradient(135deg, #eaedf1 0%, #e1e4ec 100%);
+  --gradient-wash-sand:  linear-gradient(135deg, #f4efe6 0%, #ede5d8 100%);
+  --gradient-wash-dusk:  linear-gradient(135deg, #ece7f0 0%, #e2e4ef 100%);
+  --gradient-wash-ember: linear-gradient(135deg, #f7e9e5 0%, #f0dad4 100%);
+  --gradient-wash-fog:   linear-gradient(135deg, #f2f2ef 0%, #e7e7e2 100%);
+  --gradient-wash-clay:  linear-gradient(135deg, #f0e7e0 0%, #e4d3c8 100%);
+
+  /* -- Semantic Aliases -- */
+  --text-heading: var(--sg-ink);
+  --text-body: var(--sg-body);
+  --text-muted: var(--sg-mute);
+  --surface-page: var(--sg-surface-soft);
+  --surface-canvas: var(--sg-canvas);
+  --surface-card: var(--sg-surface-card);
+  --border-hairline: var(--sg-hairline);
+  --action-primary: var(--sg-primary);
+  --action-secondary: var(--sg-secondary-bg);
+
+  /* -- Spacing -- */
+  --space-xxs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-section: 64px;
+
+  /* -- Radius -- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+
+  /* -- Focus Ring Outline -- */
+  --focus-ring: 0 0 0 2px var(--focus-inner), 0 0 0 6px var(--focus-outer);
+}
