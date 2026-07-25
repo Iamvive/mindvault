@@ -2,19 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 export default function App() {
   const [scores, setScores] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [loading, setLoading] = useState(false);
   const [selectedStudy, setSelectedStudy] = useState(null);
+  const [fullTranscript, setFullTranscript] = useState(null);
+  const [loadingTranscript, setLoadingTranscript] = useState(false);
 
-  const fetchScores = () => {
-    fetch('/api/scores')
+  const fetchScores = (date) => {
+    let url = '/api/scores';
+    if (date) {
+      url += `?date=${date}`;
+    }
+    fetch(url)
       .then(res => res.json())
       .then(data => setScores(data))
       .catch(err => console.error(err));
   };
 
   useEffect(() => {
-    fetchScores();
-  }, []);
+    fetchScores(selectedDate);
+  }, [selectedDate]);
 
   const handleSync = () => {
     setLoading(true);
@@ -22,7 +29,7 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         setLoading(false);
-        fetchScores();
+        fetchScores(selectedDate);
       })
       .catch(err => {
         setLoading(false);
@@ -30,7 +37,25 @@ export default function App() {
       });
   };
 
+  const handleFetchFullTranscript = () => {
+    setLoadingTranscript(true);
+    fetch(`/api/raw-transcript?date=${selectedDate}`)
+      .then(res => {
+        if (!res.ok) throw new Error("No raw transcript found for this date.");
+        return res.json();
+      })
+      .then(data => {
+        setLoadingTranscript(false);
+        setFullTranscript(data);
+      })
+      .catch(err => {
+        setLoadingTranscript(false);
+        alert(err.message);
+      });
+  };
+
   const today = scores[0];
+  const parsedMemories = today && today.key_memories ? JSON.parse(today.key_memories) : [];
 
   const studies = {
     cbt: {
@@ -57,49 +82,106 @@ export default function App() {
 
   return (
     <div className="container">
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px', flexWrap: 'wrap', gap: '20px' }}>
         <div>
           <h1 style={{ margin: 0 }}>Sanjaya</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', margin: '4px 0 0 0' }}>Divine Hearing & Behavioral Guidance</p>
         </div>
-        <button 
-          onClick={handleSync}
-          disabled={loading}
-          style={{
-            background: 'var(--sg-primary)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '9999px',
-            padding: '12px 24px',
-            fontSize: '1rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(230, 0, 35, 0.2)',
-            transition: 'opacity 0.2s ease',
-            opacity: loading ? 0.6 : 1
-          }}
-        >
-          {loading ? 'Syncing...' : 'Sync Locket'}
-        </button>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+          {/* Calendar Selector (Sadhana Style) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Date:</span>
+            <input 
+              type="date" 
+              value={selectedDate}
+              onChange={e => setSelectedDate(e.target.value)}
+              style={{
+                background: 'var(--surface-canvas)',
+                border: '1px solid var(--border-hairline)',
+                borderRadius: 'var(--radius-full)',
+                padding: '8px 16px',
+                color: 'var(--text-heading)',
+                fontWeight: '600',
+                fontSize: '0.95rem'
+              }}
+            />
+          </div>
+
+          <button 
+            onClick={handleSync}
+            disabled={loading}
+            className="primary"
+          >
+            {loading ? 'Syncing...' : 'Sync Locket'}
+          </button>
+        </div>
       </header>
 
       {today ? (
         <div>
+          {/* Sadhana Banner */}
           <div className="card sadhana-banner">
-            <h3 style={{ margin: 0, color: 'var(--sg-primary)', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Tomorrow's Sadhana (1% Compound Goal)</h3>
+            <h3 style={{ margin: 0, color: 'var(--sg-primary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Tomorrow's Sadhana (1% Compound Goal)</h3>
             <p style={{ fontSize: '1.4rem', fontWeight: '800', letterSpacing: '-0.5px', margin: '8px 0 0 0', lineHeight: '1.4' }}>
               {today.kaizen_target}
             </p>
           </div>
 
+          {/* Daily Synthesis */}
           <div className="card">
-            <h3 style={{ margin: '0 0 12px 0', fontSize: '1.5rem' }}>Daily Synthesis ({today.date})</h3>
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.6', margin: 0 }}>
+            <h3 style={{ margin: '0 0 12px 0', fontSize: '1.5rem' }}>Daily Synthesis</h3>
+            <p style={{ color: 'var(--text-body)', lineHeight: '1.6', margin: 0 }}>
               {today.summary}
             </p>
           </div>
 
-          <h3 style={{ fontSize: '1.3rem', marginBottom: '16px', color: 'var(--text-muted)' }}>Behavioral Metrics & Studies</h3>
+          {/* Highlights Section */}
+          <div className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+              <h3 style={{ margin: 0, fontSize: '1.4rem' }}>Top 3 Highlights of the Day</h3>
+              <button 
+                onClick={handleFetchFullTranscript}
+                disabled={loadingTranscript}
+                className="secondary"
+                style={{ padding: '8px 16px', fontSize: '0.9rem' }}
+              >
+                {loadingTranscript ? 'Opening Vault...' : 'View Full Daily Transcript →'}
+              </button>
+            </div>
+            
+            {parsedMemories.length > 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {parsedMemories.map((mem, idx) => (
+                  <div 
+                    key={idx} 
+                    style={{
+                      background: 'var(--surface-card)',
+                      border: '1px solid var(--border-hairline)',
+                      borderRadius: 'var(--radius-md)',
+                      padding: '16px 20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '4px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span className="pill-badge">{mem.time}</span>
+                      <strong style={{ fontSize: '1.05rem', color: 'var(--text-heading)' }}>{mem.title}</strong>
+                    </div>
+                    <p style={{ color: 'var(--text-muted)', margin: '8px 0 0 0', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                      {mem.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p style={{ color: 'var(--text-muted)', margin: 0 }}>No highlighted memories parsed for this day.</p>
+            )}
+          </div>
+
+          {/* Behavioral Metrics Grid */}
+          <h3 style={{ fontSize: '1.3rem', marginBottom: '16px', color: 'var(--text-muted)', fontWeight: 600 }}>Behavioral Metrics & Studies</h3>
           
           <div className="score-grid">
             <div className="score-card" onClick={() => setSelectedStudy('cbt')}>
@@ -127,6 +209,7 @@ export default function App() {
             </div>
           </div>
 
+          {/* Research Study Details Modal */}
           {selectedStudy && (
             <div 
               style={{
@@ -135,7 +218,7 @@ export default function App() {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: 'rgba(0,0,0,0.8)',
+                background: 'rgba(0,0,0,0.6)',
                 backdropFilter: 'blur(8px)',
                 display: 'flex',
                 alignItems: 'center',
@@ -147,62 +230,112 @@ export default function App() {
             >
               <div 
                 style={{
-                  background: '#121214',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '24px',
+                  background: 'var(--surface-canvas)',
+                  border: '1px solid var(--border-hairline)',
+                  borderRadius: 'var(--radius-lg)',
                   padding: '32px',
                   maxWidth: '550px',
                   width: '100%',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
                 }}
                 onClick={e => e.stopPropagation()}
               >
-                <h3 style={{ marginTop: 0, fontSize: '1.4rem', color: 'var(--text-primary)' }}>{studies[selectedStudy].name}</h3>
+                <h3 style={{ marginTop: 0, fontSize: '1.4rem', color: 'var(--text-heading)' }}>{studies[selectedStudy].name}</h3>
                 <p style={{ color: 'var(--text-muted)', lineHeight: '1.6', fontSize: '0.95rem' }}>{studies[selectedStudy].desc}</p>
                 
-                <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '12px', borderLeft: '3px solid var(--sg-primary)', marginTop: '20px' }}>
-                  <h4 style={{ margin: '0 0 6px 0', fontSize: '0.9rem', color: 'var(--sg-primary)', textTransform: 'uppercase' }}>Kaizen Micro-Action</h4>
+                <div style={{ background: 'var(--surface-card)', padding: '16px', borderRadius: 'var(--radius-md)', borderLeft: '4px solid var(--sg-primary)', marginTop: '20px' }}>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '0.9rem', color: 'var(--sg-primary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Kaizen Micro-Action</h4>
                   <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '600' }}>{studies[selectedStudy].tip}</p>
                 </div>
 
                 <button 
                   onClick={() => setSelectedStudy(null)}
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid var(--border-color)',
-                    color: 'var(--text-primary)',
-                    borderRadius: '9999px',
-                    padding: '10px 20px',
-                    marginTop: '24px',
-                    cursor: 'pointer',
-                    fontWeight: '600',
-                    width: '100%'
-                  }}
+                  className="secondary"
+                  style={{ marginTop: '24px', width: '100%' }}
                 >
                   Close Reference
                 </button>
               </div>
             </div>
           )}
+
+          {/* Full Daily Transcript Modal Drawer (Smriti Vault Fetcher) */}
+          {fullTranscript && (
+            <div 
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0,0,0,0.6)',
+                backdropFilter: 'blur(8px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1000,
+                padding: '20px'
+              }}
+              onClick={() => setFullTranscript(null)}
+            >
+              <div 
+                style={{
+                  background: 'var(--surface-canvas)',
+                  border: '1px solid var(--border-hairline)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: '32px',
+                  maxWidth: '700px',
+                  width: '100%',
+                  maxHeight: '85vh',
+                  overflowY: 'auto',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                }}
+                onClick={e => e.stopPropagation()}
+              >
+                <h3 style={{ marginTop: 0, fontSize: '1.6rem', color: 'var(--text-heading)' }}>Smriti Vault: Full Transcript ({selectedDate})</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '24px' }}>All conversations passively transcribed by your Neo 1 Locket.</p>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {fullTranscript.conversations && fullTranscript.conversations.map((conv, idx) => (
+                    <div 
+                      key={idx} 
+                      style={{
+                        padding: '12px 16px',
+                        background: conv.speaker === 'User' ? 'rgba(230, 0, 35, 0.03)' : 'var(--surface-card)',
+                        border: '1px solid var(--border-hairline)',
+                        borderLeft: conv.speaker === 'User' ? '3px solid var(--sg-primary)' : '1px solid var(--border-hairline)',
+                        borderRadius: 'var(--radius-md)'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                        <strong>{conv.speaker}</strong>
+                        <span>{conv.time || 'N/A'}</span>
+                      </div>
+                      <p style={{ margin: 0, color: 'var(--text-body)', fontSize: '0.95rem', lineHeight: '1.5' }}>{conv.text}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <button 
+                  onClick={() => setFullTranscript(null)}
+                  className="primary"
+                  style={{ marginTop: '32px', width: '100%' }}
+                >
+                  Close Vault Log
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
-        <div className="card" style={{ textAlign: 'center', padding: '60px' }}>
-          <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '24px' }}>No daily summaries have been sync'd yet.</p>
+        <div className="card" style={{ textAlign: 'center', padding: '80px 40px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '24px' }}>No daily summaries found for {selectedDate}.</p>
           <button 
             onClick={handleSync}
             disabled={loading}
-            style={{
-              background: 'var(--sg-primary)',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '9999px',
-              padding: '14px 28px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer'
-            }}
+            className="primary"
           >
-            {loading ? 'Initializing Sync...' : 'Run Initial Sync'}
+            {loading ? 'Initializing Sync...' : 'Sync Locket for Today'}
           </button>
         </div>
       )}

@@ -3,8 +3,8 @@ const { GoogleGenAI } = require('@google/genai');
 const apiKey = process.env.GEMINI_API_KEY || "mock-key";
 
 function analyzeTranscript(rawJson, callback) {
-  // If running in test mode with mock key, bypass real api call
-  if (apiKey === "mock-key") {
+  // If running in test mode or with mock key, bypass real api call
+  if (process.env.NODE_ENV === 'test' || apiKey === "mock-key") {
     const mockResult = {
       cognitive_distortion: 7.5,
       conversational_connection: 8.0,
