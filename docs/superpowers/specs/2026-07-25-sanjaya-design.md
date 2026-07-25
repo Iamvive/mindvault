@@ -1,11 +1,11 @@
-# Project Crucible: Design Specification
+# Project Sanjaya: Design Specification
 
-An automated, screenless-wearable companion system for cognitive coaching, behavioral analysis, and 1% daily self-improvement using the NeoSapien Neo 1.
+An automated, screenless-wearable companion system for cognitive coaching, behavioral analysis, and 1% daily self-improvement using the NeoSapien Neo 1. Named after Sanjaya, who was gifted with divine hearing and vision to relate events with objective clarity and counsel.
 
 ---
 
 ## 1. Goal & Context
-The user wears a NeoSapien Neo 1 locket that records and transcribes daily conversations. The goal of Project Crucible is to build an automated, self-contained system that:
+The user wears a NeoSapien Neo 1 locket that records and transcribes daily conversations. The goal of Project Sanjaya is to build an automated, self-contained system that:
 *   Schedules a daily pull of transcripts from the NeoSapien MCP at 8:00 PM.
 *   Analyzes the conversation data using LLMs calibrated against established psychological/behavioral studies.
 *   Presents a beautiful, minimalist, and responsive dashboard.
@@ -14,17 +14,17 @@ The user wears a NeoSapien Neo 1 locket that records and transcribes daily conve
 ---
 
 ## 2. Architecture & Directory Structure
-To keep the project clean, modular, and completely separate from other apps in the workspace, we will structure it inside a new directory: `crucible-coach/`.
+To keep the project clean, modular, and completely separate from other apps in the workspace, we will structure it inside a new directory: `sanjaya/`.
 
 ```
-crucible-coach/
+sanjaya/
 ├── package.json
 ├── data/
 │   ├── vault/               # IMMUTABLE RAW JSON BACKUPS (Zero data loss safety net)
 │   │   └── YYYY-MM-DD-raw.json
 │   ├── migrations/          # SQLite schema version control
 │   │   └── 001_initial_schema.sql
-│   └── crucible.db          # Active SQLite database
+│   └── sanjaya.db           # Active SQLite database
 ├── src/
 │   ├── scheduler.js         # Cron job runner (8:00 PM Daily)
 │   ├── mcp-client.js        # Connects to NeoSapien MCP to fetch transcripts
@@ -42,7 +42,7 @@ crucible-coach/
 
 ## 3. Data Protection & Scalability Strategy
 To address the critical requirement of **zero data loss**:
-*   **Immutable Raw Vault:** The first step of the 8 PM scheduler is to write the fetched raw JSON from NeoSapien directly to `crucible-coach/data/vault/YYYY-MM-DD-raw.json`. No processing, cleaning, or database interaction occurs before this file is safely written. If the database is corrupted or schemas change, we can rebuild the database from scratch by re-processing these raw files.
+*   **Immutable Raw Vault:** The first step of the 8 PM scheduler is to write the fetched raw JSON from NeoSapien directly to `sanjaya/data/vault/YYYY-MM-DD-raw.json`. No processing, cleaning, or database interaction occurs before this file is safely written. If the database is corrupted or schemas change, we can rebuild the database from scratch by re-processing these raw files.
 *   **Database Migrations:** Schema changes will be run via a simple migration runner that checks a `schema_version` table.
 *   **Modular Pipeline:** The ingestion scheduler, analysis script, database writer, and API server are completely decoupled.
 
