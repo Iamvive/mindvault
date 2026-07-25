@@ -1,0 +1,4 @@
+node_modules/
+.npm-cache/
+smriti/*.db
+smriti/vault/*.json
