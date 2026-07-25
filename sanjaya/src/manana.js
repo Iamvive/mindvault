@@ -11,7 +11,12 @@ function analyzeTranscript(rawJson, callback) {
       active_listening: 8.5,
       speech_clarity: 7.0,
       summary: "Analysis of conversation showing positive active listening adjustment.",
-      kaizen_target: "Ensure to not catastrophize when bug reports arrive."
+      kaizen_target: "Ensure to not catastrophize when bug reports arrive.",
+      key_memories: [
+        { time: "10:30 AM", title: "Launch Discussion", description: "Debated launching with crashes, selected code validation pass instead." },
+        { time: "02:15 PM", title: "Household Maintenance", description: "Committed to calling the plumber for basement leak." },
+        { time: "05:00 PM", title: "Subtle Gradient Check", description: "Finished styling checks. Manager approved showcasing tomorrow." }
+      ]
     };
     return callback(null, mockResult);
   }
@@ -27,15 +32,24 @@ function analyzeTranscript(rawJson, callback) {
 
     Transcript: ${JSON.stringify(rawJson)}
 
-    Respond strictly with JSON containing these keys:
+    Respond strictly with JSON matching this structure:
     {
       "cognitive_distortion": float,
       "conversational_connection": float,
       "active_listening": float,
       "speech_clarity": float,
       "summary": "detailed summary of communication quality",
-      "kaizen_target": "exactly one 1% daily improvement action target for tomorrow"
+      "kaizen_target": "exactly one 1% daily improvement action target for tomorrow",
+      "key_memories": [
+        {
+          "time": "HH:MM AM/PM",
+          "title": "Short title of conversation topic",
+          "description": "One-sentence description summarizing context and outcomes"
+        }
+      ]
     }
+
+    Note: The "key_memories" array must contain exactly the top 3 most significant conversations or highlights of the day.
   `;
 
   ai.models.generateContent({
