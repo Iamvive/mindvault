@@ -13,9 +13,27 @@ function analyzeTranscript(rawJson, callback) {
       summary: "Analysis of conversation showing positive active listening adjustment.",
       kaizen_target: "Ensure to not catastrophize when bug reports arrive.",
       key_memories: [
-        { time: "10:30 AM", title: "Launch Discussion", description: "Debated launching with crashes, selected code validation pass instead." },
-        { time: "02:15 PM", title: "Household Maintenance", description: "Committed to calling the plumber for basement leak." },
-        { time: "05:00 PM", title: "Subtle Gradient Check", description: "Finished styling checks. Manager approved showcasing tomorrow." }
+        { 
+          time: "10:30 AM", 
+          title: "Launch Discussion", 
+          description: "Debated launching with crashes, selected code validation pass instead.",
+          duration: "2m",
+          environment: "office"
+        },
+        { 
+          time: "02:15 PM", 
+          title: "Household Maintenance", 
+          description: "Committed to calling the plumber for basement leak.",
+          duration: "45s",
+          environment: "personal"
+        },
+        { 
+          time: "05:00 PM", 
+          title: "Subtle Gradient Check", 
+          description: "Finished styling checks. Manager approved showcasing tomorrow.",
+          duration: "10m",
+          environment: "office"
+        }
       ]
     };
     return callback(null, mockResult);
@@ -44,12 +62,14 @@ function analyzeTranscript(rawJson, callback) {
         {
           "time": "HH:MM AM/PM",
           "title": "Short title of conversation topic",
-          "description": "One-sentence description summarizing context and outcomes"
+          "description": "One-sentence description summarizing context and outcomes",
+          "duration": "duration of conversation, e.g., '1m 40s' or '30s'",
+          "environment": "either 'office' or 'personal'"
         }
       ]
     }
 
-    Note: The "key_memories" array must contain exactly the top 3 most significant conversations or highlights of the day.
+    Note: The "key_memories" array must contain exactly the top 3 most significant conversations or highlights of the day. Match the duration and environment classifications with the raw wearable metadata.
   `;
 
   ai.models.generateContent({

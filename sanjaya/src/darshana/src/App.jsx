@@ -165,9 +165,21 @@ export default function App() {
                       gap: '4px'
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span className="pill-badge">{mem.time}</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
                       <strong style={{ fontSize: '1.05rem', color: 'var(--text-heading)' }}>{mem.title}</strong>
+                      <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        <span className="pill-badge">{mem.time}</span>
+                        {mem.environment && (
+                          <span className="pill-badge" style={{ background: mem.environment === 'office' ? 'rgba(78, 120, 150, 0.08)' : 'rgba(78, 150, 90, 0.08)', color: 'var(--text-muted)' }}>
+                            {mem.environment === 'office' ? '💼 Office' : '🏠 Personal'}
+                          </span>
+                        )}
+                        {mem.duration && (
+                          <span className="pill-badge" style={{ background: 'var(--border-hairline)', color: 'var(--text-muted)' }}>
+                            ⏱️ {mem.duration}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <p style={{ color: 'var(--text-muted)', margin: '8px 0 0 0', fontSize: '0.95rem', lineHeight: '1.5' }}>
                       {mem.description}
@@ -292,9 +304,46 @@ export default function App() {
                 }}
                 onClick={e => e.stopPropagation()}
               >
-                <h3 style={{ marginTop: 0, fontSize: '1.6rem', color: 'var(--text-heading)' }}>Smriti Vault: Full Transcript ({selectedDate})</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '24px' }}>All conversations passively transcribed by your Neo 1 Locket.</p>
+                <h3 style={{ marginTop: 0, fontSize: '1.6rem', color: 'var(--text-heading)' }}>Smriti Vault Details ({selectedDate})</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '24px' }}>All memories and conversations passively transcribed by your Neo 1 Locket.</p>
                 
+                {/* Individual Memories Summary Section */}
+                {fullTranscript.memories && fullTranscript.memories.length > 0 && (
+                  <div style={{ marginBottom: '32px' }}>
+                    <h4 style={{ margin: '0 0 12px 0', fontSize: '1.1rem', color: 'var(--text-heading)', borderBottom: '1px solid var(--border-hairline)', paddingBottom: '6px' }}>
+                      Daily Memories ({fullTranscript.memories.length})
+                    </h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {fullTranscript.memories.map((mem, idx) => (
+                        <div 
+                          key={idx} 
+                          style={{
+                            background: 'var(--surface-card)',
+                            border: '1px solid var(--border-hairline)',
+                            borderRadius: 'var(--radius-md)',
+                            padding: '16px 20px'
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '8px' }}>
+                            <strong style={{ fontSize: '1rem', color: 'var(--text-heading)' }}>{mem.title}</strong>
+                            <div style={{ display: 'flex', gap: '6px' }}>
+                              <span className="pill-badge">{mem.time}</span>
+                              <span className="pill-badge" style={{ background: mem.environment === 'office' ? 'rgba(78, 120, 150, 0.08)' : 'rgba(78, 150, 90, 0.08)', color: 'var(--text-muted)' }}>
+                                {mem.environment === 'office' ? '💼 Office' : '🏠 Personal'}
+                              </span>
+                              <span className="pill-badge" style={{ background: 'var(--border-hairline)', color: 'var(--text-muted)' }}>⏱️ {mem.duration}</span>
+                            </div>
+                          </div>
+                          <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.5' }}>{mem.summary}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '1.1rem', color: 'var(--text-heading)', borderBottom: '1px solid var(--border-hairline)', paddingBottom: '6px' }}>
+                  Full Transcript Stream
+                </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {fullTranscript.conversations && fullTranscript.conversations.map((conv, idx) => (
                     <div 
