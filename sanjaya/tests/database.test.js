@@ -21,7 +21,10 @@ test('Database Migrations and Queries', (t, done) => {
       speech_clarity: 6.8,
       summary: "Had a productive discussion on project scope.",
       kaizen_target: "Listen more carefully during reviews.",
-      raw_vault_path: "smriti/vault/2026-07-25-raw.json"
+      raw_vault_path: "smriti/vault/2026-07-25-raw.json",
+      key_memories: [
+        { time: "10:30 AM", title: "Discussion with team", description: "Aligned on launch timing." }
+      ]
     };
 
     saveDailyScore('2026-07-25', mockScore, (err2) => {
@@ -38,6 +41,11 @@ test('Database Migrations and Queries', (t, done) => {
         assert.strictEqual(rows[0].summary, "Had a productive discussion on project scope.");
         assert.strictEqual(rows[0].kaizen_target, "Listen more carefully during reviews.");
         assert.strictEqual(rows[0].raw_vault_path, "smriti/vault/2026-07-25-raw.json");
+        
+        // Assert key_memories parsing
+        const parsedMemories = JSON.parse(rows[0].key_memories);
+        assert.strictEqual(parsedMemories.length, 1);
+        assert.strictEqual(parsedMemories[0].title, "Discussion with team");
         done();
       });
     });
