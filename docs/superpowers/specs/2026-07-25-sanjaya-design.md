@@ -21,8 +21,8 @@ To keep the project clean, modular, and completely separate from other apps in t
 ```
 sanjaya/
 ├── package.json
-├── data/
-│   ├── vault/               # SMRITI VAULT: Immutable raw JSON backups (Zero data loss)
+├── smriti/                  # SMRITI VAULT: Storage & Memory Layer
+│   ├── vault/               # Immutable raw JSON backups (Zero data loss)
 │   │   └── YYYY-MM-DD-raw.json
 │   ├── migrations/          # SQLite schema version control
 │   │   └── 001_initial_schema.sql
@@ -32,7 +32,7 @@ sanjaya/
 │   ├── manana.js            # MANANA ENGINE: Gemini prompt processor & scientific analyzer
 │   ├── database.js          # SQLite connector & migration runner
 │   ├── server.js            # Express API serving Darshana Dashboard
-│   └── dashboard/           # DARSHANA DASHBOARD: Subtle Gradient Frontend client
+│   └── darshana/            # DARSHANA DASHBOARD: Subtle Gradient Frontend client
 │       ├── index.html
 │       └── src/
 │           ├── App.jsx
@@ -43,7 +43,7 @@ sanjaya/
 
 ## 3. Data Protection & Scalability (Smriti Vault)
 To address the critical requirement of **zero data loss**:
-*   **Immutable Backups:** The first step of the **Shravana Daemon** is to write the fetched raw JSON from NeoSapien directly to `sanjaya/data/vault/YYYY-MM-DD-raw.json`. No processing, cleaning, or database interaction occurs before this file is safely written. If the database is corrupted or schemas change, we can rebuild the database from scratch by re-running the **Manana Engine** on these raw files.
+*   **Immutable Backups:** The first step of the **Shravana Daemon** is to write the fetched raw JSON from NeoSapien directly to `sanjaya/smriti/vault/YYYY-MM-DD-raw.json`. No processing, cleaning, or database interaction occurs before this file is safely written. If the database is corrupted or schemas change, we can rebuild the database from scratch by re-running the **Manana Engine** on these raw files.
 *   **Database Migrations:** Schema changes will be run via a simple migration runner that checks a `schema_version` table.
 
 ---
