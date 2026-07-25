@@ -1,6 +1,8 @@
 # Project Sanjaya: Design Specification
 
-An automated, screenless-wearable companion system for cognitive coaching, behavioral analysis, and 1% daily self-improvement using the NeoSapien Neo 1. Named after Sanjaya, who was gifted with divine hearing and vision to relate events with objective clarity and counsel.
+An automated, screenless-wearable companion system for cognitive coaching, behavioral analysis, and 1% daily self-improvement using the NeoSapien Neo 1. 
+
+Named after **Sanjaya**, who was gifted with divine hearing and vision to relate events with objective clarity. The components are named after the classical Vedic stages of learning, memory, and practice.
 
 ---
 
@@ -13,25 +15,24 @@ The user wears a NeoSapien Neo 1 locket that records and transcribes daily conve
 
 ---
 
-## 2. Architecture & Directory Structure
+## 2. Component & Directory Structure
 To keep the project clean, modular, and completely separate from other apps in the workspace, we will structure it inside a new directory: `sanjaya/`.
 
 ```
 sanjaya/
 ├── package.json
 ├── data/
-│   ├── vault/               # IMMUTABLE RAW JSON BACKUPS (Zero data loss safety net)
+│   ├── vault/               # SMRITI VAULT: Immutable raw JSON backups (Zero data loss)
 │   │   └── YYYY-MM-DD-raw.json
 │   ├── migrations/          # SQLite schema version control
 │   │   └── 001_initial_schema.sql
-│   └── sanjaya.db           # Active SQLite database
+│   └── sanjaya.db           # Structured SQLite database
 ├── src/
-│   ├── scheduler.js         # Cron job runner (8:00 PM Daily)
-│   ├── mcp-client.js        # Connects to NeoSapien MCP to fetch transcripts
-│   ├── analyzer.js          # Gemini API prompt processing & scientific scoring
-│   ├── database.js          # Database connector & migration runner
-│   ├── server.js            # Express backend API for dashboard data
-│   └── dashboard/           # Frontend (Vite/React with Subtle Gradient design)
+│   ├── shravana.js          # SHRAVANA DAEMON: Cron job fetching transcripts (8 PM Daily)
+│   ├── manana.js            # MANANA ENGINE: Gemini prompt processor & scientific analyzer
+│   ├── database.js          # SQLite connector & migration runner
+│   ├── server.js            # Express API serving Darshana Dashboard
+│   └── dashboard/           # DARSHANA DASHBOARD: Subtle Gradient Frontend client
 │       ├── index.html
 │       └── src/
 │           ├── App.jsx
@@ -40,16 +41,15 @@ sanjaya/
 
 ---
 
-## 3. Data Protection & Scalability Strategy
+## 3. Data Protection & Scalability (Smriti Vault)
 To address the critical requirement of **zero data loss**:
-*   **Immutable Raw Vault:** The first step of the 8 PM scheduler is to write the fetched raw JSON from NeoSapien directly to `sanjaya/data/vault/YYYY-MM-DD-raw.json`. No processing, cleaning, or database interaction occurs before this file is safely written. If the database is corrupted or schemas change, we can rebuild the database from scratch by re-processing these raw files.
+*   **Immutable Backups:** The first step of the **Shravana Daemon** is to write the fetched raw JSON from NeoSapien directly to `sanjaya/data/vault/YYYY-MM-DD-raw.json`. No processing, cleaning, or database interaction occurs before this file is safely written. If the database is corrupted or schemas change, we can rebuild the database from scratch by re-running the **Manana Engine** on these raw files.
 *   **Database Migrations:** Schema changes will be run via a simple migration runner that checks a `schema_version` table.
-*   **Modular Pipeline:** The ingestion scheduler, analysis script, database writer, and API server are completely decoupled.
 
 ---
 
-## 4. Scientific Behavioral Analysis Engine
-The `analyzer.js` component will process transcripts using specialized prompts based on established studies:
+## 4. Scientific Behavioral Analysis (Manana Engine)
+The `manana.js` component will process transcripts using specialized prompts based on established studies:
 1.  **Cognitive Distortion Index (CBT / Aaron Beck):** Identifies occurrences of cognitive biases (e.g., all-or-nothing thinking, catastrophizing, jumping to conclusions).
 2.  **Conversational Connection (John Gottman):** Analyzes conversational bidding, responsiveness, validation, and interruption rates.
 3.  **Active Listening Scale (Carl Rogers):** Scores queries vs. directives, empathetic reflections, and statement clarity.
@@ -57,7 +57,7 @@ The `analyzer.js` component will process transcripts using specialized prompts b
 
 ---
 
-## 5. Subtle Gradient Dashboard UI
+## 5. Subtle Gradient Dashboard UI (Darshana Dashboard)
 Adhering to the project's **Subtle Gradient Design System Constraints**:
 *   **Surfaces:** Translucent card mockups with desaturated background washes.
 *   **Typography:** Inter font family with negative letter-spacing (`-1px` to `-1.2px`) on display headings.
@@ -67,8 +67,8 @@ Adhering to the project's **Subtle Gradient Design System Constraints**:
 
 ---
 
-## 6. Daily 1% Improvement Engine
-At 8 PM, after generating the scorecard, the system calculates the **"Kaizen Focus for Tomorrow"**:
+## 6. Daily 1% Improvement Engine (Sadhana Loop)
+At 8 PM, after generating the scorecard, the system calculates the **"Sadhana Target for Tomorrow"**:
 1.  It compares today's scores against the user's 7-day moving average.
 2.  It identifies the metric that showed the sharpest drop or remains the lowest.
 3.  It pulls the corresponding re-framing framework and generates exactly one micro-target:
