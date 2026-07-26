@@ -47,6 +47,10 @@ export default function App() {
   const [docContent, setDocContent] = useState('');
   const [docTitle, setDocTitle] = useState('');
 
+  // Playbook Modal state
+  const [showPlaybookModal, setShowPlaybookModal] = useState(false);
+  const [copiedCmd, setCopiedCmd] = useState('');
+
   // Add Resource state
   const [activeTab, setActiveTab] = useState('url'); // 'url' or 'file'
   const [uploadFile, setUploadFile] = useState(null);
@@ -271,6 +275,37 @@ export default function App() {
     }
   };
 
+  const handleTogglePin = async (id, isPinned) => {
+    try {
+      const res = await fetch(`${API_BASE}/resources/${id}/pin`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_pinned: isPinned ? 0 : 1 })
+      });
+      if (res.ok) {
+        fetchResources();
+      }
+    } catch (err) {
+      console.error('Error toggling pin:', err);
+    }
+  };
+
+  const handleViewPlaybook = async (resource) => {
+    setSelectedResource(resource);
+    setShowPlaybookModal(true);
+
+    // Record interaction to reset 14-day timer
+    try {
+      await fetch(`${API_BASE}/resources/${resource.id}/interact`, {
+        method: 'POST'
+      });
+      // Refresh resources quietly to show reset timer
+      fetchResources();
+    } catch (err) {
+      console.error('Error recording interaction:', err);
+    }
+  };
+
   // Helper to format date
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
@@ -489,12 +524,26 @@ export default function App() {
                   <div className="card-badge-row">
                     <span className="badge-platform">{resource.platform}</span>
                     <span className="badge-category">{resource.category}</span>
+                    {resource.platform === 'GitHub' && (
+                      <span className={`badge-platform ${resource.is_pinned ? 'pinned-badge' : (resource.days_remaining <= 3 ? 'prune-warning' : '')}`}>
+                        {resource.is_pinned ? '📌 Pinned' : `⏳ Prunes in ${resource.days_remaining !== undefined ? resource.days_remaining : 14}d`}
+                      </span>
+                    )}
                     {resource.tags && resource.tags.split(',').map(t => t.trim().toLowerCase()).includes('daily-scrape') && (
                       <span className="badge-automated">⚡ Auto Feed</span>
                     )}
                   </div>
                   
                   <div className="card-actions">
+                    {resource.platform === 'GitHub' && (
+                      <button 
+                        className={`action-btn pin-btn ${resource.is_pinned ? 'active' : ''}`}
+                        onClick={() => handleTogglePin(resource.id, resource.is_pinned)}
+                        title={resource.is_pinned ? "Unpin repo (enables 14-day auto-pruning)" : "Pin repo (freezes 14-day timer)"}
+                      >
+                        📌
+                      </button>
+                    )}
                     <button 
                       className="action-btn"
                       onClick={() => openEditModal(resource)}
@@ -525,6 +574,31 @@ export default function App() {
 
                 {/* Summary */}
                 <p className="card-summary">{resource.summary}</p>
+
+                {/* GitHub Specific Use-Cases & Playbook Action */}
+                {resource.platform === 'GitHub' && resource.github_details && (
+                  <div className="github-card-section" style={{ background: 'rgba(255,255,255,0.03)', padding: '0.75rem', borderRadius: '8px', marginTop: '0.5rem', marginBottom: '0.5rem', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    {resource.github_details.use_cases && resource.github_details.use_cases.length > 0 && (
+                      <div style={{ marginBottom: '0.5rem' }}>
+                        <strong style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                          💡 Project Use-Cases:
+                        </strong>
+                        <ul style={{ margin: '0.25rem 0 0 1rem', padding: 0, fontSize: '0.8rem', color: 'var(--text-primary)' }}>
+                          {resource.github_details.use_cases.map((uc, i) => (
+                            <li key={i} style={{ marginBottom: '0.2rem' }}>{uc}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    <button 
+                      className="btn-primary" 
+                      style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.4rem', width: '100%', justifyContent: 'center' }}
+                      onClick={() => handleViewPlaybook(resource)}
+                    >
+                      ⚡ View Setup Playbook & Commands
+                    </button>
+                  </div>
+                )}
 
                 {resource.content && (
                   <button 
@@ -834,6 +908,84 @@ export default function App() {
             </div>
             <div className="doc-content-body" style={{ maxHeight: '60vh', overflowY: 'auto', padding: '1.25rem', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.9rem', lineHeight: '1.5', color: 'var(--text-primary)' }}>
               {docContent || '*No content extracted*'}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* GitHub Playbook Modal */}
+      {showPlaybookModal && selectedResource && selectedResource.github_details && (
+        <div className="modal-overlay" onClick={() => setShowPlaybookModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '700px', width: '90%' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
+              <h3 className="modal-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                ⚡ {selectedResource.title}
+              </h3>
+              <button className="btn-secondary" onClick={() => setShowPlaybookModal(false)} style={{ padding: '0.25rem 0.5rem', fontSize: '0.85rem' }}>Close</button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', maxHeight: '70vh', overflowY: 'auto' }}>
+              {/* Tech Stack Overview */}
+              <div>
+                <h4 style={{ margin: '0 0 0.4rem 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Tech Stack & Architecture</h4>
+                <p style={{ margin: 0, fontSize: '0.88rem', background: 'rgba(255,255,255,0.03)', padding: '0.75rem', borderRadius: '6px' }}>
+                  {selectedResource.github_details.tech_stack_summary || `Primary language: ${selectedResource.github_details.primary_language}`}
+                </p>
+              </div>
+
+              {/* Prerequisites */}
+              {selectedResource.github_details.quickstart_playbook && selectedResource.github_details.quickstart_playbook.prerequisites && (
+                <div>
+                  <h4 style={{ margin: '0 0 0.4rem 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Prerequisites</h4>
+                  <p style={{ margin: 0, fontSize: '0.85rem', color: '#f59e0b' }}>
+                    {selectedResource.github_details.quickstart_playbook.prerequisites}
+                  </p>
+                </div>
+              )}
+
+              {/* Setup Commands */}
+              {selectedResource.github_details.quickstart_playbook && selectedResource.github_details.quickstart_playbook.commands && (
+                <div>
+                  <h4 style={{ margin: '0 0 0.4rem 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>2-Minute Setup Commands</h4>
+                  <div style={{ background: '#0f172a', padding: '1rem', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    {selectedResource.github_details.quickstart_playbook.commands.map((cmd, i) => (
+                      <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.85rem', color: '#38bdf8' }}>
+                        <span>$ {cmd}</span>
+                        <button 
+                          style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', borderRadius: '4px', padding: '2px 8px', fontSize: '0.75rem', cursor: 'pointer' }}
+                          onClick={() => {
+                            navigator.clipboard.writeText(cmd);
+                            setCopiedCmd(cmd);
+                            setTimeout(() => setCopiedCmd(''), 2000);
+                          }}
+                        >
+                          {copiedCmd === cmd ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* One-Liner Test */}
+              {selectedResource.github_details.quickstart_playbook && selectedResource.github_details.quickstart_playbook.one_liner && (
+                <div>
+                  <h4 style={{ margin: '0 0 0.4rem 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>One-Liner Execution</h4>
+                  <div style={{ background: '#0f172a', padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: 'monospace', fontSize: '0.85rem', color: '#4ade80' }}>
+                    <span>$ {selectedResource.github_details.quickstart_playbook.one_liner}</span>
+                    <button 
+                      style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', borderRadius: '4px', padding: '2px 8px', fontSize: '0.75rem', cursor: 'pointer' }}
+                      onClick={() => {
+                        navigator.clipboard.writeText(selectedResource.github_details.quickstart_playbook.one_liner);
+                        setCopiedCmd(selectedResource.github_details.quickstart_playbook.one_liner);
+                        setTimeout(() => setCopiedCmd(''), 2000);
+                      }}
+                    >
+                      {copiedCmd === selectedResource.github_details.quickstart_playbook.one_liner ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
