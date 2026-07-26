@@ -1,3 +1,8 @@
+const path = require('path');
+const fs = require('fs');
+
+process.env.DB_PATH = path.join(__dirname, '../smriti/server-detail.test.db');
+
 const assert = require('assert');
 const test = require('node:test');
 const request = require('supertest');
@@ -5,6 +10,11 @@ const app = require('../src/server');
 const { runMigrations } = require('../src/database');
 
 test('Server Date Filter and Raw Transcript Endpoint', (t, done) => {
+  // Clean db first
+  if (fs.existsSync(process.env.DB_PATH)) {
+    fs.unlinkSync(process.env.DB_PATH);
+  }
+
   runMigrations(() => {
     // Ingest today's scores
     request(app)

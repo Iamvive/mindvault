@@ -3,15 +3,12 @@ const fs = require('fs');
 const path = require('path');
 
 const DB_DIR = path.join(__dirname, '../smriti');
-const DB_PATH = path.join(DB_DIR, 'sanjaya.db');
-
-// Ensure db directory exists
-if (!fs.existsSync(DB_DIR)) {
-  fs.mkdirSync(DB_DIR, { recursive: true });
-}
-
 function getDbConnection() {
-  return new sqlite3.Database(DB_PATH);
+  if (!fs.existsSync(DB_DIR)) {
+    fs.mkdirSync(DB_DIR, { recursive: true });
+  }
+  const dbPath = process.env.DB_PATH || path.join(DB_DIR, 'sanjaya.db');
+  return new sqlite3.Database(dbPath);
 }
 
 function runMigrations(callback) {
@@ -75,6 +72,9 @@ function saveDailyScore(date, scores, callback) {
     scores.raw_vault_path,
     JSON.stringify(scores.key_memories || [])
   ], function(err) {
+    if (err) {
+      console.error("Database save failed with error:", err);
+    }
     db.close();
     if (callback) callback(err);
   });

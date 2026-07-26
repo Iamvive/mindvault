@@ -123,3 +123,54 @@ export async function scrapeUrl(urlString) {
     };
   }
 }
+
+/**
+ * Searches the web using DuckDuckGo HTML search.
+ * Returns an array of search results: [{ title, url, snippet }]
+ */
+export async function searchWeb(query) {
+  try {
+    const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+    const response = await fetch(searchUrl, {
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9'
+      }
+    });
+
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    const results = [];
+
+    $('.result__body').slice(0, 5).each((i, el) => {
+      const titleEl = $(el).find('.result__title');
+      const title = titleEl.text().trim();
+      const rawUrl = titleEl.find('a').attr('href');
+      const snippet = $(el).find('.result__snippet').text().trim();
+
+      if (title && rawUrl) {
+        let url = rawUrl;
+        try {
+          const absoluteUrl = rawUrl.startsWith('//') 
+            ? 'https:' + rawUrl 
+            : (rawUrl.startsWith('/') ? 'https://duckduckgo.com' + rawUrl : rawUrl);
+          const parsed = new URL(absoluteUrl);
+          const u = parsed.searchParams.get('uddg');
+          if (u) {
+            url = decodeURIComponent(u);
+          }
+        } catch (e) {
+          // Keep rawUrl if parsing fails
+        }
+        results.push({ title, url, snippet });
+      }
+    });
+
+    return results;
+  } catch (error) {
+    console.error(`Search failed for query "${query}":`, error.message);
+    return [];
+  }
+}
+

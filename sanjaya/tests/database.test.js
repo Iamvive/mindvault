@@ -2,11 +2,14 @@ const assert = require('assert');
 const test = require('node:test');
 const fs = require('fs');
 const path = require('path');
+
+process.env.DB_PATH = path.join(__dirname, '../smriti/database.test.db');
+
 const { runMigrations, saveDailyScore, getDailyScores } = require('../src/database');
 
 test('Database Migrations and Queries', (t, done) => {
   // Ensure the tests directory or other parent dirs exist
-  const dbPath = path.join(__dirname, '../smriti/sanjaya.db');
+  const dbPath = process.env.DB_PATH;
   if (fs.existsSync(dbPath)) {
     fs.unlinkSync(dbPath);
   }

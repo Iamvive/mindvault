@@ -1,10 +1,21 @@
 import TelegramBot from 'node-telegram-bot-api';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { Database } from './database.js';
 import { scrapeUrl } from './scraper.js';
-import { enrichResourceMetadata } from './gemini.js';
+import { enrichResourceMetadata, enrichDocumentMetadata } from './gemini.js';
+import { convertFileToMarkdown } from './markitdown-wrapper.js';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -97,13 +108,98 @@ export function initBot() {
     }
   });
 
-  // Handle all incoming text messages
   bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     if (!isAuthorized(msg)) {
       // Quietly ignore or reply for normal text entries
       return;
     }
+
+    // Check if the message contains a file or photo or audio/voice
+    const isFile = msg.document || msg.photo || msg.audio || msg.voice;
+    
+    if (isFile) {
+      bot.sendChatAction(chatId, 'upload_document');
+      
+      try {
+        let fileId = '';
+        let originalName = '';
+        let fileType = 'Document';
+
+        if (msg.document) {
+          fileId = msg.document.file_id;
+          originalName = msg.document.file_name || 'document';
+          fileType = 'Document';
+        } else if (msg.photo) {
+          // Photo is an array of sizes, get the largest one
+          const photo = msg.photo[msg.photo.length - 1];
+          fileId = photo.file_id;
+          originalName = `photo_${Date.now()}.jpg`;
+          fileType = 'Photo';
+        } else if (msg.audio) {
+          fileId = msg.audio.file_id;
+          originalName = msg.audio.file_name || `audio_${Date.now()}.mp3`;
+          fileType = 'Audio';
+        } else if (msg.voice) {
+          fileId = msg.voice.file_id;
+          originalName = `voice_${Date.now()}.ogg`;
+          fileType = 'Voice';
+        }
+
+        // Download the file via bot API to our uploads folder
+        const tempPath = await bot.downloadFile(fileId, uploadDir);
+
+        // Rename the downloaded file to preserve original extension/name if possible
+        const fileExt = path.extname(originalName) || path.extname(tempPath) || '';
+        const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${fileExt}`;
+        const finalPath = path.join(uploadDir, uniqueName);
+        fs.renameSync(tempPath, finalPath);
+
+        // Notify user we downloaded it and are parsing it
+        bot.sendMessage(chatId, `📥 Received ${fileType}! Processing with MarkItDown & Gemini AI...`);
+
+        // Convert the file to Markdown
+        const markdown = await convertFileToMarkdown(finalPath);
+
+        // Get user notes from caption if available
+        const userNotes = msg.caption || '';
+
+        // Enrich document metadata using Gemini
+        const enriched = await enrichDocumentMetadata(originalName, markdown, userNotes);
+
+        const relativeUrl = `/uploads/${uniqueName}`;
+
+        // Save to SQLite DB
+        Database.createResource({
+          url: relativeUrl,
+          title: enriched.title,
+          summary: enriched.summary,
+          category: enriched.category,
+          tags: enriched.tags.join(','),
+          platform: enriched.platform,
+          interest_score: enriched.interest_score,
+          usefulness_score: enriched.usefulness_score,
+          user_notes: userNotes,
+          content: markdown,
+          file_path: finalPath
+        });
+
+        // Send success message to user
+        const successText = `✅ **${fileType} Ingested Successfully!**\n\n` +
+          `• **Title:** ${enriched.title}\n` +
+          `• **Category:** ${enriched.category}\n` +
+          `• **Type:** ${enriched.platform}\n` +
+          `• **Tags:** ${enriched.tags.map(t => `#${t}`).join(' ')}\n` +
+          `• **Scores:** Interest ${enriched.interest_score}/10 | Usefulness ${enriched.usefulness_score}/10\n\n` +
+          `**Summary:** ${enriched.summary}`;
+
+        return bot.sendMessage(chatId, successText);
+      } catch (error) {
+        console.error('Bot file handling error:', error);
+        return bot.sendMessage(chatId, `❌ Failed to process the sent file: ${error.message}`);
+      }
+    }
+
     const text = msg.text;
 
     // Ignore commands (they are handled separately)

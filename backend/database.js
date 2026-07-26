@@ -36,6 +36,18 @@ db.exec(`
   );
 `);
 
+// Support optional schema upgrades for files
+try {
+  db.exec(`ALTER TABLE resources ADD COLUMN content TEXT;`);
+} catch (e) {
+  // Column might already exist
+}
+try {
+  db.exec(`ALTER TABLE resources ADD COLUMN file_path TEXT;`);
+} catch (e) {
+  // Column might already exist
+}
+
 // Database Helper functions
 export const Database = {
   // Resources
@@ -44,9 +56,9 @@ export const Database = {
     const params = [];
 
     if (search) {
-      query += ' AND (title LIKE ? OR summary LIKE ? OR tags LIKE ? OR user_notes LIKE ?)';
+      query += ' AND (title LIKE ? OR summary LIKE ? OR tags LIKE ? OR user_notes LIKE ? OR content LIKE ?)';
       const searchWild = `%${search}%`;
-      params.push(searchWild, searchWild, searchWild, searchWild);
+      params.push(searchWild, searchWild, searchWild, searchWild, searchWild);
     }
 
     if (category) {
@@ -80,10 +92,10 @@ export const Database = {
     return stmt.get(url);
   },
 
-  createResource: ({ url, title, summary, category, tags, platform, interest_score, usefulness_score, user_notes }) => {
+  createResource: ({ url, title, summary, category, tags, platform, interest_score, usefulness_score, user_notes, content, file_path }) => {
     const stmt = db.prepare(`
-      INSERT INTO resources (url, title, summary, category, tags, platform, interest_score, usefulness_score, user_notes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO resources (url, title, summary, category, tags, platform, interest_score, usefulness_score, user_notes, content, file_path)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     const res = stmt.run(
       url,
@@ -94,7 +106,9 @@ export const Database = {
       platform || 'Other',
       interest_score !== undefined ? interest_score : 5,
       usefulness_score !== undefined ? usefulness_score : 5,
-      user_notes || ''
+      user_notes || '',
+      content || '',
+      file_path || ''
     );
     return res.lastInsertRowid;
   },

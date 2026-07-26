@@ -1,0 +1,412 @@
+{
+  "communities": {
+    "0": [
+      "backend_bot",
+      "backend_bot_dirname",
+      "backend_bot_filename",
+      "backend_bot_initbot",
+      "backend_bot_uploaddir",
+      "backend_database",
+      "backend_database_database",
+      "backend_database_db",
+      "backend_database_dirname",
+      "backend_database_filename",
+      "backend_gemini",
+      "backend_gemini_enrichdocumentmetadata",
+      "backend_gemini_enrichresourcemetadata",
+      "backend_gemini_genai",
+      "backend_markitdown_wrapper",
+      "backend_markitdown_wrapper_convertfiletomarkdown",
+      "backend_markitdown_wrapper_dirname",
+      "backend_markitdown_wrapper_filename",
+      "backend_markitdown_wrapper_markitdownpath",
+      "backend_package_dependencies_google_generative_ai",
+      "backend_scheduler",
+      "backend_scheduler_rundailyingestion",
+      "backend_scheduler_startscheduler",
+      "backend_scraper",
+      "backend_scraper_getplatformname",
+      "backend_scraper_scrapeurl",
+      "backend_scraper_searchweb",
+      "backend_server",
+      "backend_server_app",
+      "backend_server_dirname",
+      "backend_server_filename",
+      "backend_server_frontendbuildpath",
+      "backend_server_storage",
+      "backend_server_upload",
+      "backend_server_uploaddir",
+      "backend_test_server",
+      "google_generative_ai"
+    ],
+    "1": [
+      "default_type",
+      "inlinekeyboardmarkup",
+      "telegram_finance_bot_bot",
+      "telegram_finance_bot_bot_ask_cmd",
+      "telegram_finance_bot_bot_dashboard_cmd",
+      "telegram_finance_bot_bot_debt_add_cmd",
+      "telegram_finance_bot_bot_debt_clear_cmd",
+      "telegram_finance_bot_bot_debts_list_cmd",
+      "telegram_finance_bot_bot_delete_cmd",
+      "telegram_finance_bot_bot_get_categories_keyboard",
+      "telegram_finance_bot_bot_get_transaction_keyboard",
+      "telegram_finance_bot_bot_handle_callback_query",
+      "telegram_finance_bot_bot_handle_photo",
+      "telegram_finance_bot_bot_handle_text",
+      "telegram_finance_bot_bot_help_cmd",
+      "telegram_finance_bot_bot_main",
+      "telegram_finance_bot_bot_pending_add_cmd",
+      "telegram_finance_bot_bot_pending_delete_cmd",
+      "telegram_finance_bot_bot_pending_list_cmd",
+      "telegram_finance_bot_bot_post_init",
+      "telegram_finance_bot_bot_recurring_add_cmd",
+      "telegram_finance_bot_bot_recurring_delete_cmd",
+      "telegram_finance_bot_bot_recurring_list_cmd",
+      "telegram_finance_bot_bot_restricted",
+      "telegram_finance_bot_bot_start_cmd",
+      "telegram_finance_bot_bot_start_http_server",
+      "telegram_finance_bot_bot_summary_cmd",
+      "telegram_finance_bot_bot_undo_cmd",
+      "telegram_finance_bot_bot_update_cmd",
+      "update"
+    ],
+    "2": [
+      "frontend_package",
+      "frontend_package_dependencies",
+      "frontend_package_dependencies_lucide_react",
+      "frontend_package_dependencies_react",
+      "frontend_package_dependencies_react_dom",
+      "frontend_package_devdependencies",
+      "frontend_package_devdependencies_oxlint",
+      "frontend_package_devdependencies_types_react",
+      "frontend_package_devdependencies_types_react_dom",
+      "frontend_package_devdependencies_vite",
+      "frontend_package_devdependencies_vitejs_plugin_react",
+      "frontend_package_name",
+      "frontend_package_private",
+      "frontend_package_scripts",
+      "frontend_package_scripts_build",
+      "frontend_package_scripts_dev",
+      "frontend_package_scripts_lint",
+      "frontend_package_scripts_preview",
+      "frontend_package_type",
+      "frontend_package_version",
+      "lucide_react",
+      "oxlint",
+      "react",
+      "react_dom",
+      "types_react",
+      "types_react_dom",
+      "vite",
+      "vitejs_plugin_react"
+    ],
+    "3": [
+      "telegram_finance_bot_db",
+      "telegram_finance_bot_db_add_debt",
+      "telegram_finance_bot_db_add_pending_bill",
+      "telegram_finance_bot_db_add_recurring",
+      "telegram_finance_bot_db_check_duplicate",
+      "telegram_finance_bot_db_clear_debts_for_person",
+      "telegram_finance_bot_db_compute_image_hash",
+      "telegram_finance_bot_db_delete_last_transaction",
+      "telegram_finance_bot_db_delete_recurring",
+      "telegram_finance_bot_db_delete_transaction",
+      "telegram_finance_bot_db_get_all_recurring",
+      "telegram_finance_bot_db_get_connection",
+      "telegram_finance_bot_db_get_debt_balances",
+      "telegram_finance_bot_db_get_debt_history",
+      "telegram_finance_bot_db_get_ledger",
+      "telegram_finance_bot_db_get_monthly_budget_summary",
+      "telegram_finance_bot_db_get_or_create_user_token",
+      "telegram_finance_bot_db_get_pending_bills",
+      "telegram_finance_bot_db_get_user_id_by_token",
+      "telegram_finance_bot_db_init_db",
+      "telegram_finance_bot_db_insert_transaction",
+      "telegram_finance_bot_db_match_pending_bill",
+      "telegram_finance_bot_db_migrate_db",
+      "telegram_finance_bot_db_trigger_dashboard_update",
+      "telegram_finance_bot_db_update_pending_status",
+      "telegram_finance_bot_db_update_transaction",
+      "telegram_finance_bot_db_update_transaction_fields"
+    ],
+    "4": [
+      "axios",
+      "backend_package",
+      "backend_package_dependencies",
+      "backend_package_dependencies_axios",
+      "backend_package_dependencies_cheerio",
+      "backend_package_dependencies_cors",
+      "backend_package_dependencies_dotenv",
+      "backend_package_dependencies_express",
+      "backend_package_dependencies_multer",
+      "backend_package_dependencies_node_telegram_bot_api",
+      "backend_package_description",
+      "backend_package_main",
+      "backend_package_name",
+      "backend_package_scripts",
+      "backend_package_scripts_dev",
+      "backend_package_scripts_start",
+      "backend_package_type",
+      "backend_package_version",
+      "cheerio",
+      "cors",
+      "dotenv",
+      "express",
+      "multer",
+      "node_telegram_bot_api"
+    ],
+    "5": [
+      "telegram_finance_bot_dashboard",
+      "telegram_finance_bot_dashboard_generate_dashboard",
+      "telegram_finance_bot_dashboard_get_user_dashboard_payload",
+      "telegram_finance_bot_dashboard_rationale_115",
+      "telegram_finance_bot_dashboard_rationale_4",
+      "telegram_finance_bot_test_pipeline",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_setup",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_setupclass",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_teardownclass",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_amount_parsing",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_daily_recurring_sync_and_backfill",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_dashboard_payload_gathering",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_database_insert_and_deduplication",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_debts_and_loans",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_delete_and_update_transactions",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_http_endpoints_recurring",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_keyword_rules",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_recurring_auto_logging",
+      "telegram_finance_bot_test_pipeline_testfinancebotpipeline_test_update_transaction_fields"
+    ],
+    "6": [
+      "telegram_finance_bot_query_qa",
+      "telegram_finance_bot_query_qa_execute_database_qa",
+      "telegram_finance_bot_query_qa_is_finance_query",
+      "telegram_finance_bot_query_qa_rationale_11",
+      "telegram_finance_bot_query_qa_rationale_49",
+      "telegram_finance_bot_test_query_qa",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa_setup",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa_setupclass",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa_teardownclass",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa_test_database_qa_execution",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa_test_is_finance_query_classification",
+      "telegram_finance_bot_test_query_qa_testfinancebotqueryqa_test_sql_safety_validation"
+    ],
+    "7": [
+      "any",
+      "basemodel",
+      "telegram_finance_bot_llm_extract",
+      "telegram_finance_bot_llm_extract_extract_claude",
+      "telegram_finance_bot_llm_extract_extract_gemini",
+      "telegram_finance_bot_llm_extract_extract_local",
+      "telegram_finance_bot_llm_extract_extract_openai",
+      "telegram_finance_bot_llm_extract_extract_transaction",
+      "telegram_finance_bot_llm_extract_get_llm_client",
+      "telegram_finance_bot_llm_extract_rationale_26",
+      "telegram_finance_bot_llm_extract_rationale_73",
+      "telegram_finance_bot_llm_extract_transactionextraction"
+    ],
+    "8": [
+      "frontend_oxlintrc",
+      "frontend_oxlintrc_plugins",
+      "frontend_oxlintrc_rules",
+      "frontend_oxlintrc_rules_react_only_export_components",
+      "frontend_oxlintrc_rules_react_rules_of_hooks",
+      "frontend_oxlintrc_schema",
+      "frontend_src_app",
+      "frontend_src_app_app",
+      "frontend_src_main",
+      "ref_oxc",
+      "ref_react",
+      "ref_warn"
+    ],
+    "9": [
+      "package",
+      "package_description",
+      "package_name",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_postinstall",
+      "package_scripts_start",
+      "package_type",
+      "package_version"
+    ],
+    "10": [
+      "telegram_finance_bot_categorize",
+      "telegram_finance_bot_categorize_determine_type_and_bucket",
+      "telegram_finance_bot_categorize_match_keyword_rules",
+      "telegram_finance_bot_categorize_match_recurring_rules",
+      "telegram_finance_bot_categorize_parse_amount",
+      "telegram_finance_bot_categorize_rationale_106",
+      "telegram_finance_bot_categorize_rationale_134",
+      "telegram_finance_bot_categorize_rationale_146",
+      "telegram_finance_bot_categorize_rationale_162"
+    ],
+    "11": [
+      "telegram_finance_bot_scheduler",
+      "telegram_finance_bot_scheduler_check_all_users_recurring",
+      "telegram_finance_bot_scheduler_process_due_recurring",
+      "telegram_finance_bot_scheduler_rationale_11",
+      "telegram_finance_bot_scheduler_rationale_142",
+      "telegram_finance_bot_scheduler_rationale_183",
+      "telegram_finance_bot_scheduler_run_scheduler",
+      "telegram_finance_bot_scheduler_send_summary"
+    ],
+    "12": [
+      "simplehttprequesthandler",
+      "telegram_finance_bot_bot_multiuserhttprequesthandler",
+      "telegram_finance_bot_bot_multiuserhttprequesthandler_do_get",
+      "telegram_finance_bot_bot_multiuserhttprequesthandler_do_options",
+      "telegram_finance_bot_bot_multiuserhttprequesthandler_do_post",
+      "telegram_finance_bot_bot_multiuserhttprequesthandler_log_message"
+    ],
+    "13": [
+      "telegram_finance_bot_pull_db_from_vps",
+      "telegram_finance_bot_pull_db_from_vps_sh__entry"
+    ],
+    "14": [
+      "telegram_finance_bot_setup_vps",
+      "telegram_finance_bot_setup_vps_sh__entry"
+    ],
+    "15": [
+      "telegram_finance_bot_sync_to_vps",
+      "telegram_finance_bot_sync_to_vps_sh__entry"
+    ],
+    "16": [
+      "frontend_vite_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.1036036036036036,
+    "1": 0.2160919540229885,
+    "2": 0.07142857142857142,
+    "3": 0.14814814814814814,
+    "4": 0.08333333333333333,
+    "5": 0.1,
+    "6": 0.15384615384615385,
+    "7": 0.3181818181818182,
+    "8": 0.19696969696969696,
+    "9": 0.2222222222222222,
+    "10": 0.25,
+    "11": 0.35714285714285715,
+    "12": 0.3333333333333333,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0
+  },
+  "gods": [
+    {
+      "id": "telegram_finance_bot_db_get_connection",
+      "label": "get_connection()",
+      "degree": 23
+    },
+    {
+      "id": "telegram_finance_bot_bot_main",
+      "label": "main()",
+      "degree": 23
+    },
+    {
+      "id": "telegram_finance_bot_test_pipeline_testfinancebotpipeline",
+      "label": "TestFinanceBotPipeline",
+      "degree": 14
+    },
+    {
+      "id": "backend_database_database",
+      "label": "Database",
+      "degree": 8
+    },
+    {
+      "id": "telegram_finance_bot_llm_extract_extract_transaction",
+      "label": "extract_transaction()",
+      "degree": 8
+    },
+    {
+      "id": "backend_bot_initbot",
+      "label": "initBot()",
+      "degree": 7
+    },
+    {
+      "id": "telegram_finance_bot_llm_extract_transactionextraction",
+      "label": "TransactionExtraction",
+      "degree": 7
+    },
+    {
+      "id": "telegram_finance_bot_test_query_qa_testfinancebotqueryqa",
+      "label": "TestFinanceBotQueryQA",
+      "degree": 7
+    },
+    {
+      "id": "telegram_finance_bot_bot_multiuserhttprequesthandler",
+      "label": "MultiUserHTTPRequestHandler",
+      "degree": 7
+    },
+    {
+      "id": "telegram_finance_bot_bot_handle_callback_query",
+      "label": "handle_callback_query()",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "initBot()",
+      "target": "Database",
+      "source_files": [
+        "backend/bot.js",
+        "backend/database.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "initBot()",
+      "target": "enrichDocumentMetadata()",
+      "source_files": [
+        "backend/bot.js",
+        "backend/gemini.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "initBot()",
+      "target": "enrichResourceMetadata()",
+      "source_files": [
+        "backend/bot.js",
+        "backend/gemini.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "initBot()",
+      "target": "convertFileToMarkdown()",
+      "source_files": [
+        "backend/bot.js",
+        "backend/markitdown-wrapper.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "initBot()",
+      "target": "scrapeUrl()",
+      "source_files": [
+        "backend/bot.js",
+        "backend/scraper.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

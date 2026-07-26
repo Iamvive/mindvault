@@ -13,7 +13,8 @@ import {
   Globe, 
   Star,
   RefreshCw,
-  FolderOpen
+  FolderOpen,
+  FileText
 } from 'lucide-react';
 
 const API_BASE = 'http://localhost:3001/api';
@@ -40,11 +41,19 @@ export default function App() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedResource, setSelectedResource] = useState(null);
+  
+  // Document Reader state
+  const [showDocModal, setShowDocModal] = useState(false);
+  const [docContent, setDocContent] = useState('');
+  const [docTitle, setDocTitle] = useState('');
 
   // Add Resource state
+  const [activeTab, setActiveTab] = useState('url'); // 'url' or 'file'
+  const [uploadFile, setUploadFile] = useState(null);
   const [newUrl, setNewUrl] = useState('');
   const [newNotes, setNewNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // Edit Resource state
   const [editTitle, setEditTitle] = useState('');
@@ -102,23 +111,66 @@ export default function App() {
     }
   };
 
+  const handleSyncUpdates = async () => {
+    setIsSyncing(true);
+    try {
+      const response = await fetch(`${API_BASE}/cron/run`, {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || 'Failed to run background update sync.');
+      } else {
+        alert(data.message || `Sync completed! Added ${data.added} new updates.`);
+        fetchResources();
+        fetchStats();
+      }
+    } catch (err) {
+      console.error('Error syncing updates:', err);
+      alert('Network error during sync.');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   const handleAddSubmit = async (e) => {
     e.preventDefault();
-    if (!newUrl) return;
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE}/resources`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: newUrl, user_notes: newNotes })
-      });
+      let response;
+      if (activeTab === 'url') {
+        if (!newUrl) {
+          setIsSubmitting(false);
+          return;
+        }
+        response = await fetch(`${API_BASE}/resources`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: newUrl, user_notes: newNotes })
+        });
+      } else {
+        if (!uploadFile) {
+          alert('Please select a file to upload.');
+          setIsSubmitting(false);
+          return;
+        }
+        const formData = new FormData();
+        formData.append('file', uploadFile);
+        formData.append('user_notes', newNotes);
+
+        response = await fetch(`${API_BASE}/resources/upload`, {
+          method: 'POST',
+          body: formData
+        });
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
         alert(errorData.error || 'Failed to process resource');
       } else {
         setNewUrl('');
+        setUploadFile(null);
         setNewNotes('');
         setShowAddModal(false);
         fetchResources();
@@ -234,6 +286,11 @@ export default function App() {
     if (plat.includes('github')) return 'github';
     if (plat.includes('twitter') || plat.includes('x')) return 'twitter';
     if (plat.includes('medium')) return 'medium';
+    if (plat.includes('claude')) return 'claude';
+    if (plat.includes('gemini')) return 'gemini';
+    if (plat.includes('antigravity')) return 'antigravity';
+    if (plat.includes('airtel')) return 'airtel';
+    if (plat.includes('offers')) return 'offers';
     return 'web';
   };
 
@@ -374,6 +431,16 @@ export default function App() {
             </select>
 
             <button 
+              className="btn-secondary"
+              onClick={handleSyncUpdates}
+              disabled={isSyncing}
+              style={{ display: 'flex', gap: '0.5rem', marginRight: '0.5rem' }}
+            >
+              <RefreshCw className={isSyncing ? 'animate-spin' : ''} size={18} />
+              <span>{isSyncing ? 'Syncing...' : 'Sync Updates'}</span>
+            </button>
+
+            <button 
               className="btn-primary"
               onClick={() => setShowAddModal(true)}
             >
@@ -404,7 +471,7 @@ export default function App() {
             {resources.map((resource) => (
               <article 
                 key={resource.id} 
-                className="resource-card"
+                className={`resource-card ${resource.tags && resource.tags.split(',').map(t => t.trim().toLowerCase()).includes('daily-scrape') ? 'automated' : ''}`}
                 onMouseMove={(e) => {
                   // Interactive card mouse border glow highlight
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -422,6 +489,9 @@ export default function App() {
                   <div className="card-badge-row">
                     <span className="badge-platform">{resource.platform}</span>
                     <span className="badge-category">{resource.category}</span>
+                    {resource.tags && resource.tags.split(',').map(t => t.trim().toLowerCase()).includes('daily-scrape') && (
+                      <span className="badge-automated">⚡ Auto Feed</span>
+                    )}
                   </div>
                   
                   <div className="card-actions">
@@ -444,7 +514,7 @@ export default function App() {
 
                 {/* Title */}
                 <a 
-                  href={resource.url} 
+                  href={resource.url.startsWith('http') ? resource.url : `${API_BASE.replace('/api', '')}${resource.url}`} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="card-title"
@@ -455,6 +525,21 @@ export default function App() {
 
                 {/* Summary */}
                 <p className="card-summary">{resource.summary}</p>
+
+                {resource.content && (
+                  <button 
+                    className="btn-secondary" 
+                    style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem', marginTop: '0.5rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.25rem', width: 'fit-content' }}
+                    onClick={() => {
+                      setDocTitle(resource.title);
+                      setDocContent(resource.content);
+                      setShowDocModal(true);
+                    }}
+                  >
+                    <FileText size={14} />
+                    <span>View Parsed Text</span>
+                  </button>
+                )}
 
                 {/* Tags */}
                 {resource.tags && (
@@ -527,19 +612,73 @@ export default function App() {
       {showAddModal && (
         <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 className="modal-title">Ingest Resource Link</h3>
+            <h3 className="modal-title">Ingest Resource</h3>
+            
+            <div className="tab-container" style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'url' ? 'active' : ''}`}
+                onClick={() => setActiveTab('url')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: activeTab === 'url' ? 'var(--primary-color)' : 'var(--text-secondary)',
+                  borderBottom: activeTab === 'url' ? '2px solid var(--primary-color)' : 'none',
+                  paddingBottom: '0.25rem',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '0.95rem'
+                }}
+              >
+                Link URL
+              </button>
+              <button 
+                type="button"
+                className={`tab-btn ${activeTab === 'file' ? 'active' : ''}`}
+                onClick={() => setActiveTab('file')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: activeTab === 'file' ? 'var(--primary-color)' : 'var(--text-secondary)',
+                  borderBottom: activeTab === 'file' ? '2px solid var(--primary-color)' : 'none',
+                  paddingBottom: '0.25rem',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '0.95rem'
+                }}
+              >
+                File Upload
+              </button>
+            </div>
+
             <form onSubmit={handleAddSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div className="form-group">
-                <label className="form-label">Resource URL</label>
-                <input 
-                  type="url" 
-                  className="form-input" 
-                  placeholder="https://example.com/useful-article"
-                  value={newUrl}
-                  onChange={(e) => setNewUrl(e.target.value)}
-                  required
-                />
-              </div>
+              {activeTab === 'url' ? (
+                <div className="form-group">
+                  <label className="form-label">Resource URL</label>
+                  <input 
+                    type="url" 
+                    className="form-input" 
+                    placeholder="https://example.com/useful-article"
+                    value={newUrl}
+                    onChange={(e) => setNewUrl(e.target.value)}
+                    required
+                  />
+                </div>
+              ) : (
+                <div className="form-group">
+                  <label className="form-label">Select File</label>
+                  <input 
+                    type="file" 
+                    className="form-input" 
+                    onChange={(e) => setUploadFile(e.target.files[0])}
+                    required
+                    style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '4px', border: '1px dashed var(--border-color)' }}
+                  />
+                  <small style={{ color: 'var(--text-muted)', marginTop: '0.4rem', display: 'block', fontSize: '0.75rem' }}>
+                    Supports PDF, DOCX, XLSX, PPTX, HTML, TXT, images, and audio files.
+                  </small>
+                </div>
+              )}
 
               <div className="form-group">
                 <label className="form-label">Context / Notes (Optional)</label>
@@ -681,6 +820,21 @@ export default function App() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Document Reader Modal */}
+      {showDocModal && (
+        <div className="modal-overlay" onClick={() => setShowDocModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '800px', width: '90%' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
+              <h3 className="modal-title" style={{ margin: 0 }}>📄 {docTitle}</h3>
+              <button className="btn-secondary" onClick={() => setShowDocModal(false)} style={{ padding: '0.25rem 0.5rem', fontSize: '0.85rem' }}>Close</button>
+            </div>
+            <div className="doc-content-body" style={{ maxHeight: '60vh', overflowY: 'auto', padding: '1.25rem', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.9rem', lineHeight: '1.5', color: 'var(--text-primary)' }}>
+              {docContent || '*No content extracted*'}
+            </div>
           </div>
         </div>
       )}

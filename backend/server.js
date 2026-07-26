@@ -3,11 +3,15 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer';
+import fs from 'fs';
 
 import { Database } from './database.js';
 import { scrapeUrl } from './scraper.js';
-import { enrichResourceMetadata } from './gemini.js';
+import { enrichResourceMetadata, enrichDocumentMetadata } from './gemini.js';
 import { initBot } from './bot.js';
+import { startScheduler, runDailyIngestion } from './scheduler.js';
+import { convertFileToMarkdown } from './markitdown-wrapper.js';
 
 dotenv.config();
 
@@ -17,8 +21,29 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Ensure upload directory exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Multer storage configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
+  }
+});
+const upload = multer({ storage, limits: { fileSize: 25 * 1024 * 1024 } }); // 25MB limit
+
 app.use(cors());
 app.use(express.json());
+
+// Serve static uploads
+app.use('/uploads', express.static(uploadDir));
 
 // Optional Basic Authentication for public cloud deployments
 app.use((req, res, next) => {
@@ -47,6 +72,9 @@ app.use((req, res, next) => {
 
 // Initialize Telegram bot
 initBot();
+
+// Start nightly scheduler
+startScheduler();
 
 /**
  * REST API Endpoints
@@ -119,6 +147,57 @@ app.post('/api/resources', async (req, res) => {
   }
 });
 
+// Upload and ingest a file resource (runs MarkItDown + Gemini)
+app.post('/api/resources/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  const { user_notes } = req.body;
+  const filePath = req.file.path;
+  const originalName = req.file.originalname;
+
+  try {
+    // 1. Run markitdown CLI wrapper to convert file to Markdown
+    const markdown = await convertFileToMarkdown(filePath);
+
+    // 2. Enrich document metadata using Gemini
+    const enriched = await enrichDocumentMetadata(originalName, markdown, user_notes);
+
+    // 3. To maintain unique URL constraint, construct a relative URL path starting with /uploads
+    const relativeUrl = `/uploads/${req.file.filename}`;
+
+    // 4. Save to SQLite database
+    const id = Database.createResource({
+      url: relativeUrl,
+      title: enriched.title,
+      summary: enriched.summary,
+      category: enriched.category,
+      tags: enriched.tags.join(','),
+      platform: enriched.platform,
+      interest_score: enriched.interest_score,
+      usefulness_score: enriched.usefulness_score,
+      user_notes: user_notes || '',
+      content: markdown,
+      file_path: filePath
+    });
+
+    const newResource = Database.getResourceById(id);
+    res.status(201).json(newResource);
+  } catch (error) {
+    console.error('Error in file upload ingestion:', error);
+    // Cleanup physical file on upload failure
+    try {
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    } catch (cleanupErr) {
+      console.error('File cleanup failed:', cleanupErr);
+    }
+    res.status(500).json({ error: error.message || 'Failed to ingest and parse document' });
+  }
+});
+
 // Update an existing resource (e.g. updating scores, category, or notes)
 app.put('/api/resources/:id', (req, res) => {
   const { id } = req.params;
@@ -170,6 +249,21 @@ app.get('/api/stats', (req, res) => {
   } catch (error) {
     console.error('Error fetching stats:', error);
     res.status(500).json({ error: 'Failed to compute dashboard metrics' });
+  }
+});
+
+// Manually trigger daily update scraper
+app.post('/api/cron/run', async (req, res) => {
+  try {
+    const result = await runDailyIngestion();
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.status(500).json(result);
+    }
+  } catch (error) {
+    console.error('Error running manual cron:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import BrainVisualizer from './BrainVisualizer';
+import ChatDrawer from './ChatDrawer';
 
 export default function App() {
   const [scores, setScores] = useState([]);
@@ -7,15 +9,42 @@ export default function App() {
   const [selectedStudy, setSelectedStudy] = useState(null);
   const [fullTranscript, setFullTranscript] = useState(null);
   const [loadingTranscript, setLoadingTranscript] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [selectedLobe, setSelectedLobe] = useState(null);
 
   const fetchScores = (date) => {
-    let url = '/api/scores';
-    if (date) {
-      url += `?date=${date}`;
-    }
-    fetch(url)
+    fetch('/api/scores')
       .then(res => res.json())
-      .then(data => setScores(data))
+      .then(allRows => {
+        if (Array.isArray(allRows) && allRows.length > 0) {
+          if (date) {
+            const match = allRows.find(r => r.date === date);
+            if (match) {
+              let mems = [];
+              try { mems = JSON.parse(match.key_memories || '[]'); } catch (e) {}
+              if (mems.length > 0) {
+                setScores([match]);
+                return;
+              }
+            }
+          }
+          // Find the latest row that has non-empty key_memories
+          const rowWithMemories = allRows.find(r => {
+            try { return JSON.parse(r.key_memories || '[]').length > 0; } catch (e) { return false; }
+          });
+
+          if (rowWithMemories) {
+            setScores([rowWithMemories]);
+            if (rowWithMemories.date !== selectedDate) {
+              setSelectedDate(rowWithMemories.date);
+            }
+          } else {
+            setScores([allRows[0]]);
+          }
+        } else {
+          setScores([]);
+        }
+      })
       .catch(err => console.error(err));
   };
 
@@ -25,7 +54,13 @@ export default function App() {
 
   const handleSync = () => {
     setLoading(true);
-    fetch('/api/trigger-sync', { method: 'POST' })
+    fetch('/api/trigger-sync', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ date: selectedDate })
+    })
       .then(res => res.json())
       .then(data => {
         setLoading(false);
@@ -55,7 +90,16 @@ export default function App() {
   };
 
   const today = scores[0];
-  const parsedMemories = today && today.key_memories ? JSON.parse(today.key_memories) : [];
+  let parsedMemories = [];
+  if (today && today.key_memories) {
+    try {
+      parsedMemories = typeof today.key_memories === 'string' ? JSON.parse(today.key_memories) : today.key_memories;
+      if (!Array.isArray(parsedMemories)) parsedMemories = [];
+    } catch (err) {
+      console.error("Failed to parse key_memories JSON:", err);
+      parsedMemories = [];
+    }
+  }
 
   const studies = {
     cbt: {
@@ -109,6 +153,14 @@ export default function App() {
           </div>
 
           <button 
+            onClick={() => setIsChatOpen(true)}
+            className="secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            💬 Ask Sanjaya AI
+          </button>
+
+          <button 
             onClick={handleSync}
             disabled={loading}
             className="primary"
@@ -117,6 +169,28 @@ export default function App() {
           </button>
         </div>
       </header>
+
+      {/* 3D Interactive Realistic Brain Visualizer */}
+      <div style={{ marginBottom: '32px' }}>
+        <BrainVisualizer 
+          currentScores={today} 
+          memories={parsedMemories}
+          onSelectLobe={(lobe) => setSelectedLobe(lobe)}
+        />
+      </div>
+
+      {selectedLobe && (
+        <div className="card" style={{ borderLeft: '4px solid var(--sg-primary)', marginBottom: '32px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <h4 style={{ margin: 0, fontSize: '1.2rem' }}>🧠 Active Region Insight: {selectedLobe.name}</h4>
+            <button onClick={() => setSelectedLobe(null)} className="secondary" style={{ padding: '4px 10px', fontSize: '0.8rem' }}>✕ Close</button>
+          </div>
+          <p style={{ margin: '0 0 12px 0', color: 'var(--text-muted)' }}>{selectedLobe.desc}</p>
+          <div style={{ fontWeight: 600, color: selectedLobe.color?.getHexString ? `#${selectedLobe.color.getHexString()}` : 'var(--text-heading)' }}>
+            Behavioral Rating: {selectedLobe.score}/10
+          </div>
+        </div>
+      )}
 
       {today ? (
         <div>
@@ -388,6 +462,12 @@ export default function App() {
           </button>
         </div>
       )}
+
+      {/* RAG Memory & Behavioral Chat Drawer */}
+      <ChatDrawer 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+      />
     </div>
   );
 }

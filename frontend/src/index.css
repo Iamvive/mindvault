@@ -414,6 +414,11 @@ body {
 .card-platform-bar.github { background-color: var(--github-color); }
 .card-platform-bar.twitter { background-color: var(--twitter-color); }
 .card-platform-bar.medium { background-color: var(--medium-color); }
+.card-platform-bar.claude { background-color: #d97706; }
+.card-platform-bar.gemini { background-color: #2563eb; }
+.card-platform-bar.antigravity { background-color: #8b5cf6; }
+.card-platform-bar.airtel { background-color: #dc2626; }
+.card-platform-bar.offers { background-color: #059669; }
 
 .card-header {
   display: flex;
@@ -777,3 +782,58 @@ body {
   height: 50vh;
   gap: 1rem;
 }
+
+/* Secondary Button for Sync */
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.badge-automated {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #a7f3d0;
+}
+
+/* Automated/Daily Scrape Card Highlight */
+.resource-card.automated {
+  background: linear-gradient(135deg, rgba(20, 24, 45, 0.8) 0%, rgba(10, 12, 22, 0.9) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.resource-card.automated:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+}
+
