@@ -8,10 +8,12 @@ import fs from 'fs';
 
 import { Database } from './database.js';
 import { scrapeUrl } from './scraper.js';
-import { enrichResourceMetadata, enrichDocumentMetadata } from './gemini.js';
+import { enrichResourceMetadata, enrichDocumentMetadata, enrichGitHubRepoMetadata } from './gemini.js';
+import { parseGitHubUrl, scrapeGitHubRepo } from './githubScraper.js';
 import { initBot } from './bot.js';
 import { startScheduler, runDailyIngestion } from './scheduler.js';
 import { convertFileToMarkdown } from './markitdown-wrapper.js';
+import { startAutoPruner } from './pruner.js';
 
 dotenv.config();
 
@@ -73,8 +75,9 @@ app.use((req, res, next) => {
 // Initialize Telegram bot
 initBot();
 
-// Start nightly scheduler
+// Start nightly scheduler & auto-pruner
 startScheduler();
+startAutoPruner();
 
 /**
  * REST API Endpoints
@@ -85,7 +88,29 @@ app.get('/api/resources', (req, res) => {
   try {
     const { search, category, platform, sortBy, sortOrder } = req.query;
     const resources = Database.getAllResources(search, category, platform, sortBy, sortOrder);
-    res.json(resources);
+    
+    // Attach github_details and calculate days_remaining for GitHub resources
+    const enrichedResources = resources.map(resource => {
+      if (resource.platform === 'GitHub') {
+        const ghDetails = Database.getGitHubDetails(resource.id);
+        const lastInteracted = resource.last_interacted_at ? new Date(resource.last_interacted_at).getTime() : new Date(resource.created_at).getTime();
+        const daysElapsed = Math.floor((Date.now() - lastInteracted) / (86400 * 1000));
+        const daysRemaining = Math.max(0, 14 - daysElapsed);
+
+        return {
+          ...resource,
+          days_remaining: daysRemaining,
+          github_details: ghDetails ? {
+            ...ghDetails,
+            use_cases: typeof ghDetails.use_cases === 'string' ? JSON.parse(ghDetails.use_cases) : ghDetails.use_cases,
+            quickstart_playbook: typeof ghDetails.quickstart_playbook === 'string' ? JSON.parse(ghDetails.quickstart_playbook) : ghDetails.quickstart_playbook
+          } : null
+        };
+      }
+      return resource;
+    });
+
+    res.json(enrichedResources);
   } catch (error) {
     console.error('Error fetching resources:', error);
     res.status(500).json({ error: 'Failed to retrieve resources' });
@@ -98,6 +123,22 @@ app.get('/api/resources/:id', (req, res) => {
     const resource = Database.getResourceById(req.params.id);
     if (!resource) {
       return res.status(404).json({ error: 'Resource not found' });
+    }
+    if (resource.platform === 'GitHub') {
+      const ghDetails = Database.getGitHubDetails(resource.id);
+      const lastInteracted = resource.last_interacted_at ? new Date(resource.last_interacted_at).getTime() : new Date(resource.created_at).getTime();
+      const daysElapsed = Math.floor((Date.now() - lastInteracted) / (86400 * 1000));
+      const daysRemaining = Math.max(0, 14 - daysElapsed);
+
+      return res.json({
+        ...resource,
+        days_remaining: daysRemaining,
+        github_details: ghDetails ? {
+          ...ghDetails,
+          use_cases: typeof ghDetails.use_cases === 'string' ? JSON.parse(ghDetails.use_cases) : ghDetails.use_cases,
+          quickstart_playbook: typeof ghDetails.quickstart_playbook === 'string' ? JSON.parse(ghDetails.quickstart_playbook) : ghDetails.quickstart_playbook
+        } : null
+      });
     }
     res.json(resource);
   } catch (error) {
@@ -120,30 +161,101 @@ app.post('/api/resources', async (req, res) => {
       return res.status(409).json({ error: 'Resource already exists', existing });
     }
 
-    // Scrape URL
-    const meta = await scrapeUrl(url);
+    // Check if URL is GitHub
+    const isGitHub = parseGitHubUrl(url);
+    let enriched;
 
-    // Enrich with Gemini
-    const enriched = await enrichResourceMetadata(url, meta, user_notes);
+    if (isGitHub) {
+      const scrapedData = await scrapeGitHubRepo(url);
+      enriched = await enrichGitHubRepoMetadata(url, scrapedData, user_notes);
+      
+      const id = Database.createResource({
+        url,
+        title: enriched.title,
+        summary: enriched.summary,
+        category: enriched.category,
+        tags: enriched.tags.join(','),
+        platform: 'GitHub',
+        interest_score: enriched.interest_score,
+        usefulness_score: enriched.usefulness_score,
+        user_notes
+      });
 
-    // Save to DB
-    const id = Database.createResource({
-      url,
-      title: enriched.title,
-      summary: enriched.summary,
-      category: enriched.category,
-      tags: enriched.tags.join(','),
-      platform: enriched.platform,
-      interest_score: enriched.interest_score,
-      usefulness_score: enriched.usefulness_score,
-      user_notes
-    });
+      Database.saveGitHubDetails(id, {
+        repo_owner: isGitHub.owner,
+        repo_name: isGitHub.repo,
+        stars: scrapedData.stars,
+        forks: scrapedData.forks,
+        primary_language: scrapedData.primary_language,
+        use_cases: enriched.use_cases,
+        quickstart_playbook: enriched.quickstart_playbook,
+        tech_stack_summary: enriched.tech_stack_summary
+      });
 
-    const newResource = Database.getResourceById(id);
-    res.status(201).json(newResource);
+      const newResource = Database.getResourceById(id);
+      const ghDetails = Database.getGitHubDetails(id);
+      return res.status(201).json({
+        ...newResource,
+        days_remaining: 14,
+        github_details: {
+          ...ghDetails,
+          use_cases: enriched.use_cases,
+          quickstart_playbook: enriched.quickstart_playbook
+        }
+      });
+    } else {
+      // Scrape standard URL
+      const meta = await scrapeUrl(url);
+      enriched = await enrichResourceMetadata(url, meta, user_notes);
+
+      const id = Database.createResource({
+        url,
+        title: enriched.title,
+        summary: enriched.summary,
+        category: enriched.category,
+        tags: enriched.tags.join(','),
+        platform: enriched.platform,
+        interest_score: enriched.interest_score,
+        usefulness_score: enriched.usefulness_score,
+        user_notes
+      });
+
+      const newResource = Database.getResourceById(id);
+      return res.status(201).json(newResource);
+    }
   } catch (error) {
     console.error('Error adding resource:', error);
     res.status(500).json({ error: 'Failed to process resource' });
+  }
+});
+
+// Update interaction timestamp for 14-day auto-pruning reset
+app.post('/api/resources/:id/interact', (req, res) => {
+  try {
+    const changes = Database.updateLastInteracted(req.params.id);
+    if (changes === 0) {
+      return res.status(404).json({ error: 'Resource not found' });
+    }
+    res.json({ success: true, message: 'Interaction recorded, timer reset to 14 days.' });
+  } catch (error) {
+    console.error('Error updating interaction:', error);
+    res.status(500).json({ error: 'Failed to record interaction' });
+  }
+});
+
+// Toggle pin status (exempts from 14-day auto-pruning)
+app.patch('/api/resources/:id/pin', (req, res) => {
+  try {
+    const { is_pinned } = req.body;
+    const changes = Database.togglePin(req.params.id, is_pinned);
+    if (changes === 0) {
+      return res.status(404).json({ error: 'Resource not found' });
+    }
+    const updated = Database.getResourceById(req.params.id);
+    res.json(updated);
+  } catch (error) {
+    console.error('Error toggling pin status:', error);
+    res.status(500).json({ error: 'Failed to update pin status' });
   }
 });
 
