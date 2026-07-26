@@ -1,16 +1,16 @@
-# Graph Report - ai-play-ground  (2026-07-26)
+# Graph Report - ai-play-ground  (2026-07-25)
 
 ## Corpus Check
-- 136 files · ~104,359 words
+- 128 files · ~97,539 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1157 nodes · 1360 edges · 100 communities (84 shown, 16 thin omitted)
+- 1113 nodes · 1302 edges · 93 communities (77 shown, 16 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 35 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c926682e`
+- Built from commit: `4bacb822`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -104,14 +104,7 @@
 - server.test.js
 - manana.test.js
 - Skill authoring best practices
-- Skill structure
-- Skill authoring best practices
-- Global Constraints
-- anthropic-best-practices.md
 - db.py
-- Evaluation and iteration
-- Checklist for effective Skills
-- Core principles
 
 ## God Nodes (most connected - your core abstractions)
 1. `main()` - 23 edges
@@ -140,11 +133,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (100 total, 16 thin omitted)
+## Communities (93 total, 16 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
-Cohesion: 0.06
-Nodes (46): __dirname, __filename, initBot(), uploadDir, columns, Database, db, __dirname (+38 more)
+Cohesion: 0.10
+Nodes (29): __dirname, __filename, initBot(), uploadDir, Database, db, __dirname, __filename (+21 more)
 
 ### Community 1 - "bot.py"
 Cohesion: 0.16
@@ -183,16 +176,16 @@ Cohesion: 0.17
 Nodes (11): openskills, description, devDependencies, openskills, name, scripts, build, postinstall (+3 more)
 
 ### Community 10 - "categorize.py"
-Cohesion: 0.18
-Nodes (11): Avoid assuming tools are installed, Create verifiable intermediate outputs, MCP tool references, Next steps, Package dependencies, Returns: "OK" or lists conflicts, Runtime environment, Technical notes (+3 more)
+Cohesion: 0.05
+Nodes (42): [Analysis Title], Avoid assuming tools are installed, Avoid deeply nested references, Avoid time-sensitive information, Checklist for effective Skills, Code and scripts, Common patterns, Concise is key (+34 more)
 
 ### Community 11 - "scheduler.py"
-Cohesion: 0.17
-Nodes (11): 1. Executive Summary & Problem Statement, 2.1 Database Schema (`backend/database.js`), 2.2 Inactivity Auto-Pruning Engine (`backend/pruner.js`), 2. System Architecture & Database Schema, 3.1 GitHub Data Inspector (`backend/githubScraper.js`), 3.2 Gemini 2.5 Flash Deep Enrichment (`backend/gemini.js`), 3. GitHub Scraper & Gemini Enrichment Engine, 4. API Endpoints & Backend Routes (+3 more)
+Cohesion: 0.36
+Nodes (7): check_all_users_recurring(), process_due_recurring(), Scans the recurring table for a specific user, inserts due transactions into the, Asynchronous loop that runs on startup and every 4 hours.     Checks for due rec, Sends a summary notification to the user., run_scheduler(), send_summary()
 
 ### Community 12 - "MultiUserHTTPRequestHandler"
-Cohesion: 0.17
-Nodes (12): Advanced: Skills with executable code, [Analysis Title], Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths, Conditional workflow pattern, Examples pattern, Executive summary (+4 more)
+Cohesion: 0.12
+Nodes (16): Advanced: Skills with executable code, [Analysis Title], Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths, Build evaluations first, Conditional workflow pattern, Develop Skills iteratively with the agent (+8 more)
 
 ### Community 17 - "Test-Driven Development (TDD)"
 Cohesion: 0.05
@@ -434,40 +427,12 @@ Nodes (4): { GoogleGenAI }, { analyzeTranscript }, assert, test
 Cohesion: 0.33
 Nodes (5): assert, { fetchDailyTranscripts, backupToVault }, fs, path, test
 
-### Community 92 - "Skill structure"
-Cohesion: 0.20
-Nodes (10): Avoid deeply nested references, Naming conventions, Pattern 1: High-level guide with references, Pattern 2: Domain-specific organization, Pattern 3: Conditional details, Progressive disclosure patterns, Skill structure, Structure longer reference files with table of contents (+2 more)
-
-### Community 93 - "Skill authoring best practices"
-Cohesion: 0.22
-Nodes (9): Avoid time-sensitive information, Common patterns, Content guidelines, Implement feedback loops, Skill authoring best practices, Template pattern, Use consistent terminology, Use workflows for complex tasks (+1 more)
-
-### Community 94 - "Global Constraints"
-Cohesion: 0.22
-Nodes (8): Global Constraints, MindVault GitHub Repo Intelligence & Auto-Pruning Implementation Plan, Plan Handoff & Execution Choice, Task 1: Database Schema Extension & Helper Functions, Task 2: GitHub URL Inspector & Scraper Module, Task 3: Gemini Deep GitHub Enrichment Prompting, Task 4: Auto-Pruning Background Cron & API Integration, Task 5: Frontend React Dashboard UI Updates
-
-### Community 95 - "anthropic-best-practices.md"
-Cohesion: 0.40
-Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
-
 ### Community 96 - "db.py"
-Cohesion: 0.09
-Nodes (36): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi, add_debt(), add_pending_bill(), add_recurring() (+28 more)
-
-### Community 97 - "Evaluation and iteration"
-Cohesion: 0.50
-Nodes (4): Build evaluations first, Develop Skills iteratively with the agent, Evaluation and iteration, Observe how agents navigate Skills
-
-### Community 98 - "Checklist for effective Skills"
-Cohesion: 0.50
-Nodes (4): Checklist for effective Skills, Code and scripts, Core quality, Testing
-
-### Community 99 - "Core principles"
-Cohesion: 0.50
-Nodes (4): Concise is key, Core principles, Set appropriate degrees of freedom, Test with all models you plan to use
+Cohesion: 0.11
+Nodes (29): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi, add_debt(), add_pending_bill(), add_recurring() (+21 more)
 
 ## Knowledge Gaps
-- **657 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+652 more)
+- **630 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+625 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -481,9 +446,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Are the 20 inferred relationships involving `main()` (e.g. with `ask_cmd()` and `dashboard_cmd()`) actually correct?**
   _`main()` has 20 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
-  _657 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _630 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend AI Initialization` be split into smaller, more focused modules?**
-  _Cohesion score 0.061016949152542375 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1036036036036036 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
 - **Should `Backend Dependencies` be split into smaller, more focused modules?**

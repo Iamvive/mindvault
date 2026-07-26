@@ -5,14 +5,14 @@
     "semantic_hash": "4955b9f8c7b144b5679e02a108218ee3"
   },
   "backend/database.js": {
-    "mtime": 1785050655.0592353,
-    "ast_hash": "184048d064a505c264c96f42ce55eaeb",
-    "semantic_hash": ""
+    "mtime": 1784098616.7625031,
+    "ast_hash": "12efada76fc5c48934a142a13bf16f1c",
+    "semantic_hash": "12efada76fc5c48934a142a13bf16f1c"
   },
   "backend/gemini.js": {
-    "mtime": 1785050700.8169844,
-    "ast_hash": "0cb7872e486cc3efcdfaba54e30a98bd",
-    "semantic_hash": ""
+    "mtime": 1784098637.0151758,
+    "ast_hash": "9280f3eafc6ef4e8f6c5a1025e03c8cc",
+    "semantic_hash": "9280f3eafc6ef4e8f6c5a1025e03c8cc"
   },
   "backend/markitdown-wrapper.js": {
     "mtime": 1784098626.9246142,
@@ -35,9 +35,9 @@
     "semantic_hash": "a140ddb364b8898bef5798e53f50be11"
   },
   "backend/server.js": {
-    "mtime": 1785050737.7474818,
-    "ast_hash": "d29500c234cfa06110c4b06e12e5ee4f",
-    "semantic_hash": ""
+    "mtime": 1784098660.0818899,
+    "ast_hash": "9320b5f367b51feb2c0a569e8dad478c",
+    "semantic_hash": "9320b5f367b51feb2c0a569e8dad478c"
   },
   "backend/test-server.js": {
     "mtime": 1784029637.1238637,
@@ -55,9 +55,9 @@
     "semantic_hash": "fa5390f3d97fb0939ca2916cd5ac0413"
   },
   "frontend/src/App.jsx": {
-    "mtime": 1785050779.8497658,
-    "ast_hash": "4a6792ea5746ddfa3df4c04fb51a0b1d",
-    "semantic_hash": ""
+    "mtime": 1784098747.1999023,
+    "ast_hash": "e4e2fd63ec00172e99565f6166bc0760",
+    "semantic_hash": "e4e2fd63ec00172e99565f6166bc0760"
   },
   "frontend/src/main.jsx": {
     "mtime": 1784029554.2718368,
@@ -692,46 +692,6 @@
   "sanjaya/tests/chat.test.js": {
     "mtime": 1784995239.1417134,
     "ast_hash": "f88ddcc4d08e40b74c15eceff602ab32",
-    "semantic_hash": ""
-  },
-  "backend/githubScraper.js": {
-    "mtime": 1785050679.2117274,
-    "ast_hash": "d2bf0a3105a841ee3df833a8eccfe4b1",
-    "semantic_hash": ""
-  },
-  "backend/pruner.js": {
-    "mtime": 1785050720.5981262,
-    "ast_hash": "f5874bdebcb52e81333e010ce30c647c",
-    "semantic_hash": ""
-  },
-  "backend/test_db_github.js": {
-    "mtime": 1785050648.6573713,
-    "ast_hash": "f77ac9d7f1858b44b60cc7e00c85262f",
-    "semantic_hash": ""
-  },
-  "backend/test_gemini_github.js": {
-    "mtime": 1785050690.9485705,
-    "ast_hash": "41097729e93f4603d9a6b6c51964f20a",
-    "semantic_hash": ""
-  },
-  "backend/test_github_scraper.js": {
-    "mtime": 1785050666.2343972,
-    "ast_hash": "b3968077a151dcca10f4f70f849e60cd",
-    "semantic_hash": ""
-  },
-  "backend/test_pruner.js": {
-    "mtime": 1785050741.992685,
-    "ast_hash": "4fd7574df5748f51718a89ec840ce111",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/plans/2026-07-26-github-repo-digest.md": {
-    "mtime": 1785050330.738838,
-    "ast_hash": "38bc11d0184a9ff007d8a36bf1531c9f",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-07-26-github-repo-digest-design.md": {
-    "mtime": 1785050291.5650706,
-    "ast_hash": "d7c0c83f5e956deb10d3a478332a42d3",
     "semantic_hash": ""
   }
 }
