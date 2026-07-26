@@ -36,17 +36,42 @@ db.exec(`
   );
 `);
 
-// Support optional schema upgrades for files
-try {
-  db.exec(`ALTER TABLE resources ADD COLUMN content TEXT;`);
-} catch (e) {
-  // Column might already exist
+// Check existing table columns and perform safe migrations
+const columns = db.prepare(`PRAGMA table_info(resources)`).all().map(c => c.name);
+
+if (!columns.includes('content')) {
+  try { db.exec(`ALTER TABLE resources ADD COLUMN content TEXT;`); } catch (e) {}
 }
-try {
-  db.exec(`ALTER TABLE resources ADD COLUMN file_path TEXT;`);
-} catch (e) {
-  // Column might already exist
+if (!columns.includes('file_path')) {
+  try { db.exec(`ALTER TABLE resources ADD COLUMN file_path TEXT;`); } catch (e) {}
 }
+if (!columns.includes('last_interacted_at')) {
+  try { db.exec(`ALTER TABLE resources ADD COLUMN last_interacted_at TEXT;`); } catch (e) {}
+}
+if (!columns.includes('is_pinned')) {
+  try { db.exec(`ALTER TABLE resources ADD COLUMN is_pinned INTEGER DEFAULT 0;`); } catch (e) {}
+}
+if (!columns.includes('status')) {
+  try { db.exec(`ALTER TABLE resources ADD COLUMN status TEXT DEFAULT 'active';`); } catch (e) {}
+}
+
+// Create github_details table
+db.exec(`
+  CREATE TABLE IF NOT EXISTS github_details (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    resource_id INTEGER UNIQUE NOT NULL,
+    repo_owner TEXT NOT NULL,
+    repo_name TEXT NOT NULL,
+    stars INTEGER DEFAULT 0,
+    forks INTEGER DEFAULT 0,
+    primary_language TEXT,
+    use_cases TEXT,
+    quickstart_playbook TEXT,
+    tech_stack_summary TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (resource_id) REFERENCES resources(id) ON DELETE CASCADE
+  );
+`);
 
 // Database Helper functions
 export const Database = {
@@ -185,5 +210,58 @@ export const Database = {
     const stmt = db.prepare('DELETE FROM conversations WHERE chat_id = ?');
     const res = stmt.run(chatId);
     return res.changes;
+  },
+
+  // GitHub Extensions
+  saveGitHubDetails: (resourceId, details) => {
+    const stmt = db.prepare(`
+      INSERT INTO github_details (resource_id, repo_owner, repo_name, stars, forks, primary_language, use_cases, quickstart_playbook, tech_stack_summary)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(resource_id) DO UPDATE SET
+        stars = excluded.stars,
+        forks = excluded.forks,
+        primary_language = excluded.primary_language,
+        use_cases = excluded.use_cases,
+        quickstart_playbook = excluded.quickstart_playbook,
+        tech_stack_summary = excluded.tech_stack_summary
+    `);
+    return stmt.run(
+      resourceId,
+      details.repo_owner,
+      details.repo_name,
+      details.stars || 0,
+      details.forks || 0,
+      details.primary_language || 'Unknown',
+      typeof details.use_cases === 'string' ? details.use_cases : JSON.stringify(details.use_cases || []),
+      typeof details.quickstart_playbook === 'string' ? details.quickstart_playbook : JSON.stringify(details.quickstart_playbook || {}),
+      details.tech_stack_summary || ''
+    );
+  },
+
+  getGitHubDetails: (resourceId) => {
+    return db.prepare('SELECT * FROM github_details WHERE resource_id = ?').get(resourceId);
+  },
+
+  updateLastInteracted: (resourceId) => {
+    return db.prepare("UPDATE resources SET last_interacted_at = CURRENT_TIMESTAMP WHERE id = ?").run(resourceId);
+  },
+
+  togglePin: (resourceId, isPinned) => {
+    const pinnedVal = isPinned ? 1 : 0;
+    const statusVal = isPinned ? 'pinned' : 'active';
+    return db.prepare("UPDATE resources SET is_pinned = ?, status = ?, last_interacted_at = CURRENT_TIMESTAMP WHERE id = ?").run(pinnedVal, statusVal, resourceId);
+  },
+
+  pruneInactiveGitHubRepos: (inactivityDays = 14) => {
+    const cutoffDate = new Date(Date.now() - inactivityDays * 86400 * 1000).toISOString();
+    const result = db.prepare(`
+      UPDATE resources 
+      SET status = 'pruned' 
+      WHERE platform = 'GitHub' 
+        AND is_pinned = 0 
+        AND status = 'active' 
+        AND (last_interacted_at < ? OR (last_interacted_at IS NULL AND created_at < ?))
+    `).run(cutoffDate, cutoffDate);
+    return Number(result.changes);
   }
 };
