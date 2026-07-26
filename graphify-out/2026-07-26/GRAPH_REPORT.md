@@ -1,16 +1,16 @@
 # Graph Report - ai-play-ground  (2026-07-26)
 
 ## Corpus Check
-- 136 files · ~104,359 words
+- 161 files · ~168,825 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1157 nodes · 1360 edges · 100 communities (84 shown, 16 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 35 edges (avg confidence: 0.5)
+- 1499 nodes · 2101 edges · 121 communities (103 shown, 18 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 90 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c926682e`
+- Built from commit: `134f98ed`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -112,39 +112,59 @@
 - Evaluation and iteration
 - Checklist for effective Skills
 - Core principles
+- AgentMessage
+- LilAgentsController
+- OpenClawSession
+- WalkerCharacter
+- TerminalView
+- AgentProvider
+- PaddedTextFieldCell
+- CharacterSize
+- CGRect
+- Odysseus Hardware-Tuned macOS Installation Guide Design
+- query_qa.py
+- categorize.py
+- AgentSession
+- llm_extract.py
+- scheduler.py
+- lil agents
+- devDependencies
+- TestFinanceBotQueryQA
+- Architecture Overview
+- dashboard.py
 
 ## God Nodes (most connected - your core abstractions)
-1. `main()` - 23 edges
-2. `get_connection()` - 23 edges
-3. `Writing Skills` - 23 edges
-4. `Testing Skills With Subagents` - 16 edges
-5. `TestFinanceBotPipeline` - 15 edges
-6. `Code Review Reception` - 15 edges
-7. `Subagent-Driven Development` - 15 edges
-8. `Test-Driven Development (TDD)` - 15 edges
-9. `handleRequest()` - 14 edges
-10. `Testing Anti-Patterns` - 13 edges
+1. `WalkerCharacter` - 58 edges
+2. `AgentMessage` - 30 edges
+3. `TerminalView` - 29 edges
+4. `LilAgentsController` - 25 edges
+5. `OpenClawSession` - 25 edges
+6. `main()` - 23 edges
+7. `get_connection()` - 23 edges
+8. `Writing Skills` - 23 edges
+9. `AgentProvider` - 18 edges
+10. `ClaudeSession` - 18 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `initBot()` --references--> `Database`  [EXTRACTED]
-  backend/bot.js → backend/database.js
-- `initBot()` --calls--> `enrichDocumentMetadata()`  [EXTRACTED]
-  backend/bot.js → backend/gemini.js
-- `initBot()` --calls--> `enrichResourceMetadata()`  [EXTRACTED]
-  backend/bot.js → backend/gemini.js
-- `initBot()` --calls--> `convertFileToMarkdown()`  [EXTRACTED]
-  backend/bot.js → backend/markitdown-wrapper.js
-- `initBot()` --calls--> `scrapeUrl()`  [EXTRACTED]
-  backend/bot.js → backend/scraper.js
+- `TerminalView` --references--> `AgentProvider`  [EXTRACTED]
+  lil-agents/LilAgents/TerminalView.swift → lil-agents/LilAgents/AgentSession.swift
+- `WalkerCharacter` --references--> `AgentProvider`  [EXTRACTED]
+  lil-agents/LilAgents/WalkerCharacter.swift → lil-agents/LilAgents/AgentSession.swift
+- `OpenClawSession` --references--> `AgentMessage`  [EXTRACTED]
+  lil-agents/LilAgents/OpenClawSession.swift → lil-agents/LilAgents/AgentSession.swift
+- `ClaudeSession` --inherits--> `AgentSession`  [EXTRACTED]
+  lil-agents/LilAgents/ClaudeSession.swift → lil-agents/LilAgents/AgentSession.swift
+- `CodexSession` --inherits--> `AgentSession`  [EXTRACTED]
+  lil-agents/LilAgents/CodexSession.swift → lil-agents/LilAgents/AgentSession.swift
 
 ## Import Cycles
 - None detected.
 
-## Communities (100 total, 16 thin omitted)
+## Communities (121 total, 18 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
 Cohesion: 0.06
-Nodes (46): __dirname, __filename, initBot(), uploadDir, columns, Database, db, __dirname (+38 more)
+Nodes (47): __dirname, __filename, initBot(), uploadDir, columns, Database, db, __dirname (+39 more)
 
 ### Community 1 - "bot.py"
 Cohesion: 0.16
@@ -162,13 +182,9 @@ Nodes (10): fs, generateLocalRAGAnswer(), { getDailyScores }, { GoogleGenAI }, h
 Cohesion: 0.08
 Nodes (23): axios, dependencies, axios, cheerio, cors, dotenv, express, multer (+15 more)
 
-### Community 5 - "TestFinanceBotPipeline"
-Cohesion: 0.08
-Nodes (9): determine_type_and_bucket(), match_keyword_rules(), match_recurring_rules(), parse_amount(), Tries to extract a decimal or integer amount from a text string.     Example: "S, Checks the local keyword rules for counterparty keywords.     Returns (counterpa, Checks the text against active recurring item keywords.     Returns (counterpart, Helper to look up the bucket and type (credit/debit) for a valid category. (+1 more)
-
 ### Community 6 - "TestFinanceBotQueryQA"
-Cohesion: 0.07
-Nodes (31): any, BaseModel, @google/genai, dependencies, dotenv, express, @google/genai, react (+23 more)
+Cohesion: 0.14
+Nodes (14): dependencies, dotenv, express, @google/genai, react, react-dom, sqlite3, three (+6 more)
 
 ### Community 7 - "llm_extract.py"
 Cohesion: 0.06
@@ -391,8 +407,8 @@ Cohesion: 0.50
 Nodes (3): ai-tools-sync, How It Works, Setup & Installation
 
 ### Community 80 - "scripts"
-Cohesion: 0.12
-Nodes (15): devDependencies, supertest, vite, @vitejs/plugin-react, vite, @vitejs/plugin-react, name, scripts (+7 more)
+Cohesion: 0.22
+Nodes (8): name, scripts, build, dev:backend, dev:frontend, start, test, version
 
 ### Community 81 - "src/database.js"
 Cohesion: 0.18
@@ -451,8 +467,8 @@ Cohesion: 0.40
 Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
 
 ### Community 96 - "db.py"
-Cohesion: 0.09
-Nodes (36): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi, add_debt(), add_pending_bill(), add_recurring() (+28 more)
+Cohesion: 0.15
+Nodes (24): add_debt(), add_pending_bill(), add_recurring(), check_duplicate(), clear_debts_for_person(), delete_last_transaction(), delete_recurring(), delete_transaction() (+16 more)
 
 ### Community 97 - "Evaluation and iteration"
 Cohesion: 0.50
@@ -466,25 +482,101 @@ Nodes (4): Checklist for effective Skills, Code and scripts, Core quality, Testi
 Cohesion: 0.50
 Nodes (4): Concise is key, Core principles, Set appropriate degrees of freedom, Test with all models you plan to use
 
+### Community 100 - "AgentMessage"
+Cohesion: 0.05
+Nodes (41): ArraySlice, Foundation, AgentMessage, ClaudeSession, Any, Bool, Pipe, Process (+33 more)
+
+### Community 101 - "LilAgentsController"
+Cohesion: 0.07
+Nodes (24): App, CoreGraphics, CVDisplayLink, Void, DockVisibility, Bool, AppDelegate, LilAgentsApp (+16 more)
+
+### Community 102 - "OpenClawSession"
+Cohesion: 0.10
+Nodes (19): CryptoKit, Curve25519, Data, Int64, Role, assistant, error, toolResult (+11 more)
+
+### Community 103 - "WalkerCharacter"
+Cohesion: 0.13
+Nodes (10): CFTimeInterval, ClosedRange, Any, Bool, CGFloat, Int, NSColor, WalkerCharacter (+2 more)
+
+### Community 104 - "TerminalView"
+Cohesion: 0.24
+Nodes (6): Bool, String, Void, TerminalView, NSAttributedString, NSParagraphStyle
+
+### Community 105 - "AgentProvider"
+Cohesion: 0.11
+Nodes (17): AgentProvider, claude, codex, copilot, gemini, openclaw, opencode, Bool (+9 more)
+
+### Community 106 - "PaddedTextFieldCell"
+Cohesion: 0.18
+Nodes (12): PaddedTextFieldCell, Any, CGFloat, Int, NSColor, NSEvent, NSView, NSCoder (+4 more)
+
+### Community 107 - "CharacterSize"
+Cohesion: 0.13
+Nodes (10): AppKit, AVFoundation, CaseIterable, KeyableWindow, Bool, CharacterSize, large, medium (+2 more)
+
+### Community 108 - "CGRect"
+Cohesion: 0.17
+Nodes (8): AVPlayerLayer, AVPlayerLooper, AVQueuePlayer, CGRect, CharacterContentView, NSEvent, NSWindow, NSView
+
+### Community 109 - "Odysseus Hardware-Tuned macOS Installation Guide Design"
+Cohesion: 0.15
+Nodes (12): 1. Prerequisites & Toolchain Setup, 2. Repository Cloning & Environment Setup, 3. Environment Configuration (`.env`), 4. Hardware-Aware Local Model Recommendation Table (16 GB RAM), 5. Execution & macOS App Wrapper, Deliverables & File Locations, Installation & Guide Content Structure, Key Design Principles & Constraints (+4 more)
+
+### Community 110 - "query_qa.py"
+Cohesion: 0.24
+Nodes (8): @google/genai, get_llm_client(), any, Detects API keys and returns (provider, client/url)., execute_database_qa(), is_finance_query(), Classifies if the user's message is a natural language question or query     abo, Generates a secure SQL query to answer the user's financial question,     execut
+
+### Community 111 - "categorize.py"
+Cohesion: 0.22
+Nodes (8): determine_type_and_bucket(), match_keyword_rules(), match_recurring_rules(), parse_amount(), Tries to extract a decimal or integer amount from a text string.     Example: "S, Checks the local keyword rules for counterparty keywords.     Returns (counterpa, Checks the text against active recurring item keywords.     Returns (counterpart, Helper to look up the bucket and type (credit/debit) for a valid category.
+
+### Community 112 - "AgentSession"
+Cohesion: 0.33
+Nodes (3): AnyObject, AgentSession, NSMenuItem
+
+### Community 113 - "llm_extract.py"
+Cohesion: 0.47
+Nodes (8): BaseModel, _extract_claude(), _extract_gemini(), _extract_local(), _extract_openai(), extract_transaction(), Calls the LLM to extract transaction details from either text or image.     Uses, TransactionExtraction
+
+### Community 114 - "scheduler.py"
+Cohesion: 0.36
+Nodes (7): check_all_users_recurring(), process_due_recurring(), Scans the recurring table for a specific user, inserts due transactions into the, Asynchronous loop that runs on startup and every 4 hours.     Checks for due rec, Sends a summary notification to the user., run_scheduler(), send_summary()
+
+### Community 115 - "lil agents"
+Cohesion: 0.29
+Nodes (6): building, features, license, lil agents, privacy, requirements
+
+### Community 116 - "devDependencies"
+Cohesion: 0.29
+Nodes (7): devDependencies, supertest, vite, @vitejs/plugin-react, vite, @vitejs/plugin-react, supertest
+
+### Community 118 - "Architecture Overview"
+Cohesion: 0.33
+Nodes (4): Architecture Overview, Building, Core Components, Key Patterns
+
+### Community 119 - "dashboard.py"
+Cohesion: 0.40
+Nodes (5): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi
+
 ## Knowledge Gaps
-- **657 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+652 more)
+- **695 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+690 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `TestFinanceBotQueryQA` to `scripts`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `sqlite3` connect `TestFinanceBotQueryQA` to `db.py`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Are the 20 inferred relationships involving `main()` (e.g. with `ask_cmd()` and `dashboard_cmd()`) actually correct?**
-  _`main()` has 20 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `WalkerCharacter` connect `WalkerCharacter` to `LilAgentsController`, `TerminalView`, `AgentProvider`, `CharacterSize`, `CGRect`, `AgentSession`?**
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+- **Why does `AgentSession` connect `AgentSession` to `AgentMessage`, `OpenClawSession`, `WalkerCharacter`, `TerminalView`, `AgentProvider`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `OpenClawSession` connect `OpenClawSession` to `AgentSession`, `AgentMessage`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **Are the 2 inferred relationships involving `WalkerCharacter` (e.g. with `.completeOnboarding()` and `.updateEnvironmentVisibility()`) actually correct?**
+  _`WalkerCharacter` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 4 inferred relationships involving `LilAgentsController` (e.g. with `.applicationWillTerminate()` and `.switchCharacterSize()`) actually correct?**
+  _`LilAgentsController` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
-  _657 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _695 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend AI Initialization` be split into smaller, more focused modules?**
-  _Cohesion score 0.061016949152542375 - nodes in this community are weakly interconnected._
-- **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
-- **Should `Backend Dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06240084611316764 - nodes in this community are weakly interconnected._
