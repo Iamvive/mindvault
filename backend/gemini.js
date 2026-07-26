@@ -163,3 +163,122 @@ You must return a JSON object matching this schema:
   }
 }
 
+/**
+ * Enriches metadata for a GitHub repository using Gemini 2.5 Flash
+ * @param {string} url - GitHub URL
+ * @param {object} scrapedData - Data from githubScraper
+ * @param {string} userNotes - User context
+ * @returns {Promise<object>} Enriched JSON
+ */
+export async function enrichGitHubRepoMetadata(url, scrapedData = {}, userNotes = '') {
+  if (!apiKey) {
+    return {
+      title: scrapedData.title || 'GitHub Repository',
+      summary: scrapedData.description || 'No summary available.',
+      category: 'Tech & Coding',
+      tags: ['github', scrapedData.primary_language ? scrapedData.primary_language.toLowerCase() : 'coding'],
+      platform: 'GitHub',
+      interest_score: 8,
+      usefulness_score: 8,
+      use_cases: [
+        'Explore codebase for project inspiration',
+        'Test local execution via setup commands',
+        'Extract reusable utilities & patterns'
+      ],
+      quickstart_playbook: {
+        prerequisites: 'Node.js / Git',
+        commands: [`git clone ${url}`, 'cd ' + (scrapedData.repo || 'repo'), 'npm install'],
+        one_liner: `git clone ${url}`
+      },
+      tech_stack_summary: `Primary language: ${scrapedData.primary_language || 'Software'}`
+    };
+  }
+
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    generationConfig: { responseMimeType: 'application/json' }
+  });
+
+  const prompt = `You are a Senior Software Architect inspecting a GitHub repository for a developer's personal vault (MindVault).
+Analyze the repository details and README snippet to produce structured use-cases and setup playbooks.
+
+User's Existing Tech Stack Context: Node.js, Express, SQLite, React, Telegram Bot, AI Agents, Python.
+
+Repository Data:
+- URL: ${url}
+- Name: ${scrapedData.owner}/${scrapedData.repo}
+- Primary Language: ${scrapedData.primary_language}
+- Stars: ${scrapedData.stars} | Forks: ${scrapedData.forks}
+- Description: ${scrapedData.description}
+- User Notes: ${userNotes || '(None)'}
+- README Snippet:
+${scrapedData.readme}
+
+Return a JSON object matching this EXACT schema:
+{
+  "title": "${scrapedData.owner}/${scrapedData.repo}: Clean repository name & tagline",
+  "summary": "1-2 sentence core value proposition of what this repository does",
+  "category": "Tech & Coding",
+  "tags": ["github", "language-name", "topic-1", "topic-2"],
+  "platform": "GitHub",
+  "interest_score": 8, // Integer 1-10
+  "usefulness_score": 8, // Integer 1-10
+  "use_cases": [
+    "Use-Case 1: Specific integration idea for the user's projects (MindVault, Telegram bot, React, AI tools)",
+    "Use-Case 2: Practical local developer workflow or testing application",
+    "Use-Case 3: Architectural pattern, design decision, or code snippet worth saving"
+  ],
+  "quickstart_playbook": {
+    "prerequisites": "Prerequisites list (e.g. Node 18+, Docker, Python 3.10)",
+    "commands": [
+      "git clone ${url}",
+      "cd ${scrapedData.repo}",
+      "npm install"
+    ],
+    "one_liner": "docker run command or one-liner if applicable, else git clone command"
+  },
+  "tech_stack_summary": "1-2 sentence overview of core dependencies and framework choice"
+}`;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    const parsed = JSON.parse(text);
+
+    return {
+      title: parsed.title || `${scrapedData.owner}/${scrapedData.repo}`,
+      summary: parsed.summary || scrapedData.description || '',
+      category: 'Tech & Coding',
+      tags: Array.isArray(parsed.tags) ? parsed.tags : ['github'],
+      platform: 'GitHub',
+      interest_score: Number.isInteger(parsed.interest_score) ? Math.max(1, Math.min(10, parsed.interest_score)) : 8,
+      usefulness_score: Number.isInteger(parsed.usefulness_score) ? Math.max(1, Math.min(10, parsed.usefulness_score)) : 8,
+      use_cases: Array.isArray(parsed.use_cases) ? parsed.use_cases : [
+        'Explore codebase for project inspiration',
+        'Test local execution via setup commands',
+        'Extract reusable utilities & patterns'
+      ],
+      quickstart_playbook: parsed.quickstart_playbook || {
+        prerequisites: 'Git',
+        commands: [`git clone ${url}`],
+        one_liner: `git clone ${url}`
+      },
+      tech_stack_summary: parsed.tech_stack_summary || `Primary language: ${scrapedData.primary_language}`
+    };
+  } catch (error) {
+    console.error('Gemini GitHub enrichment failed:', error);
+    return {
+      title: `${scrapedData.owner}/${scrapedData.repo}`,
+      summary: scrapedData.description || 'GitHub repository',
+      category: 'Tech & Coding',
+      tags: ['github'],
+      platform: 'GitHub',
+      interest_score: 7,
+      usefulness_score: 7,
+      use_cases: ['Inspect repo codebase', 'Test locally'],
+      quickstart_playbook: { prerequisites: 'Git', commands: [`git clone ${url}`], one_liner: `git clone ${url}` },
+      tech_stack_summary: `Primary language: ${scrapedData.primary_language}`
+    };
+  }
+}
+
