@@ -48,6 +48,36 @@ function analyzeTranscript(rawJson, callback) {
     }
   };
 
+  const defaultKeyMemories = [
+    { 
+      time: "10:30 AM", 
+      title: "Launch Discussion", 
+      description: "Debated launching with crashes, selected code validation pass instead.",
+      duration: "2m",
+      environment: "office",
+      score: 9.2,
+      highlight_reason: "High strategic decision value & risk reduction"
+    },
+    { 
+      time: "02:15 PM", 
+      title: "Household Maintenance", 
+      description: "Committed to calling the plumber for basement leak.",
+      duration: "45s",
+      environment: "personal",
+      score: 8.5,
+      highlight_reason: "High actionability & home responsibility commitment"
+    },
+    { 
+      time: "05:00 PM", 
+      title: "Subtle Gradient Check", 
+      description: "Finished styling checks. Manager approved showcasing tomorrow.",
+      duration: "10m",
+      environment: "office",
+      score: 8.8,
+      highlight_reason: "Product milestone approval & positive feedback"
+    }
+  ];
+
   // If running in test mode or with mock key, return full Second Brain mock result
   if (process.env.NODE_ENV === 'test' || apiKey === "mock-key") {
     const mockResult = {
@@ -57,29 +87,7 @@ function analyzeTranscript(rawJson, callback) {
       speech_clarity: 7.0,
       summary: "Analysis of conversation showing positive active listening adjustment and clear task delegation.",
       kaizen_target: "Ensure not to catastrophize when unexpected bug reports arrive; ask clarifying questions first.",
-      key_memories: [
-        { 
-          time: "10:30 AM", 
-          title: "Launch Discussion", 
-          description: "Debated launching with crashes, selected code validation pass instead.",
-          duration: "2m",
-          environment: "office"
-        },
-        { 
-          time: "02:15 PM", 
-          title: "Household Maintenance", 
-          description: "Committed to calling the plumber for basement leak.",
-          duration: "45s",
-          environment: "personal"
-        },
-        { 
-          time: "05:00 PM", 
-          title: "Subtle Gradient Check", 
-          description: "Finished styling checks. Manager approved showcasing tomorrow.",
-          duration: "10m",
-          environment: "office"
-        }
-      ],
+      key_memories: defaultKeyMemories,
       action_items: defaultActionItems,
       entities: defaultEntities,
       daily_digest: defaultDigest
@@ -98,18 +106,27 @@ function analyzeTranscript(rawJson, callback) {
        - Carl Rogers' Active Listening Scale (active_listening: 1 to 10)
        - Speech Economy & Clarity (speech_clarity: 1 to 10)
 
-    2. Action Items & Commitments:
+    2. Top 3 Highlights Ranking (Model 1: Balanced Life & Growth):
+       Score each conversation snippet using this weighted formula (1 to 10 scale):
+       - impact_score (40%): Strategic decisions, milestones, problem solving
+       - relational_score (30%): Gottman connection bids, family warmth, active listening
+       - actionability_score (20%): Action items and promises generated
+       - substance_score (10%): Duration relative to filler word clutter
+       Formula: score = (0.4 * impact) + (0.3 * relational) + (0.2 * actionability) + (0.1 * substance)
+       Select the Top 3 highest-scoring conversations into "key_memories".
+
+    3. Action Items & Commitments:
        - Extract explicit tasks, promises made to others, and pending follow-ups required.
 
-    3. People, Projects & Topics:
+    4. People, Projects & Topics:
        - Identify entities (persons, projects, key topics) with context snippets and sentiment.
 
-    4. Daily Knowledge Digest, Weakness Tracker & Recommended Learning Resources:
+    5. Daily Knowledge Digest & Weakness Tracker:
        - Top high-value conversations
        - Key takeaways & decisions made
-       - Weaknesses identified (e.g., catastrophizing, filler word density, interrupting)
+       - Weaknesses identified
        - Personal growth areas
-       - Research-backed daily tip grounded in psychological literature (Beck, Gottman, Rogers, Kahneman).
+       - Research-backed daily tip grounded in psychological literature
        - Recommended Article & YouTube Video exercise to practice based on detected weakness.
 
     Transcript: ${JSON.stringify(rawJson)}
@@ -128,7 +145,9 @@ function analyzeTranscript(rawJson, callback) {
           "title": "Short title of conversation topic",
           "description": "One-sentence description summarizing context and outcomes",
           "duration": "duration of conversation, e.g., '1m 40s' or '30s'",
-          "environment": "either 'office' or 'personal'"
+          "environment": "either 'office' or 'personal'",
+          "score": float,
+          "highlight_reason": "Short reason why this conversation was selected as a top highlight"
         }
       ],
       "action_items": [
@@ -189,13 +208,31 @@ function analyzeTranscript(rawJson, callback) {
   }).catch(err => {
     console.error('[Manana] Gemini analysis error (falling back to Second Brain fallback):', err.message || err);
     
-    const fallbackMemories = (rawJson.memories || []).slice(0, 3).map(m => ({
-      time: m.time || "N/A",
-      title: m.title || "Recorded Memory",
-      description: m.summary || "Recorded conversation snippet.",
-      duration: m.duration || "N/A",
-      environment: m.environment || "personal"
-    }));
+    // Fallback heuristic scoring & ranking
+    const sortedMemories = [...(rawJson.memories || [])].sort((a, b) => {
+      const memA = a.memory || a;
+      const memB = b.memory || b;
+      const scoreA = ((memA.summary || '').length * 0.4) + ((memA.emotions || []).length * 2.0) + ((memA.participants || []).length * 1.5);
+      const scoreB = ((memB.summary || '').length * 0.4) + ((memB.emotions || []).length * 2.0) + ((memB.participants || []).length * 1.5);
+      return scoreB - scoreA;
+    });
+
+    const fallbackMemories = sortedMemories.slice(0, 3).map((m, idx) => {
+      const mem = m.memory || m;
+      return {
+        time: mem.time || "N/A",
+        title: mem.title || "Recorded Memory",
+        description: mem.summary || "Recorded conversation snippet.",
+        duration: mem.duration || "N/A",
+        environment: mem.environment || "personal",
+        score: Number((8.5 - (idx * 0.4)).toFixed(1)),
+        highlight_reason: "High conversation length & emotional resonance"
+      };
+    });
+
+    if (fallbackMemories.length === 0) {
+      fallbackMemories.push(...defaultKeyMemories);
+    }
 
     const totalMemCount = rawJson.memories ? rawJson.memories.length : 0;
     const fallbackResult = {

@@ -258,8 +258,16 @@ export default function App() {
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-                      <strong style={{ fontSize: '1.05rem', color: 'var(--text-heading)' }}>{mem.title}</strong>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ background: 'var(--sg-primary)', color: '#ffffff', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', fontSize: '0.8rem' }}>#{idx + 1}</span>
+                        <strong style={{ fontSize: '1.05rem', color: 'var(--text-heading)' }}>{mem.title}</strong>
+                      </div>
                       <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        {mem.score && (
+                          <span className="pill-badge" style={{ background: 'rgba(230, 0, 35, 0.1)', color: 'var(--sg-primary)', fontWeight: 700 }}>
+                            ⭐ {mem.score} Score
+                          </span>
+                        )}
                         <span className="pill-badge">{mem.time}</span>
                         {mem.environment && (
                           <span className="pill-badge" style={{ background: mem.environment === 'office' ? 'rgba(78, 120, 150, 0.08)' : 'rgba(78, 150, 90, 0.08)', color: 'var(--text-muted)' }}>
@@ -276,6 +284,11 @@ export default function App() {
                     <p style={{ color: 'var(--text-muted)', margin: '8px 0 0 0', fontSize: '0.95rem', lineHeight: '1.5' }}>
                       {mem.description}
                     </p>
+                    {mem.highlight_reason && (
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '6px', fontStyle: 'italic' }}>
+                        💡 Highlight Reason: {mem.highlight_reason}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
