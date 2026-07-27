@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BrainVisualizer from './BrainVisualizer';
 import ChatDrawer from './ChatDrawer';
+import ActionItemsCard from './ActionItemsCard';
+import WeaknessTracker from './WeaknessTracker';
+import SearchDrawer from './SearchDrawer';
 
 export default function App() {
   const [scores, setScores] = useState([]);
@@ -10,6 +13,7 @@ export default function App() {
   const [fullTranscript, setFullTranscript] = useState(null);
   const [loadingTranscript, setLoadingTranscript] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedLobe, setSelectedLobe] = useState(null);
 
   const fetchScores = (date) => {
@@ -153,6 +157,14 @@ export default function App() {
           </div>
 
           <button 
+            onClick={() => setIsSearchOpen(true)}
+            className="secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            🔍 Search Memory
+          </button>
+
+          <button 
             onClick={() => setIsChatOpen(true)}
             className="secondary"
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
@@ -201,6 +213,12 @@ export default function App() {
               {today.kaizen_target}
             </p>
           </div>
+
+          {/* Weakness & Research Growth Radar */}
+          <WeaknessTracker selectedDate={selectedDate} />
+
+          {/* Pending Action Items & Commitments */}
+          <ActionItemsCard />
 
           {/* Daily Synthesis */}
           <div className="card">
@@ -467,6 +485,12 @@ export default function App() {
       <ChatDrawer 
         isOpen={isChatOpen} 
         onClose={() => setIsChatOpen(false)} 
+      />
+
+      {/* Sub-millisecond FTS5 Memory Search Drawer */}
+      <SearchDrawer
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
       />
     </div>
   );
