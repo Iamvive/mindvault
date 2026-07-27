@@ -2,7 +2,19 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { getDailyScores, saveDailyScore } = require('./database');
+const {
+  getDailyScores,
+  saveDailyScore,
+  saveActionItems,
+  getActionItems,
+  toggleActionItem,
+  saveEntities,
+  getEntities,
+  saveDailyDigest,
+  getDailyDigest,
+  indexTranscriptFTS,
+  searchTranscriptsFTS
+} = require('./database');
 const { fetchDailyTranscripts, backupToVault } = require('./shravana');
 const { analyzeTranscript } = require('./manana');
 const { handleChatQuery } = require('./chat');
@@ -42,6 +54,71 @@ app.get('/api/raw-transcript', (req, res) => {
   });
 });
 
+// Second Brain REST Endpoints
+
+app.get('/api/action-items', (req, res) => {
+  const { category } = req.query;
+  getActionItems(category || 'all', (err, items) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(items);
+  });
+});
+
+app.post('/api/action-items/:id/toggle', (req, res) => {
+  const { id } = req.params;
+  toggleActionItem(id, (err, updatedItem) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ success: true, item: updatedItem });
+  });
+});
+
+app.get('/api/entities', (req, res) => {
+  const { date } = req.query;
+  getEntities(date, (err, entities) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(entities);
+  });
+});
+
+app.get('/api/search', (req, res) => {
+  const { q } = req.query;
+  if (!q) return res.json([]);
+  searchTranscriptsFTS(q, (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+});
+
+app.get('/api/digest', (req, res) => {
+  const { date } = req.query;
+  const targetDate = date || new Date().toISOString().split('T')[0];
+  getDailyDigest(targetDate, (err, digestRow) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!digestRow) {
+      return res.json({
+        top_conversations: [],
+        key_takeaways: ["Sync Locket to extract knowledge digests."],
+        weaknesses_identified: ["No weaknesses detected today."],
+        growth_areas: ["Maintain active listening and clear vocal cadence."],
+        research_tip: "Carl Rogers' Active Listening Scale: Mirroring a colleague's core constraint before introducing your proposal increases alignment by up to 35%."
+      });
+    }
+    let parsedDigest = {
+      date: digestRow.date,
+      top_conversations: [],
+      key_takeaways: [],
+      weaknesses_identified: [],
+      growth_areas: [],
+      research_tip: digestRow.research_tip || ""
+    };
+    try { parsedDigest.top_conversations = JSON.parse(digestRow.top_conversations || '[]'); } catch (e) {}
+    try { parsedDigest.key_takeaways = JSON.parse(digestRow.key_takeaways || '[]'); } catch (e) {}
+    try { parsedDigest.weaknesses_identified = JSON.parse(digestRow.weaknesses_identified || '[]'); } catch (e) {}
+    try { parsedDigest.growth_areas = JSON.parse(digestRow.growth_areas || '[]'); } catch (e) {}
+    res.json(parsedDigest);
+  });
+});
+
 function performSync(syncDate, callback) {
   fetchDailyTranscripts(syncDate, null, (err, transcript) => {
     if (err) {
@@ -50,6 +127,13 @@ function performSync(syncDate, callback) {
     }
 
     const vaultPath = backupToVault(syncDate, transcript);
+
+    // Index transcript lines into FTS5
+    if (transcript.conversations && Array.isArray(transcript.conversations)) {
+      for (const conv of transcript.conversations) {
+        indexTranscriptFTS(syncDate, conv.time, conv.speaker, conv.text);
+      }
+    }
 
     analyzeTranscript(transcript, (err2, analysisResult) => {
       if (err2) {
@@ -60,7 +144,13 @@ function performSync(syncDate, callback) {
       analysisResult.raw_vault_path = vaultPath;
 
       saveDailyScore(syncDate, analysisResult, (err3) => {
-        if (callback) callback(err3, analysisResult);
+        saveActionItems(syncDate, analysisResult.action_items, (err4) => {
+          saveEntities(syncDate, analysisResult.entities, (err5) => {
+            saveDailyDigest(syncDate, analysisResult.daily_digest || {}, (err6) => {
+              if (callback) callback(err3 || err4 || err5 || err6, analysisResult);
+            });
+          });
+        });
       });
     });
   });
