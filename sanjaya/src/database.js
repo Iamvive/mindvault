@@ -44,11 +44,21 @@ function runMigrations(callback) {
           db.exec(sql3, (err4) => {
             if (err4) {
               console.error("Migration 003 failed", err4);
+              db.close();
+              if (callback) callback(err4);
             } else {
               console.log("Migration 003 applied successfully");
+              const indexSql = `
+                DELETE FROM action_items WHERE rowid NOT IN (SELECT MIN(rowid) FROM action_items GROUP BY date, task);
+                DELETE FROM entities WHERE rowid NOT IN (SELECT MIN(rowid) FROM entities GROUP BY date, entity_name, entity_type);
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_action_items_date_task ON action_items(date, task);
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_entities_date_name ON entities(date, entity_name, entity_type);
+              `;
+              db.exec(indexSql, (err5) => {
+                db.close();
+                if (callback) callback(err5 || null);
+              });
             }
-            db.close();
-            if (callback) callback(err4);
           });
         } else {
           db.close();
@@ -112,7 +122,7 @@ function saveActionItems(date, items, callback) {
   }
   const db = getDbConnection();
   const stmt = db.prepare(`
-    INSERT INTO action_items (date, time, task, category, status, context, assignee)
+    INSERT OR IGNORE INTO action_items (date, time, task, category, status, context, assignee)
     VALUES (?, ?, ?, ?, 'pending', ?, ?)
   `);
 
@@ -172,7 +182,7 @@ function saveEntities(date, entities, callback) {
   }
   const db = getDbConnection();
   const stmt = db.prepare(`
-    INSERT INTO entities (date, entity_name, entity_type, context_snippet, sentiment)
+    INSERT OR IGNORE INTO entities (date, entity_name, entity_type, context_snippet, sentiment)
     VALUES (?, ?, ?, ?, ?)
   `);
 

@@ -33,5 +33,6 @@ CREATE TABLE IF NOT EXISTS daily_digests (
   weaknesses_identified TEXT,
   growth_areas TEXT,
   research_tip TEXT,
+  recommended_resources TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

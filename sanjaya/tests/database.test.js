@@ -49,32 +49,37 @@ test('Database Migrations and Queries', (t, done) => {
         assert.strictEqual(rows[0].date, '2026-07-25');
         assert.strictEqual(rows[0].cognitive_distortion, 8.5);
 
-        // Test Action Items
+        // Test Action Items & Deduplication
         const mockItems = [
           { time: '11:00 AM', task: 'Follow up on design spec', category: 'todo', context: 'Architecture review', assignee: 'Self' }
         ];
         saveActionItems('2026-07-25', mockItems, (err4) => {
           assert.strictEqual(err4, null);
 
-          getActionItems('all', (err5, items) => {
-            assert.strictEqual(err5, null);
-            assert.strictEqual(items.length, 1);
-            assert.strictEqual(items[0].task, 'Follow up on design spec');
-            assert.strictEqual(items[0].status, 'pending');
+          // Save duplicate items to verify deduplication works
+          saveActionItems('2026-07-25', mockItems, (err4b) => {
+            assert.strictEqual(err4b, null);
 
-            toggleActionItem(items[0].id, (err6, updated) => {
-              assert.strictEqual(err6, null);
-              assert.strictEqual(updated.status, 'completed');
+            getActionItems('all', (err5, items) => {
+              assert.strictEqual(err5, null);
+              assert.strictEqual(items.length, 1);
+              assert.strictEqual(items[0].task, 'Follow up on design spec');
+              assert.strictEqual(items[0].status, 'pending');
 
-              // Test FTS search
-              indexTranscriptFTS('2026-07-25', '11:00 AM', 'User', 'We need SQLite FTS5 for quick searching', (err7) => {
-                assert.strictEqual(err7, null);
+              toggleActionItem(items[0].id, (err6, updated) => {
+                assert.strictEqual(err6, null);
+                assert.strictEqual(updated.status, 'completed');
 
-                searchTranscriptsFTS('SQLite', (err8, searchResults) => {
-                  assert.strictEqual(err8, null);
-                  assert.ok(searchResults.length >= 1);
-                  assert.strictEqual(searchResults[0].speaker, 'User');
-                  done();
+                // Test FTS search
+                indexTranscriptFTS('2026-07-25', '11:00 AM', 'User', 'We need SQLite FTS5 for quick searching', (err7) => {
+                  assert.strictEqual(err7, null);
+
+                  searchTranscriptsFTS('SQLite', (err8, searchResults) => {
+                    assert.strictEqual(err8, null);
+                    assert.ok(searchResults.length >= 1);
+                    assert.strictEqual(searchResults[0].speaker, 'User');
+                    done();
+                  });
                 });
               });
             });
