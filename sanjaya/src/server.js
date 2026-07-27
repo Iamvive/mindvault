@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const {
+  runMigrations,
   getDailyScores,
   saveDailyScore,
   saveActionItems,
@@ -192,12 +193,15 @@ function runBackgroundAutoSync() {
 
 if (require.main === module) {
   const PORT = process.env.PORT || 3001;
-  app.listen(PORT, () => {
-    console.log(`Sanjaya Server running on port ${PORT}`);
-    
-    // Trigger immediate background sync on startup, then every 15 minutes
-    setTimeout(runBackgroundAutoSync, 1000);
-    setInterval(runBackgroundAutoSync, 15 * 60 * 1000);
+  runMigrations((err) => {
+    if (err) console.error("Migration check failed on startup:", err);
+    app.listen(PORT, () => {
+      console.log(`Sanjaya Server running on port ${PORT}`);
+      
+      // Trigger immediate background sync on startup, then every 15 minutes
+      setTimeout(runBackgroundAutoSync, 1000);
+      setInterval(runBackgroundAutoSync, 15 * 60 * 1000);
+    });
   });
 }
 
