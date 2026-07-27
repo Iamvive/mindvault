@@ -213,8 +213,8 @@ function saveDailyDigest(date, digest, callback) {
   const db = getDbConnection();
   const query = `
     INSERT OR REPLACE INTO daily_digests
-    (date, top_conversations, key_takeaways, weaknesses_identified, growth_areas, research_tip)
-    VALUES (?, ?, ?, ?, ?, ?)
+    (date, top_conversations, key_takeaways, weaknesses_identified, growth_areas, research_tip, recommended_resources)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   db.run(query, [
     date,
@@ -222,7 +222,8 @@ function saveDailyDigest(date, digest, callback) {
     JSON.stringify(digest.key_takeaways || []),
     JSON.stringify(digest.weaknesses_identified || []),
     JSON.stringify(digest.growth_areas || []),
-    digest.research_tip || ''
+    digest.research_tip || '',
+    JSON.stringify(digest.recommended_resources || {})
   ], function(err) {
     db.close();
     if (callback) callback(err || null);

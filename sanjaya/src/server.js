@@ -95,13 +95,30 @@ app.get('/api/digest', (req, res) => {
   const targetDate = date || new Date().toISOString().split('T')[0];
   getDailyDigest(targetDate, (err, digestRow) => {
     if (err) return res.status(500).json({ error: err.message });
+    const defaultResources = {
+      article: {
+        title: "Carl Rogers & Active Listening: 3 Practical Rules",
+        author_or_source: "Psychology Today",
+        key_exercise: "Before stating your opinion in a meeting, repeat back the speaker's main constraint to confirm understanding.",
+        search_url: "https://www.google.com/search?q=Carl+Rogers+Active+Listening+Psychology+Today"
+      },
+      youtube_video: {
+        title: "How to Stop Catastrophizing & Black-and-White Thinking",
+        channel: "Therapy in a Nutshell",
+        duration: "12m",
+        key_exercise: "Practice identifying absolute words ('always', 'never') in your thoughts and replacing them with objective facts.",
+        search_url: "https://www.youtube.com/results?search_query=CBT+how+to+stop+catastrophizing+practice"
+      }
+    };
+
     if (!digestRow) {
       return res.json({
         top_conversations: [],
         key_takeaways: ["Sync Locket to extract knowledge digests."],
         weaknesses_identified: ["No weaknesses detected today."],
         growth_areas: ["Maintain active listening and clear vocal cadence."],
-        research_tip: "Carl Rogers' Active Listening Scale: Mirroring a colleague's core constraint before introducing your proposal increases alignment by up to 35%."
+        research_tip: "Carl Rogers' Active Listening Scale: Mirroring a colleague's core constraint before introducing your proposal increases alignment by up to 35%.",
+        recommended_resources: defaultResources
       });
     }
     let parsedDigest = {
@@ -110,12 +127,19 @@ app.get('/api/digest', (req, res) => {
       key_takeaways: [],
       weaknesses_identified: [],
       growth_areas: [],
-      research_tip: digestRow.research_tip || ""
+      research_tip: digestRow.research_tip || "",
+      recommended_resources: defaultResources
     };
     try { parsedDigest.top_conversations = JSON.parse(digestRow.top_conversations || '[]'); } catch (e) {}
     try { parsedDigest.key_takeaways = JSON.parse(digestRow.key_takeaways || '[]'); } catch (e) {}
     try { parsedDigest.weaknesses_identified = JSON.parse(digestRow.weaknesses_identified || '[]'); } catch (e) {}
     try { parsedDigest.growth_areas = JSON.parse(digestRow.growth_areas || '[]'); } catch (e) {}
+    try { 
+      const resObj = JSON.parse(digestRow.recommended_resources || '{}');
+      if (resObj && (resObj.article || resObj.youtube_video)) {
+        parsedDigest.recommended_resources = resObj;
+      }
+    } catch (e) {}
     res.json(parsedDigest);
   });
 });

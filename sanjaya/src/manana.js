@@ -30,7 +30,22 @@ function analyzeTranscript(rawJson, callback) {
     growth_areas: [
       "Active Listening: Mirror back team member concerns before stating technical counters."
     ],
-    research_tip: "Carl Rogers' Active Listening Scale: Mirroring a colleague's core constraint before introducing your proposal increases alignment by up to 35% and calms emotional resistance."
+    research_tip: "Carl Rogers' Active Listening Scale: Mirroring a colleague's core constraint before introducing your proposal increases alignment by up to 35% and calms emotional resistance.",
+    recommended_resources: {
+      article: {
+        title: "Carl Rogers & Active Listening: 3 Practical Rules",
+        author_or_source: "Psychology Today",
+        key_exercise: "Before stating your opinion in a meeting, repeat back the speaker's main constraint to confirm understanding.",
+        search_url: "https://www.google.com/search?q=Carl+Rogers+Active+Listening+Psychology+Today"
+      },
+      youtube_video: {
+        title: "How to Stop Catastrophizing & Black-and-White Thinking",
+        channel: "Therapy in a Nutshell",
+        duration: "12m",
+        key_exercise: "Practice identifying absolute words ('always', 'never') in your thoughts and replacing them with objective facts.",
+        search_url: "https://www.youtube.com/results?search_query=CBT+how+to+stop+catastrophizing+practice"
+      }
+    }
   };
 
   // If running in test mode or with mock key, return full Second Brain mock result
@@ -89,12 +104,13 @@ function analyzeTranscript(rawJson, callback) {
     3. People, Projects & Topics:
        - Identify entities (persons, projects, key topics) with context snippets and sentiment.
 
-    4. Daily Knowledge Digest & Weakness Tracker:
+    4. Daily Knowledge Digest, Weakness Tracker & Recommended Learning Resources:
        - Top high-value conversations
        - Key takeaways & decisions made
        - Weaknesses identified (e.g., catastrophizing, filler word density, interrupting)
        - Personal growth areas
        - Research-backed daily tip grounded in psychological literature (Beck, Gottman, Rogers, Kahneman).
+       - Recommended Article & YouTube Video exercise to practice based on detected weakness.
 
     Transcript: ${JSON.stringify(rawJson)}
 
@@ -139,7 +155,22 @@ function analyzeTranscript(rawJson, callback) {
         "key_takeaways": ["Takeaway 1", "Takeaway 2"],
         "weaknesses_identified": ["Weakness 1"],
         "growth_areas": ["Growth Area 1"],
-        "research_tip": "Psychology research-backed tip for tomorrow"
+        "research_tip": "Psychology research-backed tip for tomorrow",
+        "recommended_resources": {
+          "article": {
+            "title": "Article Title",
+            "author_or_source": "Source Name",
+            "key_exercise": "Specific actionable exercise to practice",
+            "search_url": "Search URL"
+          },
+          "youtube_video": {
+            "title": "Video Title",
+            "channel": "Channel Name",
+            "duration": "10m",
+            "key_exercise": "Specific actionable video practice exercise",
+            "search_url": "Search URL"
+          }
+        }
       }
     }
   `;
