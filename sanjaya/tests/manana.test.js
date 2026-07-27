@@ -27,6 +27,14 @@ test('Manana Engine parses transcript correctly and returns top 3 key memories',
     assert.ok(scores.key_memories[0].time !== undefined);
     assert.ok(scores.key_memories[0].title !== undefined);
     assert.ok(scores.key_memories[0].description !== undefined);
+
+    // Assert Second Brain fields
+    assert.ok(Array.isArray(scores.action_items));
+    assert.ok(scores.action_items.length > 0);
+    assert.ok(Array.isArray(scores.entities));
+    assert.ok(scores.entities.length > 0);
+    assert.ok(scores.daily_digest !== undefined);
+    assert.ok(scores.daily_digest.research_tip !== undefined);
     done();
   });
 });
