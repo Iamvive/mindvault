@@ -1,16 +1,16 @@
-# Graph Report - ai-play-ground  (2026-07-29)
+# Graph Report - ai-play-ground  (2026-07-27)
 
 ## Corpus Check
-- 159 files · ~120,913 words
+- 148 files · ~115,465 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1315 nodes · 1610 edges · 111 communities (95 shown, 16 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.64)
+- 1246 nodes · 1494 edges · 106 communities (90 shown, 16 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9d4544c2`
+- Built from commit: `59dd40d0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -117,14 +117,10 @@
 - Design Specification: Person Account Ledger & Collapsible Dashboard Sections
 - Global Constraints
 - second-brain-api.test.js
-- Project Sanjaya: Top 3 Highlights Multi-Factor Ranking Design Specification
-- scheduler.py
-- Google SSO Authentication Design Specification
 - Odysseus Hardware-Tuned macOS Installation Guide Design
-- Global Constraints
 
 ## God Nodes (most connected - your core abstractions)
-1. `get_connection()` - 32 edges
+1. `get_connection()` - 26 edges
 2. `main()` - 23 edges
 3. `Writing Skills` - 23 edges
 4. `TestFinanceBotPipeline` - 16 edges
@@ -142,23 +138,23 @@
   sanjaya/src/server.js → sanjaya/src/shravana.js
 - `performSync()` --calls--> `fetchDailyTranscripts()`  [EXTRACTED]
   sanjaya/src/server.js → sanjaya/src/shravana.js
-- `main()` --indirect_call--> `handle_callback_query()`  [INFERRED]
-  telegram-finance-bot/bot.py → telegram-finance-bot/handlers/callbacks.py
-- `main()` --indirect_call--> `ask_cmd()`  [INFERRED]
-  telegram-finance-bot/bot.py → telegram-finance-bot/handlers/commands.py
+- `initBot()` --references--> `Database`  [EXTRACTED]
+  backend/bot.js → backend/database.js
+- `initBot()` --calls--> `enrichDocumentMetadata()`  [EXTRACTED]
+  backend/bot.js → backend/gemini.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (111 total, 16 thin omitted)
+## Communities (106 total, 16 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
 Cohesion: 0.06
 Nodes (47): __dirname, __filename, initBot(), uploadDir, columns, Database, db, __dirname (+39 more)
 
 ### Community 1 - "bot.py"
-Cohesion: 0.10
-Nodes (47): InlineKeyboardMarkup, SimpleHTTPRequestHandler, main(), post_init(), determine_type_and_bucket(), match_keyword_rules(), match_recurring_rules(), parse_amount() (+39 more)
+Cohesion: 0.16
+Nodes (30): DEFAULT_TYPE, InlineKeyboardMarkup, SimpleHTTPRequestHandler, ask_cmd(), dashboard_cmd(), debt_add_cmd(), debt_clear_cmd(), debts_list_cmd() (+22 more)
 
 ### Community 2 - "package.json"
 Cohesion: 0.07
@@ -173,8 +169,8 @@ Cohesion: 0.08
 Nodes (23): axios, dependencies, axios, cheerio, cors, dotenv, express, multer (+15 more)
 
 ### Community 5 - "TestFinanceBotPipeline"
-Cohesion: 0.09
-Nodes (6): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi, TestFinanceBotPipeline
+Cohesion: 0.08
+Nodes (9): determine_type_and_bucket(), match_keyword_rules(), match_recurring_rules(), parse_amount(), Tries to extract a decimal or integer amount from a text string.     Example: "S, Checks the local keyword rules for counterparty keywords.     Returns (counterpa, Checks the text against active recurring item keywords.     Returns (counterpart, Helper to look up the bucket and type (credit/debit) for a valid category. (+1 more)
 
 ### Community 6 - "TestFinanceBotQueryQA"
 Cohesion: 0.07
@@ -345,8 +341,8 @@ Cohesion: 0.40
 Nodes (5): GREEN: Write Minimal Skill, Micro-Test Wording Before Full Scenarios, RED-GREEN-REFACTOR for Skills, RED: Write Failing Test (Baseline), REFACTOR: Close Loopholes
 
 ### Community 52 - "AGENTS.md"
-Cohesion: 0.17
-Nodes (11): AGENTS, Available Skills, Before claiming something is done, Before writing code, Coding Guidelines for AI Agents, graphify, Penpot Integration (MCP), Security basics (+3 more)
+Cohesion: 0.33
+Nodes (5): AGENTS, Available Skills, graphify, Penpot Integration (MCP), Subtle Gradient Design System Constraints
 
 ### Community 53 - "penpot"
 Cohesion: 0.18
@@ -474,8 +470,8 @@ Cohesion: 0.40
 Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
 
 ### Community 96 - "db.py"
-Cohesion: 0.10
-Nodes (34): add_debt(), add_pending_bill(), add_recurring(), check_duplicate(), clear_debts_for_person(), create_user_session(), delete_debt(), delete_last_transaction() (+26 more)
+Cohesion: 0.08
+Nodes (39): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi, add_debt(), add_pending_bill(), add_recurring() (+31 more)
 
 ### Community 97 - "Evaluation and iteration"
 Cohesion: 0.50
@@ -509,28 +505,12 @@ Nodes (5): Global Constraints, Person Account Ledger & Collapsible Dashboard Sec
 Cohesion: 0.29
 Nodes (6): runMigrations(), app, assert, { runMigrations }, supertest, test
 
-### Community 105 - "Project Sanjaya: Top 3 Highlights Multi-Factor Ranking Design Specification"
-Cohesion: 0.29
-Nodes (6): 1. Goal, 2. Multi-Factor Scoring Model (Model 1), 3. Fallback Heuristic Ranking, 4. UI Dashboard Display, Composite Score Formula, Project Sanjaya: Top 3 Highlights Multi-Factor Ranking Design Specification
-
-### Community 107 - "scheduler.py"
-Cohesion: 0.36
-Nodes (7): check_all_users_recurring(), process_due_recurring(), Scans the recurring table for a specific user, inserts due transactions into the, Asynchronous loop that runs on startup and every 4 hours.     Checks for due rec, Sends a summary notification to the user., run_scheduler(), send_summary()
-
-### Community 108 - "Google SSO Authentication Design Specification"
-Cohesion: 0.09
-Nodes (21): 1. Overview & Goal, 2. Architecture & Authentication Flow, 3.1 Database Schema (`db.py`), 3.2 Backend Server (`handlers/http_server.py`), 3.3 Frontend Dashboard (`dashboard/template.html` / `dashboard.html`), 3.4 Telegram Bot Commands (`handlers/commands.py`), 3. Detailed Component & Schema Changes, 4. Security & Safety Principles (+13 more)
-
 ### Community 109 - "Odysseus Hardware-Tuned macOS Installation Guide Design"
 Cohesion: 0.15
 Nodes (12): 1. Prerequisites & Toolchain Setup, 2. Repository Cloning & Environment Setup, 3. Environment Configuration (`.env`), 4. Hardware-Aware Local Model Recommendation Table (16 GB RAM), 5. Execution & macOS App Wrapper, Deliverables & File Locations, Installation & Guide Content Structure, Key Design Principles & Constraints (+4 more)
 
-### Community 110 - "Global Constraints"
-Cohesion: 0.29
-Nodes (6): Global Constraints, Google SSO Authentication Implementation Plan, Task 1: Database Migration & Session Management (`db.py`), Task 2: Backend Google SSO Verification & Session Middleware (`handlers/http_server.py`), Task 3: Web Dashboard Frontend Google SSO Interface (`dashboard/template.html`), Task 4: Telegram `/dashboard` Command & Full End-to-End Verification
-
 ## Knowledge Gaps
-- **731 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+726 more)
+- **705 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+700 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -541,13 +521,13 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `sqlite3` connect `TestFinanceBotQueryQA` to `db.py`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Are the 20 inferred relationships involving `main()` (e.g. with `handle_callback_query()` and `ask_cmd()`) actually correct?**
+- **Are the 20 inferred relationships involving `main()` (e.g. with `ask_cmd()` and `dashboard_cmd()`) actually correct?**
   _`main()` has 20 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
-  _731 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _705 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend AI Initialization` be split into smaller, more focused modules?**
   _Cohesion score 0.06240084611316764 - nodes in this community are weakly interconnected._
-- **Should `bot.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.09679370840895342 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
+- **Should `Backend Dependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._

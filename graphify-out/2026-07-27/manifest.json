@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/bot.py": {
-    "mtime": 1785254298.2024367,
-    "ast_hash": "eb942dfa551ae2cc54590ceebb3f9c4e",
+    "mtime": 1785168837.4474788,
+    "ast_hash": "a4fa2febf7483e962c00592f3f7939de",
     "semantic_hash": ""
   },
   "telegram-finance-bot/categorize.py": {
@@ -90,13 +90,13 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/db.py": {
-    "mtime": 1785328338.690692,
-    "ast_hash": "65e243397efbf013f4a4437538e3ccfa",
+    "mtime": 1785169104.0978465,
+    "ast_hash": "0025f078a0d05c3ef16c5d8efaaaf70d",
     "semantic_hash": ""
   },
   "telegram-finance-bot/llm_extract.py": {
-    "mtime": 1785328930.401616,
-    "ast_hash": "a00719c0bbc293a30dd52ed968770815",
+    "mtime": 1784465332.746267,
+    "ast_hash": "d0f09259c06f8ab435b854b035e5f567",
     "semantic_hash": ""
   },
   "telegram-finance-bot/scheduler.py": {
@@ -110,8 +110,8 @@
     "semantic_hash": "6d4d3c2796c944904d2b986505bca8f8"
   },
   "telegram-finance-bot/sync_to_vps.sh": {
-    "mtime": 1785327947.0859897,
-    "ast_hash": "46fe18678c302168aa52b38c04f5be95",
+    "mtime": 1785168354.115951,
+    "ast_hash": "3aea338a49eb37063e18c6178e3fc41d",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_pipeline.py": {
@@ -260,12 +260,12 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1785324137.254989,
+    "mtime": 1785167876.6182232,
     "ast_hash": "8e314e20966af1c5e55f5f167f558acc",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1785324137.2553544,
+    "mtime": 1785167876.6185408,
     "ast_hash": "8e314e20966af1c5e55f5f167f558acc",
     "semantic_hash": ""
   },
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   ".agents/AGENTS.md": {
-    "mtime": 1785256458.633496,
-    "ast_hash": "34b3ac0f3d18960bc53c034bc13deaa2",
+    "mtime": 1784719820.44702,
+    "ast_hash": "7d187380d47e4e601068d078863fda74",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -500,13 +500,13 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard/template.html": {
-    "mtime": 1785329594.1821814,
-    "ast_hash": "c20e2a95cf25493fe1ae6ade6724e60e",
+    "mtime": 1785169810.5006547,
+    "ast_hash": "f5b77d29c0fff7ff715f95f7045dca86",
     "semantic_hash": ""
   },
   "telegram-finance-bot/docker-compose.yml": {
-    "mtime": 1785327935.187826,
-    "ast_hash": "0ecb0529e1468340425515b749403064",
+    "mtime": 1784302218.102668,
+    "ast_hash": "9fc0e0154d2ab8ca7ee9daaf57fb2210",
     "semantic_hash": ""
   },
   "telegram-finance-bot/requirements.txt": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "sanjaya/src/darshana/src/App.jsx": {
-    "mtime": 1785172952.4019554,
-    "ast_hash": "afdd9b0153f49855d02b3c5adb7ee73a",
+    "mtime": 1785171140.1651232,
+    "ast_hash": "39664d026e7f1a01d116db92ff4ae6db",
     "semantic_hash": ""
   },
   "sanjaya/src/darshana/src/main.jsx": {
@@ -605,13 +605,13 @@
     "semantic_hash": ""
   },
   "sanjaya/src/database.js": {
-    "mtime": 1785249616.7343159,
-    "ast_hash": "bd4cbffa11804c9afc2ed84952229f84",
+    "mtime": 1785171807.0398612,
+    "ast_hash": "d59933b94c73436a6b6bd945e557c92d",
     "semantic_hash": ""
   },
   "sanjaya/src/manana.js": {
-    "mtime": 1785172941.272886,
-    "ast_hash": "d48287d5382188d19918940ed529ddb0",
+    "mtime": 1785171795.198803,
+    "ast_hash": "25a259265290a2fc17fb43a1b3e54af7",
     "semantic_hash": ""
   },
   "sanjaya/src/server.js": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "sanjaya/tests/database.test.js": {
-    "mtime": 1785171999.2083411,
-    "ast_hash": "808c23c77f272d3ef253fcc5ff52e771",
+    "mtime": 1785171019.1938105,
+    "ast_hash": "6e7483419e009ce7874fb6e44d0c3601",
     "semantic_hash": ""
   },
   "sanjaya/tests/manana.test.js": {
@@ -760,7 +760,7 @@
     "semantic_hash": ""
   },
   "sanjaya/smriti/migrations/003_second_brain_system.sql": {
-    "mtime": 1785171977.6869075,
+    "mtime": 1785171801.8306656,
     "ast_hash": "76775ce4c692e2792f6e4aa2c02b1eb6",
     "semantic_hash": ""
   },
@@ -792,61 +792,6 @@
   "docs/superpowers/specs/2026-07-27-sanjaya-second-brain-design.md": {
     "mtime": 1785170982.5350366,
     "ast_hash": "66b372a9ae94dacc3f88278010137fdb",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-07-27-sanjaya-highlight-ranking-design.md": {
-    "mtime": 1785172933.824346,
-    "ast_hash": "fb165b267bbf719d0f8e9e2738204945",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/handlers/__init__.py": {
-    "mtime": 1785254250.0162764,
-    "ast_hash": "88e883b9d0e0b8ee0c0ec013de6f19c7",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/handlers/auth.py": {
-    "mtime": 1785254258.5537863,
-    "ast_hash": "3ee497bf29b010f94bf66e8df8b2f694",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/handlers/callbacks.py": {
-    "mtime": 1785254281.4898093,
-    "ast_hash": "006728123cb292a95a2fc5d855888e97",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/handlers/commands.py": {
-    "mtime": 1785325414.0769572,
-    "ast_hash": "d9b2c92a6e25244ee1619548d180e51e",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/handlers/http_server.py": {
-    "mtime": 1785329176.4612179,
-    "ast_hash": "920b082454f8ce8cdb94e87cc30ab133",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/handlers/messages.py": {
-    "mtime": 1785254290.4046016,
-    "ast_hash": "05dd2b9ae4ddad33944c227788174189",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/rollback.sh": {
-    "mtime": 1785327966.6632245,
-    "ast_hash": "17288e00fb789f1d8fd7383b0a9f9265",
-    "semantic_hash": ""
-  },
-  "telegram-finance-bot/test_auth_sso.py": {
-    "mtime": 1785327778.0955842,
-    "ast_hash": "fe2a078b03b6102deda63bde99a497bb",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/plans/2026-07-29-google-sso-auth.md": {
-    "mtime": 1785325193.6208234,
-    "ast_hash": "e4c4e574e9a36c45c9f1a640fc73bacc",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-07-29-google-sso-auth-design.md": {
-    "mtime": 1785325128.8426516,
-    "ast_hash": "e399e2128aae333ed0c40b0e6d93de39",
     "semantic_hash": ""
   }
 }
