@@ -1,3 +1,8 @@
+export interface ImageInput {
+  buffer: Buffer;
+  mimeType: string;
+}
+
 export interface DetectedFurniture {
   item: string;
   approx_location: string;

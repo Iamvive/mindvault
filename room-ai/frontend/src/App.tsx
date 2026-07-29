@@ -7,19 +7,19 @@ import { RoomAnalysisResult, MakeoverRequest, MakeoverResponse } from './types/r
 
 export const App: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [analysis, setAnalysis] = useState<RoomAnalysisResult | null>(null);
   const [makeoverResult, setMakeoverResult] = useState<MakeoverResponse | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleImageSelect = async (file: File, url: string) => {
-    setSelectedFile(file);
-    setPreviewUrl(url);
+  const handleImagesSelect = async (files: File[], urls: string[]) => {
+    setSelectedFiles(files);
+    setPreviewUrls(urls);
     setLoading(true);
 
     const formData = new FormData();
-    formData.append('image', file);
+    files.forEach(f => formData.append('images', f));
 
     try {
       const res = await fetch('/api/analyze-room', { method: 'POST', body: formData });
@@ -28,7 +28,6 @@ export const App: React.FC = () => {
       setStep(2);
     } catch (err) {
       console.error('Failed to analyze room:', err);
-      // Fallback
       setStep(2);
     } finally {
       setLoading(false);
@@ -39,9 +38,7 @@ export const App: React.FC = () => {
     setLoading(true);
     try {
       const formData = new FormData();
-      if (selectedFile) {
-        formData.append('image', selectedFile);
-      }
+      selectedFiles.forEach(f => formData.append('images', f));
       formData.append('payload', JSON.stringify(request));
 
       const res = await fetch('/api/generate-makeover', {
@@ -60,8 +57,8 @@ export const App: React.FC = () => {
 
   const handleReset = () => {
     setStep(1);
-    setSelectedFile(null);
-    setPreviewUrl('');
+    setSelectedFiles([]);
+    setPreviewUrls([]);
     setAnalysis(null);
     setMakeoverResult(null);
   };
@@ -70,23 +67,23 @@ export const App: React.FC = () => {
     <div style={{ maxWidth: '1140px', margin: '0 auto', padding: '40px 24px' }}>
       <header style={{ textAlign: 'center', marginBottom: '40px' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'rgba(230,0,35,0.1)', color: 'var(--sg-primary)', padding: '6px 18px', borderRadius: '9999px', fontSize: '13px', fontWeight: 700, marginBottom: '16px' }}>
-          ✨ AI-Powered Interior Makeovers
+          ✨ AI-Powered Spatial Makeovers
         </div>
         <h1 style={{ fontSize: '48px', fontWeight: 800, marginBottom: '10px' }}>RoomAI</h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '16px', maxWidth: '600px', margin: '0 auto' }}>
-          Upload a room photo, specify what to add and keep, and get realistic AI visualizations & shoppable furniture recommendations.
+        <p style={{ color: 'var(--text-muted)', fontSize: '16px', maxWidth: '640px', margin: '0 auto' }}>
+          Upload up to 4 photos of your room, specify what to add and keep, and get realistic AI visualizations & shoppable furniture recommendations.
         </p>
       </header>
 
       <WizardStepper currentStep={step} />
 
       {step === 1 && (
-        <UploadStep onImageSelected={handleImageSelect} loading={loading} />
+        <UploadStep onImagesSelected={handleImagesSelect} loading={loading} />
       )}
 
       {step === 2 && (
         <PreferencesStep 
-          previewUrl={previewUrl} 
+          previewUrl={previewUrls.length > 0 ? previewUrls[0] : ''} 
           analysis={analysis} 
           onSubmit={handleGenerateMakeover}
           loading={loading}
@@ -95,7 +92,7 @@ export const App: React.FC = () => {
 
       {step === 3 && makeoverResult && (
         <MakeoverView 
-          originalPreviewUrl={previewUrl} 
+          originalPreviewUrl={previewUrls.length > 0 ? previewUrls[0] : ''} 
           makeoverResponse={makeoverResult} 
           onReset={handleReset} 
         />
