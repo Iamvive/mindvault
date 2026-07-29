@@ -12,6 +12,11 @@
 
 ### Key Constraints & Budget Guidelines
 - **100% Free / Low Cost Operations:** Uses Google Gemini Flash API (free tier) for vision analysis and free image generation endpoints (Pollinations.ai / Hugging Face free inference).
+- **Strict API Key Isolation & Zero Leakage:** 
+  - All API keys reside strictly inside the backend `.env` file (`process.env.GEMINI_API_KEY`) and are never sent to or exposed in the React frontend bundle.
+  - `.env`, `.env.local`, and API secret files are strictly listed in `.gitignore`.
+  - Frontend makes standard relative `/api/*` REST calls with zero credentials exposed to client JS.
+  - Includes a fallback mock engine so the app can run fully offline/locally without requiring any external API keys.
 - **Protected Regions:** Existing furniture specified to be kept (e.g. desk, mirror, walls, windows) are preserved during makeover rendering.
 - **Dimensional Sanity Check:** Recommendations strictly check suggested dimensions against estimated free floor space (e.g. preventing a queen bed recommendation in a 6x6 ft space).
 
