@@ -24,7 +24,7 @@ export async function generateMakeoverImage(
     makeover: {
       image_url: imageUrl,
       description: `Realistic ${style} room makeover incorporating a ${addItem} while preserving your existing ${keepItems}.`,
-      suggested_item_dimensions: req.dimensions?.length_ft 
+      suggested_item_dimensions: (req.dimensions?.length_ft && req.dimensions?.width_ft)
         ? `${req.dimensions.length_ft * 8} x ${req.dimensions.width_ft * 8} inches` 
         : '60 x 80 inches (Queen)',
       estimated_price_range: '$320 - $580',
