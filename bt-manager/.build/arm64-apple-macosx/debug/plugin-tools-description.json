@@ -56,6 +56,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift"
         },
         {
@@ -86,6 +90,7 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
@@ -177,6 +182,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o"
         },
         {
@@ -201,6 +210,7 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
@@ -340,6 +350,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/FixActionsServiceTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift"
         },
         {
@@ -365,6 +379,7 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticReportTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/FixActionsServiceTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.swift.o"
       ],
       "otherArguments" : [
@@ -449,6 +464,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/FixActionsServiceTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.swift.o"
         },
         {
@@ -464,6 +483,7 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BluetoothServiceTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/DeviceDiagnosticReportTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/DeviceDiagnosticServiceTests.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/FixActionsServiceTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift"
       ],
       "tempsPath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build",
@@ -488,6 +508,7 @@
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift",
@@ -628,6 +649,7 @@
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BluetoothServiceTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/DeviceDiagnosticReportTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/DeviceDiagnosticServiceTests.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/FixActionsServiceTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift",
       "-I",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/Modules",
@@ -772,6 +794,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift"
         },
         {
@@ -823,6 +849,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o"
         },
         {
           "kind" : "file",
@@ -890,6 +920,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
         },
         {
@@ -923,6 +957,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/FixActionsServiceTests.swift.o"
         },
         {
           "kind" : "file",
@@ -961,6 +999,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/DeviceDiagnosticServiceTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/FixActionsServiceTests.swift"
         },
         {
           "kind" : "file",

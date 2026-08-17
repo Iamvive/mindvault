@@ -5,6 +5,7 @@
 /Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift
 /Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift
 /Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift
+/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift
 /Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift
 /Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift
 /Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift

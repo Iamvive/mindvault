@@ -85,10 +85,13 @@ public final class DeviceDiagnosticService {
             mScope: kAudioObjectPropertyScopeGlobal,
             mElement: kAudioObjectPropertyElementMain
         )
-        var nameSize: UInt32 = 256
-        var nameBuffer = [CChar](repeating: 0, count: 256)
-        if AudioObjectGetPropertyData(defaultInputDeviceID, &nameAddress, 0, nil, &nameSize, &nameBuffer) == noErr {
-            return String(cString: nameBuffer)
+        var nameSize: UInt32 = 0
+        if AudioObjectGetPropertyDataSize(defaultInputDeviceID, &nameAddress, 0, nil, &nameSize) == noErr && nameSize > 0 {
+            var nameBuffer = [CChar](repeating: 0, count: Int(nameSize) + 1)
+            if AudioObjectGetPropertyData(defaultInputDeviceID, &nameAddress, 0, nil, &nameSize, &nameBuffer) == noErr {
+                nameBuffer[Int(nameSize)] = 0
+                return String(cString: nameBuffer)
+            }
         }
         return "Unknown"
     }

@@ -47,9 +47,10 @@ public final class AudioRoutingService {
                 mScope: kAudioObjectPropertyScopeGlobal,
                 mElement: kAudioObjectPropertyElementMain
             )
-            if AudioObjectGetPropertyDataSize(id, &nameAddress, 0, nil, &nameSize) == noErr {
-                var nameBuffer = [CChar](repeating: 0, count: Int(nameSize))
+            if AudioObjectGetPropertyDataSize(id, &nameAddress, 0, nil, &nameSize) == noErr && nameSize > 0 {
+                var nameBuffer = [CChar](repeating: 0, count: Int(nameSize) + 1)
                 if AudioObjectGetPropertyData(id, &nameAddress, 0, nil, &nameSize, &nameBuffer) == noErr {
+                    nameBuffer[Int(nameSize)] = 0
                     let devName = String(cString: nameBuffer)
                     if AudioRoutingService.isDeviceMatch(deviceName: devName, targetName: targetName) {
                         var defaultAddress = AudioObjectPropertyAddress(
