@@ -2,6 +2,13 @@
   "": {
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/master.swiftdeps"
   },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioControlServiceTests.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.dia"
+  },
   "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift": {
     "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioRoutingServiceTests.d",
     "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioRoutingServiceTests.swift.o",

@@ -44,6 +44,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioControlService.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift"
         },
         {
@@ -61,6 +65,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/GlobalHotkeyService.swift"
         },
         {
           "kind" : "file",
@@ -95,11 +103,13 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothDevice.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticReport.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/EQPreset.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioControlService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioRoutingService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/GlobalHotkeyService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DiagnosticCardView.swift.o",
@@ -180,6 +190,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioControlService.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioRoutingService.swift.o"
         },
         {
@@ -197,6 +211,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/GlobalHotkeyService.swift.o"
         },
         {
           "kind" : "file",
@@ -225,11 +243,13 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/BluetoothDevice.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/DeviceDiagnosticReport.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/EQPreset.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioControlService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/GlobalHotkeyService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DiagnosticCardView.swift",
@@ -346,6 +366,10 @@
       "inputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioControlServiceTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift"
         },
         {
@@ -397,6 +421,7 @@
       "moduleName" : "BTManagerTests",
       "moduleOutputPath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/Modules/BTManagerTests.swiftmodule",
       "objects" : [
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioRoutingServiceTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AutoReconnectWatcherTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BTManagerSanityTests.swift.o",
@@ -465,6 +490,10 @@
       "outputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioRoutingServiceTests.swift.o"
         },
         {
@@ -506,6 +535,7 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioControlServiceTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BTManagerSanityTests.swift",
@@ -535,11 +565,13 @@
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/BluetoothDevice.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/DeviceDiagnosticReport.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/EQPreset.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioControlService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/GlobalHotkeyService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DiagnosticCardView.swift",
@@ -675,6 +707,7 @@
       "-package-name",
       "bt_manager",
       "-c",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioControlServiceTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BTManagerSanityTests.swift",
@@ -815,6 +848,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioControlService.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift"
         },
         {
@@ -832,6 +869,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/FixActionsService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/GlobalHotkeyService.swift"
         },
         {
           "kind" : "file",
@@ -858,6 +899,10 @@
         {
           "kind" : "virtual",
           "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioControlService.swift.o"
         },
         {
           "kind" : "file",
@@ -902,6 +947,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/FixActionsService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/GlobalHotkeyService.swift.o"
         },
         {
           "kind" : "file",
@@ -937,6 +986,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioControlService.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioRoutingService.swift.o"
         },
         {
@@ -981,6 +1034,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/GlobalHotkeyService.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
         },
         {
@@ -990,6 +1047,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioControlServiceTests.swift.o"
         },
         {
           "kind" : "file",
@@ -1036,6 +1097,10 @@
         {
           "kind" : "virtual",
           "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioControlServiceTests.swift"
         },
         {
           "kind" : "file",
