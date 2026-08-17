@@ -1,1 +1,3 @@
-/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/main.swift
+/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/BTManagerApp.swift
+/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/BluetoothDevice.swift
+/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift
