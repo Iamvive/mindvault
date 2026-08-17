@@ -5,68 +5,89 @@ struct DeviceRowView: View {
     @ObservedObject var bluetoothService: BluetoothService
     @ObservedObject var preferencesStore: PreferencesStore
     let audioService: AudioRoutingService
+    let diagnosticService: DeviceDiagnosticService
+    let fixService: FixActionsService
+
+    @State private var isExpanded: Bool = false
 
     var body: some View {
-        HStack(spacing: 8) {
-            // Device Type Icon
-            Image(systemName: device.deviceType == .headphones ? "headphones" : "bluetooth")
-                .font(.system(size: 14))
-                .foregroundColor(device.isConnected ? .green : .secondary)
-                .frame(width: 20)
-
-            // Name & Connection Status
-            VStack(alignment: .leading, spacing: 2) {
-                Text(device.name)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
-
-                Text(device.isConnected ? "Connected" : "Disconnected")
-                    .font(.system(size: 10))
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 8) {
+                // Device Type Icon
+                Image(systemName: device.deviceType == .headphones ? "headphones" : "bluetooth")
+                    .font(.system(size: 14))
                     .foregroundColor(device.isConnected ? .green : .secondary)
-            }
+                    .frame(width: 20)
 
-            Spacer(minLength: 4)
+                // Name & Connection Status
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(device.name)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
 
-            // Exclusive Lock Toggle Button
-            Button(action: {
-                let currentLock = preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress)
-                preferencesStore.setExclusiveLock(macAddress: device.macAddress, enabled: !currentLock)
-                preferencesStore.setFavorite(macAddress: device.macAddress, isFavorite: true)
-            }) {
-                Image(systemName: preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress) ? "lock.fill" : "lock.open")
-                    .font(.system(size: 11))
-                    .foregroundColor(preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress) ? .orange : .secondary)
-            }
-            .buttonStyle(.plain)
-            .help("Toggle Exclusive Lock (Prevents phone interruptions)")
-
-            // Connect Action Button
-            Button(action: {
-                bluetoothService.forceConnect(macAddress: device.macAddress) { success in
-                    if success {
-                        audioService.setSystemAudioOutput(matchingDeviceName: device.name)
-                        audioService.setSystemAudioInput(matchingDeviceName: device.name)
-                    }
+                    Text(device.isConnected ? "Connected" : "Disconnected")
+                        .font(.system(size: 10))
+                        .foregroundColor(device.isConnected ? .green : .secondary)
                 }
-            }) {
-                Text(device.isConnected ? "Connected" : "Connect")
-                    .font(.system(size: 11, weight: .medium))
-            }
-            .buttonStyle(.bordered)
-            .controlSize(.small)
-            .disabled(bluetoothService.isConnecting || device.isConnected)
 
-            // Favorite Star Button
-            Button(action: {
-                let currentFav = preferencesStore.isFavorite(macAddress: device.macAddress)
-                preferencesStore.setFavorite(macAddress: device.macAddress, isFavorite: !currentFav)
-            }) {
-                Image(systemName: preferencesStore.isFavorite(macAddress: device.macAddress) ? "star.fill" : "star")
-                    .font(.system(size: 12))
-                    .foregroundColor(.yellow)
+                Spacer(minLength: 4)
+
+                // Expand Chevron Button
+                Button(action: { isExpanded.toggle() }) {
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .help("Toggle Health Diagnostics")
+
+                // Exclusive Lock Toggle Button
+                Button(action: {
+                    let currentLock = preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress)
+                    preferencesStore.setExclusiveLock(macAddress: device.macAddress, enabled: !currentLock)
+                    preferencesStore.setFavorite(macAddress: device.macAddress, isFavorite: true)
+                }) {
+                    Image(systemName: preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress) ? "lock.fill" : "lock.open")
+                        .font(.system(size: 11))
+                        .foregroundColor(preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress) ? .orange : .secondary)
+                }
+                .buttonStyle(.plain)
+                .help("Toggle Exclusive Lock")
+
+                // Connect Action Button
+                Button(action: {
+                    bluetoothService.forceConnect(macAddress: device.macAddress) { success in
+                        if success {
+                            audioService.setSystemAudioOutput(matchingDeviceName: device.name)
+                            audioService.setSystemAudioInput(matchingDeviceName: device.name)
+                        }
+                    }
+                }) {
+                    Text(device.isConnected ? "Connected" : "Connect")
+                        .font(.system(size: 11, weight: .medium))
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .disabled(bluetoothService.isConnecting || device.isConnected)
+
+                // Favorite Star Button
+                Button(action: {
+                    let currentFav = preferencesStore.isFavorite(macAddress: device.macAddress)
+                    preferencesStore.setFavorite(macAddress: device.macAddress, isFavorite: !currentFav)
+                }) {
+                    Image(systemName: preferencesStore.isFavorite(macAddress: device.macAddress) ? "star.fill" : "star")
+                        .font(.system(size: 12))
+                        .foregroundColor(.yellow)
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
+
+            if isExpanded {
+                let report = diagnosticService.inspect(device: device)
+                DiagnosticCardView(report: report, device: device, fixService: fixService)
+                    .transition(.opacity)
+            }
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 5)

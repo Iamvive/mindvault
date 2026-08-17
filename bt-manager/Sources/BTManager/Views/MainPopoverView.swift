@@ -5,6 +5,8 @@ struct MainPopoverView: View {
     @ObservedObject var preferencesStore: PreferencesStore
     @ObservedObject var watcher: AutoReconnectWatcher
     let audioService: AudioRoutingService
+    private let diagnosticService = DeviceDiagnosticService()
+    private let fixService = FixActionsService()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -44,7 +46,9 @@ struct MainPopoverView: View {
                             device: dev,
                             bluetoothService: bluetoothService,
                             preferencesStore: preferencesStore,
-                            audioService: audioService
+                            audioService: audioService,
+                            diagnosticService: diagnosticService,
+                            fixService: fixService
                         )
                     }
                 }
@@ -52,7 +56,7 @@ struct MainPopoverView: View {
                 Divider()
             }
 
-            // All Devices Section (Expands popover dynamically)
+            // All Devices Section
             VStack(alignment: .leading, spacing: 4) {
                 Text("PAIRED DEVICES")
                     .font(.system(size: 9, weight: .bold))
@@ -70,7 +74,9 @@ struct MainPopoverView: View {
                                 device: dev,
                                 bluetoothService: bluetoothService,
                                 preferencesStore: preferencesStore,
-                                audioService: audioService
+                                audioService: audioService,
+                                diagnosticService: diagnosticService,
+                                fixService: fixService
                             )
                         }
                     }
