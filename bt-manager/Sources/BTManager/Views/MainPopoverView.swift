@@ -52,7 +52,7 @@ struct MainPopoverView: View {
                 Divider()
             }
 
-            // All Devices Section
+            // All Devices Section (Expands popover dynamically)
             VStack(alignment: .leading, spacing: 4) {
                 Text("PAIRED DEVICES")
                     .font(.system(size: 9, weight: .bold))
@@ -64,19 +64,16 @@ struct MainPopoverView: View {
                         .foregroundColor(.secondary)
                         .padding(.vertical, 4)
                 } else {
-                    ScrollView {
-                        VStack(spacing: 4) {
-                            ForEach(bluetoothService.devices) { dev in
-                                DeviceRowView(
-                                    device: dev,
-                                    bluetoothService: bluetoothService,
-                                    preferencesStore: preferencesStore,
-                                    audioService: audioService
-                                )
-                            }
+                    VStack(spacing: 4) {
+                        ForEach(bluetoothService.devices) { dev in
+                            DeviceRowView(
+                                device: dev,
+                                bluetoothService: bluetoothService,
+                                preferencesStore: preferencesStore,
+                                audioService: audioService
+                            )
                         }
                     }
-                    .frame(maxHeight: 200)
                 }
             }
 
@@ -104,7 +101,7 @@ struct MainPopoverView: View {
             }
         }
         .padding(12)
-        .frame(width: 290)
+        .frame(width: 310)
         .onAppear {
             bluetoothService.fetchPairedDevices()
             watcher.start()
