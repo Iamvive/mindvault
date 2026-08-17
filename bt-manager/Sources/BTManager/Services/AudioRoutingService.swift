@@ -12,6 +12,15 @@ public final class AudioRoutingService {
 
     @discardableResult
     public func setSystemAudioOutput(matchingDeviceName targetName: String) -> Bool {
+        return setSystemAudioDevice(matchingDeviceName: targetName, isInput: false)
+    }
+
+    @discardableResult
+    public func setSystemAudioInput(matchingDeviceName targetName: String) -> Bool {
+        return setSystemAudioDevice(matchingDeviceName: targetName, isInput: true)
+    }
+
+    private func setSystemAudioDevice(matchingDeviceName targetName: String, isInput: Bool) -> Bool {
         var propertySize: UInt32 = 0
         var address = AudioObjectPropertyAddress(
             mSelector: kAudioHardwarePropertyDevices,
@@ -29,6 +38,8 @@ public final class AudioRoutingService {
             return false
         }
 
+        let targetSelector = isInput ? kAudioHardwarePropertyDefaultInputDevice : kAudioHardwarePropertyDefaultOutputDevice
+
         for id in deviceIDs {
             var nameSize: UInt32 = 0
             var nameAddress = AudioObjectPropertyAddress(
@@ -42,7 +53,7 @@ public final class AudioRoutingService {
                     let devName = String(cString: nameBuffer)
                     if AudioRoutingService.isDeviceMatch(deviceName: devName, targetName: targetName) {
                         var defaultAddress = AudioObjectPropertyAddress(
-                            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+                            mSelector: targetSelector,
                             mScope: kAudioObjectPropertyScopeGlobal,
                             mElement: kAudioObjectPropertyElementMain
                         )

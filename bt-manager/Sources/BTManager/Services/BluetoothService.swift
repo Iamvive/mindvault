@@ -4,7 +4,7 @@ import IOBluetooth
 public final class BluetoothService: ObservableObject {
     @Published public var devices: [BluetoothDevice] = []
     @Published public var isConnecting: Bool = false
-    @Published public var statusMessage: String = "Ready"
+    @Published public var statusMessage: String = "Loading devices..."
 
     private let blueutilPaths = [
         "/opt/homebrew/bin/blueutil",
@@ -32,17 +32,19 @@ public final class BluetoothService: ObservableObject {
         var result = [BluetoothDevice]()
 
         for raw in rawList {
-            guard !seenAddresses.contains(raw.address) else { continue }
-            seenAddresses.insert(raw.address)
+            let cleanAddress = raw.address.replacingOccurrences(of: "-", with: ":").uppercased()
+            guard !seenAddresses.contains(cleanAddress) else { continue }
+            seenAddresses.insert(cleanAddress)
 
-            let isHeadphones = (raw.name?.lowercased().contains("akg") == true ||
-                                raw.name?.lowercased().contains("headphone") == true ||
-                                raw.name?.lowercased().contains("buds") == true ||
-                                raw.name?.lowercased().contains("ebuddies") == true)
+            let nameStr = raw.name ?? "Unknown Device"
+            let isHeadphones = (nameStr.lowercased().contains("akg") ||
+                                nameStr.lowercased().contains("headphone") ||
+                                nameStr.lowercased().contains("buds") ||
+                                nameStr.lowercased().contains("ebuddies"))
             result.append(
                 BluetoothDevice(
-                    macAddress: raw.address,
-                    name: raw.name ?? "Unknown Device",
+                    macAddress: cleanAddress,
+                    name: nameStr,
                     isConnected: raw.connected ?? false,
                     isPaired: raw.paired ?? true,
                     deviceType: isHeadphones ? .headphones : .unknown
@@ -53,30 +55,53 @@ public final class BluetoothService: ObservableObject {
     }
 
     public func fetchPairedDevices() {
-        if let blueutil = activeBlueutilPath {
-            let output = runProcess(executable: blueutil, arguments: ["--paired", "--format", "json"])
-            let parsed = BluetoothService.parseDeviceJSON(output)
-            if !parsed.isEmpty {
-                DispatchQueue.main.async {
-                    self.devices = parsed
-                }
-                return
-            }
-        }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            var fetched: [BluetoothDevice] = []
 
-        // Fallback to IOBluetooth
-        guard let pairedIO = IOBluetoothDevice.pairedDevices() as? [IOBluetoothDevice] else { return }
-        DispatchQueue.main.async {
-            self.devices = pairedIO.map { ioDevice in
-                BluetoothDevice(
-                    macAddress: ioDevice.addressString ?? "Unknown",
-                    name: ioDevice.nameOrAddress ?? "Unknown Device",
-                    isConnected: ioDevice.isConnected(),
-                    isPaired: true,
-                    batteryLevel: nil,
-                    rssi: Int(ioDevice.rawRSSI()),
-                    deviceType: ioDevice.isHeadset ? .headphones : .unknown
-                )
+            // 1. Try blueutil CLI
+            if let blueutil = self.activeBlueutilPath {
+                let output = self.runProcess(executable: blueutil, arguments: ["--paired", "--format", "json"])
+                fetched = BluetoothService.parseDeviceJSON(output)
+            }
+
+            // 2. Fallback / Merge with IOBluetooth
+            if let pairedIO = IOBluetoothDevice.pairedDevices() as? [IOBluetoothDevice] {
+                for ioDevice in pairedIO {
+                    guard let rawAddr = ioDevice.addressString else { continue }
+                    let cleanAddr = rawAddr.replacingOccurrences(of: "-", with: ":").uppercased()
+                    let nameStr = ioDevice.nameOrAddress ?? "Unknown Device"
+                    let isConn = ioDevice.isConnected()
+
+                    if let idx = fetched.firstIndex(where: { $0.macAddress == cleanAddr }) {
+                        fetched[idx].isConnected = fetched[idx].isConnected || isConn
+                    } else {
+                        let isHeadphones = nameStr.lowercased().contains("akg") ||
+                                           nameStr.lowercased().contains("headphone") ||
+                                           nameStr.lowercased().contains("buds")
+                        fetched.append(
+                            BluetoothDevice(
+                                macAddress: cleanAddr,
+                                name: nameStr,
+                                isConnected: isConn,
+                                isPaired: true,
+                                batteryLevel: nil,
+                                rssi: Int(ioDevice.rawRSSI()),
+                                deviceType: isHeadphones ? .headphones : .unknown
+                            )
+                        )
+                    }
+                }
+            }
+
+            DispatchQueue.main.async {
+                self.devices = fetched
+                if fetched.isEmpty {
+                    self.statusMessage = "No paired devices found"
+                } else {
+                    let connectedCount = fetched.filter { $0.isConnected }.count
+                    self.statusMessage = "\(fetched.count) paired device(s) (\(connectedCount) connected)"
+                }
             }
         }
     }
@@ -85,12 +110,14 @@ public final class BluetoothService: ObservableObject {
         self.isConnecting = true
         self.statusMessage = "Connecting to \(macAddress)..."
         
-        DispatchQueue.global().async { [weak self] in
+        let blueutilFormattedAddr = macAddress.replacingOccurrences(of: ":", with: "-").lowercased()
+
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             
-            // 1. Disconnect to clear link
+            // 1. Disconnect to clear stale socket
             if let blueutil = self.activeBlueutilPath {
-                _ = self.runProcess(executable: blueutil, arguments: ["--disconnect", macAddress])
+                _ = self.runProcess(executable: blueutil, arguments: ["--disconnect", blueutilFormattedAddr])
             } else if let ioDevice = IOBluetoothDevice(addressString: macAddress) {
                 ioDevice.closeConnection()
             }
@@ -105,7 +132,7 @@ public final class BluetoothService: ObservableObject {
                 }
 
                 if let blueutil = self.activeBlueutilPath {
-                    let res = self.runProcess(executable: blueutil, arguments: ["--connect", macAddress])
+                    let res = self.runProcess(executable: blueutil, arguments: ["--connect", blueutilFormattedAddr])
                     if !res.contains("Failed") {
                         success = true
                         break
@@ -126,7 +153,7 @@ public final class BluetoothService: ObservableObject {
                     self.fetchPairedDevices()
                     completion(true)
                 } else {
-                    self.statusMessage = "Connection failed. Turn AKG off/on or disconnect from phone."
+                    self.statusMessage = "Connection failed. Check AKG pairing LED."
                     completion(false)
                 }
             }
@@ -149,12 +176,5 @@ public final class BluetoothService: ObservableObject {
         } catch {
             return ""
         }
-    }
-}
-
-private extension IOBluetoothDevice {
-    var isHeadset: Bool {
-        let name = (self.nameOrAddress ?? "").lowercased()
-        return name.contains("akg") || name.contains("headphone") || name.contains("pods") || name.contains("buds")
     }
 }
