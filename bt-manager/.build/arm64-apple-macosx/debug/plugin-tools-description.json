@@ -52,6 +52,14 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
         },
         {
@@ -68,7 +76,9 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioRoutingService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o",
-        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o"
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -153,6 +163,14 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/Modules/BTManager.swiftmodule"
         }
       ],
@@ -163,7 +181,9 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
-        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift"
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
       ],
       "tempsPath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build",
       "wholeModuleOptimization" : false
@@ -427,6 +447,8 @@
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift",
       "-I",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -699,6 +721,14 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
         }
       ],
       "outputFilePath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/sources"
@@ -729,6 +759,14 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
         },
         {
           "kind" : "file",
@@ -777,6 +815,14 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
         },
         {
           "kind" : "file",

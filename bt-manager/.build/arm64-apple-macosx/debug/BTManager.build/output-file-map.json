@@ -43,5 +43,19 @@
     "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore~partial.swiftmodule",
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swiftdeps",
     "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.dia"
+  },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.dia"
+  },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.dia"
   }
 }
