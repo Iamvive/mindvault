@@ -9,6 +9,13 @@
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BTManagerSanityTests.swiftdeps",
     "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BTManagerSanityTests.dia"
   },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BluetoothServiceTests.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests.dia"
+  },
   "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift": {
     "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.d",
     "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.swift.o",
