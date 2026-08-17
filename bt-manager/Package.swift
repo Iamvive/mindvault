@@ -13,10 +13,7 @@ let package = Package(
         .executableTarget(
             name: "BTManager",
             dependencies: [],
-            path: "Sources/BTManager",
-            resources: [
-                .process("Info.plist")
-            ]
+            path: "Sources/BTManager"
         ),
         .testTarget(
             name: "BTManagerTests",
