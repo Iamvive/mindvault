@@ -44,6 +44,13 @@
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swiftdeps",
     "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.dia"
   },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceDiagnosticService.dia"
+  },
   "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift": {
     "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.d",
     "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o",

@@ -37,6 +37,13 @@
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticReportTests.swiftdeps",
     "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticReportTests.dia"
   },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/DeviceDiagnosticServiceTests.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/DeviceDiagnosticServiceTests.dia"
+  },
   "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift": {
     "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.d",
     "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.swift.o",
