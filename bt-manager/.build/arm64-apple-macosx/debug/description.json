@@ -40,6 +40,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift"
         },
         {
@@ -62,6 +66,7 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BTManagerApp.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothDevice.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioRoutingService.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o"
       ],
@@ -136,6 +141,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BluetoothService.swift.o"
         },
         {
@@ -152,6 +161,7 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/BTManagerApp.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/BluetoothDevice.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift"
       ],
@@ -270,6 +280,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BTManagerSanityTests.swift"
         },
         {
@@ -298,6 +312,7 @@
       "moduleOutputPath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/Modules/BTManagerTests.swiftmodule",
       "objects" : [
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioRoutingServiceTests.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AutoReconnectWatcherTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BTManagerSanityTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BluetoothServiceTests.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/PreferencesStoreTests.swift.o"
@@ -364,6 +379,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AutoReconnectWatcherTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/BTManagerSanityTests.swift.o"
         },
         {
@@ -382,6 +401,7 @@
       "prepareForIndexing" : false,
       "sources" : [
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BTManagerSanityTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BluetoothServiceTests.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift"
@@ -404,6 +424,7 @@
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/BTManagerApp.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Models/BluetoothDevice.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AudioRoutingService.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
       "-I",
@@ -538,6 +559,7 @@
       "bt_manager",
       "-c",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BTManagerSanityTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/BluetoothServiceTests.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift",
@@ -668,6 +690,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/BluetoothService.swift"
         },
         {
@@ -687,6 +713,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AudioRoutingService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o"
         },
         {
           "kind" : "file",
@@ -734,6 +764,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/AutoReconnectWatcher.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/BTManagerApp.swift.o"
         },
         {
@@ -755,6 +789,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AudioRoutingServiceTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManagerTests.build/AutoReconnectWatcherTests.swift.o"
         },
         {
           "kind" : "file",
@@ -781,6 +819,10 @@
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift"
         },
         {
           "kind" : "file",
