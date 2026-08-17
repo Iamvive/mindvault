@@ -7,7 +7,7 @@ struct DeviceRowView: View {
     let audioService: AudioRoutingService
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             // Device Type Icon
             Image(systemName: device.deviceType == .headphones ? "headphones" : "bluetooth")
                 .font(.system(size: 14))
@@ -28,7 +28,20 @@ struct DeviceRowView: View {
 
             Spacer(minLength: 4)
 
-            // Action Button
+            // Exclusive Lock Toggle Button
+            Button(action: {
+                let currentLock = preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress)
+                preferencesStore.setExclusiveLock(macAddress: device.macAddress, enabled: !currentLock)
+                preferencesStore.setFavorite(macAddress: device.macAddress, isFavorite: true)
+            }) {
+                Image(systemName: preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress) ? "lock.fill" : "lock.open")
+                    .font(.system(size: 11))
+                    .foregroundColor(preferencesStore.isExclusiveLockEnabled(macAddress: device.macAddress) ? .orange : .secondary)
+            }
+            .buttonStyle(.plain)
+            .help("Toggle Exclusive Lock (Prevents phone interruptions)")
+
+            // Connect Action Button
             Button(action: {
                 bluetoothService.forceConnect(macAddress: device.macAddress) { success in
                     if success {
@@ -44,7 +57,7 @@ struct DeviceRowView: View {
             .controlSize(.small)
             .disabled(bluetoothService.isConnecting || device.isConnected)
 
-            // Favorite Star
+            // Favorite Star Button
             Button(action: {
                 let currentFav = preferencesStore.isFavorite(macAddress: device.macAddress)
                 preferencesStore.setFavorite(macAddress: device.macAddress, isFavorite: !currentFav)
