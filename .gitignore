@@ -18,3 +18,10 @@ frontend/dist/
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Graphify & internal caches
+graphify-out/
+.superpowers/
+apple-cockpit/**/node_modules/
+apple-cockpit/**/dist/
+
