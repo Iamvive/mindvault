@@ -48,7 +48,9 @@ export default function App() {
         )}
 
         {activeTab === 'desk' && (
-          <DeskArrangement />
+          <DeskArrangement 
+            onTriggerAction={handleTriggerAction}
+          />
         )}
 
         {activeTab === 'diagnostics' && (

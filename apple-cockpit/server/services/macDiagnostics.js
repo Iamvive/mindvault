@@ -187,6 +187,12 @@ function executeRepair(actionId) {
       result.message = 'Opened native macOS Screen Sharing app.';
       break;
 
+    case 'open-displays':
+      safeExec('open "x-apple.systempreferences:com.apple.Displays-Settings.extension" 2>/dev/null || open /System/Library/PreferencePanes/Displays.prefPane 2>/dev/null || true');
+      result.success = true;
+      result.message = 'Opened macOS System Settings > Displays for physical arrangement matching.';
+      break;
+
     case 'trigger-airdrop':
       safeExec('osascript -e \'tell application "Finder" to open (POSIX file "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app")\' 2>/dev/null || open /System/Library/CoreServices/Finder.app');
       result.success = true;
