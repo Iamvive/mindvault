@@ -75,28 +75,28 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/bot.py": {
-    "mtime": 1785254298.2024367,
-    "ast_hash": "eb942dfa551ae2cc54590ceebb3f9c4e",
+    "mtime": 1785854413.3080199,
+    "ast_hash": "f2269bfcdc6a00e2d0a0c072bc4fb62e",
     "semantic_hash": ""
   },
   "telegram-finance-bot/categorize.py": {
-    "mtime": 1784465298.2998514,
-    "ast_hash": "6126a1e0809a49f37c086b5a887f762d",
+    "mtime": 1785952110.2310286,
+    "ast_hash": "c461eb0b15e44aedc9a41e9cec631ff2",
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard.py": {
-    "mtime": 1785168829.2751942,
-    "ast_hash": "57f3322dc2643830897accfc3ec00f06",
+    "mtime": 1785489320.2921503,
+    "ast_hash": "01844c0adc287c646882e6de04308e5b",
     "semantic_hash": ""
   },
   "telegram-finance-bot/db.py": {
-    "mtime": 1785328338.690692,
-    "ast_hash": "65e243397efbf013f4a4437538e3ccfa",
+    "mtime": 1786194545.2599788,
+    "ast_hash": "84b3beda209d5838ac98b9892edf6f54",
     "semantic_hash": ""
   },
   "telegram-finance-bot/llm_extract.py": {
-    "mtime": 1785328930.401616,
-    "ast_hash": "a00719c0bbc293a30dd52ed968770815",
+    "mtime": 1785864173.474737,
+    "ast_hash": "3b592349989ddee3728e413a0658fc89",
     "semantic_hash": ""
   },
   "telegram-finance-bot/scheduler.py": {
@@ -110,18 +110,18 @@
     "semantic_hash": "6d4d3c2796c944904d2b986505bca8f8"
   },
   "telegram-finance-bot/sync_to_vps.sh": {
-    "mtime": 1785327947.0859897,
-    "ast_hash": "46fe18678c302168aa52b38c04f5be95",
+    "mtime": 1786190236.866162,
+    "ast_hash": "cb8f113aaff24ba3f40e6f8f2005bf04",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_pipeline.py": {
-    "mtime": 1785169832.1979759,
-    "ast_hash": "01a394a42619aa91212acc38dcab8599",
+    "mtime": 1785952424.192257,
+    "ast_hash": "76e5b1467223e1f2d37e3ec8cc678d27",
     "semantic_hash": ""
   },
   "telegram-finance-bot/query_qa.py": {
-    "mtime": 1785169209.777168,
-    "ast_hash": "cef15ba78c8c965a8bd29c9c55400058",
+    "mtime": 1785854391.2959375,
+    "ast_hash": "a09365f126621524015cf95922e3b4a1",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_query_qa.py": {
@@ -260,13 +260,13 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1785324137.254989,
-    "ast_hash": "8e314e20966af1c5e55f5f167f558acc",
+    "mtime": 1787588266.3460538,
+    "ast_hash": "cb0c35fe0f197934d8e45b0b70c7da70",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1785324137.2553544,
-    "ast_hash": "8e314e20966af1c5e55f5f167f558acc",
+    "mtime": 1787588266.346439,
+    "ast_hash": "cb0c35fe0f197934d8e45b0b70c7da70",
     "semantic_hash": ""
   },
   ".agent/skills/brainstorming/SKILL.md": {
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   ".agents/AGENTS.md": {
-    "mtime": 1785256458.633496,
-    "ast_hash": "34b3ac0f3d18960bc53c034bc13deaa2",
+    "mtime": 1785868562.3519094,
+    "ast_hash": "4ec9af25d8cc84b82016c4aa70b395d4",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -500,18 +500,18 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard/template.html": {
-    "mtime": 1785329594.1821814,
-    "ast_hash": "c20e2a95cf25493fe1ae6ade6724e60e",
+    "mtime": 1786192042.312697,
+    "ast_hash": "7675925096c29d550ef85e8efea7dc34",
     "semantic_hash": ""
   },
   "telegram-finance-bot/docker-compose.yml": {
-    "mtime": 1785327935.187826,
-    "ast_hash": "0ecb0529e1468340425515b749403064",
+    "mtime": 1785343344.2863147,
+    "ast_hash": "8f71f848b092a1afbc0e10b11cd91deb",
     "semantic_hash": ""
   },
   "telegram-finance-bot/requirements.txt": {
-    "mtime": 1784290570.0471852,
-    "ast_hash": "c1ea2834cd8406005cdb19e999f74521",
+    "mtime": 1785343420.5675702,
+    "ast_hash": "a2fda0a08c1140b2eb92706df01ba628",
     "semantic_hash": ""
   },
   "frontend/public/favicon.svg": {
@@ -810,23 +810,23 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/callbacks.py": {
-    "mtime": 1785254281.4898093,
-    "ast_hash": "006728123cb292a95a2fc5d855888e97",
+    "mtime": 1785489300.072178,
+    "ast_hash": "a0b17897d3f6d56aba1181e6dd26e342",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/commands.py": {
-    "mtime": 1785325414.0769572,
-    "ast_hash": "d9b2c92a6e25244ee1619548d180e51e",
+    "mtime": 1786030936.5710182,
+    "ast_hash": "a03e38868ee50f204c5c0ecae62c016e",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/http_server.py": {
-    "mtime": 1785329176.4612179,
-    "ast_hash": "920b082454f8ce8cdb94e87cc30ab133",
+    "mtime": 1786194492.6147745,
+    "ast_hash": "8a1220a369105a9f2557fdedf618f9b3",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/messages.py": {
-    "mtime": 1785254290.4046016,
-    "ast_hash": "05dd2b9ae4ddad33944c227788174189",
+    "mtime": 1785952081.318284,
+    "ast_hash": "c7fc47d66be7791a0bafb54f77310305",
     "semantic_hash": ""
   },
   "telegram-finance-bot/rollback.sh": {
@@ -835,8 +835,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_auth_sso.py": {
-    "mtime": 1785327778.0955842,
-    "ast_hash": "fe2a078b03b6102deda63bde99a497bb",
+    "mtime": 1786030979.3033767,
+    "ast_hash": "ad1cd9d6e315f0215c1a3a6e78dc4744",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-07-29-google-sso-auth.md": {
@@ -847,6 +847,706 @@
   "docs/superpowers/specs/2026-07-29-google-sso-auth-design.md": {
     "mtime": 1785325128.8426516,
     "ast_hash": "e399e2128aae333ed0c40b0e6d93de39",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/package.json": {
+    "mtime": 1785330587.4832432,
+    "ast_hash": "c5d16ee3afead24f4eef67ca526e12dd",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/data/furnitureCatalog.json": {
+    "mtime": 1785330618.0775332,
+    "ast_hash": "7e5b3577ef4d0daf3f470f116b246912",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/index.ts": {
+    "mtime": 1785330663.9289505,
+    "ast_hash": "99d53714b6f72c6d2b8a43363dd94e1b",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/routes/roomRoutes.ts": {
+    "mtime": 1785332095.3452477,
+    "ast_hash": "50b0d27488e3a67e0c0dc3cee728d94f",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/services/catalogService.test.ts": {
+    "mtime": 1785330622.0342877,
+    "ast_hash": "43c4f419236dabd1fd3653f273d93484",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/services/catalogService.ts": {
+    "mtime": 1785330626.2140968,
+    "ast_hash": "1f89499613623e5172c5af708f3d2d10",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/services/geminiService.test.ts": {
+    "mtime": 1785332122.9375842,
+    "ast_hash": "0192c27eab41a854c1313032ea37d3be",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/services/geminiService.ts": {
+    "mtime": 1785332088.8371906,
+    "ast_hash": "0eef216856cdf1859712f12c860ff9de",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/services/imageGenService.test.ts": {
+    "mtime": 1785330651.8828743,
+    "ast_hash": "f711fb5bd9ea3a546eece2373402658f",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/services/imageGenService.ts": {
+    "mtime": 1785334029.1994684,
+    "ast_hash": "ec450a5b1c4d8f1c7cf9425cf4082246",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/src/types/room.ts": {
+    "mtime": 1785332083.7067184,
+    "ast_hash": "67d4165e2a359f08c09e9fed1d3ad53e",
+    "semantic_hash": ""
+  },
+  "room-ai/backend/tsconfig.json": {
+    "mtime": 1785330544.2636464,
+    "ast_hash": "7ac5a3bbd9abb7f01745aedb486bb846",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/package.json": {
+    "mtime": 1785330561.656233,
+    "ast_hash": "4df08c11c03ff3be18393a7a384c6837",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/App.tsx": {
+    "mtime": 1785332113.9767938,
+    "ast_hash": "741e056814c73475c24c2e0353fd243d",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/components/MakeoverView.tsx": {
+    "mtime": 1785334035.9372404,
+    "ast_hash": "09587f338531ccacd2293a0bc2b08d2d",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/components/PreferencesStep.tsx": {
+    "mtime": 1785330691.554818,
+    "ast_hash": "4a3a38ed8b22d7a5572cd233b74762b7",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/components/RecommendationCard.tsx": {
+    "mtime": 1785330698.1576345,
+    "ast_hash": "bacbf7490591086a9b93e2e4b81c10bd",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/components/UploadStep.tsx": {
+    "mtime": 1785332107.9382162,
+    "ast_hash": "f988760a534510e51eaa5e0a4b92c862",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/components/WizardStepper.tsx": {
+    "mtime": 1785330680.7792027,
+    "ast_hash": "89ca46be6e7dcd0fc762c163d9c422d5",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/main.tsx": {
+    "mtime": 1785330715.6041656,
+    "ast_hash": "e4f333ed53d8ba57d80e92bc80468a02",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/src/types/room.ts": {
+    "mtime": 1785330570.3778872,
+    "ast_hash": "d955a642f1710f459a4e760c17662245",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/tsconfig.json": {
+    "mtime": 1785330722.6346846,
+    "ast_hash": "5221e53c419acd58757c657be7344df3",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/vite.config.ts": {
+    "mtime": 1785330566.3318121,
+    "ast_hash": "6a0b19dc93c2fd32c5dd1273d83c3ed4",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/mcp_server.py": {
+    "mtime": 1786193681.477337,
+    "ast_hash": "d03607c63b156b8f142ff273233b2465",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/test_mcp_server.py": {
+    "mtime": 1785854460.6905622,
+    "ast_hash": "0fe4fce69ec627d328ba4c3454e797ef",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-29-room-ai-implementation-plan.md": {
+    "mtime": 1785330518.8067641,
+    "ast_hash": "107efbe4d42b659c7653c0a79580f63c",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-29-telegram-finance-mcp.md": {
+    "mtime": 1785341923.1671078,
+    "ast_hash": "8f84a98f0bfadf9b995ea63e9c32f242",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-29-room-ai-design.md": {
+    "mtime": 1785330473.5900962,
+    "ast_hash": "7c4728907bd1e741b6aab14dcd8028f6",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-29-telegram-finance-mcp-design.md": {
+    "mtime": 1785341876.6370468,
+    "ast_hash": "21a5c434ab7ccbba6a92c68c1f525ab7",
+    "semantic_hash": ""
+  },
+  "room-ai/frontend/index.html": {
+    "mtime": 1785330582.8180492,
+    "ast_hash": "a9f201599ae329f8e121b51e14638302",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/plans/2026-07-31-budget-month-tracker-plan.md": {
+    "mtime": 1785489205.2616677,
+    "ast_hash": "4c063abbdea2fccefeeea51a1db98aec",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/specs/2026-07-31-budget-month-tracker-design.md": {
+    "mtime": 1785489197.685455,
+    "ast_hash": "e3c7e742a5f62e7815cfe8be66167ff5",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-03-user-uuid-identity-architecture-design.md": {
+    "mtime": 1785770970.1156924,
+    "ast_hash": "c1af0d2bdbf0d7a7ea0626cb82291059",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/rate_limiter.py": {
+    "mtime": 1785856150.8647373,
+    "ast_hash": "20897324e845a37cce1404866aeb4c9e",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/test_categorize.py": {
+    "mtime": 1785864085.9399521,
+    "ast_hash": "5aabaf2d3c9585c8dc388f6f1d823e59",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/test_rate_limiter.py": {
+    "mtime": 1785856136.5073984,
+    "ast_hash": "2b4c89f867f013f7b735dde5f1185e9a",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/test_token_db.py": {
+    "mtime": 1785854298.646453,
+    "ast_hash": "3bc9216305606b42314fb3738d29c7af",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/test_token_tracker.py": {
+    "mtime": 1785864200.0627792,
+    "ast_hash": "0fc5714f6a055eb67467691939b417e4",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/token_tracker.py": {
+    "mtime": 1785854342.7247956,
+    "ast_hash": "8576547d0ce3dba7cf179aedede9539a",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-03-user-uuid-identity-architecture.md": {
+    "mtime": 1785771082.375673,
+    "ast_hash": "306a16a7a0795bdddedab7c0b0ef609b",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-03-auto-logout-session-expiration-design.md": {
+    "mtime": 1785771996.7859297,
+    "ast_hash": "3e9032c5748754ffaebe7d11cbe1578d",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/KANBAN.md": {
+    "mtime": 1785862781.0447226,
+    "ast_hash": "1317a3f7823a0add7ecae8129f208619",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-04-api-rate-limiting.md": {
+    "mtime": 1785855999.9537106,
+    "ast_hash": "29d817291c133f9c25c82a451718a2ef",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-04-llm-cost-optimization.md": {
+    "mtime": 1785864029.243396,
+    "ast_hash": "9f0d4daaa1eba5330fa8195c0fbc5373",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-04-token-usage-instrumentation.md": {
+    "mtime": 1785853748.4909525,
+    "ast_hash": "df5a9d117a0768d7fcec8d782a490369",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-08-rebranding-wealthwise.md": {
+    "mtime": 1785862776.421925,
+    "ast_hash": "c02df5168ba9e6393e2cd17b34c5e2dc",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/specs/2026-08-03-auto-logout-session-expiration-design.md": {
+    "mtime": 1785772108.9079275,
+    "ast_hash": "3e9032c5748754ffaebe7d11cbe1578d",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/specs/2026-08-04-api-rate-limiting-design.md": {
+    "mtime": 1785855980.4564188,
+    "ast_hash": "a74a9e43274bb71b829004e17e5d9749",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/specs/2026-08-04-llm-cost-optimization-design.md": {
+    "mtime": 1785863996.7826104,
+    "ast_hash": "0071ebf67a78d7a1d072b5ee24a7d3c9",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/specs/2026-08-04-token-usage-instrumentation-design.md": {
+    "mtime": 1785853669.1002977,
+    "ast_hash": "1bd507bc9bb65f5010f424eec548b203",
+    "semantic_hash": ""
+  },
+  ".claude/settings.local.json": {
+    "mtime": 1785952475.1156616,
+    "ast_hash": "217c144a866afebc2cc60b72d55d15f2",
+    "semantic_hash": ""
+  },
+  ".codex/hooks.json": {
+    "mtime": 1786204802.1494408,
+    "ast_hash": "ea959d4aee936b477b88453f7d851a53",
+    "semantic_hash": ""
+  },
+  "bt-manager/Package.swift": {
+    "mtime": 1786954875.8793445,
+    "ast_hash": "0901ff2b66c82bc71227ce69c6f105b1",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/BTManagerApp.swift": {
+    "mtime": 1787587739.8886037,
+    "ast_hash": "d6916c7066dccb88749098ab64f18002",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Models/BluetoothDevice.swift": {
+    "mtime": 1786954832.7925289,
+    "ast_hash": "098e8c4f81b3f657cc9d5675f434c81c",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Models/DeviceDiagnosticReport.swift": {
+    "mtime": 1786958011.950826,
+    "ast_hash": "8806b25c9598354b56a2ca6264a73400",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/AudioRoutingService.swift": {
+    "mtime": 1786958095.2753859,
+    "ast_hash": "88feb789507f155327e4b76d993f611e",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/AutoReconnectWatcher.swift": {
+    "mtime": 1786957346.0975435,
+    "ast_hash": "9c2803b26a3ffe9a2f906f6125a08702",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/BluetoothService.swift": {
+    "mtime": 1786956582.1667242,
+    "ast_hash": "ca1b823e6d5d439dc56a4a4c751a7ead",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift": {
+    "mtime": 1786958102.7765694,
+    "ast_hash": "9e7fe55ece1e9d68783d2db0af84832d",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/FixActionsService.swift": {
+    "mtime": 1786958074.3751683,
+    "ast_hash": "2cd570fd22aa261813e7a54a78ee2dd4",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/PreferencesStore.swift": {
+    "mtime": 1786957340.6775103,
+    "ast_hash": "7bc32769b3e5d109acb9228a0397955f",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Views/DeviceRowView.swift": {
+    "mtime": 1786974879.07791,
+    "ast_hash": "ab79ff6c37d17bd2782bea818ab5197c",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Views/DiagnosticCardView.swift": {
+    "mtime": 1786958125.6770604,
+    "ast_hash": "278e512fc317e1a9c9050d5e38cd2c0f",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Views/MainPopoverView.swift": {
+    "mtime": 1786974884.6163824,
+    "ast_hash": "26cf75e00995e14db95645ab92d0bbe7",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift": {
+    "mtime": 1786954937.4579384,
+    "ast_hash": "589ddde06c52f4b2e92f9d73a5aaca01",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/AutoReconnectWatcherTests.swift": {
+    "mtime": 1786954956.0566413,
+    "ast_hash": "4bd966b26ff221ca0ea1aad1b1111318",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/BTManagerSanityTests.swift": {
+    "mtime": 1786954789.0305724,
+    "ast_hash": "1cb8fdcb11c8ce5931fade8cd5820b01",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/BluetoothServiceTests.swift": {
+    "mtime": 1786954916.3029816,
+    "ast_hash": "4a03d4209784154f0636df6d2bafa8a5",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/DeviceDiagnosticReportTests.swift": {
+    "mtime": 1786958020.4089537,
+    "ast_hash": "860ea24bab57092d9860c94c44d1bb67",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/DeviceDiagnosticServiceTests.swift": {
+    "mtime": 1786958049.9613178,
+    "ast_hash": "6ffb47990915cb305369869ebedcf840",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/FixActionsServiceTests.swift": {
+    "mtime": 1786958080.842943,
+    "ast_hash": "4775785b20ac84f73d68e596bcaebf43",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/PreferencesStoreTests.swift": {
+    "mtime": 1786954842.6997633,
+    "ast_hash": "4a2681e54f7bbf004abcb35d9f3fa973",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/dashboard/wealth/wealth.js": {
+    "mtime": 1786194123.6668253,
+    "ast_hash": "d8728b82074c56787290a7a80a1a228d",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/db_wealth.py": {
+    "mtime": 1786985512.0322602,
+    "ast_hash": "e361d1e39743ca6a22b082e4da8145b9",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/handlers/wealth_server.py": {
+    "mtime": 1786193545.6357706,
+    "ast_hash": "3fe7136b92bbce6a65aa862f1483af18",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/manana_wealth.py": {
+    "mtime": 1786985546.5378673,
+    "ast_hash": "9203c8693e16b33dbda76a1da404f900",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_api_endpoints.py": {
+    "mtime": 1786172196.740376,
+    "ast_hash": "1d2d50b93e0bf384237df878f54480ac",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_mcp_auth.py": {
+    "mtime": 1786172183.6402276,
+    "ast_hash": "95933de4cea71133ed89d5bf15f32764",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_migration.py": {
+    "mtime": 1786172026.3688138,
+    "ast_hash": "4900c1c297df072e45e072b3051cab90",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_wealth_api.py": {
+    "mtime": 1786176250.922248,
+    "ast_hash": "29df95a943bd212a722d8f78330ec1e2",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_wealth_audit.py": {
+    "mtime": 1786176356.8207111,
+    "ast_hash": "3a44a2d6625273f48c008555cef5a3e4",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_wealth_db.py": {
+    "mtime": 1786176179.7912288,
+    "ast_hash": "5034e56767cc789bb5d124e90e095125",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1786204802.149067,
+    "ast_hash": "614c6843d2e15dbf13dd2146b36477f6",
+    "semantic_hash": ""
+  },
+  "bt-manager/README.md": {
+    "mtime": 1787587868.4772534,
+    "ast_hash": "a6fca47f24c4c4fa9aac9468fc9fb0aa",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/plans/2026-08-17-bluetooth-device-inspector-plan.md": {
+    "mtime": 1786957986.905124,
+    "ast_hash": "e407bedc27aacf41992ebac1f7665969",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/plans/2026-08-17-bluetooth-device-manager-plan.md": {
+    "mtime": 1786954747.2270117,
+    "ast_hash": "86952d8f3cf8e1485eca4de89bfb6b88",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/specs/2026-08-17-bluetooth-device-inspector-design.md": {
+    "mtime": 1786957961.9029965,
+    "ast_hash": "3e6af5bf0c93d8dd24eef062608c15ad",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/specs/2026-08-17-bluetooth-device-manager-design.md": {
+    "mtime": 1786954724.3602552,
+    "ast_hash": "c1944745d525038458be046f7ca9f6e4",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-08-codex-setup.md": {
+    "mtime": 1786204185.0986342,
+    "ast_hash": "3847516c91ed9e8c58a3e75e40f892de",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-08-decouple-user-ids-and-secure-mcp.md": {
+    "mtime": 1786171482.6420398,
+    "ast_hash": "489aea1fe82f90da116b2ee3896b1782",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-08-wealth-monitor.md": {
+    "mtime": 1786176143.7111876,
+    "ast_hash": "3fc7898289e17cb490d18281e86968cb",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-08-codex-setup-design.md": {
+    "mtime": 1786204172.7077663,
+    "ast_hash": "811433ee4684acf4f05a3a606230c3fa",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-08-decouple-user-ids-and-secure-mcp-design.md": {
+    "mtime": 1786171399.8378525,
+    "ast_hash": "4796563a430e44b3c9618b611cbc302f",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-08-wealth-monitor-design.md": {
+    "mtime": 1786176091.0915313,
+    "ast_hash": "3e48c2bf9c6ab1f9c62b2a779efdddd2",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Models/EQPreset.swift": {
+    "mtime": 1786974820.6967468,
+    "ast_hash": "b566b8984bae3382c2f8125c0e083446",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/AudioControlService.swift": {
+    "mtime": 1786975150.4578245,
+    "ast_hash": "c7fea7c9e8aa80c24a878ab0d3d9fdeb",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Services/GlobalHotkeyService.swift": {
+    "mtime": 1786974850.4402423,
+    "ast_hash": "f8455d0b797556e9c74434a3ad734aa9",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Views/HeadphoneAudioControlView.swift": {
+    "mtime": 1786975164.9399116,
+    "ast_hash": "d23d33508970267523169fd6feee0d50",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Views/RotaryKnobView.swift": {
+    "mtime": 1786975159.6941054,
+    "ast_hash": "8a752043c828aca16b84b655e1b5d10c",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/AudioControlServiceTests.swift": {
+    "mtime": 1786975154.9794576,
+    "ast_hash": "607617b952031feb77a0aa8e6f064e26",
+    "semantic_hash": ""
+  },
+  "bt-manager/Tests/BTManagerTests/EQPresetTests.swift": {
+    "mtime": 1786974825.641873,
+    "ast_hash": "d95379fbaf90ec09b1c55a0426860cbb",
+    "semantic_hash": ""
+  },
+  "bt-manager/build_app.sh": {
+    "mtime": 1787587756.807071,
+    "ast_hash": "c8147920311ff6869ebe2629fc143938",
+    "semantic_hash": ""
+  },
+  "bt-manager/setup_auto_start.sh": {
+    "mtime": 1787587852.3166082,
+    "ast_hash": "2234b393d7012b3d10dc93864116dada",
+    "semantic_hash": ""
+  },
+  "bt-manager/stop_auto_start.sh": {
+    "mtime": 1787587833.9627855,
+    "ast_hash": "f52bc21e1d924c48018b66342fb9ada3",
+    "semantic_hash": ""
+  },
+  "dev_tools.sh": {
+    "mtime": 1786962158.855117,
+    "ast_hash": "0c2e124ca9aa7f76a446c811b5ae2269",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_wealth_audit_runner.py": {
+    "mtime": 1786985522.304315,
+    "ast_hash": "96dff278a72ce91fb88f5b111c573cea",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_zerodha_sync.py": {
+    "mtime": 1786985502.7186222,
+    "ast_hash": "d4cce320419734112c92bdadb1751ab6",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/plans/2026-08-17-headphone-audio-controls-plan.md": {
+    "mtime": 1786974767.3732355,
+    "ast_hash": "9c1561b91cd3786bffde1c26281268cd",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/plans/2026-08-17-stepped-rotary-controls-plan.md": {
+    "mtime": 1786975139.5050626,
+    "ast_hash": "6e7f98c25ccb9040de74057428f09586",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/specs/2026-08-17-headphone-audio-controls-design.md": {
+    "mtime": 1786975131.5123312,
+    "ast_hash": "a6650095ebba2c927c49d01718aed3d7",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-17-wealth-checkup-zerodha-mcp.md": {
+    "mtime": 1786985488.230307,
+    "ast_hash": "78231f1b1212e05ba2e1b79851be9363",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/specs/2026-08-17-wealth-checkup-zerodha-mcp-design.md": {
+    "mtime": 1786985440.854064,
+    "ast_hash": "48aa0ada47d1687aee0df5b0e3648860",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/package.json": {
+    "mtime": 1787590253.2581863,
+    "ast_hash": "183caa96424769c42a39be6954c2a401",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/App.jsx": {
+    "mtime": 1787590460.0689788,
+    "ast_hash": "cb8b646872b553a571dc30aebbc48fb1",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/App.test.jsx": {
+    "mtime": 1787590492.0286212,
+    "ast_hash": "fa7f020cdb10adbbba14f1e056394114",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/components/DeskArrangement.jsx": {
+    "mtime": 1787590393.7627792,
+    "ast_hash": "ba4cc67ec5a00fe911959600865ddb55",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/components/DiagnosticCenter.jsx": {
+    "mtime": 1787590407.620894,
+    "ast_hash": "9c18160952b71793fa3662e8d3c3e90a",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/components/Header.jsx": {
+    "mtime": 1787590366.7129142,
+    "ast_hash": "0e30629199dd15feb14ee4e4992fb051",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/components/MasterPlaybook.jsx": {
+    "mtime": 1787590437.2869754,
+    "ast_hash": "22ff59c1bf90af48f3480db8bb1a7ed8",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/components/QuickActionDock.jsx": {
+    "mtime": 1787590448.643765,
+    "ast_hash": "72a524616e21ef507922e7a47fde053f",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/components/TopologyRadar.jsx": {
+    "mtime": 1787590379.8350756,
+    "ast_hash": "8ab4b85f998100102fe730dbc2267a0f",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/hooks/useCockpitState.js": {
+    "mtime": 1787590343.3327098,
+    "ast_hash": "2d9e762cca19694913e4dfde5c86cc9b",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/main.jsx": {
+    "mtime": 1787590316.6821353,
+    "ast_hash": "253d4db42a0b217629b29497cec5becb",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/src/setupTests.js": {
+    "mtime": 1787590468.9543552,
+    "ast_hash": "622aa044fcf2dcfecf2d418984be7efd",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/vite.config.js": {
+    "mtime": 1787590277.6071095,
+    "ast_hash": "a433a901d235abc9116f2c90fa896b70",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/package.json": {
+    "mtime": 1787590058.532437,
+    "ast_hash": "d10f256b57a5c4ddd9fb1d006ae2d28a",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/index.js": {
+    "mtime": 1787590208.7120426,
+    "ast_hash": "2a7dcb99fc4917d7b6bb94677dafb1bb",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/package.json": {
+    "mtime": 1787590114.5828536,
+    "ast_hash": "76f515529d28041533645ce27a6e670c",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/routes/actions.js": {
+    "mtime": 1787590198.9473538,
+    "ast_hash": "90cefcfbac37a474e2244475642635a8",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/routes/devices.js": {
+    "mtime": 1787590182.704065,
+    "ast_hash": "a876c3a24fe6eb41c3c4d33bb86d3eda",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/routes/diagnostics.js": {
+    "mtime": 1787590190.9170675,
+    "ast_hash": "210da1f482146a962a77c2b1329ca503",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/services/bonjourScanner.js": {
+    "mtime": 1787590144.698803,
+    "ast_hash": "4f971e4bc43cac245a4f0c1d54e05b18",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/services/macDiagnostics.js": {
+    "mtime": 1787590135.515504,
+    "ast_hash": "ac2808c7d38ec59e92165f31e3a50321",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/tests/api.test.js": {
+    "mtime": 1787590217.4424293,
+    "ast_hash": "ae01e605eef3653935c201feb0bc485e",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/server/tests/diagnostics.test.js": {
+    "mtime": 1787590153.7062697,
+    "ast_hash": "d0c4cff5f8d297563284f93d632e4817",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/README.md": {
+    "mtime": 1787590085.1917818,
+    "ast_hash": "f2d3722c5171d35ed8bc03e496edda70",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/client/index.html": {
+    "mtime": 1787590307.693025,
+    "ast_hash": "31d26bfc0611c7a33481db1ab61bc9c9",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-24-apple-ecosystem-cockpit.md": {
+    "mtime": 1787590026.7067928,
+    "ast_hash": "a9303e1e6a3236d6f8fae0c45741035c",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-24-apple-ecosystem-cockpit-design.md": {
+    "mtime": 1787589741.34291,
+    "ast_hash": "81efeb4b6afb7c93be75e4d595877b2f",
     "semantic_hash": ""
   }
 }

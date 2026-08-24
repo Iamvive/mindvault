@@ -1,7 +1,15 @@
 import SwiftUI
+import AppKit
+
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.setActivationPolicy(.accessory)
+    }
+}
 
 @main
 struct BTManagerApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var bluetoothService = BluetoothService()
     @StateObject private var preferencesStore = PreferencesStore()
     private let audioService = AudioRoutingService()

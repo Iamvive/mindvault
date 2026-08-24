@@ -35,18 +35,25 @@ git clone https://github.com/YOUR_USERNAME/bt-manager.git
 cd bt-manager
 ```
 
-### 2. Build and Test
+### 2. Build and Package Native App Bundle
 ```bash
-# Run unit test suites
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
-
-# Build release executable
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift build -c release
+# Builds and creates BTManager.app
+./build_app.sh
 ```
 
-### 3. Launch App
+### 3. Launch App (One-Off)
 ```bash
-./.build/release/BTManager &
+./start.command
+```
+
+### 4. ⚡ Make It Persistent (Always Run & Never Disappear)
+To automatically start on macOS login and auto-restart if ever terminated or closed:
+```bash
+# Enable background LaunchAgent daemon
+./setup_auto_start.sh
+
+# Disable if needed
+./stop_auto_start.sh
 ```
 
 ---

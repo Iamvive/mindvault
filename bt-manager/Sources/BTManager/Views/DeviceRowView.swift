@@ -7,6 +7,7 @@ struct DeviceRowView: View {
     let audioService: AudioRoutingService
     let diagnosticService: DeviceDiagnosticService
     let fixService: FixActionsService
+    @ObservedObject var audioControl: AudioControlService
 
     @State private var isExpanded: Bool = false
 
@@ -40,7 +41,7 @@ struct DeviceRowView: View {
                         .foregroundColor(.secondary)
                 }
                 .buttonStyle(.plain)
-                .help("Toggle Health Diagnostics")
+                .help("Toggle Controls & Health Diagnostics")
 
                 // Exclusive Lock Toggle Button
                 Button(action: {
@@ -84,6 +85,10 @@ struct DeviceRowView: View {
             }
 
             if isExpanded {
+                if device.deviceType == .headphones {
+                    HeadphoneAudioControlView(audioControl: audioControl, device: device)
+                }
+
                 let report = diagnosticService.inspect(device: device)
                 DiagnosticCardView(report: report, device: device, fixService: fixService)
                     .transition(.opacity)

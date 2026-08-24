@@ -84,7 +84,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/HeadphoneAudioControlView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/RotaryKnobView.swift"
         },
         {
           "kind" : "file",
@@ -113,7 +121,9 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DeviceRowView.swift.o",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DiagnosticCardView.swift.o",
-        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -230,7 +240,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.swift.o"
         },
         {
           "kind" : "file",
@@ -253,7 +271,9 @@
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
         "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DiagnosticCardView.swift",
-        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/HeadphoneAudioControlView.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift",
+        "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/RotaryKnobView.swift"
       ],
       "tempsPath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build",
       "wholeModuleOptimization" : false
@@ -575,7 +595,9 @@
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Services/PreferencesStore.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DeviceRowView.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/DiagnosticCardView.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/HeadphoneAudioControlView.swift",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift",
+      "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/RotaryKnobView.swift",
       "-I",
       "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -888,7 +910,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/HeadphoneAudioControlView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/RotaryKnobView.swift"
         }
       ],
       "outputFilePath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/sources"
@@ -954,11 +984,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
         },
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.swift.o"
         }
       ],
       "outputFilePath" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.product/Objects.LinkFileList"
@@ -1038,11 +1076,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o"
         },
         {
           "kind" : "file",
           "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/PreferencesStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.swift.o"
         },
         {
           "kind" : "file",

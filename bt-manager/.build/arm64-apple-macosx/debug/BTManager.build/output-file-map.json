@@ -100,11 +100,25 @@
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DiagnosticCardView.swiftdeps",
     "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/DiagnosticCardView.dia"
   },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/HeadphoneAudioControlView.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/HeadphoneAudioControlView.dia"
+  },
   "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/MainPopoverView.swift": {
     "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.d",
     "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swift.o",
     "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView~partial.swiftmodule",
     "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.swiftdeps",
     "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/MainPopoverView.dia"
+  },
+  "/Users/appworx/Desktop/ai-play-ground/bt-manager/Sources/BTManager/Views/RotaryKnobView.swift": {
+    "dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.d",
+    "object": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.swift.o",
+    "swiftmodule": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView~partial.swiftmodule",
+    "swift-dependencies": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.swiftdeps",
+    "diagnostics": "/Users/appworx/Desktop/ai-play-ground/bt-manager/.build/arm64-apple-macosx/debug/BTManager.build/RotaryKnobView.dia"
   }
 }

@@ -55,8 +55,18 @@ function runMigrations(callback) {
                 CREATE UNIQUE INDEX IF NOT EXISTS idx_entities_date_name ON entities(date, entity_name, entity_type);
               `;
               db.exec(indexSql, (err5) => {
-                db.close();
-                if (callback) callback(err5 || null);
+                db.all("PRAGMA table_info(daily_digests)", (err6, cols) => {
+                  const hasRecommendedResources = cols && cols.some(c => c.name === 'recommended_resources');
+                  if (!hasRecommendedResources) {
+                    db.run("ALTER TABLE daily_digests ADD COLUMN recommended_resources TEXT", (err7) => {
+                      db.close();
+                      if (callback) callback(err5 || err6 || err7 || null);
+                    });
+                  } else {
+                    db.close();
+                    if (callback) callback(err5 || err6 || null);
+                  }
+                });
               });
             }
           });

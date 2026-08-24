@@ -3,12 +3,69 @@ import CoreAudio
 import AVFoundation
 import Combine
 
+public enum BassBoostStep: String, CaseIterable, Identifiable, Codable {
+    case off = "OFF"
+    case low = "LOW (+4dB)"
+    case med = "MED (+8dB)"
+    case high = "HIGH (+12dB)"
+
+    public var id: String { rawValue }
+
+    public var dbGain: Double {
+        switch self {
+        case .off: return 0.0
+        case .low: return 4.0
+        case .med: return 8.0
+        case .high: return 12.0
+        }
+    }
+
+    public var next: BassBoostStep {
+        let all = BassBoostStep.allCases
+        let idx = all.firstIndex(of: self) ?? 0
+        return all[(idx + 1) % all.count]
+    }
+
+    public var previous: BassBoostStep {
+        let all = BassBoostStep.allCases
+        let idx = all.firstIndex(of: self) ?? 0
+        return all[(idx - 1 + all.count) % all.count]
+    }
+}
+
+public enum SidetoneStep: String, CaseIterable, Identifiable, Codable {
+    case off = "OFF"
+    case low = "LOW (35%)"
+    case high = "HIGH (75%)"
+
+    public var id: String { rawValue }
+
+    public var volume: Double {
+        switch self {
+        case .off: return 0.0
+        case .low: return 0.35
+        case .high: return 0.75
+        }
+    }
+
+    public var next: SidetoneStep {
+        let all = SidetoneStep.allCases
+        let idx = all.firstIndex(of: self) ?? 0
+        return all[(idx + 1) % all.count]
+    }
+
+    public var previous: SidetoneStep {
+        let all = SidetoneStep.allCases
+        let idx = all.firstIndex(of: self) ?? 0
+        return all[(idx - 1 + all.count) % all.count]
+    }
+}
+
 public final class AudioControlService: ObservableObject {
     @Published public private(set) var isMicMuted: Bool = false
-    @Published public private(set) var bassBoostLevel: Double = 0.0 // 0.0 to 1.0
+    @Published public private(set) var bassStep: BassBoostStep = .off
     @Published public private(set) var activeEQPreset: EQPreset = .balanced
-    @Published public private(set) var isSidetoneEnabled: Bool = false
-    @Published public private(set) var sidetoneVolume: Double = 0.5 // 0.0 to 1.0
+    @Published public private(set) var sidetoneStep: SidetoneStep = .off
 
     private var sidetoneEngine: AVAudioEngine?
 
@@ -17,7 +74,28 @@ public final class AudioControlService: ObservableObject {
     }
 
     public var calculatedBassGaindB: Double {
-        return bassBoostLevel * 12.0
+        return bassStep.dbGain
+    }
+
+    public func cycleBassStep() {
+        setBassStep(bassStep.next)
+    }
+
+    public func setBassStep(_ step: BassBoostStep) {
+        self.bassStep = step
+    }
+
+    public func cycleSidetoneStep() {
+        setSidetoneStep(sidetoneStep.next)
+    }
+
+    public func setSidetoneStep(_ step: SidetoneStep) {
+        self.sidetoneStep = step
+        if step == .off {
+            stopSidetoneEngine()
+        } else {
+            startSidetoneEngine(volume: step.volume)
+        }
     }
 
     public func toggleMicMute() {
@@ -49,30 +127,8 @@ public final class AudioControlService: ObservableObject {
         self.isMicMuted = muted
     }
 
-    public func setBassBoostLevel(_ level: Double) {
-        self.bassBoostLevel = max(0.0, min(1.0, level))
-    }
-
     public func setEQPreset(_ preset: EQPreset) {
         self.activeEQPreset = preset
-    }
-
-    public func toggleSidetone() {
-        setSidetoneEnabled(!isSidetoneEnabled)
-    }
-
-    public func setSidetoneEnabled(_ enabled: Bool) {
-        self.isSidetoneEnabled = enabled
-        if enabled {
-            startSidetoneEngine()
-        } else {
-            stopSidetoneEngine()
-        }
-    }
-
-    public func setSidetoneVolume(_ volume: Double) {
-        self.sidetoneVolume = max(0.0, min(1.0, volume))
-        sidetoneEngine?.mainMixerNode.outputVolume = Float(self.sidetoneVolume)
     }
 
     private func checkCurrentMicMuteStatus() -> Bool {
@@ -100,7 +156,7 @@ public final class AudioControlService: ObservableObject {
         return false
     }
 
-    private func startSidetoneEngine() {
+    private func startSidetoneEngine(volume: Double) {
         stopSidetoneEngine()
         let engine = AVAudioEngine()
         let inputNode = engine.inputNode
@@ -108,7 +164,7 @@ public final class AudioControlService: ObservableObject {
         let format = inputNode.inputFormat(forBus: 0)
 
         engine.connect(inputNode, to: outputNode, format: format)
-        engine.mainMixerNode.outputVolume = Float(sidetoneVolume)
+        engine.mainMixerNode.outputVolume = Float(volume)
 
         do {
             try engine.start()

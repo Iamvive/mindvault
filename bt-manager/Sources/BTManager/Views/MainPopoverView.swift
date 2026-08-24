@@ -7,6 +7,8 @@ struct MainPopoverView: View {
     let audioService: AudioRoutingService
     private let diagnosticService = DeviceDiagnosticService()
     private let fixService = FixActionsService()
+    @StateObject private var audioControl = AudioControlService()
+    @State private var hotkeyService: GlobalHotkeyService?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -48,7 +50,8 @@ struct MainPopoverView: View {
                             preferencesStore: preferencesStore,
                             audioService: audioService,
                             diagnosticService: diagnosticService,
-                            fixService: fixService
+                            fixService: fixService,
+                            audioControl: audioControl
                         )
                     }
                 }
@@ -76,7 +79,8 @@ struct MainPopoverView: View {
                                 preferencesStore: preferencesStore,
                                 audioService: audioService,
                                 diagnosticService: diagnosticService,
-                                fixService: fixService
+                                fixService: fixService,
+                                audioControl: audioControl
                             )
                         }
                     }
@@ -111,6 +115,11 @@ struct MainPopoverView: View {
         .onAppear {
             bluetoothService.fetchPairedDevices()
             watcher.start()
+            if hotkeyService == nil {
+                let hk = GlobalHotkeyService(audioControlService: audioControl)
+                hk.startListening()
+                self.hotkeyService = hk
+            }
         }
     }
 }

@@ -2,14 +2,31 @@ import XCTest
 @testable import BTManager
 
 final class AudioControlServiceTests: XCTestCase {
-    func testBassBoostMapping() {
+    func testBassBoostStepCycling() {
         let service = AudioControlService()
-        service.setBassBoostLevel(0.5)
-        XCTAssertEqual(service.bassBoostLevel, 0.5)
-        XCTAssertEqual(service.calculatedBassGaindB, 6.0)
-
-        service.setBassBoostLevel(1.0)
+        XCTAssertEqual(service.bassStep, .off)
+        service.cycleBassStep()
+        XCTAssertEqual(service.bassStep, .low)
+        XCTAssertEqual(service.calculatedBassGaindB, 4.0)
+        service.cycleBassStep()
+        XCTAssertEqual(service.bassStep, .med)
+        XCTAssertEqual(service.calculatedBassGaindB, 8.0)
+        service.cycleBassStep()
+        XCTAssertEqual(service.bassStep, .high)
         XCTAssertEqual(service.calculatedBassGaindB, 12.0)
+        service.cycleBassStep()
+        XCTAssertEqual(service.bassStep, .off)
+    }
+
+    func testSidetoneStepCycling() {
+        let service = AudioControlService()
+        XCTAssertEqual(service.sidetoneStep, .off)
+        service.cycleSidetoneStep()
+        XCTAssertEqual(service.sidetoneStep, .low)
+        service.cycleSidetoneStep()
+        XCTAssertEqual(service.sidetoneStep, .high)
+        service.cycleSidetoneStep()
+        XCTAssertEqual(service.sidetoneStep, .off)
     }
 
     func testMicMuteToggle() {

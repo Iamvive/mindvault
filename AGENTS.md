@@ -14,8 +14,6 @@ This workspace has project-level configuration for the **Penpot MCP Server** in 
 - **Prerequisites**: Ensure the `PENPOT_ACCESS_TOKEN` environment variable or config field is set with your Penpot access token.
 - **Workflow**: Install the Penpot MCP Plugin inside the Penpot editor to enable WebSocket communication.
 
-# AGENTS
-
 <skills_system priority="1">
 
 ## Available Skills
@@ -156,52 +154,3 @@ Usage notes:
 <!-- SKILLS_TABLE_END -->
 
 </skills_system>
-
-## Subtle Gradient Design System Constraints
-
-Whenever generating UI styling, writing CSS, or styling frontend components:
-1. **Typography:** Never use monospace, serif, or generic display fonts. Standard font family must be `Inter`, system-ui, sans-serif. Use negative tracking (e.g. `letter-spacing: -1.2px`) on display/large headings.
-2. **Colors:** Use variables from the Subtle Gradient CSS. The only saturated accent color allowed is `--sg-primary` (`#e60023`). Avoid saturated greens, blues, or yellows unless explicitly requested.
-3. **Surfaces:** Use desaturated washes (`--gradient-wash-*`) for card mockups, section backgrounds, or image placeholders.
-4. **Rounding:** UI elements must be rounded. Use `16px` for standard cards/buttons, `32px` for major cards, and `9999px` (full) for search bars, status chips, pill buttons, and avatars.
-
-
-## Coding Guidelines for AI Agents
-
-### Before writing code
-- **Read before you write:** Understand existing patterns, naming conventions, and file structure before adding anything. Reuse existing utilities/functions instead of duplicating logic.
-- **Don't guess — verify:** If a claim about the codebase (a bug, a risk, a missing test) can be checked by reading the file or running a command, check it before acting on it.
-- **Scope matches the ask:** A bug fix doesn't need a refactor. A one-off script doesn't need an abstraction layer. Don't build for hypothetical future requirements.
-
-### While writing code
-- **No dead code:** Don't leave commented-out blocks, unused imports, or `// removed` markers. If something's unused, delete it.
-- **No defensive code for impossible cases:** Only validate at real boundaries (user input, external APIs, network calls). Trust internal function contracts.
-- **Comments explain "why," not "what":** Well-named code already says what it does. Only comment on non-obvious constraints, workarounds, or invariants.
-- **Match existing style:** Follow existing error handling patterns, module boundaries, and test conventions rather than introducing personal preference mid-codebase.
-- **Keep files single-purpose:** If a file starts mixing unrelated concerns (e.g., HTTP server + business logic + command routing), split it before it grows further.
-
-### Security basics
-- **Parameterize all SQL/queries:** Never string-format user input into a query.
-- **Never commit secrets:** Ensure `.gitignore` covers `.env`, key files, and local DBs.
-- **Validate/authenticate network endpoints:** Authenticate anything exposed over a network boundary (tokens, allowlists), even for local tools.
-
-### Before claiming something is done
-- **Run it:** Execute tests, linters, or the actual feature — don't assert "this works" from reading code alone.
-- **State what wasn't verified:** If you can't run the UI, an external API, or a specific path, say so explicitly instead of implying full coverage.
-- **Report regressions honestly:** A green test suite after a refactor is meaningful; a claim without running it isn't.
-
-### Version control hygiene
-- **Never force-push, hard-reset, or amend published commits** without explicit confirmation.
-- **Stage specific files:** Avoid `git add -A` or `git add .` to prevent accidentally committing secrets or unrelated changes.
-- **Only commit when explicitly asked to.**
-
-
-## Zerodha Kite MCP Server Connection Rules
-
-When connecting to the Zerodha Kite MCP server via `mcp-remote`, always adhere to these session and protocol rules:
-1. **Handling Server Pings:** The server periodically sends JSON-RPC `ping` requests to the client. The client must monitor incoming messages, detect `method: "ping"`, and immediately respond with a valid JSON-RPC pong: `{"jsonrpc": "2.0", "id": ping_id, "result": {}}`. Failing to do so will cause the client to read a ping as a tool response or block the socket.
-2. **Persistent Login Flow:** When calling the `login` tool, the connection process must remain running to keep the local OAuth callback server listening. Terminating the process before the user completes authorization will cause the browser redirect to fail.
-3. **Clean Process Exit:** To ensure `mcp-remote` persists OAuth tokens to disk (`~/.mcp-auth/`), always close the process cleanly by closing `stdin` (`proc.stdin.close()`) and waiting for it to exit, rather than forcefully terminating it with `SIGKILL` or `SIGTERM` prematurely.
-4. **Daily Expiry:** Zerodha session tokens expire daily at 6:00 AM IST. Expect to re-run the login flow once per calendar day.
-
-
