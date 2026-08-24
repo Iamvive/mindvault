@@ -1,0 +1,13 @@
+{
+  "name": "apple-ecosystem-cockpit",
+  "version": "1.0.0",
+  "description": "Interactive command center and diagnostic hub for Mac mini, MacBook, and iPad",
+  "scripts": {
+    "dev": "concurrently \"npm run server --prefix server\" \"npm run dev --prefix client\"",
+    "start": "node server/index.js",
+    "test": "npm run test --prefix server && npm run test --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
