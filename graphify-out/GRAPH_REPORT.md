@@ -1,16 +1,16 @@
 # Graph Report - ai-play-ground  (2026-08-24)
 
 ## Corpus Check
-- 297 files · ~192,874 words
+- 298 files · ~216,581 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2430 nodes · 3192 edges · 195 communities (165 shown, 30 thin omitted)
+- 2435 nodes · 3200 edges · 192 communities (165 shown, 27 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 121 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ab4acab2`
+- Built from commit: `a6eee20b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -195,12 +195,9 @@
 - Global Constraints
 - REFACTOR Phase: Close Loopholes (Stay Green)
 - TestWealthDB
-- wealth_server.py
 - VERIFY GREEN: Pressure Testing
-- TestZerodhaSync
 - Example: TDD Skill Bulletproofing
 - 🍎 Apple Ecosystem Cockpit
-- Anti-patterns to avoid
 
 ## God Nodes (most connected - your core abstractions)
 1. `get_connection()` - 44 edges
@@ -229,15 +226,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (195 total, 30 thin omitted)
+## Communities (192 total, 27 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
 Cohesion: 0.06
 Nodes (45): __dirname, __filename, initBot(), uploadDir, columns, Database, db, __dirname (+37 more)
 
 ### Community 1 - "bot.py"
-Cohesion: 0.05
-Nodes (65): InlineKeyboardMarkup, SimpleHTTPRequestHandler, main(), post_init(), determine_type_and_bucket(), extract_target_budget_month(), match_bank_sms_rules(), match_keyword_rules() (+57 more)
+Cohesion: 0.06
+Nodes (60): InlineKeyboardMarkup, SimpleHTTPRequestHandler, main(), post_init(), determine_type_and_bucket(), extract_target_budget_month(), match_bank_sms_rules(), match_keyword_rules() (+52 more)
 
 ### Community 2 - "package.json"
 Cohesion: 0.07
@@ -280,8 +277,8 @@ Cohesion: 0.17
 Nodes (11): 1. Executive Summary & Problem Statement, 2.1 Database Schema (`backend/database.js`), 2.2 Inactivity Auto-Pruning Engine (`backend/pruner.js`), 2. System Architecture & Database Schema, 3.1 GitHub Data Inspector (`backend/githubScraper.js`), 3.2 Gemini 2.5 Flash Deep Enrichment (`backend/gemini.js`), 3. GitHub Scraper & Gemini Enrichment Engine, 4. API Endpoints & Backend Routes (+3 more)
 
 ### Community 12 - "MultiUserHTTPRequestHandler"
-Cohesion: 0.15
-Nodes (13): Advanced: Skills with executable code, [Analysis Title], Build evaluations first, Conditional workflow pattern, Develop Skills iteratively with the agent, Evaluation and iteration, Examples pattern, Executive summary (+5 more)
+Cohesion: 0.17
+Nodes (12): Advanced: Skills with executable code, [Analysis Title], Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths, Conditional workflow pattern, Examples pattern, Executive summary (+4 more)
 
 ### Community 17 - "Test-Driven Development (TDD)"
 Cohesion: 0.05
@@ -554,7 +551,7 @@ Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
 
 ### Community 96 - "db.py"
 Cohesion: 0.10
-Nodes (41): add_debt(), add_pending_bill(), add_recurring(), check_duplicate(), clear_debts_for_person(), create_temp_login_code(), create_user_pat(), create_user_session() (+33 more)
+Nodes (33): add_debt(), add_pending_bill(), add_recurring(), check_duplicate(), clear_debts_for_person(), create_temp_login_code(), create_user_pat(), create_user_session() (+25 more)
 
 ### Community 97 - "Evaluation and iteration"
 Cohesion: 0.07
@@ -645,8 +642,8 @@ Cohesion: 0.17
 Nodes (11): Global Constraints, Plan Verification Check, RoomAI Implementation Plan, Task 1: RoomAI Project Scaffolding & Shared Types, Task 2: Static Curated Catalog & Recommendation Matcher Service, Task 3: Gemini Flash Vision Analysis Service & Endpoint, Task 4: AI Makeover Generator Service & Endpoints, Task 5: Frontend Design System & Theme CSS (+3 more)
 
 ### Community 121 - "BluetoothDevice"
-Cohesion: 0.11
-Nodes (24): BluetoothDevice, DeviceType, headphones, keyboard, mouse, speaker, unknown, Bool (+16 more)
+Cohesion: 0.12
+Nodes (22): BluetoothDevice, DeviceType, headphones, keyboard, mouse, speaker, unknown, Bool (+14 more)
 
 ### Community 122 - "llm_extract.py"
 Cohesion: 0.16
@@ -669,8 +666,8 @@ Cohesion: 0.33
 Nodes (5): Budget Month Tracker Implementation Plan, Task 1: Database Migration & Core Queries (`db.py`), Task 2: Target Month Natural Language Extraction (`categorize.py` & `llm_extract.py`), Task 3: Telegram Message Confirmation & Inline Callback Buttons (`handlers/messages.py` & `handlers/callbacks.py`), Task 4: Web Dashboard Payload & Range Filtering (`dashboard.py` & `dashboard/template.html`)
 
 ### Community 128 - "db_wealth.py"
-Cohesion: 0.13
-Nodes (11): BehavioralInsight, calculate_monthly_expense_rate(), generate_wealth_audit(), NomineeSuggestion, Any, BaseModel, RefinanceAlert, WealthAuditReport (+3 more)
+Cohesion: 0.06
+Nodes (31): add_nominee_item(), add_wealth_asset(), add_wealth_document(), add_wealth_liability(), delete_wealth_document(), get_connection(), get_nominee_checklist(), get_wealth_assets() (+23 more)
 
 ### Community 129 - "🏛️ Architecture Design: LLM Cost & Extraction Optimization Engine"
 Cohesion: 0.18
@@ -726,27 +723,27 @@ Nodes (15): 1. Goal & Context, 2. Directory & Module Boundaries, 3. Database Sch
 
 ### Community 142 - "mcp_server.py"
 Cohesion: 0.14
-Nodes (15): expense_audit_prompt(), fetch_family_transactions(), get_family_contributions_ledger(), get_family_ledger_resource(), get_finance_taxonomy_resource(), manage_recurring(), monthly_budget_review_prompt(), query_transactions() (+7 more)
+Nodes (15): add_family_contribution(), expense_audit_prompt(), fetch_family_transactions(), get_family_contributions_ledger(), get_family_ledger_resource(), get_finance_taxonomy_resource(), monthly_budget_review_prompt(), Returns JSON snapshot of Consolidated Family Support & Outflows Ledger (Home Sup (+7 more)
 
 ### Community 143 - "get_active_user_id"
-Cohesion: 0.13
-Nodes (16): add_family_contribution(), add_transaction(), delete_transaction(), get_active_user_id(), get_budget_summary(), get_default_user_id(), get_finance_debts_resource(), get_finance_summary_resource() (+8 more)
+Cohesion: 0.11
+Nodes (18): add_transaction(), get_active_user_id(), get_default_user_id(), get_finance_summary_resource(), get_token_usage_stats(), manage_debts(), manage_recurring(), Any (+10 more)
 
 ### Community 144 - "TestMCPAuth"
-Cohesion: 0.19
+Cohesion: 0.20
 Nodes (3): TokenAuthMiddleware, MockApp, TestMCPAuth
 
 ### Community 145 - "AudioRoutingService"
-Cohesion: 0.24
-Nodes (9): AudioRoutingService, Bool, String, FixActionsService, Bool, DeviceRowView, Bool, MainPopoverView (+1 more)
+Cohesion: 0.31
+Nodes (6): AudioRoutingService, Bool, String, FixActionsService, Bool, MainPopoverView
 
 ### Community 146 - "Bluetooth Device Manager (AKG Force-Connect) - macOS Menu Bar App Design Spec"
 Cohesion: 0.15
 Nodes (12): 1. Executive Summary & Problem Statement, 2. System Architecture & Components, 3. Bluetooth & Audio Reconnection Logic, 4. User Interface & Menu Bar Panel Design, 5. Storage, Permissions & Error Handling, 6. Verification & Testing Plan, Auto-Reconnect Watchdog, Bluetooth Device Manager (AKG Force-Connect) - macOS Menu Bar App Design Spec (+4 more)
 
 ### Community 147 - "resolve_user_uuid"
-Cohesion: 0.29
-Nodes (10): get_ledger(), get_monthly_budget_summary(), get_or_create_user_by_identity(), get_recent_transactions(), get_token_usage_summary(), Any, Translates any input identifier (user_uuid, telegram_user_id int/str, or google_, Resolves or creates a user_uuid for a given provider and provider_uid. (+2 more)
+Cohesion: 0.24
+Nodes (12): get_ledger(), get_monthly_budget_summary(), get_or_create_user_by_identity(), get_recent_transactions(), get_token_usage_summary(), insert_transaction(), match_pending_bill(), Any (+4 more)
 
 ### Community 148 - "Foundation"
 Cohesion: 0.14
@@ -757,8 +754,8 @@ Cohesion: 0.18
 Nodes (10): 1. Executive Summary & Goal, 2. System Architecture & Components, 3. Inspection Rules & 1-Click Fix Actions by Device Category, 4. User Interface & Expandable Card Specification, 5. Verification & Test Plan, Bluetooth Device Inspector & 1-Click Fix Engine Design Spec, 🎧 Headphones & Audio Devices (AKG, eBuddies, Buds), ⌨️ Keyboards (Keychron K6, Wireless Keyboards) (+2 more)
 
 ### Community 150 - "DeviceRowView"
-Cohesion: 0.11
-Nodes (12): AppKit, AppDelegate, RotaryKnobView, Double, String, Void, CGFloat, Color (+4 more)
+Cohesion: 0.09
+Nodes (17): AppKit, AppDelegate, DeviceRowView, Bool, DiagnosticCardView, String, RotaryKnobView, Double (+9 more)
 
 ### Community 151 - "query_qa.py"
 Cohesion: 0.09
@@ -804,6 +801,18 @@ Nodes (3): Available Skills, graphify, Penpot Integration (MCP)
 Cohesion: 0.12
 Nodes (10): sqlite3, sqlite3, get_llm_client(), any, Detects API keys and returns (provider, client/url)., execute_database_qa(), is_finance_query(), Classifies if the user's message is a natural language question or query     abo (+2 more)
 
+### Community 167 - "get_token_usage_stats"
+Cohesion: 0.33
+Nodes (5): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi
+
+### Community 168 - "manage_debts"
+Cohesion: 0.33
+Nodes (6): get_user_id_by_google_email(), init_db(), migrate_db(), migrate_sso_tables(), Applies schema migrations for Google SSO, auth_identities, and user_uuid fields., sync_lending_transactions_to_debts()
+
+### Community 169 - "update_transaction"
+Cohesion: 0.50
+Nodes (4): Build evaluations first, Develop Skills iteratively with the agent, Evaluation and iteration, Observe how agents navigate Skills
+
 ### Community 171 - "Design Specification — Zerodha Kite MCP Live OAuth & Wealth Audit Engine"
 Cohesion: 0.18
 Nodes (10): 1. Overview & Context, 2. Architecture & Data Flow, 3.1 Zerodha Kite OAuth Sync Session, 3.2 Portfolio Aggregation & Cash Flow Baseline, 3.3 Audit Metrics & Behavioral Intelligence, 3. Detailed Component Specifications, 4. Verification Plan, Automated Verification (+2 more)
@@ -823,10 +832,6 @@ Nodes (5): Execution Handoff, Global Constraints, Stepped Rotary Dial Controls I
 ### Community 175 - "Global Constraints"
 Cohesion: 0.40
 Nodes (4): Global Constraints, Task 1: Zerodha OAuth Sync & Asset Upsert Engine, Task 2: Wealth Check-Up Audit Engine Test & Validation, Zerodha Kite OAuth Sync & Wealth Check-Up Implementation Plan
-
-### Community 177 - "add_debt"
-Cohesion: 0.28
-Nodes (15): add_nominee_item(), add_wealth_asset(), add_wealth_document(), add_wealth_liability(), delete_wealth_document(), get_connection(), get_nominee_checklist(), get_wealth_assets() (+7 more)
 
 ### Community 181 - "server/package.json"
 Cohesion: 0.13
@@ -848,10 +853,6 @@ Nodes (9): Apple Ecosystem Cockpit Implementation Plan, Global Constraints, Task
 Cohesion: 0.29
 Nodes (7): 1. Explicit Negation in Rules, 2. Entry in Rationalization Table, 3. Red Flag Entry, 4. Update description, Plugging Each Hole, Re-verify After Refactoring, REFACTOR Phase: Close Loopholes (Stay Green)
 
-### Community 187 - "wealth_server.py"
-Cohesion: 0.47
-Nodes (3): extract_boundary(), handle_wealth_upload(), parse_multipart()
-
 ### Community 188 - "VERIFY GREEN: Pressure Testing"
 Cohesion: 0.40
 Nodes (5): Key Elements of Good Scenarios, Pressure Types, Testing Setup, VERIFY GREEN: Pressure Testing, Writing Pressure Scenarios
@@ -864,21 +865,17 @@ Nodes (4): Example: TDD Skill Bulletproofing, Initial Test (Failed), Iteration 1
 Cohesion: 0.50
 Nodes (3): 🍎 Apple Ecosystem Cockpit, 🌟 Key Features, 🚀 Quick Start (1-Click Launch)
 
-### Community 193 - "Anti-patterns to avoid"
-Cohesion: 0.67
-Nodes (3): Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths
-
 ## Knowledge Gaps
 - **1131 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1126 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **30 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **27 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `TestFinanceBotQueryQA` to `link_identity`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **Why does `sqlite3` connect `link_identity` to `db.py`, `add_debt`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `sqlite3` connect `link_identity` to `db.py`, `db_wealth.py`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **Why does `sqlite3` connect `link_identity` to `TestFinanceBotQueryQA`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
