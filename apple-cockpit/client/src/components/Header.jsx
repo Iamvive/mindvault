@@ -38,20 +38,18 @@ export default function Header({
         gap: '16px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '12px',
-            background: 'var(--gradient-wash-glow), var(--bg-surface-elevated)',
-            border: '1px solid var(--border-subtle)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '22px',
-            boxShadow: 'var(--shadow-sm)'
-          }}>
-            🍎
-          </div>
+          <img 
+            src="/app-icon.jpg" 
+            alt="Apple Ecosystem Cockpit Icon" 
+            style={{
+              width: '46px',
+              height: '46px',
+              borderRadius: '13px',
+              objectFit: 'cover',
+              border: '1px solid var(--border-subtle)',
+              boxShadow: 'var(--shadow-sm)'
+            }}
+          />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <h1>Apple Ecosystem Cockpit</h1>
