@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Monitor, Laptop, Tablet, Move, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Monitor, Laptop, Tablet, Move, Sparkles, CheckCircle2, Navigation, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export default function DeskArrangement() {
   const [positions, setPositions] = useState({
@@ -11,6 +11,8 @@ export default function DeskArrangement() {
   const [activePreset, setActivePreset] = useState('desk-hub');
   const [draggingId, setDraggingId] = useState(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [activeDeviceFocus, setActiveDeviceFocus] = useState('macmini');
+  const [cursorSimulationLog, setCursorSimulationLog] = useState('Cursor currently centered on Mac mini display.');
 
   const presets = [
     {
@@ -29,8 +31,8 @@ export default function DeskArrangement() {
       desc: 'Mac mini main display with iPad tilted flat in front for Apple Pencil sketching.',
       positions: {
         macmini: { x: 340, y: 20, label: 'Mac mini Monitor (Color Reference)', type: 'macmini', active: true },
-        ipad: { x: 360, y: 240, label: 'iPad Pro (Pencil Drawing Surface)', type: 'ipad', active: true },
-        macbook: { x: 60, y: 80, label: 'MacBook Pro (Clamshell / Aux)', type: 'macbook', active: false }
+        ipad: { x: 340, y: 230, label: 'iPad Pro (Pencil Drawing Surface)', type: 'ipad', active: true },
+        macbook: { x: 40, y: 80, label: 'MacBook Pro (Auxiliary / Clamshell)', type: 'macbook', active: false }
       }
     },
     {
@@ -40,7 +42,7 @@ export default function DeskArrangement() {
       positions: {
         macbook: { x: 260, y: 80, label: 'MacBook Pro (Primary Laptop)', type: 'macbook', active: true },
         ipad: { x: 640, y: 100, label: 'iPad (Sidecar Extended Screen)', type: 'ipad', active: true },
-        macmini: { x: 50, y: 50, label: 'Mac mini (Headless in Studio)', type: 'macmini', active: false }
+        macmini: { x: 40, y: 50, label: 'Mac mini (Headless in Studio)', type: 'macmini', active: false }
       }
     }
   ];
@@ -48,6 +50,8 @@ export default function DeskArrangement() {
   const applyPreset = (preset) => {
     setActivePreset(preset.id);
     setPositions(preset.positions);
+    setActiveDeviceFocus('macmini');
+    setCursorSimulationLog(`Preset applied: ${preset.name}. Cursor on primary screen.`);
   };
 
   const handleMouseDown = (e, id) => {
@@ -72,6 +76,19 @@ export default function DeskArrangement() {
 
   const handleMouseUp = () => {
     setDraggingId(null);
+  };
+
+  const testMoveDirection = (direction) => {
+    if (direction === 'RIGHT') {
+      setActiveDeviceFocus('ipad');
+      setCursorSimulationLog('➡️ Pushed through RIGHT edge of Mac mini monitor → Cursor crossed over to iPad Pro!');
+    } else if (direction === 'LEFT') {
+      setActiveDeviceFocus('macbook');
+      setCursorSimulationLog('⬅️ Pushed through LEFT edge of Mac mini monitor → Cursor crossed over to MacBook Pro!');
+    } else if (direction === 'CENTER') {
+      setActiveDeviceFocus('macmini');
+      setCursorSimulationLog('🎯 Cursor returned to center on Mac mini display.');
+    }
   };
 
   return (
@@ -124,7 +141,7 @@ export default function DeskArrangement() {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         style={{
-          height: '460px',
+          height: '440px',
           position: 'relative',
           background: 'linear-gradient(180deg, #fcfcfb 0%, #f4f4f0 100%)',
           overflow: 'hidden',
@@ -169,6 +186,7 @@ export default function DeskArrangement() {
           const isMini = pos.type === 'macmini';
           const isMacBook = pos.type === 'macbook';
           const isIpad = pos.type === 'ipad';
+          const hasCursorFocus = activeDeviceFocus === id;
 
           const width = isMini ? 260 : (isMacBook ? 230 : 180);
           const height = isMini ? 170 : (isMacBook ? 150 : 135);
@@ -184,17 +202,17 @@ export default function DeskArrangement() {
                 width: `${width}px`,
                 height: `${height}px`,
                 borderRadius: isIpad ? '16px' : '12px',
-                background: pos.active ? '#ffffff' : '#f0f0ec',
-                border: isMini ? '2px solid var(--border-active)' : '1px solid var(--border-hairline)',
-                boxShadow: pos.active ? '0 8px 24px rgba(0, 0, 0, 0.06)' : 'none',
+                background: hasCursorFocus ? '#ffffff' : (pos.active ? '#fafafa' : '#f0f0ec'),
+                border: hasCursorFocus ? '2px solid var(--border-active)' : '1px solid var(--border-hairline)',
+                boxShadow: hasCursorFocus ? '0 10px 30px rgba(230, 0, 35, 0.15)' : (pos.active ? '0 8px 24px rgba(0, 0, 0, 0.04)' : 'none'),
                 cursor: 'grab',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 padding: '12px',
                 opacity: pos.active ? 1 : 0.6,
-                transition: draggingId === id ? 'none' : 'transform 0.1s ease',
-                zIndex: draggingId === id ? 10 : 2
+                transition: draggingId === id ? 'none' : 'all 0.2s ease',
+                zIndex: hasCursorFocus ? 15 : (draggingId === id ? 10 : 2)
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -206,8 +224,8 @@ export default function DeskArrangement() {
                     {isMini ? 'Mac mini' : (isMacBook ? 'MacBook' : 'iPad')}
                   </span>
                 </div>
-                <span className={`badge-pill ${pos.active ? 'badge-success' : 'badge-warn'}`} style={{ fontSize: '0.62rem', padding: '2px 6px' }}>
-                  {pos.active ? 'Active' : 'Aux'}
+                <span className={`badge-pill ${hasCursorFocus ? 'badge-alert' : (pos.active ? 'badge-success' : 'badge-warn')}`} style={{ fontSize: '0.62rem', padding: '2px 6px' }}>
+                  {hasCursorFocus ? '🎯 Mouse Active' : (pos.active ? 'Connected' : 'Aux')}
                 </span>
               </div>
 
@@ -216,13 +234,14 @@ export default function DeskArrangement() {
                 flex: 1,
                 margin: '8px 0',
                 borderRadius: '8px',
-                background: 'var(--surface-card)',
-                border: '1px dashed var(--border-glow)',
+                background: hasCursorFocus ? 'var(--sg-primary-pale)' : 'var(--surface-card)',
+                border: hasCursorFocus ? '1px solid var(--border-active)' : '1px dashed var(--border-glow)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '0.72rem',
-                color: 'var(--sg-mute)',
+                color: hasCursorFocus ? 'var(--border-active)' : 'var(--sg-mute)',
+                fontWeight: hasCursorFocus ? 700 : 400,
                 textAlign: 'center',
                 padding: '4px'
               }}>
@@ -236,6 +255,47 @@ export default function DeskArrangement() {
             </div>
           );
         })}
+      </div>
+
+      {/* Interactive Navigation Simulator Toolbar */}
+      <div className="wealth-panel" style={{ padding: '1.5rem 2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <Navigation size={16} style={{ color: 'var(--border-active)' }} />
+              <h3 style={{ fontSize: '0.98rem', fontWeight: 700 }}>Interactive Mouse Edge Navigation Tester</h3>
+            </div>
+            <p style={{ fontSize: '0.84rem', color: 'var(--sg-mute)' }}>
+              {cursorSimulationLog}
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button 
+              onClick={() => testMoveDirection('LEFT')}
+              className="btn-secondary"
+              style={{ fontSize: '0.82rem', padding: '0.45rem 1rem' }}
+            >
+              <ArrowLeft size={14} />
+              Move Left (to MacBook)
+            </button>
+            <button 
+              onClick={() => testMoveDirection('CENTER')}
+              className="btn-secondary"
+              style={{ fontSize: '0.82rem', padding: '0.45rem 1rem' }}
+            >
+              Center (Mac mini)
+            </button>
+            <button 
+              onClick={() => testMoveDirection('RIGHT')}
+              className="btn-primary"
+              style={{ fontSize: '0.82rem', padding: '0.45rem 1rem' }}
+            >
+              Move Right (to iPad)
+              <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
