@@ -1,0 +1,15 @@
+{
+  "name": "apple-cockpit-server",
+  "version": "1.0.0",
+  "description": "Backend engine for macOS ecosystem diagnostic probing & repair",
+  "main": "index.js",
+  "scripts": {
+    "server": "node index.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "ws": "^8.17.1"
+  }
+}
