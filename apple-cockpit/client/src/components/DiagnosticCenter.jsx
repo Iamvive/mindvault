@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, AlertTriangle, XCircle, Wrench, RefreshCw, Terminal, Sparkles } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, XCircle, Wrench, Terminal, Sparkles } from 'lucide-react';
 
 export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionLog }) {
   const checks = diagnostics?.checks || [];
@@ -9,28 +9,28 @@ export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionL
     switch (status) {
       case 'PASS':
         return (
-          <span className="chip chip-online">
-            <CheckCircle2 size={12} />
+          <span className="badge-pill badge-success">
+            <CheckCircle2 size={11} />
             PASS
           </span>
         );
       case 'WARNING':
         return (
-          <span className="chip chip-warning">
-            <AlertTriangle size={12} />
+          <span className="badge-pill badge-warn">
+            <AlertTriangle size={11} />
             ATTENTION
           </span>
         );
       case 'FAIL':
         return (
-          <span className="chip chip-danger">
-            <XCircle size={12} />
+          <span className="badge-pill badge-alert">
+            <XCircle size={11} />
             FAILED
           </span>
         );
       default:
         return (
-          <span className="chip" style={{ background: 'var(--gradient-wash-2)', color: 'var(--text-secondary)' }}>
+          <span className="badge-pill" style={{ background: 'var(--surface-card)', color: 'var(--sg-mute)' }}>
             INFO
           </span>
         );
@@ -55,23 +55,23 @@ export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionL
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Overview & Auto-Heal Banner */}
-      <div className="glass-panel" style={{ padding: '32px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
+      <div className="wealth-panel" style={{ padding: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1.75rem' }}>
           <div>
             <h2 className="display-2">Diagnostic Center & 1-Tap Auto-Heal</h2>
-            <p style={{ marginTop: '4px' }}>
+            <p style={{ marginTop: '4px', fontSize: '0.88rem', color: 'var(--sg-mute)' }}>
               Automated 8-point audit verifying Continuity daemons, Bluetooth link layers, and Bonjour services
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '1.75rem', fontWeight: 700, letterSpacing: '-0.8px', color: score >= 85 ? 'var(--status-online)' : 'var(--status-warn)' }}>
+              <div style={{ fontSize: '1.85rem', fontWeight: 800, letterSpacing: '-1px', color: score >= 85 ? 'var(--sg-success)' : 'var(--sg-warn)' }}>
                 {score}%
               </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.72rem', color: 'var(--sg-mute)', textTransform: 'uppercase', fontWeight: 700 }}>
                 Ecosystem Health
               </div>
             </div>
@@ -79,47 +79,46 @@ export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionL
             <button 
               onClick={() => onTriggerRepair('restart-sharingd')}
               className="btn-primary"
-              style={{ padding: '10px 20px' }}
             >
-              <Wrench size={16} />
+              <Wrench size={15} />
               1-Click Auto-Heal All
             </button>
           </div>
         </div>
 
         {/* 8 Checks Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
           {checks.map((check) => {
             const fixAction = getActionForCheck(check.id);
             return (
               <div 
                 key={check.id}
-                className="glass-card"
+                className="wealth-card"
                 style={{
-                  padding: '20px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  gap: '14px'
+                  gap: '12px'
                 }}
               >
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                    <h3 style={{ fontSize: '0.98rem', fontWeight: 600, color: 'var(--text-primary)' }}>{check.title}</h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                    <h3 style={{ fontSize: '0.96rem', fontWeight: 700, color: 'var(--sg-ink)' }}>{check.title}</h3>
                     {getStatusBadge(check.status)}
                   </div>
-                  <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                  <p style={{ fontSize: '0.84rem', color: 'var(--sg-body)', lineHeight: 1.4 }}>
                     {check.detail}
                   </p>
                   {check.recommendedAction && (
                     <div style={{
-                      marginTop: '10px',
+                      marginTop: '8px',
                       padding: '8px 12px',
-                      borderRadius: 'var(--radius-sm)',
-                      background: 'rgba(255, 214, 10, 0.08)',
-                      border: '1px solid rgba(255, 214, 10, 0.2)',
+                      borderRadius: '8px',
+                      background: 'var(--sg-warn-pale)',
+                      border: '1px solid var(--sg-warn-border)',
                       fontSize: '0.76rem',
-                      color: 'var(--status-warn)'
+                      color: 'var(--sg-warn)',
+                      fontWeight: 500
                     }}>
                       💡 {check.recommendedAction}
                     </div>
@@ -127,13 +126,13 @@ export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionL
                 </div>
 
                 {fixAction && (
-                  <div style={{ paddingTop: '10px', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'flex-end' }}>
+                  <div style={{ paddingTop: '8px', borderTop: '1px dashed var(--border-hairline)', display: 'flex', justifyContent: 'flex-end' }}>
                     <button
                       onClick={() => onTriggerRepair(fixAction.action)}
                       className="btn-secondary"
-                      style={{ fontSize: '0.78rem', padding: '6px 14px' }}
+                      style={{ fontSize: '0.78rem', padding: '0.35rem 0.85rem' }}
                     >
-                      <Wrench size={13} />
+                      <Wrench size={12} />
                       {fixAction.label}
                     </button>
                   </div>
@@ -146,16 +145,15 @@ export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionL
 
       {/* Action Logs Box */}
       {actionLog && actionLog.length > 0 && (
-        <div className="glass-panel" style={{ padding: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
-            <Terminal size={18} style={{ color: 'var(--sg-primary)' }} />
-            <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>Recent Diagnostic & Repair Logs</h3>
+        <div className="wealth-panel" style={{ padding: '1.5rem 2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem' }}>
+            <Terminal size={16} style={{ color: 'var(--border-active)' }} />
+            <h3 style={{ fontSize: '0.98rem', fontWeight: 700 }}>Recent Diagnostic & Repair Logs</h3>
           </div>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px',
-            fontFamily: 'var(--font-family)',
+            gap: '6px',
             fontSize: '0.82rem'
           }}>
             {actionLog.map((log) => (
@@ -166,18 +164,18 @@ export default function DiagnosticCenter({ diagnostics, onTriggerRepair, actionL
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: '8px 14px',
-                  background: 'var(--gradient-wash-1)',
-                  borderRadius: 'var(--radius-sm)',
-                  border: '1px solid var(--border-subtle)'
+                  background: 'var(--surface-card)',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-hairline)'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span className={`chip ${log.success ? 'chip-online' : 'chip-danger'}`} style={{ fontSize: '0.65rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span className={`badge-pill ${log.success ? 'badge-success' : 'badge-alert'}`} style={{ fontSize: '0.62rem' }}>
                     {log.success ? 'SUCCESS' : 'FAILED'}
                   </span>
-                  <span>{log.message}</span>
+                  <span style={{ color: 'var(--sg-ink)', fontWeight: 500 }}>{log.message}</span>
                 </div>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>{log.time}</span>
+                <span style={{ color: 'var(--sg-mute)', fontSize: '0.75rem' }}>{log.time}</span>
               </div>
             ))}
           </div>

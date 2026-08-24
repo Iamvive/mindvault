@@ -38,7 +38,7 @@ export default function App() {
       />
 
       {/* Main View Router */}
-      <main style={{ minHeight: '600px' }}>
+      <main style={{ minHeight: '520px' }}>
         {activeTab === 'radar' && (
           <TopologyRadar 
             topology={topology}
@@ -75,26 +75,28 @@ export default function App() {
         )}
       </main>
 
-      {/* Subtle Footer */}
+      {/* Subtle Luxury Footer */}
       <footer style={{
-        marginTop: '48px',
-        paddingTop: '24px',
-        borderTop: '1px solid var(--border-subtle)',
+        marginTop: '3rem',
+        paddingTop: '1.5rem',
+        borderTop: '1px solid var(--border-hairline)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px',
         fontSize: '0.8rem',
-        color: 'var(--text-muted)'
+        color: 'var(--sg-mute)'
       }}>
-        <div>
-          🍎 Apple Ecosystem Cockpit • Mac mini + MacBook + iPad
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>🍎 Apple Ecosystem Cockpit</span>
+          <span style={{ color: 'var(--border-hairline)' }}>•</span>
+          <span>Mac mini + MacBook + iPad</span>
         </div>
-        <div style={{ display: 'flex', gap: '16px' }}>
+        <div style={{ display: 'flex', gap: '16px', fontWeight: 500 }}>
           <span>Universal Control: Active</span>
           <span>Sidecar: Ready</span>
-          <span>Handoff: 5GHz Subnet</span>
+          <span>Subnet: Synced</span>
         </div>
       </footer>
     </div>

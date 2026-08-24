@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Monitor, Laptop, Tablet, Move, RotateCcw, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Monitor, Laptop, Tablet, Move, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function DeskArrangement() {
   const [positions, setPositions] = useState({
     macmini: { x: 340, y: 50, label: 'Mac mini Monitor (27" 4K)', type: 'macmini', active: true },
     ipad: { x: 740, y: 110, label: 'iPad Pro (Right Stand)', type: 'ipad', active: true },
-    macbook: { x: 40, y: 110, label: 'MacBook Pro (Left Companion)', type: 'macbook', active: true }
+    macbook: { x: 40, y: 110, label: 'MacBook Pro (Left Side)', type: 'macbook', active: true }
   });
 
   const [activePreset, setActivePreset] = useState('desk-hub');
@@ -75,43 +75,43 @@ export default function DeskArrangement() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Preset Selector */}
-      <div className="glass-panel" style={{ padding: '24px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+      <div className="wealth-panel" style={{ padding: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
           <div>
             <h2 className="display-2">Desk & Display Studio</h2>
-            <p style={{ marginTop: '2px' }}>
+            <p style={{ marginTop: '2px', fontSize: '0.88rem', color: 'var(--sg-mute)' }}>
               Arrange your physical workspace to optimize Universal Control edge transitions and Sidecar positioning
             </p>
           </div>
-          <span className="chip chip-primary">
-            <Sparkles size={13} />
-            Interactive Spatial Canvas
+          <span className="badge-pill badge-alert">
+            <Sparkles size={12} />
+            Spatial Canvas
           </span>
         </div>
 
         {/* Presets Bar */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
           {presets.map((preset) => (
             <div
               key={preset.id}
               onClick={() => applyPreset(preset)}
-              className="glass-card"
+              className="wealth-card"
               style={{
-                padding: '16px 20px',
+                padding: '1.25rem',
                 cursor: 'pointer',
-                border: activePreset === preset.id ? '1px solid var(--sg-primary)' : '1px solid var(--border-subtle)',
-                background: activePreset === preset.id ? 'var(--gradient-wash-3)' : 'var(--bg-glass-card)'
+                border: activePreset === preset.id ? '1px solid var(--border-active)' : '1px solid var(--border-hairline)',
+                background: activePreset === preset.id ? 'var(--sg-primary-pale)' : '#ffffff'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>{preset.name}</h4>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--sg-ink)' }}>{preset.name}</h4>
                 {activePreset === preset.id && (
-                  <CheckCircle2 size={16} style={{ color: 'var(--sg-primary)' }} />
+                  <CheckCircle2 size={16} style={{ color: 'var(--border-active)' }} />
                 )}
               </div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>{preset.desc}</p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--sg-body)', lineHeight: 1.4 }}>{preset.desc}</p>
             </div>
           ))}
         </div>
@@ -119,36 +119,35 @@ export default function DeskArrangement() {
 
       {/* Interactive Desk Canvas */}
       <div 
-        className="glass-panel" 
+        className="wealth-panel" 
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         style={{
           height: '460px',
           position: 'relative',
-          background: 'radial-gradient(ellipse at center, rgba(35, 35, 48, 0.4) 0%, rgba(14, 14, 18, 0.95) 100%)',
+          background: 'linear-gradient(180deg, #fcfcfb 0%, #f4f4f0 100%)',
           overflow: 'hidden',
           cursor: draggingId ? 'grabbing' : 'default',
           userSelect: 'none'
         }}
       >
-        {/* Desk Grid & Visual Boundary */}
+        {/* Subtle Grid */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-          opacity: 0.5
+          backgroundImage: 'radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px)',
+          backgroundSize: '24px 24px'
         }} />
 
         {/* Desk Surface Marker */}
         <div style={{
           position: 'absolute',
-          bottom: '20px',
+          bottom: '24px',
           left: '30px',
           right: '30px',
-          height: '4px',
-          background: 'linear-gradient(90deg, transparent, var(--border-subtle), transparent)',
+          height: '2px',
+          background: 'linear-gradient(90deg, transparent, var(--border-hairline), transparent)',
           borderRadius: 'var(--radius-full)'
         }} />
 
@@ -157,7 +156,7 @@ export default function DeskArrangement() {
           top: '16px',
           left: '20px',
           fontSize: '0.78rem',
-          color: 'var(--text-muted)',
+          color: 'var(--sg-mute)',
           display: 'flex',
           alignItems: 'center',
           gap: '6px'
@@ -184,57 +183,55 @@ export default function DeskArrangement() {
                 top: `${pos.y}px`,
                 width: `${width}px`,
                 height: `${height}px`,
-                borderRadius: isIpad ? '20px' : '12px',
-                background: pos.active 
-                  ? (isMini ? 'linear-gradient(180deg, #1f1f2a, #13131c)' : '#181822')
-                  : 'rgba(30, 30, 40, 0.4)',
-                border: isMini ? '2px solid var(--border-primary)' : '1px solid var(--border-focus)',
-                boxShadow: 'var(--shadow-md)',
+                borderRadius: isIpad ? '16px' : '12px',
+                background: pos.active ? '#ffffff' : '#f0f0ec',
+                border: isMini ? '2px solid var(--border-active)' : '1px solid var(--border-hairline)',
+                boxShadow: pos.active ? '0 8px 24px rgba(0, 0, 0, 0.06)' : 'none',
                 cursor: 'grab',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                padding: '14px',
-                opacity: pos.active ? 1 : 0.45,
+                padding: '12px',
+                opacity: pos.active ? 1 : 0.6,
                 transition: draggingId === id ? 'none' : 'transform 0.1s ease',
                 zIndex: draggingId === id ? 10 : 2
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  {isMini && <Monitor size={18} style={{ color: 'var(--sg-primary)' }} />}
-                  {isMacBook && <Laptop size={18} style={{ color: '#64d2ff' }} />}
-                  {isIpad && <Tablet size={18} style={{ color: '#ffd60a' }} />}
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {isMini && <Monitor size={16} style={{ color: 'var(--border-active)' }} />}
+                  {isMacBook && <Laptop size={16} style={{ color: 'var(--sg-accent-blue)' }} />}
+                  {isIpad && <Tablet size={16} style={{ color: 'var(--sg-accent-purple)' }} />}
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--sg-ink)' }}>
                     {isMini ? 'Mac mini' : (isMacBook ? 'MacBook' : 'iPad')}
                   </span>
                 </div>
-                <span className={`chip ${pos.active ? 'chip-online' : 'chip-warning'}`} style={{ fontSize: '0.65rem', padding: '2px 8px' }}>
-                  {pos.active ? 'Active' : 'Auxiliary'}
+                <span className={`badge-pill ${pos.active ? 'badge-success' : 'badge-warn'}`} style={{ fontSize: '0.62rem', padding: '2px 6px' }}>
+                  {pos.active ? 'Active' : 'Aux'}
                 </span>
               </div>
 
-              {/* Screen Mock Graphic */}
+              {/* Screen Mock Frame */}
               <div style={{
                 flex: 1,
                 margin: '8px 0',
-                borderRadius: '6px',
-                background: 'var(--gradient-wash-1)',
-                border: '1px dashed var(--border-subtle)',
+                borderRadius: '8px',
+                background: 'var(--surface-card)',
+                border: '1px dashed var(--border-glow)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '0.72rem',
-                color: 'var(--text-muted)',
+                color: 'var(--sg-mute)',
                 textAlign: 'center',
                 padding: '4px'
               }}>
                 {pos.label}
               </div>
 
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--sg-mute)', display: 'flex', justifyContent: 'space-between' }}>
                 <span>Edge Link: Enabled</span>
-                <span>{pos.active ? '100% DPI' : 'Standby'}</span>
+                <span style={{ fontWeight: 600, color: 'var(--sg-ink)' }}>{pos.active ? '100% DPI' : 'Standby'}</span>
               </div>
             </div>
           );

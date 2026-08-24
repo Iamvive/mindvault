@@ -8,8 +8,7 @@ import {
   Check, 
   ChevronRight, 
   Sparkles,
-  Terminal,
-  ExternalLink
+  Terminal
 } from 'lucide-react';
 
 export default function MasterPlaybook({ onTriggerAction }) {
@@ -139,13 +138,13 @@ export default function MasterPlaybook({ onTriggerAction }) {
   const activeGuide = guides.find((g) => g.id === activeGuideId) || guides[0];
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '24px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '1.5rem' }}>
       {/* Sidebar Guide Menu */}
-      <div className="glass-panel" style={{ padding: '20px', height: 'fit-content' }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '14px', paddingLeft: '8px' }}>
+      <div className="wealth-panel" style={{ padding: '1.25rem', height: 'fit-content' }}>
+        <h3 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '1rem', paddingLeft: '8px' }}>
           Master Playbook
         </h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {guides.map((guide) => {
             const Icon = guide.icon;
             const isActive = activeGuideId === guide.id;
@@ -156,21 +155,21 @@ export default function MasterPlaybook({ onTriggerAction }) {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px',
-                  padding: '12px 14px',
-                  borderRadius: 'var(--radius-md)',
-                  border: 'none',
-                  background: isActive ? 'var(--gradient-wash-3)' : 'transparent',
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  fontWeight: isActive ? 600 : 500,
-                  fontSize: '0.85rem',
+                  gap: '10px',
+                  padding: '10px 12px',
+                  borderRadius: '10px',
+                  border: '1px solid',
+                  borderColor: isActive ? 'var(--border-active)' : 'transparent',
+                  background: isActive ? 'var(--sg-primary-pale)' : 'transparent',
+                  color: isActive ? 'var(--border-active)' : 'var(--sg-body)',
+                  fontWeight: isActive ? 700 : 500,
+                  fontSize: '0.84rem',
                   cursor: 'pointer',
                   textAlign: 'left',
-                  transition: 'all 0.15s ease',
-                  borderLeft: isActive ? '3px solid var(--sg-primary)' : '3px solid transparent'
+                  transition: 'var(--transition-smooth)'
                 }}
               >
-                <Icon size={18} style={{ color: isActive ? 'var(--sg-primary)' : 'var(--text-muted)' }} />
+                <Icon size={16} style={{ color: isActive ? 'var(--border-active)' : 'var(--sg-mute)' }} />
                 <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {guide.title.split('(')[0]}
                 </div>
@@ -182,48 +181,49 @@ export default function MasterPlaybook({ onTriggerAction }) {
       </div>
 
       {/* Guide Content Display */}
-      <div className="glass-panel" style={{ padding: '32px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+      <div className="wealth-panel" style={{ padding: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
           <div>
-            <span className="chip chip-primary" style={{ marginBottom: '8px' }}>
+            <span className="badge-pill badge-alert" style={{ marginBottom: '6px' }}>
               {activeGuide.badge}
             </span>
             <h2 className="display-2" style={{ marginTop: '4px' }}>{activeGuide.title}</h2>
           </div>
         </div>
 
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '24px' }}>
+        <p style={{ fontSize: '0.92rem', color: 'var(--sg-body)', lineHeight: 1.5, marginBottom: '1.5rem' }}>
           {activeGuide.summary}
         </p>
 
         {/* Steps List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '28px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '1.75rem' }}>
           {activeGuide.steps.map((step, idx) => (
             <div 
               key={idx} 
-              className="glass-card"
-              style={{ padding: '18px 20px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}
+              className="wealth-card"
+              style={{ padding: '1.25rem 1.5rem', display: 'flex', gap: '14px', alignItems: 'flex-start' }}
             >
               <div style={{
-                width: '28px',
-                height: '28px',
+                width: '26px',
+                height: '26px',
                 borderRadius: 'var(--radius-full)',
-                background: 'var(--gradient-wash-3)',
+                background: 'var(--sg-primary-pale)',
+                border: '1px solid var(--border-active)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.82rem',
+                fontSize: '0.78rem',
                 fontWeight: 700,
-                color: 'var(--sg-primary)',
+                color: 'var(--border-active)',
                 flexShrink: 0
               }}>
                 {idx + 1}
               </div>
               <div>
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--sg-ink)', marginBottom: '3px' }}>
                   {step.title}
                 </h4>
-                <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--sg-body)', lineHeight: 1.45 }}>
                   {step.detail}
                 </p>
               </div>
@@ -233,21 +233,21 @@ export default function MasterPlaybook({ onTriggerAction }) {
 
         {/* Pro Tip Box */}
         <div style={{
-          padding: '16px 20px',
-          borderRadius: 'var(--radius-md)',
-          background: 'rgba(230, 0, 35, 0.06)',
-          border: '1px solid var(--border-primary)',
-          marginBottom: '24px',
+          padding: '1.25rem 1.5rem',
+          borderRadius: '12px',
+          background: 'var(--sg-primary-pale)',
+          border: '1px solid rgba(230, 0, 35, 0.2)',
+          marginBottom: '1.5rem',
           display: 'flex',
           gap: '12px',
           alignItems: 'flex-start'
         }}>
-          <Sparkles size={18} style={{ color: 'var(--sg-primary)', flexShrink: 0, marginTop: '2px' }} />
+          <Sparkles size={16} style={{ color: 'var(--border-active)', flexShrink: 0, marginTop: '2px' }} />
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--sg-primary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--border-active)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               Ecosystem Pro Tip
             </div>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', marginTop: '2px', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '0.85rem', color: 'var(--sg-body)', marginTop: '2px', lineHeight: 1.4 }}>
               {activeGuide.proTip}
             </div>
           </div>
@@ -256,29 +256,29 @@ export default function MasterPlaybook({ onTriggerAction }) {
         {/* Terminal Repair Snippet */}
         {activeGuide.terminalFix && (
           <div style={{
-            padding: '14px 18px',
-            background: 'var(--bg-base)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--border-subtle)',
+            padding: '12px 16px',
+            background: 'var(--surface-card)',
+            borderRadius: '10px',
+            border: '1px solid var(--border-hairline)',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             gap: '12px'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>
-              <Terminal size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-              <code style={{ fontSize: '0.8rem', color: '#ff6b7e', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+              <Terminal size={14} style={{ color: 'var(--sg-mute)', flexShrink: 0 }} />
+              <code style={{ fontSize: '0.8rem', color: 'var(--border-active)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 600 }}>
                 {activeGuide.terminalFix}
               </code>
             </div>
             <button
               onClick={() => copyToClipboard(activeGuide.terminalFix)}
               className="btn-secondary"
-              style={{ padding: '6px 12px', fontSize: '0.75rem', flexShrink: 0 }}
+              style={{ padding: '0.35rem 0.85rem', fontSize: '0.76rem', flexShrink: 0 }}
             >
               {copiedCmd === activeGuide.terminalFix ? (
                 <>
-                  <Check size={12} style={{ color: 'var(--status-online)' }} />
+                  <Check size={12} style={{ color: 'var(--sg-success)' }} />
                   Copied
                 </>
               ) : (

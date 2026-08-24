@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Monitor, Share2, Copy, RefreshCw, Wrench, ExternalLink, Zap, CheckCircle2 } from 'lucide-react';
+import { Monitor, Share2, Copy, RefreshCw, Wrench, Zap, CheckCircle2 } from 'lucide-react';
 
 export default function QuickActionDock({ onTriggerAction, onTriggerRepair, isRefreshing, onRefresh }) {
   const [activeFeedback, setActiveFeedback] = useState('');
@@ -20,7 +20,7 @@ export default function QuickActionDock({ onTriggerAction, onTriggerRepair, isRe
       title: 'Remote Screen Share to Mac mini',
       desc: 'Opens native macOS Screen Sharing app connected to local VNC port 5900',
       icon: Monitor,
-      color: 'var(--sg-primary)',
+      color: 'var(--border-active)',
       btnLabel: 'Launch Screen Share'
     },
     {
@@ -28,7 +28,7 @@ export default function QuickActionDock({ onTriggerAction, onTriggerRepair, isRe
       title: 'Open Native AirDrop Window',
       desc: 'Instantly opens AirDrop in Finder to discover MacBook and iPad for file dropping',
       icon: Share2,
-      color: '#64d2ff',
+      color: 'var(--sg-accent-blue)',
       btnLabel: 'Open AirDrop'
     },
     {
@@ -36,7 +36,7 @@ export default function QuickActionDock({ onTriggerAction, onTriggerRepair, isRe
       title: 'Broadcast Clipboard Heartbeat',
       desc: 'Sends a lightweight cross-device sync ping to wake up Universal Clipboard',
       icon: Copy,
-      color: '#ffd60a',
+      color: 'var(--sg-accent-purple)',
       btnLabel: 'Send Ping'
     },
     {
@@ -44,7 +44,7 @@ export default function QuickActionDock({ onTriggerAction, onTriggerRepair, isRe
       title: 'Restart Apple Handoff Daemon',
       desc: 'Soft-restarts sharingd to fix hung Universal Control or AirDrop sessions',
       icon: Wrench,
-      color: '#ff6b7e',
+      color: 'var(--border-active)',
       btnLabel: 'Restart sharingd'
     },
     {
@@ -52,69 +52,70 @@ export default function QuickActionDock({ onTriggerAction, onTriggerRepair, isRe
       title: 'Flush Bonjour / mDNS Cache',
       desc: 'Refreshes local subnet peer discovery for Sidecar and Apple AirPlay',
       icon: RefreshCw,
-      color: 'var(--status-online)',
+      color: 'var(--sg-success)',
       btnLabel: 'Flush Cache'
     }
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div className="glass-panel" style={{ padding: '32px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div className="wealth-panel" style={{ padding: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h2 className="display-2">Quick Action Dock</h2>
-            <p style={{ marginTop: '4px' }}>
+            <p style={{ marginTop: '4px', fontSize: '0.88rem', color: 'var(--sg-mute)' }}>
               One-tap triggers to launch remote connections, file drops, and daemon health resets
             </p>
           </div>
           {activeFeedback && (
-            <span className="chip chip-online">
-              <CheckCircle2 size={13} />
+            <span className="badge-pill badge-success">
+              <CheckCircle2 size={12} />
               {activeFeedback}
             </span>
           )}
         </div>
 
         {/* Action Cards Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
           {actions.map((act) => {
             const Icon = act.icon;
             return (
               <div 
                 key={act.id} 
-                className="glass-card"
-                style={{ padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '16px' }}
+                className="wealth-card"
+                style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.25rem' }}
               >
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
                   <div style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'var(--gradient-wash-2)',
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '10px',
+                    background: 'var(--surface-card)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    border: '1px solid var(--border-glow)'
                   }}>
-                    <Icon size={22} style={{ color: act.color }} />
+                    <Icon size={20} style={{ color: act.color }} />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                    <h3 style={{ fontSize: '0.96rem', fontWeight: 700, color: 'var(--sg-ink)', marginBottom: '3px' }}>
                       {act.title}
                     </h3>
-                    <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                    <p style={{ fontSize: '0.82rem', color: 'var(--sg-body)', lineHeight: 1.4 }}>
                       {act.desc}
                     </p>
                   </div>
                 </div>
 
-                <div style={{ paddingTop: '10px', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'flex-end' }}>
+                <div style={{ paddingTop: '8px', borderTop: '1px dashed var(--border-hairline)', display: 'flex', justifyContent: 'flex-end' }}>
                   <button
                     onClick={() => handleAction(act.id, act.title)}
                     className="btn-primary"
-                    style={{ fontSize: '0.82rem', padding: '8px 16px', width: '100%', justifyContent: 'center' }}
+                    style={{ width: '100%', justifyContent: 'center' }}
                   >
-                    <Zap size={14} />
+                    <Zap size={13} />
                     {act.btnLabel}
                   </button>
                 </div>

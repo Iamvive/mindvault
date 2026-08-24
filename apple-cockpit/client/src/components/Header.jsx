@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, RefreshCw, Layers, Layout, Activity, BookOpen, Zap } from 'lucide-react';
+import { Radio, RefreshCw, Layout, Activity, BookOpen, Zap } from 'lucide-react';
 
 export default function Header({ 
   activeTab, 
@@ -12,7 +12,6 @@ export default function Header({
 }) {
   const score = diagnostics?.score ?? 100;
   const isHealthy = score >= 85;
-  const isDegraded = score >= 60 && score < 85;
 
   const tabs = [
     { id: 'radar', label: 'Ecosystem Radar', icon: Radio },
@@ -24,10 +23,10 @@ export default function Header({
 
   return (
     <header style={{
-      marginBottom: '28px',
+      marginBottom: '2rem',
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px'
+      gap: '1.25rem'
     }}>
       {/* Top Banner */}
       <div style={{
@@ -35,51 +34,42 @@ export default function Header({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '16px'
+        gap: '1rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img 
             src="/app-icon.jpg" 
             alt="Apple Ecosystem Cockpit Icon" 
             style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '13px',
+              width: '42px',
+              height: '42px',
+              borderRadius: '10px',
               objectFit: 'cover',
-              border: '1px solid var(--border-subtle)',
-              boxShadow: 'var(--shadow-sm)'
+              border: '1px solid var(--border-hairline)',
+              boxShadow: 'var(--shadow-subtle)'
             }}
           />
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <h1>Apple Ecosystem Cockpit</h1>
-              <span className="chip chip-primary" style={{ fontSize: '0.7rem' }}>
+              <span className="badge-pill badge-alert" style={{ fontSize: '0.68rem' }}>
                 {hostInfo?.deviceType ? `Host: ${hostInfo.deviceType}` : 'Host: macOS'}
               </span>
             </div>
-            <p style={{ fontSize: '0.85rem', marginTop: '2px' }}>
+            <p style={{ fontSize: '0.85rem', color: 'var(--sg-mute)', marginTop: '2px' }}>
               Seamless Orchestration for Mac mini • MacBook • iPad
             </p>
           </div>
         </div>
 
         {/* Global Health & Live Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           {/* Sync Status Badge */}
-          <div className="glass-card" style={{
-            padding: '8px 16px',
-            borderRadius: 'var(--radius-full)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            fontSize: '0.85rem'
-          }}>
-            <div className={`status-dot ${isConnected ? 'pulsing' : ''}`} style={{
-              backgroundColor: isConnected ? (isHealthy ? 'var(--status-online)' : (isDegraded ? 'var(--status-warn)' : 'var(--status-fail)')) : 'var(--text-muted)'
+          <div className="live-indicator">
+            <span className={`live-dot ${isConnected ? 'pulsing' : ''}`} style={{
+              backgroundColor: isConnected ? (isHealthy ? 'var(--sg-success)' : 'var(--sg-warn)') : 'var(--sg-mute)'
             }} />
-            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-              {isConnected ? `${score}% Ecosystem Health` : 'Offline Mode'}
-            </span>
+            <span>{isConnected ? `${score}% Ecosystem Health` : 'Offline Mode'}</span>
           </div>
 
           {/* Refresh Button */}
@@ -87,26 +77,16 @@ export default function Header({
             onClick={onRefresh}
             disabled={isRefreshing}
             className="btn-secondary"
-            style={{ borderRadius: 'var(--radius-full)', padding: '8px 14px' }}
             title="Refresh Diagnostics & Services"
           >
-            <RefreshCw size={15} style={{ animation: isRefreshing ? 'spin 1s linear infinite' : 'none' }} />
+            <RefreshCw size={14} style={{ animation: isRefreshing ? 'spin 1s linear infinite' : 'none' }} />
             <span>{isRefreshing ? 'Auditing...' : 'Sync'}</span>
           </button>
         </div>
       </div>
 
       {/* Navigation Pill Bar */}
-      <nav style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '6px',
-        background: 'var(--bg-glass)',
-        borderRadius: 'var(--radius-full)',
-        border: '1px solid var(--border-subtle)',
-        overflowX: 'auto'
-      }}>
+      <nav className="tab-pill-bar">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -114,34 +94,16 @@ export default function Header({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '9px 20px',
-                borderRadius: 'var(--radius-full)',
-                border: 'none',
-                background: isActive ? 'var(--sg-primary)' : 'transparent',
-                color: isActive ? '#ffffff' : 'var(--text-secondary)',
-                fontWeight: isActive ? 600 : 500,
-                fontSize: '0.88rem',
-                cursor: 'pointer',
-                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                whiteSpace: 'nowrap',
-                position: 'relative'
-              }}
+              className={`tab-pill-btn ${isActive ? 'active' : ''}`}
             >
-              <Icon size={16} />
+              <Icon size={15} />
               <span>{tab.label}</span>
               {tab.badge && (
                 <span style={{
-                  position: 'absolute',
-                  top: '6px',
-                  right: '8px',
-                  width: '7px',
-                  height: '7px',
+                  width: '6px',
+                  height: '6px',
                   borderRadius: 'var(--radius-full)',
-                  background: 'var(--status-warn)'
+                  background: 'var(--sg-warn)'
                 }} />
               )}
             </button>
