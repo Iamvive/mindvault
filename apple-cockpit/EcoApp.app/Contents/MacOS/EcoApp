@@ -1,0 +1,26 @@
+#!/bin/bash
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+
+PROJECT_DIR="/Users/appworx/Desktop/ai-play-ground/apple-cockpit"
+cd "$PROJECT_DIR" || exit 1
+
+# Start Backend Server if not running
+if ! curl -s http://localhost:5174/api/health >/dev/null 2>&1; then
+  node server/index.js &
+fi
+
+# Start Frontend Dev Server if not running
+if ! curl -s http://localhost:5173/ >/dev/null 2>&1; then
+  (cd client && npm run dev) &
+fi
+
+# Poll until frontend is accessible
+for i in {1..20}; do
+  if curl -s http://localhost:5173/ >/dev/null 2>&1; then
+    break
+  fi
+  sleep 0.2
+done
+
+# Open the browser
+open "http://localhost:5173"
