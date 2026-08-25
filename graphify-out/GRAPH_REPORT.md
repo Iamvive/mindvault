@@ -1,16 +1,16 @@
-# Graph Report - ai-play-ground  (2026-08-24)
+# Graph Report - ai-play-ground  (2026-08-25)
 
 ## Corpus Check
-- 298 files · ~216,581 words
+- 299 files · ~217,198 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2435 nodes · 3200 edges · 192 communities (165 shown, 27 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 121 edges (avg confidence: 0.69)
+- 2440 nodes · 3205 edges · 194 communities (166 shown, 28 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 122 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a6eee20b`
+- Built from commit: `14dc57c8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -195,6 +195,7 @@
 - Global Constraints
 - REFACTOR Phase: Close Loopholes (Stay Green)
 - TestWealthDB
+- add_debt
 - VERIFY GREEN: Pressure Testing
 - Example: TDD Skill Bulletproofing
 - 🍎 Apple Ecosystem Cockpit
@@ -214,8 +215,8 @@
 ## Surprising Connections (you probably didn't know these)
 - `BTManagerApp` --calls--> `AudioRoutingService`  [INFERRED]
   bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/AudioRoutingService.swift
-- `BTManagerApp` --calls--> `BluetoothService`  [INFERRED]
-  bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/BluetoothService.swift
+- `BTManagerApp` --calls--> `PreferencesStore`  [INFERRED]
+  bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/PreferencesStore.swift
 - `MainPopoverView` --calls--> `AudioControlService`  [INFERRED]
   bt-manager/Sources/BTManager/Views/MainPopoverView.swift → bt-manager/Sources/BTManager/Services/AudioControlService.swift
 - `MainPopoverView` --calls--> `DeviceDiagnosticService`  [INFERRED]
@@ -226,7 +227,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (192 total, 27 thin omitted)
+## Communities (194 total, 28 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
 Cohesion: 0.06
@@ -253,8 +254,8 @@ Cohesion: 0.08
 Nodes (10): get_client_ip(), Any, RateLimiter, TestFinanceBotPipeline, DummyHandler, test_get_client_ip_fallback(), test_get_client_ip_forwarded_for(), test_get_client_ip_real_ip() (+2 more)
 
 ### Community 6 - "TestFinanceBotQueryQA"
-Cohesion: 0.07
-Nodes (28): @google/genai, dependencies, dotenv, express, @google/genai, react, react-dom, three (+20 more)
+Cohesion: 0.12
+Nodes (15): devDependencies, supertest, vite, @vitejs/plugin-react, vite, @vitejs/plugin-react, name, scripts (+7 more)
 
 ### Community 7 - "llm_extract.py"
 Cohesion: 0.06
@@ -550,12 +551,12 @@ Cohesion: 0.40
 Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
 
 ### Community 96 - "db.py"
-Cohesion: 0.10
-Nodes (33): add_debt(), add_pending_bill(), add_recurring(), check_duplicate(), clear_debts_for_person(), create_temp_login_code(), create_user_pat(), create_user_session() (+25 more)
+Cohesion: 0.12
+Nodes (30): add_pending_bill(), add_recurring(), check_duplicate(), create_temp_login_code(), create_user_pat(), create_user_session(), delete_debt(), delete_last_transaction() (+22 more)
 
 ### Community 97 - "Evaluation and iteration"
 Cohesion: 0.07
-Nodes (39): actionsRouter, app, broadcastInterval, broadcastTelemetry(), cors, devicesRouter, diagnosticsRouter, express (+31 more)
+Nodes (41): actionsRouter, app, broadcastInterval, broadcastTelemetry(), cors, devicesRouter, diagnosticsRouter, express (+33 more)
 
 ### Community 98 - "Checklist for effective Skills"
 Cohesion: 0.50
@@ -646,8 +647,8 @@ Cohesion: 0.12
 Nodes (22): BluetoothDevice, DeviceType, headphones, keyboard, mouse, speaker, unknown, Bool (+14 more)
 
 ### Community 122 - "llm_extract.py"
-Cohesion: 0.16
-Nodes (29): _extract_claude(), _extract_gemini(), _extract_local(), _extract_openai(), extract_transaction(), BaseModel, Calls the LLM to extract transaction details from either text or image.     Uses, TransactionExtraction (+21 more)
+Cohesion: 0.06
+Nodes (52): @google/genai, dependencies, dotenv, express, @google/genai, react, react-dom, sqlite3 (+44 more)
 
 ### Community 123 - "Global Constraints"
 Cohesion: 0.29
@@ -698,12 +699,12 @@ Cohesion: 0.29
 Nodes (6): Global Constraints, LLM Cost & Extraction Optimization Engine Implementation Plan, 🧪 Plan Self-Review & Verification, Task 1: Indian Bank & UPI Fast-Log Regex Engine, Task 2: Dual-Model Routing & Context Caching in `llm_extract.py`, Task 3: Pricing Table & Cost Accounting Update
 
 ### Community 136 - "BluetoothService"
-Cohesion: 0.28
-Nodes (6): BluetoothService, Bool, Int, String, Void, BluetoothServiceTests
+Cohesion: 0.15
+Nodes (13): App, BTManagerApp, AutoReconnectWatcher, Bool, BluetoothService, Bool, Int, String (+5 more)
 
 ### Community 137 - "XCTest"
 Cohesion: 0.13
-Nodes (9): AudioRoutingServiceTests, AutoReconnectWatcherTests, BTManagerSanityTests, DeviceDiagnosticReportTests, EQPresetTests, FixActionsServiceTests, BTManager, XCTest (+1 more)
+Nodes (9): AutoReconnectWatcherTests, BluetoothServiceTests, BTManagerSanityTests, DeviceDiagnosticReportTests, EQPresetTests, FixActionsServiceTests, BTManager, XCTest (+1 more)
 
 ### Community 138 - "Global Constraints"
 Cohesion: 0.33
@@ -714,8 +715,8 @@ Cohesion: 0.12
 Nodes (16): 1. Overview, 2.1 Database Schema & Migrations, 2.2 API Endpoints, 2.3 Authentication Layer, 2.4 Web Dashboard UI, 2. Proposed Changes, 3.1 Automated Tests, 3.2 Manual Verification (+8 more)
 
 ### Community 140 - "PreferencesStore"
-Cohesion: 0.15
-Nodes (14): App, BTManagerApp, AutoReconnectWatcher, Bool, PreferencesStore, Bool, String, PreferencesStoreTests (+6 more)
+Cohesion: 0.30
+Nodes (6): PreferencesStore, Bool, String, PreferencesStoreTests, Set, UserDefaults
 
 ### Community 141 - "Design Specification - Wealth Monitor, Nominee Audit & Document Vault"
 Cohesion: 0.12
@@ -723,19 +724,19 @@ Nodes (15): 1. Goal & Context, 2. Directory & Module Boundaries, 3. Database Sch
 
 ### Community 142 - "mcp_server.py"
 Cohesion: 0.14
-Nodes (15): add_family_contribution(), expense_audit_prompt(), fetch_family_transactions(), get_family_contributions_ledger(), get_family_ledger_resource(), get_finance_taxonomy_resource(), monthly_budget_review_prompt(), Returns JSON snapshot of Consolidated Family Support & Outflows Ledger (Home Sup (+7 more)
+Nodes (15): add_transaction(), expense_audit_prompt(), fetch_family_transactions(), get_family_contributions_ledger(), get_family_ledger_resource(), get_finance_taxonomy_resource(), get_token_usage_stats(), monthly_budget_review_prompt() (+7 more)
 
 ### Community 143 - "get_active_user_id"
 Cohesion: 0.11
-Nodes (18): add_transaction(), get_active_user_id(), get_default_user_id(), get_finance_summary_resource(), get_token_usage_stats(), manage_debts(), manage_recurring(), Any (+10 more)
+Nodes (18): add_family_contribution(), get_active_user_id(), get_default_user_id(), get_finance_summary_resource(), manage_debts(), manage_recurring(), Any, query_transactions() (+10 more)
 
 ### Community 144 - "TestMCPAuth"
 Cohesion: 0.20
 Nodes (3): TokenAuthMiddleware, MockApp, TestMCPAuth
 
 ### Community 145 - "AudioRoutingService"
-Cohesion: 0.31
-Nodes (6): AudioRoutingService, Bool, String, FixActionsService, Bool, MainPopoverView
+Cohesion: 0.24
+Nodes (7): AudioRoutingService, Bool, String, FixActionsService, Bool, MainPopoverView, AudioRoutingServiceTests
 
 ### Community 146 - "Bluetooth Device Manager (AKG Force-Connect) - macOS Menu Bar App Design Spec"
 Cohesion: 0.15
@@ -746,20 +747,20 @@ Cohesion: 0.24
 Nodes (12): get_ledger(), get_monthly_budget_summary(), get_or_create_user_by_identity(), get_recent_transactions(), get_token_usage_summary(), insert_transaction(), match_pending_bill(), Any (+4 more)
 
 ### Community 148 - "Foundation"
-Cohesion: 0.14
-Nodes (9): AVFoundation, EQPreset, Double, String, Combine, CoreAudio, Foundation, Hashable (+1 more)
+Cohesion: 0.19
+Nodes (5): AVFoundation, Combine, CoreAudio, Foundation, IOBluetooth
 
 ### Community 149 - "Bluetooth Device Inspector & 1-Click Fix Engine Design Spec"
 Cohesion: 0.18
 Nodes (10): 1. Executive Summary & Goal, 2. System Architecture & Components, 3. Inspection Rules & 1-Click Fix Actions by Device Category, 4. User Interface & Expandable Card Specification, 5. Verification & Test Plan, Bluetooth Device Inspector & 1-Click Fix Engine Design Spec, 🎧 Headphones & Audio Devices (AKG, eBuddies, Buds), ⌨️ Keyboards (Keychron K6, Wireless Keyboards) (+2 more)
 
 ### Community 150 - "DeviceRowView"
-Cohesion: 0.09
-Nodes (17): AppKit, AppDelegate, DeviceRowView, Bool, DiagnosticCardView, String, RotaryKnobView, Double (+9 more)
+Cohesion: 0.08
+Nodes (19): AppKit, AppDelegate, DeviceRowView, Bool, DiagnosticCardView, String, HeadphoneAudioControlView, Double (+11 more)
 
 ### Community 151 - "query_qa.py"
 Cohesion: 0.09
-Nodes (20): AVAudioEngine, AudioControlService, BassBoostStep, high, low, med, off, SidetoneStep (+12 more)
+Nodes (22): AVAudioEngine, EQPreset, Double, String, AudioControlService, BassBoostStep, high, low (+14 more)
 
 ### Community 152 - "Global Constraints"
 Cohesion: 0.20
@@ -796,10 +797,6 @@ Nodes (29): dependencies, lucide-react, react, react-dom, devDependencies, jsdom
 ### Community 163 - "AGENTS.md"
 Cohesion: 0.50
 Nodes (3): Available Skills, graphify, Penpot Integration (MCP)
-
-### Community 166 - "link_identity"
-Cohesion: 0.12
-Nodes (10): sqlite3, sqlite3, get_llm_client(), any, Detects API keys and returns (provider, client/url)., execute_database_qa(), is_finance_query(), Classifies if the user's message is a natural language question or query     abo (+2 more)
 
 ### Community 167 - "get_token_usage_stats"
 Cohesion: 0.33
@@ -853,6 +850,10 @@ Nodes (9): Apple Ecosystem Cockpit Implementation Plan, Global Constraints, Task
 Cohesion: 0.29
 Nodes (7): 1. Explicit Negation in Rules, 2. Entry in Rationalization Table, 3. Red Flag Entry, 4. Update description, Plugging Each Hole, Re-verify After Refactoring, REFACTOR Phase: Close Loopholes (Stay Green)
 
+### Community 187 - "add_debt"
+Cohesion: 0.67
+Nodes (3): add_debt(), clear_debts_for_person(), get_debt_balances()
+
 ### Community 188 - "VERIFY GREEN: Pressure Testing"
 Cohesion: 0.40
 Nodes (5): Key Elements of Good Scenarios, Pressure Types, Testing Setup, VERIFY GREEN: Pressure Testing, Writing Pressure Scenarios
@@ -866,24 +867,24 @@ Cohesion: 0.50
 Nodes (3): 🍎 Apple Ecosystem Cockpit, 🌟 Key Features, 🚀 Quick Start (1-Click Launch)
 
 ## Knowledge Gaps
-- **1131 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1126 more)
+- **1132 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1127 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **27 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **28 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `TestFinanceBotQueryQA` to `link_identity`?**
+- **Why does `dependencies` connect `llm_extract.py` to `TestFinanceBotQueryQA`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `sqlite3` connect `link_identity` to `db.py`, `db_wealth.py`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **Why does `sqlite3` connect `link_identity` to `TestFinanceBotQueryQA`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `sqlite3` connect `llm_extract.py` to `db.py`, `db_wealth.py`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `AudioControlService` (e.g. with `MainPopoverView` and `.testBassBoostStepCycling()`) actually correct?**
   _`AudioControlService` has 5 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 21 inferred relationships involving `main()` (e.g. with `handle_callback_query()` and `ask_cmd()`) actually correct?**
   _`main()` has 21 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
-  _1131 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1132 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend AI Initialization` be split into smaller, more focused modules?**
   _Cohesion score 0.06440677966101695 - nodes in this community are weakly interconnected._
+- **Should `bot.py` be split into smaller, more focused modules?**
+  _Cohesion score 0.058519793459552494 - nodes in this community are weakly interconnected._

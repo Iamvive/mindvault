@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/db.py": {
-    "mtime": 1787594097.017628,
-    "ast_hash": "350f04569f97e2a69702ae93e972eb94",
+    "mtime": 1787595497.4838192,
+    "ast_hash": "69fda85929151e4fedd2e011bd6d5eac",
     "semantic_hash": ""
   },
   "telegram-finance-bot/llm_extract.py": {
@@ -110,8 +110,8 @@
     "semantic_hash": "6d4d3c2796c944904d2b986505bca8f8"
   },
   "telegram-finance-bot/sync_to_vps.sh": {
-    "mtime": 1786190236.866162,
-    "ast_hash": "cb8f113aaff24ba3f40e6f8f2005bf04",
+    "mtime": 1787595315.5793917,
+    "ast_hash": "22ce64a802fa04ed21b85ac02dbb9097",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_pipeline.py": {
@@ -260,13 +260,13 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1787592686.6945417,
-    "ast_hash": "1247183aed3e8bda157937288649c693",
+    "mtime": 1787653925.0331545,
+    "ast_hash": "2e95e404d0a0c5330425347c689eb7bb",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1787592686.6963012,
-    "ast_hash": "1247183aed3e8bda157937288649c693",
+    "mtime": 1787653925.0333664,
+    "ast_hash": "2e95e404d0a0c5330425347c689eb7bb",
     "semantic_hash": ""
   },
   ".agent/skills/brainstorming/SKILL.md": {
@@ -1420,8 +1420,8 @@
     "semantic_hash": ""
   },
   "apple-cockpit/client/src/App.jsx": {
-    "mtime": 1787594321.9519846,
-    "ast_hash": "dfeae46727023ce76e805176e1487d4c",
+    "mtime": 1787654491.953908,
+    "ast_hash": "f3fbd4df48173a3ac58bb46581e3aeb6",
     "semantic_hash": ""
   },
   "apple-cockpit/client/src/App.test.jsx": {
@@ -1430,8 +1430,8 @@
     "semantic_hash": ""
   },
   "apple-cockpit/client/src/components/DeskArrangement.jsx": {
-    "mtime": 1787594313.7389476,
-    "ast_hash": "00afcf0d71e1467279be183981fb760e",
+    "mtime": 1787654471.5038147,
+    "ast_hash": "1c1ec3b3c3b0b555f115d1d13687cde3",
     "semantic_hash": ""
   },
   "apple-cockpit/client/src/components/DiagnosticCenter.jsx": {
@@ -1455,8 +1455,8 @@
     "semantic_hash": ""
   },
   "apple-cockpit/client/src/components/TopologyRadar.jsx": {
-    "mtime": 1787592686.705841,
-    "ast_hash": "1f1a4ec1930b558d244d5d6013c39561",
+    "mtime": 1787654465.0375366,
+    "ast_hash": "6fedbd7437a8d77814e28abd9d1bfc27",
     "semantic_hash": ""
   },
   "apple-cockpit/client/src/hooks/useCockpitState.js": {
@@ -1510,8 +1510,8 @@
     "semantic_hash": ""
   },
   "apple-cockpit/server/services/bonjourScanner.js": {
-    "mtime": 1787592686.7120411,
-    "ast_hash": "4f971e4bc43cac245a4f0c1d54e05b18",
+    "mtime": 1787654440.5502012,
+    "ast_hash": "e0407b823288c306b9a0ffb0c9ba01be",
     "semantic_hash": ""
   },
   "apple-cockpit/server/services/macDiagnostics.js": {
@@ -1557,6 +1557,11 @@
   "apple-cockpit/client/public/app-icon.jpg": {
     "mtime": 1787592686.7019298,
     "ast_hash": "032f052455f48464e1e46fe0b6b6bc44",
+    "semantic_hash": ""
+  },
+  "apple-cockpit/EcoApp.app/Contents/MacOS/EcoApp": {
+    "mtime": 1787654207.8927822,
+    "ast_hash": "167997afcafd673a9317ad39e953b1f1",
     "semantic_hash": ""
   }
 }
