@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Monitor, Laptop, Tablet, Move, Sparkles, CheckCircle2, Navigation, ArrowRight, ArrowLeft, ArrowUp, ArrowDown, ExternalLink } from 'lucide-react';
 
-export default function DeskArrangement({ onTriggerAction }) {
+export default function DeskArrangement({ onTriggerAction, topology }) {
+  const isIpadOnline = topology?.devices?.find(d => d.id === 'ipad')?.status === 'ONLINE';
+  const isMacBookOnline = topology?.devices?.find(d => d.id === 'macbook')?.status === 'ONLINE';
+
   const [positions, setPositions] = useState({
     macmini: { x: 340, y: 50, label: 'Mac mini Monitor (27" 4K)', type: 'macmini', active: true, width: 260, height: 170 },
-    ipad: { x: 740, y: 110, label: 'iPad Pro (Right Stand)', type: 'ipad', active: true, width: 180, height: 135 },
-    macbook: { x: 40, y: 110, label: 'MacBook Pro (Left Side)', type: 'macbook', active: true, width: 230, height: 150 }
+    ipad: { x: 740, y: 110, label: isIpadOnline ? 'iPad Pro (Right Stand)' : 'iPad Pro (Disconnected • Sleeping)', type: 'ipad', active: isIpadOnline, width: 180, height: 135 },
+    macbook: { x: 40, y: 110, label: isMacBookOnline ? 'MacBook Pro (Left Side)' : 'MacBook Pro (Standby)', type: 'macbook', active: isMacBookOnline, width: 230, height: 150 }
   });
 
   const [activePreset, setActivePreset] = useState('desk-hub');

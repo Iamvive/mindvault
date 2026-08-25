@@ -50,6 +50,7 @@ export default function App() {
         {activeTab === 'desk' && (
           <DeskArrangement 
             onTriggerAction={handleTriggerAction}
+            topology={topology}
           />
         )}
 
