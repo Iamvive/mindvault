@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/db.py": {
-    "mtime": 1787595497.4838192,
-    "ast_hash": "69fda85929151e4fedd2e011bd6d5eac",
+    "mtime": 1787989244.322207,
+    "ast_hash": "77227a0155efd55cdf8976ddb3f0baa1",
     "semantic_hash": ""
   },
   "telegram-finance-bot/llm_extract.py": {
@@ -260,13 +260,13 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1787653925.0331545,
-    "ast_hash": "2e95e404d0a0c5330425347c689eb7bb",
+    "mtime": 1787989103.4382763,
+    "ast_hash": "617ac8e30c289add419a7b6fa2b8dfaa",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1787653925.0333664,
-    "ast_hash": "2e95e404d0a0c5330425347c689eb7bb",
+    "mtime": 1787989108.3810217,
+    "ast_hash": "617ac8e30c289add419a7b6fa2b8dfaa",
     "semantic_hash": ""
   },
   ".agent/skills/brainstorming/SKILL.md": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/docker-compose.yml": {
-    "mtime": 1785343344.2863147,
-    "ast_hash": "8f71f848b092a1afbc0e10b11cd91deb",
+    "mtime": 1787989316.1521928,
+    "ast_hash": "d8befa586b836d1be7d94a24429db76b",
     "semantic_hash": ""
   },
   "telegram-finance-bot/requirements.txt": {
@@ -965,13 +965,13 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/mcp_server.py": {
-    "mtime": 1787594101.2274165,
-    "ast_hash": "7ef191b1475255ed990aa81202d89346",
+    "mtime": 1787989311.429679,
+    "ast_hash": "e63a24be2e0ae7a6b34767fb76411891",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_mcp_server.py": {
-    "mtime": 1785854460.6905622,
-    "ast_hash": "0fe4fce69ec627d328ba4c3454e797ef",
+    "mtime": 1787988111.8125722,
+    "ast_hash": "ddb00f7b47e1721c55749dbe89d42361",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-07-29-room-ai-implementation-plan.md": {

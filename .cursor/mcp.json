@@ -60,7 +60,7 @@
       "args": [
         "-y",
         "mcp-remote",
-        "${env:FINANCE_MCP_URL}"
+        "https://finance.appworx.co.in/mcp"
       ]
     },
     "zerodha": {

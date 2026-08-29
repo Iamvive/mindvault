@@ -1,16 +1,16 @@
-# Graph Report - ai-play-ground  (2026-08-25)
+# Graph Report - ai-play-ground  (2026-08-29)
 
 ## Corpus Check
-- 299 files · ~217,198 words
+- 299 files · ~218,891 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2440 nodes · 3205 edges · 194 communities (166 shown, 28 thin omitted)
+- 2453 nodes · 3275 edges · 184 communities (160 shown, 24 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 122 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `14dc57c8`
+- Built from commit: `62c492b9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -171,21 +171,16 @@
 - Global Constraints
 - migrate_db
 - FastMCP
-- TestDatabaseSecurityMigration
 - AGENTS.md
 - Package.swift
 - link_identity
-- get_token_usage_stats
-- manage_debts
 - update_transaction
-- update_family_contribution
 - Design Specification — Zerodha Kite MCP Live OAuth & Wealth Audit Engine
 - Headphone Audio & Microphone Control Suite Design Spec (v2: Stepped Rotary Dial Controls)
 - Global Constraints
 - Global Constraints
 - Global Constraints
 - dev_tools.sh
-- add_debt
 - build_app.sh
 - setup_auto_start.sh
 - stop_auto_start.sh
@@ -194,8 +189,6 @@
 - apple-cockpit/package.json
 - Global Constraints
 - REFACTOR Phase: Close Loopholes (Stay Green)
-- TestWealthDB
-- add_debt
 - VERIFY GREEN: Pressure Testing
 - Example: TDD Skill Bulletproofing
 - 🍎 Apple Ecosystem Cockpit
@@ -204,19 +197,19 @@
 1. `get_connection()` - 44 edges
 2. `AudioControlService` - 28 edges
 3. `react` - 27 edges
-4. `main()` - 24 edges
-5. `Writing Skills` - 23 edges
-6. `TestFinanceBotPipeline` - 22 edges
-7. `PreferencesStore` - 21 edges
-8. `BluetoothDevice` - 20 edges
-9. `TokenUsage` - 19 edges
-10. `get_active_user_id()` - 18 edges
+4. `resolve_user_uuid()` - 27 edges
+5. `main()` - 24 edges
+6. `Writing Skills` - 23 edges
+7. `TestFinanceBotPipeline` - 22 edges
+8. `PreferencesStore` - 21 edges
+9. `get_authenticated_user_id()` - 21 edges
+10. `BluetoothDevice` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `BTManagerApp` --calls--> `AudioRoutingService`  [INFERRED]
   bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/AudioRoutingService.swift
-- `BTManagerApp` --calls--> `PreferencesStore`  [INFERRED]
-  bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/PreferencesStore.swift
+- `BTManagerApp` --calls--> `BluetoothService`  [INFERRED]
+  bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/BluetoothService.swift
 - `MainPopoverView` --calls--> `AudioControlService`  [INFERRED]
   bt-manager/Sources/BTManager/Views/MainPopoverView.swift → bt-manager/Sources/BTManager/Services/AudioControlService.swift
 - `MainPopoverView` --calls--> `DeviceDiagnosticService`  [INFERRED]
@@ -227,15 +220,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (194 total, 28 thin omitted)
+## Communities (184 total, 24 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
 Cohesion: 0.06
 Nodes (45): __dirname, __filename, initBot(), uploadDir, columns, Database, db, __dirname (+37 more)
 
 ### Community 1 - "bot.py"
-Cohesion: 0.06
-Nodes (60): InlineKeyboardMarkup, SimpleHTTPRequestHandler, main(), post_init(), determine_type_and_bucket(), extract_target_budget_month(), match_bank_sms_rules(), match_keyword_rules() (+52 more)
+Cohesion: 0.05
+Nodes (65): InlineKeyboardMarkup, SimpleHTTPRequestHandler, main(), post_init(), determine_type_and_bucket(), extract_target_budget_month(), match_bank_sms_rules(), match_keyword_rules() (+57 more)
 
 ### Community 2 - "package.json"
 Cohesion: 0.07
@@ -551,8 +544,8 @@ Cohesion: 0.40
 Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
 
 ### Community 96 - "db.py"
-Cohesion: 0.12
-Nodes (30): add_pending_bill(), add_recurring(), check_duplicate(), create_temp_login_code(), create_user_pat(), create_user_session(), delete_debt(), delete_last_transaction() (+22 more)
+Cohesion: 0.07
+Nodes (53): add_debt(), add_pending_bill(), add_recurring(), check_duplicate(), clear_debts_for_person(), create_temp_login_code(), create_user_pat(), create_user_session() (+45 more)
 
 ### Community 97 - "Evaluation and iteration"
 Cohesion: 0.07
@@ -643,8 +636,8 @@ Cohesion: 0.17
 Nodes (11): Global Constraints, Plan Verification Check, RoomAI Implementation Plan, Task 1: RoomAI Project Scaffolding & Shared Types, Task 2: Static Curated Catalog & Recommendation Matcher Service, Task 3: Gemini Flash Vision Analysis Service & Endpoint, Task 4: AI Makeover Generator Service & Endpoints, Task 5: Frontend Design System & Theme CSS (+3 more)
 
 ### Community 121 - "BluetoothDevice"
-Cohesion: 0.12
-Nodes (22): BluetoothDevice, DeviceType, headphones, keyboard, mouse, speaker, unknown, Bool (+14 more)
+Cohesion: 0.11
+Nodes (24): BluetoothDevice, DeviceType, headphones, keyboard, mouse, speaker, unknown, Bool (+16 more)
 
 ### Community 122 - "llm_extract.py"
 Cohesion: 0.06
@@ -699,12 +692,12 @@ Cohesion: 0.29
 Nodes (6): Global Constraints, LLM Cost & Extraction Optimization Engine Implementation Plan, 🧪 Plan Self-Review & Verification, Task 1: Indian Bank & UPI Fast-Log Regex Engine, Task 2: Dual-Model Routing & Context Caching in `llm_extract.py`, Task 3: Pricing Table & Cost Accounting Update
 
 ### Community 136 - "BluetoothService"
-Cohesion: 0.15
-Nodes (13): App, BTManagerApp, AutoReconnectWatcher, Bool, BluetoothService, Bool, Int, String (+5 more)
+Cohesion: 0.28
+Nodes (6): BluetoothService, Bool, Int, String, Void, BluetoothServiceTests
 
 ### Community 137 - "XCTest"
 Cohesion: 0.13
-Nodes (9): AutoReconnectWatcherTests, BluetoothServiceTests, BTManagerSanityTests, DeviceDiagnosticReportTests, EQPresetTests, FixActionsServiceTests, BTManager, XCTest (+1 more)
+Nodes (9): AudioRoutingServiceTests, AutoReconnectWatcherTests, BTManagerSanityTests, DeviceDiagnosticReportTests, EQPresetTests, FixActionsServiceTests, BTManager, XCTest (+1 more)
 
 ### Community 138 - "Global Constraints"
 Cohesion: 0.33
@@ -715,8 +708,8 @@ Cohesion: 0.12
 Nodes (16): 1. Overview, 2.1 Database Schema & Migrations, 2.2 API Endpoints, 2.3 Authentication Layer, 2.4 Web Dashboard UI, 2. Proposed Changes, 3.1 Automated Tests, 3.2 Manual Verification (+8 more)
 
 ### Community 140 - "PreferencesStore"
-Cohesion: 0.30
-Nodes (6): PreferencesStore, Bool, String, PreferencesStoreTests, Set, UserDefaults
+Cohesion: 0.15
+Nodes (14): App, BTManagerApp, AutoReconnectWatcher, Bool, PreferencesStore, Bool, String, PreferencesStoreTests (+6 more)
 
 ### Community 141 - "Design Specification - Wealth Monitor, Nominee Audit & Document Vault"
 Cohesion: 0.12
@@ -724,11 +717,11 @@ Nodes (15): 1. Goal & Context, 2. Directory & Module Boundaries, 3. Database Sch
 
 ### Community 142 - "mcp_server.py"
 Cohesion: 0.14
-Nodes (15): add_transaction(), expense_audit_prompt(), fetch_family_transactions(), get_family_contributions_ledger(), get_family_ledger_resource(), get_finance_taxonomy_resource(), get_token_usage_stats(), monthly_budget_review_prompt() (+7 more)
+Nodes (15): expense_audit_prompt(), fetch_family_transactions(), get_family_contributions_ledger(), get_family_ledger_resource(), get_finance_taxonomy_resource(), login(), logout(), monthly_budget_review_prompt() (+7 more)
 
 ### Community 143 - "get_active_user_id"
-Cohesion: 0.11
-Nodes (18): add_family_contribution(), get_active_user_id(), get_default_user_id(), get_finance_summary_resource(), manage_debts(), manage_recurring(), Any, query_transactions() (+10 more)
+Cohesion: 0.09
+Nodes (31): add_family_contribution(), add_transaction(), auth_status(), check_auth(), delete_transaction(), get_authenticated_user_id(), get_budget_summary(), get_finance_debts_resource() (+23 more)
 
 ### Community 144 - "TestMCPAuth"
 Cohesion: 0.20
@@ -736,31 +729,31 @@ Nodes (3): TokenAuthMiddleware, MockApp, TestMCPAuth
 
 ### Community 145 - "AudioRoutingService"
 Cohesion: 0.24
-Nodes (7): AudioRoutingService, Bool, String, FixActionsService, Bool, MainPopoverView, AudioRoutingServiceTests
+Nodes (9): AudioRoutingService, Bool, String, FixActionsService, Bool, DeviceRowView, Bool, MainPopoverView (+1 more)
 
 ### Community 146 - "Bluetooth Device Manager (AKG Force-Connect) - macOS Menu Bar App Design Spec"
 Cohesion: 0.15
 Nodes (12): 1. Executive Summary & Problem Statement, 2. System Architecture & Components, 3. Bluetooth & Audio Reconnection Logic, 4. User Interface & Menu Bar Panel Design, 5. Storage, Permissions & Error Handling, 6. Verification & Testing Plan, Auto-Reconnect Watchdog, Bluetooth Device Manager (AKG Force-Connect) - macOS Menu Bar App Design Spec (+4 more)
 
 ### Community 147 - "resolve_user_uuid"
-Cohesion: 0.24
-Nodes (12): get_ledger(), get_monthly_budget_summary(), get_or_create_user_by_identity(), get_recent_transactions(), get_token_usage_summary(), insert_transaction(), match_pending_bill(), Any (+4 more)
+Cohesion: 0.67
+Nodes (3): get_active_user_id(), get_default_user_id(), Any
 
 ### Community 148 - "Foundation"
-Cohesion: 0.19
-Nodes (5): AVFoundation, Combine, CoreAudio, Foundation, IOBluetooth
+Cohesion: 0.14
+Nodes (9): AVFoundation, EQPreset, Double, String, Combine, CoreAudio, Foundation, Hashable (+1 more)
 
 ### Community 149 - "Bluetooth Device Inspector & 1-Click Fix Engine Design Spec"
 Cohesion: 0.18
 Nodes (10): 1. Executive Summary & Goal, 2. System Architecture & Components, 3. Inspection Rules & 1-Click Fix Actions by Device Category, 4. User Interface & Expandable Card Specification, 5. Verification & Test Plan, Bluetooth Device Inspector & 1-Click Fix Engine Design Spec, 🎧 Headphones & Audio Devices (AKG, eBuddies, Buds), ⌨️ Keyboards (Keychron K6, Wireless Keyboards) (+2 more)
 
 ### Community 150 - "DeviceRowView"
-Cohesion: 0.08
-Nodes (19): AppKit, AppDelegate, DeviceRowView, Bool, DiagnosticCardView, String, HeadphoneAudioControlView, Double (+11 more)
+Cohesion: 0.11
+Nodes (12): AppKit, AppDelegate, RotaryKnobView, Double, String, Void, CGFloat, Color (+4 more)
 
 ### Community 151 - "query_qa.py"
 Cohesion: 0.09
-Nodes (22): AVAudioEngine, EQPreset, Double, String, AudioControlService, BassBoostStep, high, low (+14 more)
+Nodes (20): AVAudioEngine, AudioControlService, BassBoostStep, high, low, med, off, SidetoneStep (+12 more)
 
 ### Community 152 - "Global Constraints"
 Cohesion: 0.20
@@ -797,14 +790,6 @@ Nodes (29): dependencies, lucide-react, react, react-dom, devDependencies, jsdom
 ### Community 163 - "AGENTS.md"
 Cohesion: 0.50
 Nodes (3): Available Skills, graphify, Penpot Integration (MCP)
-
-### Community 167 - "get_token_usage_stats"
-Cohesion: 0.33
-Nodes (5): generate_dashboard(), get_range_dates(), get_user_dashboard_payload(), Deprecated: Dashboard is now rendered dynamically on client request via API., Assembles the dashboard data payload (range_data, months_data, debts, pending_bi
-
-### Community 168 - "manage_debts"
-Cohesion: 0.33
-Nodes (6): get_user_id_by_google_email(), init_db(), migrate_db(), migrate_sso_tables(), Applies schema migrations for Google SSO, auth_identities, and user_uuid fields., sync_lending_transactions_to_debts()
 
 ### Community 169 - "update_transaction"
 Cohesion: 0.50
@@ -850,10 +835,6 @@ Nodes (9): Apple Ecosystem Cockpit Implementation Plan, Global Constraints, Task
 Cohesion: 0.29
 Nodes (7): 1. Explicit Negation in Rules, 2. Entry in Rationalization Table, 3. Red Flag Entry, 4. Update description, Plugging Each Hole, Re-verify After Refactoring, REFACTOR Phase: Close Loopholes (Stay Green)
 
-### Community 187 - "add_debt"
-Cohesion: 0.67
-Nodes (3): add_debt(), clear_debts_for_person(), get_debt_balances()
-
 ### Community 188 - "VERIFY GREEN: Pressure Testing"
 Cohesion: 0.40
 Nodes (5): Key Elements of Good Scenarios, Pressure Types, Testing Setup, VERIFY GREEN: Pressure Testing, Writing Pressure Scenarios
@@ -869,7 +850,7 @@ Nodes (3): 🍎 Apple Ecosystem Cockpit, 🌟 Key Features, 🚀 Quick Start (1-
 ## Knowledge Gaps
 - **1132 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1127 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **28 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -880,11 +861,11 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `AudioControlService` (e.g. with `MainPopoverView` and `.testBassBoostStepCycling()`) actually correct?**
   _`AudioControlService` has 5 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 21 inferred relationships involving `main()` (e.g. with `handle_callback_query()` and `ask_cmd()`) actually correct?**
-  _`main()` has 21 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
   _1132 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend AI Initialization` be split into smaller, more focused modules?**
   _Cohesion score 0.06440677966101695 - nodes in this community are weakly interconnected._
 - **Should `bot.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.058519793459552494 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05225885225885226 - nodes in this community are weakly interconnected._
+- **Should `package.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
