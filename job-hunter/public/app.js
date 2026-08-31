@@ -209,31 +209,39 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadedResumeName = file.name;
     const reader = new FileReader();
 
-    reader.onload = (evt) => {
-      uploadedResumeText = evt.target.result;
-      localStorage.setItem('mindhunt_resume_text', uploadedResumeText);
-      localStorage.setItem('mindhunt_resume_name', uploadedResumeName);
+    reader.onload = async (evt) => {
+      const dataUrl = evt.target.result;
 
       dropZoneCta.style.display = 'none';
-      resumeFileName.innerText = `📄 ${file.name} (${Math.round(file.size / 1024)} KB)`;
+      resumeFileName.innerText = `📄 ${file.name} (Extracting text...)`;
       resumeFileInfo.style.display = 'block';
 
-      // Auto-save to master profile
-      fetch('/api/profile/save-asset', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          assetType: 'resume',
-          data: { filename: uploadedResumeName, text: uploadedResumeText }
-        })
-      });
+      try {
+        const res = await fetch('/api/resume/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: file.name,
+            base64Data: dataUrl
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          uploadedResumeText = data.profile?.uploadedResumeText || '';
+          localStorage.setItem('mindhunt_resume_text', uploadedResumeText);
+          localStorage.setItem('mindhunt_resume_name', file.name);
+          resumeFileName.innerText = `📄 ${file.name} (Parsed & Active)`;
+        }
+      } catch (err) {
+        console.warn('PDF parse error:', err);
+      }
     };
 
-    reader.readAsText(file);
+    reader.readAsDataURL(file);
   }
 
   // Restore saved resume if present
-  if (uploadedResumeName && uploadedResumeText) {
+  if (uploadedResumeName) {
     dropZoneCta.style.display = 'none';
     resumeFileName.innerText = `📄 ${uploadedResumeName} (Saved & Active)`;
     resumeFileInfo.style.display = 'block';
@@ -341,10 +349,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scLinkedinHeadline) scLinkedinHeadline.value = prof.personal?.title || '';
     if (scLinkedinAbout) scLinkedinAbout.value = prof.summary || '';
 
-    // Check if resume was saved on profile
-    if (prof.uploadedResumeFileName && prof.uploadedResumeText) {
+    if (prof.uploadedResumeFileName) {
       uploadedResumeName = prof.uploadedResumeFileName;
-      uploadedResumeText = prof.uploadedResumeText;
+      uploadedResumeText = prof.uploadedResumeText || '';
       dropZoneCta.style.display = 'none';
       resumeFileName.innerText = `📄 ${uploadedResumeName} (Saved & Active)`;
       resumeFileInfo.style.display = 'block';

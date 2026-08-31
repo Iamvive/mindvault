@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'node:path';
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import { initDatabase, getQueuedJobs, getAllJobs, getJobById, updateJobStatus } from '../db/database.js';
 import { loadMasterProfile, saveMasterProfile } from '../core/profile.js';
 import { processDiscoveredJob } from '../scrapers/discovery-manager.js';
@@ -13,10 +14,13 @@ import { scoreUnifiedProfile } from '../core/unified-scorer.js';
 import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt } from '../core/prompt-generator.js';
 import { generateResumeHtml, renderResumePdf } from '../pdf/resume-renderer.js';
 
+const require = createRequire(import.meta.url);
+const pdfParse = require('pdf-parse');
+
 const app = express();
 const PORT = process.env.PORT || 4200;
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '20mb' }));
 app.use(express.static(path.resolve(process.cwd(), 'public')));
 app.use('/data/generated_resumes', express.static(path.resolve(process.cwd(), 'data/generated_resumes')));
 
@@ -113,6 +117,35 @@ app.put('/api/profile', (req, res) => {
   try {
     saveMasterProfile(req.body, 'data/master_profile.json');
     res.json({ success: true, profile: req.body });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Parse & Upload Resume File (PDF / TXT / Base64)
+app.post('/api/resume/upload', async (req, res) => {
+  const { filename, base64Data, rawText } = req.body;
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    let extractedText = rawText || '';
+
+    if (base64Data && (!extractedText || extractedText.startsWith('%PDF'))) {
+      const buffer = Buffer.from(base64Data.replace(/^data:.*?;base64,/, ''), 'base64');
+      const pdfData = await pdfParse(buffer);
+      extractedText = pdfData.text || '';
+    }
+
+    profile.uploadedResumeFileName = filename || 'resume.pdf';
+    profile.uploadedResumeText = extractedText;
+
+    saveMasterProfile(profile, 'data/master_profile.json');
+    res.json({
+      success: true,
+      filename: profile.uploadedResumeFileName,
+      textLength: extractedText.length,
+      extractedPreview: extractedText.slice(0, 300),
+      profile
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
