@@ -10,8 +10,9 @@ import { promptClaudeSession, parseClaudeResponse } from '../cdp/claude-worker.j
 import { auditGitHubProfile } from '../core/github-auditor.js';
 import { auditLinkedInProfile, fetchLinkedInProfileData } from '../core/linkedin-auditor.js';
 import { scoreUnifiedProfile } from '../core/unified-scorer.js';
-import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt } from '../core/prompt-generator.js';
+import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt, buildCoverLetterPrompt } from '../core/prompt-generator.js';
 import { generateResumeHtml, renderResumePdf } from '../pdf/resume-renderer.js';
+import { generateCoverLetterHtml, renderCoverLetterPdf } from '../pdf/cover-letter-renderer.js';
 import { extractText } from 'unpdf';
 
 const app = express();
@@ -140,12 +141,6 @@ app.post('/api/resume/upload', async (req, res) => {
     profile.uploadedResumeFileName = filename || 'resume.pdf';
     if (extractedText && extractedText.length > 50) {
       profile.uploadedResumeText = extractedText;
-
-      // Extract candidate name if filename has name or text has name header
-      const nameMatch = filename.replace(/\.(pdf|docx|doc|txt)$/i, '').replace(/[-_]/g, ' ').replace(/\bresume\b/gi, '').trim();
-      if (nameMatch && (profile.personal.name === 'Alex Mercer' || !profile.personal.name)) {
-        profile.personal.name = nameMatch.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-      }
     }
 
     saveMasterProfile(profile, 'data/master_profile.json');
@@ -161,7 +156,79 @@ app.post('/api/resume/upload', async (req, res) => {
   }
 });
 
-// API: Instant Auto-Save of any Asset Pillar (GitHub, LinkedIn, Resume)
+// API: Cover Letter Upload
+app.post('/api/cover-letter/upload', async (req, res) => {
+  const { filename, base64Data, rawText } = req.body;
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    let extractedText = rawText || '';
+
+    if (base64Data) {
+      try {
+        const base64Clean = base64Data.replace(/^data:.*?;base64,/, '');
+        const buffer = Buffer.from(base64Clean, 'base64');
+        const parsed = await extractText(new Uint8Array(buffer));
+        extractedText = Array.isArray(parsed.text) ? parsed.text.join('\n') : (parsed.text || '');
+      } catch (pdfErr) {
+        console.warn('Cover letter PDF parse warning:', pdfErr.message);
+      }
+    }
+
+    profile.uploadedCoverLetterFileName = filename || 'cover_letter.pdf';
+    if (extractedText && extractedText.length > 20) {
+      profile.masterCoverLetter = extractedText;
+    }
+
+    saveMasterProfile(profile, 'data/master_profile.json');
+    res.json({
+      success: true,
+      filename: profile.uploadedCoverLetterFileName,
+      coverLetterText: profile.masterCoverLetter,
+      profile
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Cover Letter HTML Live Preview
+app.get('/api/cover-letter/preview-html', (req, res) => {
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    const company = req.query.company || '';
+    const role = req.query.role || '';
+    const html = generateCoverLetterHtml(profile, { company, role });
+    res.setHeader('Content-Type', 'text/html');
+    res.send(html);
+  } catch (err) {
+    res.status(500).send(`<h3>Preview Error: ${err.message}</h3>`);
+  }
+});
+
+// API: Cover Letter PDF Download
+app.get('/api/cover-letter/download-pdf', async (req, res) => {
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    const company = req.query.company || '';
+    const role = req.query.role || '';
+    const outPath = `data/generated_resumes/Cover_Letter_${(profile.personal?.name || 'Candidate').replace(/\s+/g, '_')}.pdf`;
+    
+    await renderCoverLetterPdf(profile, outPath, { company, role });
+    const fullPath = path.resolve(process.cwd(), outPath);
+
+    if (fs.existsSync(fullPath)) {
+      res.download(fullPath);
+    } else {
+      const html = generateCoverLetterHtml(profile, { company, role });
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Instant Auto-Save of any Asset Pillar (GitHub, LinkedIn, Resume, Cover Letter)
 app.post('/api/profile/save-asset', (req, res) => {
   const { assetType, data } = req.body;
   try {
@@ -178,17 +245,14 @@ app.post('/api/profile/save-asset', (req, res) => {
         profile.personal.github = val.startsWith('http') ? val : (val ? `https://github.com/${val}` : '');
       }
     } else if (assetType === 'resume') {
-      if (data.filename) {
-        profile.uploadedResumeFileName = data.filename;
-        const nameMatch = data.filename.replace(/\.(pdf|docx|doc|txt)$/i, '').replace(/[-_]/g, ' ').replace(/\bresume\b/gi, '').trim();
-        if (nameMatch && (profile.personal.name === 'Alex Mercer' || !profile.personal.name)) {
-          profile.personal.name = nameMatch.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        }
-      }
+      if (data.filename) profile.uploadedResumeFileName = data.filename;
       if (data.text) profile.uploadedResumeText = data.text;
       if (data.summary) profile.summary = data.summary;
       if (data.experience) profile.masterExperience = data.experience;
       if (data.skills) profile.skills = data.skills;
+    } else if (assetType === 'cover-letter') {
+      if (data.coverLetterText) profile.masterCoverLetter = data.coverLetterText;
+      if (data.filename) profile.uploadedCoverLetterFileName = data.filename;
     }
 
     saveMasterProfile(profile, 'data/master_profile.json');
@@ -285,10 +349,13 @@ app.post('/api/profile/apply-claude-output', (req, res) => {
     } catch (e) {
       if (assetType === 'linkedin') {
         profile.summary = rawOutput;
+      } else if (assetType === 'cover-letter') {
+        profile.masterCoverLetter = rawOutput;
       }
     }
 
     if (parsed) {
+      if (parsed.improvedCoverLetter) profile.masterCoverLetter = parsed.improvedCoverLetter;
       if (parsed.candidateName) profile.personal.name = parsed.candidateName;
       if (parsed.updatedTitle) profile.personal.title = parsed.updatedTitle;
       if (parsed.updatedAboutSection) profile.summary = parsed.updatedAboutSection;
@@ -336,6 +403,8 @@ app.post('/api/prompts/generate', (req, res) => {
     prompt = buildGitHubPrompt(enrichedPayload);
   } else if (type === 'resume') {
     prompt = buildResumePrompt(enrichedPayload);
+  } else if (type === 'cover-letter') {
+    prompt = buildCoverLetterPrompt(enrichedPayload);
   } else {
     return res.status(400).json({ error: 'Invalid prompt type' });
   }

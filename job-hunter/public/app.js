@@ -264,6 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
         pageTitle.innerText = 'Master ATS Resume Studio & PDF Viewer';
         pageSubtitle.innerText = 'Live single-column ATS preview, real-time section editor, and instant PDF download.';
         renderResumeStudio();
+      } else if (targetTab === 'tab-cover-letter') {
+        pageTitle.innerText = 'Master Cover Letter Studio & AI Improver';
+        pageSubtitle.innerText = 'Upload, tailor, and use AI to craft human-sounding, metric-dense cover letters.';
+        renderCoverLetterStudio();
       } else if (targetTab === 'tab-live-profile') {
         pageTitle.innerText = 'Live Candidate Profile Workspace';
         pageSubtitle.innerText = 'The persistent, evolving source of truth for your applications and audits.';
@@ -520,6 +524,156 @@ document.addEventListener('DOMContentLoaded', () => {
     navigator.clipboard.writeText(text);
     alert('Plain text resume copied to clipboard!');
   });
+
+  // --- COVER LETTER STUDIO CONTROLLERS ---
+  const clUploadZone = document.getElementById('cover-letter-upload-zone');
+  const clFileInput = document.getElementById('cover-letter-file-input');
+  const clDropCta = document.getElementById('cl-drop-cta');
+  const clFileInfo = document.getElementById('cl-file-info');
+  const clFileName = document.getElementById('cl-file-name');
+  const clTargetCompany = document.getElementById('cl-target-company');
+  const clTargetRole = document.getElementById('cl-target-role');
+  const clBodyEditor = document.getElementById('cl-body-editor');
+  const clPreviewIframe = document.getElementById('cl-preview-iframe');
+  const btnRefreshClPreview = document.getElementById('btn-refresh-cl-preview');
+  const btnSaveCoverLetter = document.getElementById('btn-save-cover-letter');
+  const btnCopyCoverLetter = document.getElementById('btn-copy-cover-letter');
+  const btnAiImproveCl = document.getElementById('btn-ai-improve-cl');
+  const btnDownloadCoverLetter = document.getElementById('btn-download-cover-letter');
+
+  function renderCoverLetterStudio() {
+    if (!loadedProfile) return;
+    const p = loadedProfile;
+
+    if (clBodyEditor && (!clBodyEditor.value || clBodyEditor.value.trim() === '')) {
+      clBodyEditor.value = p.masterCoverLetter || `Dear Hiring Team,\n\nI am writing to express my strong interest in the ${clTargetRole.value || p.personal?.title || 'Senior Android Engineer'} position at ${clTargetCompany.value || 'your team'}. With over 7 years of engineering scalable, high-performance mobile applications, I specialize in Kotlin Multiplatform (KMP), clean architecture, and modular SDK integrations.\n\nCurrently at Porter, I engineered an in-house events SDK using KMP, matching Mixpanel performance while cutting infrastructure costs. I also integrated the Truecaller SDK to achieve 99.8% faster login speeds (slashing authentication time from 10s to 0.017s) and boosted signup conversion by 57%. Furthermore, by refactoring monolithic endpoints into microservices and optimizing device stability, my team reduced daily ANR incidents by 92%.\n\nI would welcome the opportunity to discuss how my technical expertise in Kotlin, KMP, modular SDK design, and mobile performance optimization can accelerate your mobile engineering goals.\n\nThank you for your time and consideration.\n\nSincerely,\n${p.personal?.name || 'Vivek Kumar'}`;
+    }
+
+    if (p.uploadedCoverLetterFileName && clFileName) {
+      clDropCta.style.display = 'none';
+      clFileName.innerText = `📄 ${p.uploadedCoverLetterFileName} (Active)`;
+      clFileInfo.style.display = 'block';
+    }
+
+    updateCoverLetterPreview();
+  }
+
+  function updateCoverLetterPreview() {
+    const comp = encodeURIComponent(clTargetCompany?.value || '');
+    const role = encodeURIComponent(clTargetRole?.value || '');
+    if (clPreviewIframe) {
+      clPreviewIframe.src = `/api/cover-letter/preview-html?company=${comp}&role=${role}&t=${Date.now()}`;
+    }
+    if (btnDownloadCoverLetter) {
+      btnDownloadCoverLetter.href = `/api/cover-letter/download-pdf?company=${comp}&role=${role}&t=${Date.now()}`;
+    }
+  }
+
+  if (clUploadZone) {
+    clUploadZone.addEventListener('click', () => clFileInput.click());
+    clUploadZone.addEventListener('dragover', (e) => e.preventDefault());
+    clUploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (e.dataTransfer.files.length > 0) handleCoverLetterUpload(e.dataTransfer.files[0]);
+    });
+  }
+
+  if (clFileInput) {
+    clFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) handleCoverLetterUpload(e.target.files[0]);
+    });
+  }
+
+  function handleCoverLetterUpload(file) {
+    const reader = new FileReader();
+    reader.onload = async (evt) => {
+      const dataUrl = evt.target.result;
+      clDropCta.style.display = 'none';
+      clFileName.innerText = `📄 ${file.name} (Parsing text...)`;
+      clFileInfo.style.display = 'block';
+
+      try {
+        const res = await fetch('/api/cover-letter/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: file.name, base64Data: dataUrl })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadedProfile = data.profile;
+          clFileName.innerText = `📄 ${file.name} (Parsed & Active)`;
+          clBodyEditor.value = data.coverLetterText || clBodyEditor.value;
+          updateCoverLetterPreview();
+        }
+      } catch (err) {
+        console.warn('Cover letter upload error:', err);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (clTargetCompany) clTargetCompany.addEventListener('input', updateCoverLetterPreview);
+  if (clTargetRole) clTargetRole.addEventListener('input', updateCoverLetterPreview);
+  if (btnRefreshClPreview) btnRefreshClPreview.addEventListener('click', updateCoverLetterPreview);
+
+  if (btnSaveCoverLetter) {
+    btnSaveCoverLetter.addEventListener('click', async () => {
+      if (!loadedProfile) return;
+      loadedProfile.masterCoverLetter = clBodyEditor.value;
+
+      try {
+        const res = await fetch('/api/profile/save-asset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            assetType: 'cover-letter',
+            data: { coverLetterText: clBodyEditor.value }
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('✅ Cover Letter saved persistently!');
+          updateCoverLetterPreview();
+        }
+      } catch (e) {
+        alert(`Save error: ${e.message}`);
+      }
+    });
+  }
+
+  if (btnCopyCoverLetter) {
+    btnCopyCoverLetter.addEventListener('click', () => {
+      navigator.clipboard.writeText(clBodyEditor.value);
+      alert('Cover Letter copied to clipboard!');
+    });
+  }
+
+  if (btnAiImproveCl) {
+    btnAiImproveCl.addEventListener('click', async () => {
+      activePromptType = 'cover-letter';
+      promptModalTitle.innerText = '🤖 ✨ Context-Rich Claude Prompt for Cover Letter';
+
+      const payload = {
+        masterCoverLetter: clBodyEditor.value,
+        targetCompany: clTargetCompany.value || 'Target Tech Scale-up / Enterprise',
+        targetRole: clTargetRole.value || 'Senior Android Engineer'
+      };
+
+      try {
+        const res = await fetch('/api/prompts/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'cover-letter', payload })
+        });
+        const data = await res.json();
+        promptTextDisplay.value = data.prompt;
+        promptResponseDisplay.value = '';
+        promptModal.style.display = 'flex';
+      } catch (err) {
+        alert(`Error: ${err.message}`);
+      }
+    });
+  }
 
   // Render Live Candidate Profile Workspace
   function renderLiveProfile() {

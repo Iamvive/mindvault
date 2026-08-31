@@ -30,6 +30,10 @@
           <span class="icon">📄</span>
           <span>Resume Studio & PDF</span>
         </button>
+        <button class="nav-item" data-tab="tab-cover-letter" id="nav-cover-letter-btn">
+          <span class="icon">✉️</span>
+          <span>Cover Letter Studio</span>
+        </button>
         <button class="nav-item" data-tab="tab-live-profile" id="nav-live-profile-btn">
           <span class="icon">👤</span>
           <span>Live Candidate Profile</span>
@@ -338,6 +342,76 @@
               <button class="btn-pill" id="btn-refresh-preview" style="font-size: 11px; padding: 3px 8px;">🔄 Refresh Preview</button>
             </div>
             <iframe id="studio-preview-iframe" src="/api/resume/preview-html" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2.5: Master Cover Letter Studio & AI Improver -->
+      <section class="tab-pane" id="tab-cover-letter">
+        <div class="major-card" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">Master Cover Letter Studio</h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-top: 2px;">Upload, edit, and use AI to tailor high-converting, human-sounding cover letters.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-secondary" id="btn-copy-cover-letter">📋 Copy Plain Text</button>
+            <button class="btn-secondary" id="btn-save-cover-letter">💾 Save Edits</button>
+            <a href="/api/cover-letter/download-pdf" target="_blank" class="btn-primary" id="btn-download-cover-letter" style="text-decoration: none;">📥 Download PDF</a>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <!-- Left: Upload & Live Editor -->
+          <div class="major-card" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Upload Zone -->
+            <div style="padding: 16px; border: 2px dashed var(--border-color); border-radius: var(--radius-card); background: #fafafa; text-align: center; cursor: pointer;" id="cover-letter-upload-zone">
+              <input type="file" id="cover-letter-file-input" accept=".pdf,.docx,.doc,.txt" style="display: none;">
+              <div id="cl-drop-cta">
+                <span style="font-size: 24px;">✉️</span>
+                <div style="font-weight: 700; font-size: 13px; margin-top: 4px;">Upload Existing Cover Letter</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Drop PDF, DOCX, or TXT file here to parse & improve</div>
+              </div>
+              <div id="cl-file-info" style="display: none;">
+                <span id="cl-file-name" style="font-weight: 700; font-size: 13px; color: #065f46;"></span>
+              </div>
+            </div>
+
+            <!-- Target Company & Role -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-field">
+                <label>Target Company</label>
+                <input type="text" id="cl-target-company" placeholder="e.g. Uber / Razorpay / Google">
+              </div>
+              <div class="form-field">
+                <label>Target Role</label>
+                <input type="text" id="cl-target-role" placeholder="e.g. Senior Android Engineer">
+              </div>
+            </div>
+
+            <!-- AI Improvement Actions -->
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-primary" id="btn-ai-improve-cl" style="flex: 1; font-size: 12px; padding: 9px 12px;">
+                🤖 ✨ AI Improve & Polish (Claude)
+              </button>
+            </div>
+
+            <!-- Cover Letter Text Editor -->
+            <div class="form-field" style="display: flex; flex-direction: column; flex: 1;">
+              <label style="display: flex; justify-content: space-between;">
+                <span>Cover Letter Body</span>
+                <span style="font-weight: normal; color: var(--text-muted); font-size: 11px;">Paragraphs auto-formatted</span>
+              </label>
+              <textarea id="cl-body-editor" rows="16" class="code-editor" style="font-family: inherit; font-size: 12.5px; line-height: 1.6;"></textarea>
+            </div>
+          </div>
+
+          <!-- Right: Live Visual Preview -->
+          <div class="major-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 80vh;">
+            <div style="padding: 12px 18px; border-bottom: 1px solid var(--border-light); background: #fbfbfd; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Live Formatted Preview</span>
+              <button class="btn-pill" id="btn-refresh-cl-preview" style="font-size: 11px; padding: 3px 8px;">🔄 Refresh Preview</button>
+            </div>
+            <iframe id="cl-preview-iframe" src="/api/cover-letter/preview-html" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
           </div>
         </div>
       </section>

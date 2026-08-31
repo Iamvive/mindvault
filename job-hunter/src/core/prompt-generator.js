@@ -138,3 +138,47 @@ Provide your response strictly as valid JSON wrapped in \`\`\`json \`\`\` block:
 \`\`\`
 `.trim();
 }
+
+export function buildCoverLetterPrompt(payload = {}) {
+  const intel = analyzeProfileIntelligence(payload);
+  const targetCompany = payload.targetCompany || 'Target Tech Scale-up / Enterprise';
+  const targetRole = payload.targetRole || payload.personal?.title || 'Senior Android Engineer';
+  const currentLetter = payload.currentCoverLetter || payload.masterCoverLetter || '';
+  const jdText = payload.jdText || '';
+
+  return `
+You are a Principal Executive Recruiter and Career Strategist.
+Your goal is to write or polish an exceptional, human-sounding Cover Letter for this senior tech candidate.
+
+CANDIDATE BACKGROUND:
+- Name: ${intel.candidateName}
+- Current Seniority: ${intel.archetype} (${intel.estimatedYears} Years Experience)
+- Proven Tech Stack: ${intel.topTechStack.join(', ')}
+- Past Key Employers: ${intel.companiesList.join(', ')}
+- Real Proven Quantified Accomplishments:
+${intel.highlightedAchievements.slice(0, 5).map(m => `  • "${m}"`).join('\n')}
+
+TARGET APPLICATION:
+- Target Company: ${targetCompany}
+- Target Role: ${targetRole}
+${jdText ? `- Job Description Snippet:\n"""\n${jdText.slice(0, 1000)}\n"""` : ''}
+${currentLetter ? `- Candidate's Current Draft:\n"""\n${currentLetter}\n"""` : ''}
+
+GUIDELINES:
+1. Tone must sound authentic, confident, and human — avoid generic AI clichés like "I was thrilled to see", "I am the ideal candidate", or "testament to my skills".
+2. Hook the reader in paragraph 1 with deep alignment with the company's engineering mission.
+3. In paragraph 2 and 3, explicitly weave in 2-3 of the candidate's real metrics.
+4. Keep length to 3-4 concise, impactful paragraphs.
+
+OUTPUT FORMAT:
+Provide your response strictly as valid JSON wrapped in \`\`\`json \`\`\` block:
+
+\`\`\`json
+{
+  "improvedCoverLetter": "Dear Hiring Team,\\n\\n[Paragraph 1: Compelling hook and why this company]\\n\\n[Paragraph 2: Deep technical accomplishments with real metrics]\\n\\n[Paragraph 3: Architecture leadership, team mentorship, and strategic value]\\n\\n[Paragraph 4: Call to action and closing]\\n\\nSincerely,\\n${intel.candidateName}",
+  "keyStrengthsHighlighted": ["${intel.topTechStack.slice(0, 3).join('", "')}"],
+  "recruiterImpactScore": 95
+}
+\`\`\`
+`.trim();
+}
