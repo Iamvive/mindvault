@@ -8,9 +8,10 @@ import { submitApprovedJob } from '../submitters/submitter-manager.js';
 import { connectToChrome, checkCdpAvailable, findOrCreateTab } from '../cdp/chrome-bridge.js';
 import { promptClaudeSession, parseClaudeResponse } from '../cdp/claude-worker.js';
 import { auditGitHubProfile } from '../core/github-auditor.js';
-import { auditLinkedInProfile } from '../core/linkedin-auditor.js';
+import { auditLinkedInProfile, fetchLinkedInProfileData } from '../core/linkedin-auditor.js';
 import { scoreUnifiedProfile } from '../core/unified-scorer.js';
 import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt } from '../core/prompt-generator.js';
+import { generateResumeHtml, renderResumePdf } from '../pdf/resume-renderer.js';
 
 const app = express();
 const PORT = process.env.PORT || 4200;
@@ -117,6 +118,78 @@ app.put('/api/profile', (req, res) => {
   }
 });
 
+// API: Update Candidate Snapshot
+app.post('/api/profile/snapshot', (req, res) => {
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    const { currentRole, currentCompany, totalYearsExperience, targetSeniority, location } = req.body;
+
+    if (!profile.personal) profile.personal = {};
+    if (currentRole !== undefined) profile.personal.currentRole = currentRole;
+    if (currentCompany !== undefined) profile.personal.currentCompany = currentCompany;
+    if (totalYearsExperience !== undefined) profile.personal.totalYearsExperience = Number(totalYearsExperience);
+    if (targetSeniority !== undefined) profile.personal.targetSeniority = targetSeniority;
+    if (location !== undefined) profile.personal.location = location;
+
+    saveMasterProfile(profile, 'data/master_profile.json');
+    res.json({ success: true, profile });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Auto-Extract Snapshot & Timeline from LinkedIn
+app.post('/api/profile/extract-linkedin-snapshot', async (req, res) => {
+  const { linkedinUrl } = req.body;
+  try {
+    const isCdp = await checkCdpAvailable();
+    let browser = null;
+    if (isCdp) browser = await connectToChrome();
+
+    const data = await fetchLinkedInProfileData(linkedinUrl, browser);
+    const profile = loadMasterProfile('data/master_profile.json');
+
+    if (!profile.personal) profile.personal = {};
+    if (data.currentRole) profile.personal.currentRole = data.currentRole;
+    if (data.currentCompany) profile.personal.currentCompany = data.currentCompany;
+    if (data.totalYearsExperience) profile.personal.totalYearsExperience = data.totalYearsExperience;
+    if (data.location) profile.personal.location = data.location;
+    if (data.headline) profile.personal.title = data.headline;
+    if (data.about) profile.summary = data.about;
+
+    saveMasterProfile(profile, 'data/master_profile.json');
+    res.json({ success: true, extracted: data, profile });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Resume Studio - Live HTML Preview
+app.get('/api/resume/preview-html', (req, res) => {
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    const html = generateResumeHtml(profile);
+    res.setHeader('Content-Type', 'text/html');
+    res.send(html);
+  } catch (err) {
+    res.status(500).send(`<h3>Preview Error: ${err.message}</h3>`);
+  }
+});
+
+// API: Resume Studio - Download ATS PDF
+app.get('/api/resume/download-pdf', async (req, res) => {
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    const outPath = `data/generated_resumes/Master_Resume_${(profile.personal?.name || 'Candidate').replace(/\s+/g, '_')}.pdf`;
+    await renderResumePdf(profile, outPath);
+
+    const fullPath = path.resolve(process.cwd(), outPath);
+    res.download(fullPath);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // API: Apply and Persist Claude Output to the User's Profile
 app.post('/api/profile/apply-claude-output', (req, res) => {
   const { rawOutput, assetType } = req.body;
@@ -129,22 +202,18 @@ app.post('/api/profile/apply-claude-output', (req, res) => {
     try {
       parsed = parseClaudeResponse(rawOutput);
     } catch (e) {
-      // If direct JSON parse fails, treat as string update
       if (assetType === 'linkedin') {
         profile.summary = rawOutput;
       }
     }
 
     if (parsed) {
-      // Apply LinkedIn improvements
       if (parsed.updatedTitle) profile.personal.title = parsed.updatedTitle;
       if (parsed.updatedAboutSection) profile.summary = parsed.updatedAboutSection;
       if (parsed.suggestedHeadlines) profile.suggestedHeadlines = parsed.suggestedHeadlines;
 
-      // Apply GitHub improvements
       if (parsed.profileReadmeMarkdown) profile.githubReadme = parsed.profileReadmeMarkdown;
 
-      // Apply Resume upgrades
       if (parsed.updatedSummary) profile.summary = parsed.updatedSummary;
       if (parsed.recommendedSkills) {
         profile.skills = { ...profile.skills, ...parsed.recommendedSkills };
