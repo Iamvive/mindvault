@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'node:path';
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import { initDatabase, getQueuedJobs, getAllJobs, getJobById, updateJobStatus } from '../db/database.js';
 import { loadMasterProfile, saveMasterProfile } from '../core/profile.js';
 import { processDiscoveredJob } from '../scrapers/discovery-manager.js';
@@ -13,14 +12,12 @@ import { auditLinkedInProfile, fetchLinkedInProfileData } from '../core/linkedin
 import { scoreUnifiedProfile } from '../core/unified-scorer.js';
 import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt } from '../core/prompt-generator.js';
 import { generateResumeHtml, renderResumePdf } from '../pdf/resume-renderer.js';
-
-const require = createRequire(import.meta.url);
-const pdfParse = require('pdf-parse');
+import { extractText } from 'unpdf';
 
 const app = express();
 const PORT = process.env.PORT || 4200;
 
-app.use(express.json({ limit: '20mb' }));
+app.use(express.json({ limit: '25mb' }));
 app.use(express.static(path.resolve(process.cwd(), 'public')));
 app.use('/data/generated_resumes', express.static(path.resolve(process.cwd(), 'data/generated_resumes')));
 
@@ -129,14 +126,27 @@ app.post('/api/resume/upload', async (req, res) => {
     const profile = loadMasterProfile('data/master_profile.json');
     let extractedText = rawText || '';
 
-    if (base64Data && (!extractedText || extractedText.startsWith('%PDF'))) {
-      const buffer = Buffer.from(base64Data.replace(/^data:.*?;base64,/, ''), 'base64');
-      const pdfData = await pdfParse(buffer);
-      extractedText = pdfData.text || '';
+    if (base64Data) {
+      try {
+        const base64Clean = base64Data.replace(/^data:.*?;base64,/, '');
+        const buffer = Buffer.from(base64Clean, 'base64');
+        const parsed = await extractText(new Uint8Array(buffer));
+        extractedText = Array.isArray(parsed.text) ? parsed.text.join('\n') : (parsed.text || '');
+      } catch (pdfErr) {
+        console.warn('PDF parse warning:', pdfErr.message);
+      }
     }
 
     profile.uploadedResumeFileName = filename || 'resume.pdf';
-    profile.uploadedResumeText = extractedText;
+    if (extractedText && extractedText.length > 50) {
+      profile.uploadedResumeText = extractedText;
+
+      // Extract candidate name if filename has name or text has name header
+      const nameMatch = filename.replace(/\.(pdf|docx|doc|txt)$/i, '').replace(/[-_]/g, ' ').replace(/\bresume\b/gi, '').trim();
+      if (nameMatch && (profile.personal.name === 'Alex Mercer' || !profile.personal.name)) {
+        profile.personal.name = nameMatch.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+      }
+    }
 
     saveMasterProfile(profile, 'data/master_profile.json');
     res.json({
@@ -168,7 +178,13 @@ app.post('/api/profile/save-asset', (req, res) => {
         profile.personal.github = val.startsWith('http') ? val : (val ? `https://github.com/${val}` : '');
       }
     } else if (assetType === 'resume') {
-      if (data.filename) profile.uploadedResumeFileName = data.filename;
+      if (data.filename) {
+        profile.uploadedResumeFileName = data.filename;
+        const nameMatch = data.filename.replace(/\.(pdf|docx|doc|txt)$/i, '').replace(/[-_]/g, ' ').replace(/\bresume\b/gi, '').trim();
+        if (nameMatch && (profile.personal.name === 'Alex Mercer' || !profile.personal.name)) {
+          profile.personal.name = nameMatch.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        }
+      }
       if (data.text) profile.uploadedResumeText = data.text;
       if (data.summary) profile.summary = data.summary;
       if (data.experience) profile.masterExperience = data.experience;
@@ -273,6 +289,7 @@ app.post('/api/profile/apply-claude-output', (req, res) => {
     }
 
     if (parsed) {
+      if (parsed.candidateName) profile.personal.name = parsed.candidateName;
       if (parsed.updatedTitle) profile.personal.title = parsed.updatedTitle;
       if (parsed.updatedAboutSection) profile.summary = parsed.updatedAboutSection;
       if (parsed.suggestedHeadlines) profile.suggestedHeadlines = parsed.suggestedHeadlines;
