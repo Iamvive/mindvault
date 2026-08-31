@@ -1,0 +1,103 @@
+{
+  "personal": {
+    "name": "Alex Mercer",
+    "title": "Lead Full-Stack / Distributed Systems Engineer",
+    "email": "alex.mercer@example.com",
+    "phone": "+91 9876543210",
+    "location": "Bengaluru, India / Remote",
+    "linkedin": "https://linkedin.com/in/alex-mercer-dev",
+    "github": "https://github.com/alexmercer-dev",
+    "portfolio": "https://alexmercer.dev"
+  },
+  "summary": "High-impact Full-Stack Engineer with 6+ years specializing in distributed systems, event-driven architectures, high-performance Node.js/Go backends, and responsive React frontend web applications.",
+  "masterExperience": [
+    {
+      "company": "CloudScale Technologies",
+      "role": "Staff Software Engineer",
+      "location": "Bengaluru, India",
+      "startDate": "2023-01",
+      "endDate": "Present",
+      "techStack": ["Node.js", "TypeScript", "Go", "PostgreSQL", "Kafka", "Docker", "Kubernetes", "AWS"],
+      "bullets": [
+        "Architected an event-driven transaction processing pipeline handling 45,000 requests/sec with 99.99% uptime using Kafka and Go.",
+        "Optimized complex PostgreSQL query execution plans, reducing P99 latency by 54% and saving $18,000/month in cloud infrastructure costs.",
+        "Mentored a team of 8 engineers across 3 distributed time zones, championing TDD, CI/CD automation, and strict code review standards.",
+        "Led migration of legacy monolith into microservices with zero downtime for over 1.2M active users."
+      ]
+    },
+    {
+      "company": "FinTech Matrix",
+      "role": "Senior Full-Stack Engineer",
+      "location": "Bengaluru, India",
+      "startDate": "2020-06",
+      "endDate": "2022-12",
+      "techStack": ["React", "TypeScript", "Node.js", "Express", "Redis", "PostgreSQL", "GraphQL", "AWS"],
+      "bullets": [
+        "Built responsive real-time financial analytics dashboard in React & TypeScript, boosting daily user engagement by 35%.",
+        "Engineered zero-trust JWT authentication and role-based access control (RBAC) microservice adhering to SOC2 compliance.",
+        "Implemented distributed Redis caching layer that decreased database read load by 68%.",
+        "Pioneered automated end-to-end testing suite with Playwright and Vitest, slashing regression bugs in production by 40%."
+      ]
+    },
+    {
+      "company": "Apex Software Labs",
+      "role": "Software Engineer",
+      "location": "Remote",
+      "startDate": "2018-08",
+      "endDate": "2020-05",
+      "techStack": ["JavaScript", "Node.js", "React", "MongoDB", "REST APIs", "Docker"],
+      "bullets": [
+        "Developed scalable REST APIs serving over 500k mobile and web clients daily.",
+        "Refactored state management to Redux Toolkit, decreasing client bundle size by 28% and speeding up initial page load time to under 1.2s."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "HyperQueue",
+      "summary": "Ultra-low latency distributed message queue engine built in Go with Raft consensus protocol.",
+      "techStack": ["Go", "Raft", "gRPC", "Docker"],
+      "github": "https://github.com/alexmercer-dev/hyperqueue",
+      "highlights": [
+        "Sub-millisecond P95 publish-to-consume latency at 100k msg/sec throughput.",
+        "Fault-tolerant leader election and log replication."
+      ]
+    },
+    {
+      "name": "DevPulse Cockpit",
+      "summary": "Real-time developer observability platform integrating Git metrics, PR review cycles, and deployment health.",
+      "techStack": ["React", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS"],
+      "github": "https://github.com/alexmercer-dev/devpulse",
+      "highlights": [
+        "Used by 250+ engineering teams to track DORA metrics and bottlenecks."
+      ]
+    }
+  ],
+  "skills": {
+    "languages": ["TypeScript", "JavaScript", "Go", "Python", "SQL", "HTML5", "CSS3"],
+    "frameworks": ["Node.js", "Express", "React", "Next.js", "NestJS", "FastAPI", "GraphQL"],
+    "cloudAndDevops": ["AWS (ECS, S3, RDS, Lambda)", "Docker", "Kubernetes", "CI/CD (GitHub Actions)", "Terraform"],
+    "databases": ["PostgreSQL", "Redis", "Kafka", "MongoDB", "SQLite"],
+    "architecture": ["Distributed Systems", "Microservices", "Event-Driven Architecture", "REST APIs", "TDD / DDD"]
+  },
+  "education": [
+    {
+      "institution": "National Institute of Technology",
+      "degree": "Bachelor of Technology in Computer Science & Engineering",
+      "location": "India",
+      "year": "2018"
+    }
+  ],
+  "preferences": {
+    "targetTitles": [
+      "Staff Software Engineer",
+      "Senior Full-Stack Engineer",
+      "Lead Backend Engineer",
+      "Principal Engineer"
+    ],
+    "minSalaryInLPA": 40,
+    "workMode": ["Remote", "Hybrid"],
+    "locations": ["Bengaluru", "Remote", "Gurugram", "Hyderabad"],
+    "blacklistCompanies": ["ScamCo", "SpamCorp"]
+  }
+}
