@@ -1,3 +1,92 @@
+import { connectToChrome, checkCdpAvailable } from '../cdp/chrome-bridge.js';
+
+export async function fetchLinkedInProfileData(profileUrl, browserInstance = null) {
+  if (!profileUrl) throw new Error('LinkedIn Profile URL is required');
+
+  let cleanUrl = profileUrl.trim();
+  if (!cleanUrl.startsWith('http')) {
+    cleanUrl = `https://www.linkedin.com/in/${cleanUrl.replace(/^\/+/, '')}`;
+  }
+
+  let browser = browserInstance;
+  let ownsBrowser = false;
+
+  const isCdp = await checkCdpAvailable();
+  if (!browser && isCdp) {
+    browser = await connectToChrome();
+  }
+
+  if (!browser) {
+    // If Chrome CDP is not connected, extract username as fallback info
+    const username = cleanUrl.split('/in/')[1]?.replace(/\/+$/, '') || 'User';
+    return {
+      profileUrl: cleanUrl,
+      headline: `${username} - Software Engineer`,
+      about: '',
+      extractedVia: 'fallback'
+    };
+  }
+
+  const page = await browser.newPage();
+  try {
+    await page.goto(cleanUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await page.waitForTimeout(2500);
+
+    const extracted = await page.evaluate(() => {
+      // 1. Headline
+      const headlineEl = document.querySelector('.text-body-medium.break-words, h2.top-card-layout__headline, .pv-top-card--list-bullet');
+      const headline = headlineEl ? headlineEl.innerText.trim() : '';
+
+      // 2. Name
+      const nameEl = document.querySelector('h1.text-heading-xlarge, h1.top-card-layout__title');
+      const name = nameEl ? nameEl.innerText.trim() : '';
+
+      // 3. About Section
+      // LinkedIn About is often in a section with id 'about' or data-generated-suggestion-target
+      let about = '';
+      const aboutSection = document.querySelector('#about');
+      if (aboutSection) {
+        const parentCard = aboutSection.closest('section');
+        if (parentCard) {
+          const textEl = parentCard.querySelector('.display-flex .visually-hidden, .inline-show-more-text');
+          about = textEl ? textEl.innerText.trim() : parentCard.innerText.replace(/About/i, '').trim();
+        }
+      }
+
+      // Fallback About selector
+      if (!about) {
+        const altAbout = document.querySelector('.pv-about-section, .core-section-container[data-section="summary"]');
+        if (altAbout) about = altAbout.innerText.replace(/About/i, '').trim();
+      }
+
+      return {
+        name,
+        headline,
+        about
+      };
+    });
+
+    return {
+      profileUrl: cleanUrl,
+      name: extracted.name || '',
+      headline: extracted.headline || '',
+      about: extracted.about || '',
+      extractedVia: 'cdp'
+    };
+  } catch (err) {
+    console.warn(`CDP LinkedIn extraction notice: ${err.message}`);
+    return {
+      profileUrl: cleanUrl,
+      headline: '',
+      about: '',
+      extractedVia: 'error_fallback'
+    };
+  } finally {
+    await page.close();
+    if (ownsBrowser) await browser.close();
+  }
+}
+
 export function auditLinkedInProfile(profileInput = {}) {
   const { headline = '', about = '', experience = '', profileUrl = '' } = profileInput;
 
@@ -9,7 +98,6 @@ export function auditLinkedInProfile(profileInput = {}) {
   const hasRole = /engineer|architect|developer|lead|staff|principal|manager|cto/i.test(headline);
   const hasKeywords = /go|typescript|react|python|node|distributed|aws|cloud|kafka|sql|microservices|java|system design/i.test(headline);
   const hasDivider = /[|•\-\/]/.test(headline);
-  const hasMetricOrImpact = /10x|scale|1m|500k|high-throughput|latency|cloud/i.test(headline);
 
   if (hasRole && hasKeywords && hasDivider) {
     score += 20;
@@ -34,10 +122,10 @@ export function auditLinkedInProfile(profileInput = {}) {
   }
 
   // 2. About / Summary Evaluation
-  if (about.length > 250) {
+  if (about && about.length > 250) {
     score += 18;
     strengths.push('About section has strong narrative depth and background detail.');
-  } else if (about.length > 50) {
+  } else if (about && about.length > 50) {
     score += 8;
     improvements.push({
       id: 'fix-about-length',
@@ -88,14 +176,12 @@ export function auditLinkedInProfile(profileInput = {}) {
 
   score = Math.min(98, Math.max(40, score));
 
-  // 3 Ready-to-apply Magnetic Headlines
   const generatedHeadlines = [
     'Senior Full-Stack Engineer | React, TypeScript, Node.js, AWS | Scaled Distributed Systems to 1M+ Users',
     'Staff Backend Architect | Go, Kafka, PostgreSQL, AWS | High-Throughput & Event-Driven Systems',
     'Lead Software Engineer | Microservices, Cloud Architecture & Scalable Web Applications'
   ];
 
-  // Ready-to-apply Structured About Rewrite
   const generatedAbout = `
 🚀 **About Me:**
 Results-driven Senior Software Engineer with 6+ years specializing in distributed systems, event-driven architectures, and high-performance web applications. Passionate about solving complex scaling bottlenecks and writing resilient, test-driven code.
@@ -116,6 +202,8 @@ Results-driven Senior Software Engineer with 6+ years specializing in distribute
   return {
     platform: 'linkedin',
     profileUrl: profileUrl || '',
+    headline: headline || '',
+    about: about || '',
     score,
     grade: score >= 85 ? 'A+' : (score >= 75 ? 'A' : (score >= 60 ? 'B' : 'C')),
     strengths,

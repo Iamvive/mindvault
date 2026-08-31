@@ -86,7 +86,7 @@
             <div>
               <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">The 3-Pillar Profile Rater & Fixer</h3>
               <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
-                Share your <strong>GitHub Link</strong>, <strong>LinkedIn Details</strong>, and <strong>Resume (PDF or Text)</strong> to get an instant comprehensive AI score & 1-click fixes.
+                Simply share your <strong>GitHub Link</strong>, <strong>LinkedIn Link</strong>, and <strong>Resume</strong> — AI auto-fetches and rates everything with 1-click fixes.
               </p>
             </div>
             <div style="display: flex; gap: 10px;">
@@ -102,33 +102,31 @@
           <div class="major-card" style="padding: 20px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
               <span style="font-size: 20px;">💻</span>
-              <h4 style="font-size: 15px; font-weight: 700;">1. GitHub Presence</h4>
+              <h4 style="font-size: 15px; font-weight: 700;">1. GitHub Link</h4>
             </div>
             <div class="form-field">
               <label for="sc-github">GitHub Username or URL</label>
               <input type="text" id="sc-github" placeholder="e.g. alexmercer-dev or https://github.com/...">
             </div>
-            <p style="font-size: 11.5px; color: var(--text-muted);">Audits public repositories, project documentation depth, live demos, and README polish.</p>
+            <p style="font-size: 11.5px; color: var(--text-muted);">Auto-fetches public repositories, project documentation depth, live demos, and README polish.</p>
           </div>
 
-          <!-- Pillar 2: LinkedIn -->
+          <!-- Pillar 2: LinkedIn (Only URL needed) -->
           <div class="major-card" style="padding: 20px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
               <span style="font-size: 20px;">👔</span>
-              <h4 style="font-size: 15px; font-weight: 700;">2. LinkedIn Profile</h4>
+              <h4 style="font-size: 15px; font-weight: 700;">2. LinkedIn Link</h4>
             </div>
             <div class="form-field">
               <label for="sc-linkedin-url">LinkedIn Profile URL</label>
-              <input type="text" id="sc-linkedin-url" placeholder="https://linkedin.com/in/...">
+              <input type="text" id="sc-linkedin-url" placeholder="https://linkedin.com/in/your-username">
             </div>
-            <div class="form-field">
-              <label for="sc-linkedin-headline">Headline</label>
-              <input type="text" id="sc-linkedin-headline" placeholder="e.g. Senior Backend Engineer | Go, AWS">
-            </div>
-            <div class="form-field">
-              <label for="sc-linkedin-about">About Section</label>
-              <textarea id="sc-linkedin-about" rows="2" placeholder="Paste your About section..."></textarea>
-            </div>
+            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 8px;">
+              Auto-inspects Headline, About section, and experience metrics directly via your active Chrome session.
+            </p>
+            <!-- Hidden inputs used by 1-click fixer -->
+            <input type="hidden" id="sc-linkedin-headline">
+            <input type="hidden" id="sc-linkedin-about">
           </div>
 
           <!-- Pillar 3: Resume (Upload PDF / Paste / Master) -->

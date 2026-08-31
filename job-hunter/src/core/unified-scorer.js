@@ -1,15 +1,16 @@
 import { auditGitHubProfile } from './github-auditor.js';
-import { auditLinkedInProfile } from './linkedin-auditor.js';
+import { auditLinkedInProfile, fetchLinkedInProfileData } from './linkedin-auditor.js';
 import { auditResume } from './resume-auditor.js';
 
-export async function scoreUnifiedProfile(payload = {}) {
+export async function scoreUnifiedProfile(payload = {}, browserInstance = null) {
   const {
     githubUsernameOrUrl = '',
     linkedinUrl = '',
-    linkedinHeadline = '',
-    linkedinAbout = '',
     resumeData = {}
   } = payload;
+
+  let linkedinHeadline = payload.linkedinHeadline || '';
+  let linkedinAbout = payload.linkedinAbout || '';
 
   const results = {
     overallScore: 0,
@@ -33,12 +34,31 @@ export async function scoreUnifiedProfile(payload = {}) {
     }
   }
 
-  // 2. Audit LinkedIn
-  if (linkedinHeadline || linkedinAbout || linkedinUrl) {
+  // 2. Audit LinkedIn (Auto-fetch via URL if headline/about not pre-supplied)
+  if (linkedinUrl) {
+    try {
+      if (!linkedinHeadline && !linkedinAbout) {
+        const fetched = await fetchLinkedInProfileData(linkedinUrl, browserInstance);
+        linkedinHeadline = fetched.headline || '';
+        linkedinAbout = fetched.about || '';
+      }
+
+      const liAudit = auditLinkedInProfile({
+        headline: linkedinHeadline,
+        about: linkedinAbout,
+        profileUrl: linkedinUrl
+      });
+      results.pillars.linkedin = liAudit;
+      totalScoreSum += liAudit.score;
+      validPillarsCount++;
+    } catch (err) {
+      results.pillars.linkedin = { error: err.message, score: 50, grade: 'C' };
+    }
+  } else if (linkedinHeadline || linkedinAbout) {
     const liAudit = auditLinkedInProfile({
       headline: linkedinHeadline,
       about: linkedinAbout,
-      profileUrl: linkedinUrl
+      profileUrl: ''
     });
     results.pillars.linkedin = liAudit;
     totalScoreSum += liAudit.score;
