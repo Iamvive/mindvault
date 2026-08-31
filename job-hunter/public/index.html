@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindHunt — Zero-Cost AI Job Application Cockpit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">🎯</div>
+        <div class="brand-text">
+          <h1>MindHunt</h1>
+          <span class="badge-zero-cost">0-Cost AI Agent</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="tab-queue" id="nav-queue-btn">
+          <span class="icon">📋</span>
+          <span>Approval Queue</span>
+          <span class="counter-badge" id="sidebar-queue-count">0</span>
+        </button>
+        <button class="nav-item" data-tab="tab-tailor" id="nav-tailor-btn">
+          <span class="icon">✨</span>
+          <span>Instant JD Tailor</span>
+        </button>
+        <button class="nav-item" data-tab="tab-history" id="nav-history-btn">
+          <span class="icon">📊</span>
+          <span>Application Tracker</span>
+        </button>
+        <button class="nav-item" data-tab="tab-profile" id="nav-profile-btn">
+          <span class="icon">👤</span>
+          <span>Master Profile & Audit</span>
+        </button>
+      </nav>
+
+      <div class="cdp-status-card">
+        <div class="status-indicator-row">
+          <span class="status-dot" id="cdp-dot"></span>
+          <span class="status-label" id="cdp-text">Checking Chrome CDP...</span>
+        </div>
+        <p class="status-hint">Connects via Chrome port 9222 (0 API bill)</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Metrics Header -->
+      <header class="top-header">
+        <div class="header-title">
+          <h2 id="page-title">Approval Queue</h2>
+          <p id="page-subtitle">Review ATS tailored resumes and approve 1-click applications.</p>
+        </div>
+        <div class="header-stats">
+          <div class="stat-pill">
+            <span class="stat-num" id="stat-queued">0</span>
+            <span class="stat-label">Queued</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-num" id="stat-applied">0</span>
+            <span class="stat-label">Applied</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-num" id="stat-review">0</span>
+            <span class="stat-label">Manual Attention</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB 1: Approval Queue -->
+      <section class="tab-pane active" id="tab-queue">
+        <div class="pane-actions">
+          <div class="filter-group">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-pill active" data-filter="all">All Queued</button>
+            <button class="filter-pill" data-filter="high-ats">ATS > 85%</button>
+            <button class="filter-pill" data-filter="instahyre">Instahyre</button>
+            <button class="filter-pill" data-filter="linkedin">LinkedIn</button>
+          </div>
+          <button class="btn-primary" id="btn-batch-apply">
+            <span>🚀 Batch Apply All</span>
+          </button>
+        </div>
+
+        <div class="cards-grid" id="queue-cards-container">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- TAB 2: Instant JD Tailor -->
+      <section class="tab-pane" id="tab-tailor">
+        <div class="tailor-card major-card">
+          <h3 class="card-heading">Paste Any Job Description</h3>
+          <p class="card-subheading">Instantly calculates ATS score, matches master profile bullet points, and generates a print-ready tailored PDF.</p>
+
+          <form id="tailor-form" class="tailor-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="tailor-title">Job Title</label>
+                <input type="text" id="tailor-title" placeholder="e.g. Senior Backend Engineer" required>
+              </div>
+              <div class="form-field">
+                <label for="tailor-company">Company</label>
+                <input type="text" id="tailor-company" placeholder="e.g. Razorpay" required>
+              </div>
+              <div class="form-field">
+                <label for="tailor-platform">Platform</label>
+                <select id="tailor-platform">
+                  <option value="instahyre">Instahyre</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="custom">Direct / Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="tailor-jd">Job Description Text</label>
+              <textarea id="tailor-jd" rows="8" placeholder="Paste the full job description here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btn-tailor-submit">
+              <span>✨ Tailor Resume & Queue Job</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- TAB 3: Application Tracker -->
+      <section class="tab-pane" id="tab-history">
+        <div class="table-container major-card">
+          <table class="jobs-table" id="history-table">
+            <thead>
+              <tr>
+                <th>Company & Title</th>
+                <th>Platform</th>
+                <th>ATS Score</th>
+                <th>Status</th>
+                <th>Action / Notes</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 4: Master Profile & Global Audit -->
+      <section class="tab-pane" id="tab-profile">
+        <div class="profile-grid">
+          <div class="major-card">
+            <div class="card-header-flex">
+              <h3 class="card-heading">Master Profile JSON</h3>
+              <button class="btn-secondary" id="btn-save-profile">💾 Save Profile</button>
+            </div>
+            <p class="card-subheading">The single source of truth used for generating all tailored ATS resumes.</p>
+            <textarea id="profile-editor" rows="22" class="code-editor"></textarea>
+          </div>
+
+          <div class="major-card">
+            <h3 class="card-heading">Global Presence Optimization</h3>
+            <p class="card-subheading">Prompts and recommendations to supercharge your public profiles.</p>
+
+            <div class="audit-section">
+              <h4>LinkedIn Recruiter SEO</h4>
+              <p class="audit-tip">Recruiters search via Boolean keywords. Keep target job titles in Headline and technical skills listed in top 5.</p>
+              <button class="btn-pill" id="btn-copy-linkedin-prompt">📋 Copy LinkedIn Audit Prompt</button>
+            </div>
+
+            <div class="audit-section" style="margin-top: 18px;">
+              <h4>GitHub Profile README</h4>
+              <p class="audit-tip">Pin top 3 architectural projects with live demo links, clean README diagrams, and performance benchmarks.</p>
+              <button class="btn-pill" id="btn-copy-github-prompt">📋 Copy GitHub Showcase Prompt</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- PDF Preview Modal -->
+  <div class="modal-backdrop" id="pdf-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-pdf-title">Tailored Resume Preview</h3>
+        <button class="modal-close" id="btn-close-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdf-iframe" src="" class="pdf-frame"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
