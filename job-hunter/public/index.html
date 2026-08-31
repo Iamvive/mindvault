@@ -26,6 +26,10 @@
           <span class="icon">🏆</span>
           <span>My Profile & Scorecard</span>
         </button>
+        <button class="nav-item" data-tab="tab-live-profile" id="nav-live-profile-btn">
+          <span class="icon">👤</span>
+          <span>Live Candidate Profile</span>
+        </button>
         <button class="nav-item" data-tab="tab-queue" id="nav-queue-btn">
           <span class="icon">📋</span>
           <span>Approval Queue</span>
@@ -38,10 +42,6 @@
         <button class="nav-item" data-tab="tab-history" id="nav-history-btn">
           <span class="icon">📊</span>
           <span>Application Tracker</span>
-        </button>
-        <button class="nav-item" data-tab="tab-profile" id="nav-profile-btn">
-          <span class="icon">👤</span>
-          <span>Master Profile JSON</span>
         </button>
       </nav>
 
@@ -86,7 +86,7 @@
             <div>
               <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">The 3-Pillar Profile Rater & Fixer</h3>
               <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
-                Share your <strong>GitHub Link</strong>, <strong>LinkedIn Link</strong>, and <strong>Resume</strong> — AI auto-fetches, rates, and generates Claude prompts with persistent saving.
+                Share your <strong>GitHub Link</strong>, <strong>LinkedIn Link</strong>, and <strong>Resume</strong> — AI auto-fetches, rates, and generates contextual Claude prompts to update your live profile.
               </p>
             </div>
             <div style="display: flex; gap: 10px;">
@@ -207,19 +207,71 @@
 
           <!-- 3 Pillar Detailed Breakdown Grid -->
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-            <!-- Pillar Breakdown 1: GitHub -->
             <div class="major-card" id="card-gh-breakdown"></div>
-
-            <!-- Pillar Breakdown 2: LinkedIn -->
             <div class="major-card" id="card-li-breakdown"></div>
-
-            <!-- Pillar Breakdown 3: Resume -->
             <div class="major-card" id="card-resume-breakdown"></div>
           </div>
         </div>
       </section>
 
-      <!-- TAB 2: Approval Queue -->
+      <!-- TAB 2: Live Candidate Profile Workspace (Persistent Platform Profile) -->
+      <section class="tab-pane" id="tab-live-profile">
+        <div class="major-card" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;" id="live-prof-name">Candidate Profile</h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-top: 2px;" id="live-prof-title">Staff Software Engineer</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-secondary" id="btn-reload-live-profile">🔄 Refresh</button>
+            <button class="btn-primary" id="btn-save-live-profile">💾 Save Profile</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+          <!-- Left Column: Summary & Work Experience Bullets -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Executive Summary Card -->
+            <div class="major-card">
+              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">Executive Summary / LinkedIn About</h4>
+              <textarea id="live-prof-summary" rows="4" class="code-editor" style="font-family: inherit; font-size: 13px;"></textarea>
+            </div>
+
+            <!-- Master Experience Cards -->
+            <div class="major-card">
+              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">Verified Work Experience & Quantified Impact</h4>
+              <div id="live-prof-experience-container" style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Skills & Links -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Skills Matrix -->
+            <div class="major-card">
+              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">Core Skills Matrix</h4>
+              <div id="live-prof-skills-container">
+                <!-- Dynamically populated tags -->
+              </div>
+            </div>
+
+            <!-- Links & Presence -->
+            <div class="major-card">
+              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">Persistent Profile Links</h4>
+              <div class="form-field">
+                <label>LinkedIn</label>
+                <input type="text" id="live-prof-linkedin">
+              </div>
+              <div class="form-field">
+                <label>GitHub</label>
+                <input type="text" id="live-prof-github">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Approval Queue -->
       <section class="tab-pane" id="tab-queue">
         <div class="pane-actions">
           <div class="filter-group">
@@ -234,12 +286,10 @@
           </button>
         </div>
 
-        <div class="cards-grid" id="queue-cards-container">
-          <!-- Dynamically populated -->
-        </div>
+        <div class="cards-grid" id="queue-cards-container"></div>
       </section>
 
-      <!-- TAB 3: Instant JD Tailor -->
+      <!-- TAB 4: Instant JD Tailor -->
       <section class="tab-pane" id="tab-tailor">
         <div class="tailor-card major-card">
           <h3 class="card-heading">Paste Any Job Description</h3>
@@ -277,7 +327,7 @@
         </div>
       </section>
 
-      <!-- TAB 4: Application Tracker -->
+      <!-- TAB 5: Application Tracker -->
       <section class="tab-pane" id="tab-history">
         <div class="table-container major-card">
           <table class="jobs-table" id="history-table">
@@ -290,38 +340,24 @@
                 <th>Action / Notes</th>
               </tr>
             </thead>
-            <tbody id="history-table-body">
-              <!-- Dynamically populated -->
-            </tbody>
+            <tbody id="history-table-body"></tbody>
           </table>
-        </div>
-      </section>
-
-      <!-- TAB 5: Master Profile JSON -->
-      <section class="tab-pane" id="tab-profile">
-        <div class="major-card">
-          <div class="card-header-flex">
-            <h3 class="card-heading">Master Profile JSON</h3>
-            <button class="btn-secondary" id="btn-save-profile">💾 Save Profile</button>
-          </div>
-          <p class="card-subheading">The single source of truth used for generating all tailored ATS resumes.</p>
-          <textarea id="profile-editor" rows="22" class="code-editor"></textarea>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- Claude Prompt Modal -->
+  <!-- Claude Prompt & Sync Modal -->
   <div class="modal-backdrop" id="prompt-modal" style="display: none;">
-    <div class="modal-card" style="width: 800px; height: 80vh;">
+    <div class="modal-card" style="width: 860px; height: 85vh;">
       <div class="modal-header">
-        <h3 id="prompt-modal-title">🤖 Claude Prompt Generator</h3>
+        <h3 id="prompt-modal-title">🤖 Context-Rich Claude Prompt & Live Sync</h3>
         <button class="modal-close" id="btn-close-prompt-modal">✕</button>
       </div>
       <div class="modal-body" style="padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto;">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Generated Claude Prompt</label>
+            <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Contextual Claude Prompt</label>
             <div style="display: flex; gap: 8px;">
               <button class="btn-pill" id="btn-copy-generated-prompt">📋 Copy Prompt</button>
               <button class="btn-primary" id="btn-send-prompt-cdp" style="font-size: 11px; padding: 4px 12px;">⚡ Send to Claude (CDP)</button>
@@ -332,12 +368,12 @@
 
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Claude Response / Output</label>
-            <button class="btn-primary" id="btn-persist-asset-changes" style="background-color: #059669; font-size: 11px; padding: 4px 12px;">
-              💾 Save & Persist Changes
+            <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Claude Response / Structured Output</label>
+            <button class="btn-primary" id="btn-apply-claude-profile" style="background-color: #059669; font-size: 11px; padding: 6px 14px;">
+              ⚡ Apply Updates to My Live Profile (Persistent)
             </button>
           </div>
-          <textarea id="prompt-response-display" rows="8" class="code-editor" placeholder="Paste Claude's response here or wait for CDP stream to populate..."></textarea>
+          <textarea id="prompt-response-display" rows="8" class="code-editor" placeholder="Paste Claude's response here or click 'Send to Claude (CDP)' to auto-stream. Then click 'Apply Updates to My Live Profile' to update your platform profile!"></textarea>
         </div>
       </div>
     </div>

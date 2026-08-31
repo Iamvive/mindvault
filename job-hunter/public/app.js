@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnBatchApply = document.getElementById('btn-batch-apply');
 
   const tailorForm = document.getElementById('tailor-form');
-  const profileEditor = document.getElementById('profile-editor');
-  const btnSaveProfile = document.getElementById('btn-save-profile');
   const historyTableBody = document.getElementById('history-table-body');
 
   // 3-Pillar Scorecard Elements
@@ -60,6 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardLiBreakdown = document.getElementById('card-li-breakdown');
   const cardResumeBreakdown = document.getElementById('card-resume-breakdown');
 
+  // Live Candidate Profile Elements
+  const liveProfName = document.getElementById('live-prof-name');
+  const liveProfTitle = document.getElementById('live-prof-title');
+  const liveProfSummary = document.getElementById('live-prof-summary');
+  const liveProfExperienceContainer = document.getElementById('live-prof-experience-container');
+  const liveProfSkillsContainer = document.getElementById('live-prof-skills-container');
+  const liveProfLinkedin = document.getElementById('live-prof-linkedin');
+  const liveProfGithub = document.getElementById('live-prof-github');
+  const btnSaveLiveProfile = document.getElementById('btn-save-live-profile');
+  const btnReloadLiveProfile = document.getElementById('btn-reload-live-profile');
+
   // Prompt Modal Elements
   const promptModal = document.getElementById('prompt-modal');
   const promptModalTitle = document.getElementById('prompt-modal-title');
@@ -68,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const promptResponseDisplay = document.getElementById('prompt-response-display');
   const btnCopyGeneratedPrompt = document.getElementById('btn-copy-generated-prompt');
   const btnSendPromptCdp = document.getElementById('btn-send-prompt-cdp');
-  const btnPersistAssetChanges = document.getElementById('btn-persist-asset-changes');
+  const btnApplyClaudeProfile = document.getElementById('btn-apply-claude-profile');
 
   const pdfModal = document.getElementById('pdf-modal');
   const modalPdfTitle = document.getElementById('modal-pdf-title');
@@ -155,6 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetTab === 'tab-scorecard') {
         pageTitle.innerText = 'My Profile & 3-Pillar AI Scorecard';
         pageSubtitle.innerText = 'Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.';
+      } else if (targetTab === 'tab-live-profile') {
+        pageTitle.innerText = 'Live Candidate Profile Workspace';
+        pageSubtitle.innerText = 'The persistent, evolving source of truth for your applications and audits.';
+        renderLiveProfile();
       } else if (targetTab === 'tab-queue') {
         pageTitle.innerText = 'Approval Queue';
         pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
@@ -166,10 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         pageTitle.innerText = 'Application Tracker';
         pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
         loadHistory();
-      } else if (targetTab === 'tab-profile') {
-        pageTitle.innerText = 'Master Profile JSON';
-        pageSubtitle.innerText = 'Edit your single source of truth used for generating all ATS resumes.';
-        loadProfile();
       }
     });
   });
@@ -228,7 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Auto pre-fill on start
   fetchProfileData().then(prof => {
-    if (prof) prefillAssets(prof);
+    if (prof) {
+      prefillAssets(prof);
+      renderLiveProfile();
+    }
   });
 
   btnPrefillAll.addEventListener('click', async () => {
@@ -239,12 +251,93 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Render Live Candidate Profile Workspace
+  function renderLiveProfile() {
+    if (!loadedProfile) return;
+    const p = loadedProfile;
+
+    liveProfName.innerText = p.personal?.name || 'Candidate Profile';
+    liveProfTitle.innerText = p.personal?.title || 'Senior Software Engineer';
+    liveProfSummary.value = p.summary || '';
+    liveProfLinkedin.value = p.personal?.linkedin || '';
+    liveProfGithub.value = p.personal?.github || '';
+
+    // Render Experience Bullets
+    const expList = p.masterExperience || [];
+    liveProfExperienceContainer.innerHTML = expList.map((exp, idx) => `
+      <div style="background: var(--bg-app); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+          <div>
+            <strong style="font-size: 14px; color: var(--text-primary);">${exp.role}</strong> • <span style="font-weight: 600; color: var(--text-secondary);">${exp.company}</span>
+            <div style="font-size: 11px; color: var(--text-muted);">${exp.startDate} - ${exp.endDate || 'Present'} • ${exp.location || 'Remote'}</div>
+          </div>
+        </div>
+        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">
+          <textarea class="exp-bullet-editor code-editor" data-index="${idx}" rows="${Math.max(3, (exp.bullets || []).length * 2)}" style="font-family: inherit; font-size: 12px; line-height: 1.5;">${(exp.bullets || []).join('\n')}</textarea>
+        </div>
+      </div>
+    `).join('');
+
+    // Render Skills Tags
+    const skills = p.skills || {};
+    const allSkills = [
+      ...(skills.languages || []),
+      ...(skills.frameworks || []),
+      ...(skills.cloudAndDevops || []),
+      ...(skills.databases || [])
+    ];
+
+    liveProfSkillsContainer.innerHTML = `
+      <div class="keywords-row" style="margin-top: 4px;">
+        ${allSkills.map(s => `<span class="kw-chip matched" style="font-size: 12px; padding: 4px 10px;">${s}</span>`).join('')}
+      </div>
+    `;
+  }
+
+  // Save Live Profile
+  btnSaveLiveProfile.addEventListener('click', async () => {
+    if (!loadedProfile) return;
+
+    loadedProfile.summary = liveProfSummary.value;
+    loadedProfile.personal.linkedin = liveProfLinkedin.value;
+    loadedProfile.personal.github = liveProfGithub.value;
+
+    document.querySelectorAll('.exp-bullet-editor').forEach(textarea => {
+      const idx = parseInt(textarea.getAttribute('data-index'), 10);
+      const lines = textarea.value.split('\n').map(l => l.trim()).filter(Boolean);
+      if (loadedProfile.masterExperience[idx]) {
+        loadedProfile.masterExperience[idx].bullets = lines;
+      }
+    });
+
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loadedProfile)
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('✅ Live Candidate Profile persistently saved!');
+        renderLiveProfile();
+      }
+    } catch (e) {
+      alert(`Save Error: ${e.message}`);
+    }
+  });
+
+  btnReloadLiveProfile.addEventListener('click', async () => {
+    await fetchProfileData();
+    renderLiveProfile();
+    alert('Refreshed profile data!');
+  });
+
   // Generate Prompt Buttons
   document.querySelectorAll('.btn-gen-prompt').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const type = e.currentTarget.getAttribute('data-type');
       activePromptType = type;
-      promptModalTitle.innerText = `🤖 Claude Prompt for ${type.toUpperCase()}`;
+      promptModalTitle.innerText = `🤖 Context-Rich Claude Prompt for ${type.toUpperCase()}`;
 
       let payload = {};
       const prof = loadedProfile || await fetchProfileData();
@@ -307,8 +400,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
       if (data.success) {
-        promptResponseDisplay.value = data.response;
-        alert('Received response from Claude!');
+        promptResponseDisplay.value = typeof data.response === 'object' ? JSON.stringify(data.response, null, 2) : data.response;
+        alert('Received response from Claude! Click "Apply Updates to My Live Profile" to persist.');
       } else {
         alert(data.error || 'Failed to dispatch to Claude');
       }
@@ -320,44 +413,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Save & Persist Asset Changes
-  btnPersistAssetChanges.addEventListener('click', async () => {
-    const responseText = promptResponseDisplay.value.trim();
-    if (!responseText) {
-      alert('Please paste Claude’s response or make changes in the Response box first.');
+  // Apply Claude Output to Live Platform Profile
+  btnApplyClaudeProfile.addEventListener('click', async () => {
+    const rawOutput = promptResponseDisplay.value.trim();
+    if (!rawOutput) {
+      alert('Please paste Claude’s response or click "Send to Claude (CDP)" first.');
       return;
     }
 
-    let assetData = {};
-    if (activePromptType === 'linkedin') {
-      assetData = {
-        url: scLinkedinUrl.value,
-        about: responseText
-      };
-    } else if (activePromptType === 'github') {
-      assetData = {
-        username: scGithub.value
-      };
-    } else if (activePromptType === 'resume') {
-      assetData = {
-        summary: responseText
-      };
-    }
-
     try {
-      const res = await fetch('/api/profile/save-asset', {
+      const res = await fetch('/api/profile/apply-claude-output', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ assetType: activePromptType, data: assetData })
+        body: JSON.stringify({ rawOutput, assetType: activePromptType })
       });
       const data = await res.json();
       if (data.success) {
-        alert(`✅ Changes persistently saved to master_profile.json!`);
+        alert('🎉 Live Candidate Profile persistently updated on MindHunt platform!');
+        loadedProfile = data.profile;
+        renderLiveProfile();
         promptModal.style.display = 'none';
-        fetchProfileData();
+        document.getElementById('nav-live-profile-btn').click();
+      } else {
+        alert(`Error: ${data.error}`);
       }
     } catch (err) {
-      alert(`Save error: ${err.message}`);
+      alert(`Update Error: ${err.message}`);
     }
   });
 
@@ -395,7 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const sc = data.scorecard;
         statBrandScore.innerText = `${sc.overallScore}%`;
 
-        // Render Hero
         scorecardResultsArea.style.display = 'block';
         scHeroScore.innerText = `${sc.overallScore}%`;
         scHeroGrade.innerText = `Grade ${sc.overallGrade}`;
@@ -404,7 +484,6 @@ document.addEventListener('DOMContentLoaded', () => {
           'Your 3 assets (GitHub, LinkedIn, and Resume) are in the top tier for senior tech roles.' :
           'Good foundation with immediate actionable optimization opportunities across your 3 pillars.';
 
-        // Render Cross Insights
         if (sc.crossAssetInsights && sc.crossAssetInsights.length > 0) {
           scCrossInsights.innerHTML = `
             <strong style="font-size: 12px; color: var(--text-primary);">🔄 Cross-Asset Alignment Gaps:</strong>
@@ -439,15 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
               </ul>
             </div>
 
-            ${(gh.improvements || []).length > 0 ? `
-              <div style="margin-bottom: 12px;">
-                <strong style="font-size: 11.5px; color: var(--sg-primary);">Fixes:</strong>
-                <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
-                  ${gh.improvements.slice(0, 2).map(i => `<li>${i}</li>`).join('')}
-                </ul>
-              </div>
-            ` : ''}
-
             <button class="btn-pill btn-copy-gh-readme" data-readme="${encodeURIComponent(gh.recommendedReadme || '')}" style="width: 100%; margin-top: 8px;">
               📋 Copy Profile README
             </button>
@@ -474,15 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${(li.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
               </ul>
             </div>
-
-            ${(li.improvements || []).length > 0 ? `
-              <div style="margin-bottom: 12px;">
-                <strong style="font-size: 11.5px; color: var(--sg-primary);">Fixes:</strong>
-                <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
-                  ${li.improvements.slice(0, 2).map(i => `<li>${typeof i === 'object' ? i.title : i}</li>`).join('')}
-                </ul>
-              </div>
-            ` : ''}
 
             <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
               <button class="btn-primary btn-apply-li-head" data-head="${encodeURIComponent(li.generatedHeadlines?.[0] || '')}" style="font-size: 11.5px; padding: 6px 12px;">
@@ -514,22 +575,12 @@ document.addEventListener('DOMContentLoaded', () => {
               </ul>
             </div>
 
-            ${(resPillar.improvements || []).length > 0 ? `
-              <div style="margin-bottom: 12px;">
-                <strong style="font-size: 11.5px; color: var(--sg-primary);">Fixes:</strong>
-                <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
-                  ${resPillar.improvements.slice(0, 2).map(i => `<li>${i}</li>`).join('')}
-                </ul>
-              </div>
-            ` : ''}
-
             <button class="btn-primary" id="btn-goto-tailor" style="width: 100%; margin-top: 8px; font-size: 11.5px; padding: 6px 12px;">
               ✨ Generate ATS Single-Page PDF
             </button>
           `;
         }
 
-        // Attach dynamic button listeners
         document.querySelectorAll('.btn-copy-gh-readme').forEach(b => {
           b.addEventListener('click', (e) => {
             const readme = decodeURIComponent(e.currentTarget.getAttribute('data-readme'));
@@ -641,7 +692,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    // Attach card event listeners
     document.querySelectorAll('.btn-preview-pdf').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const pdf = e.currentTarget.getAttribute('data-pdf');
@@ -679,7 +729,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Batch Apply All
   btnBatchApply.addEventListener('click', async () => {
     if (allQueuedJobs.length === 0) return;
     const ids = allQueuedJobs.map(j => j.id);
@@ -695,13 +744,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loadQueue();
   });
 
-  // Modal Close
   btnCloseModal.addEventListener('click', () => {
     pdfModal.style.display = 'none';
     pdfIframe.src = '';
   });
 
-  // Tailor New Form Submit
   tailorForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('btn-tailor-submit');
@@ -760,31 +807,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn(e);
     }
   }
-
-  // Load Profile
-  async function loadProfile() {
-    try {
-      const res = await fetch('/api/profile');
-      const profile = await res.json();
-      profileEditor.value = JSON.stringify(profile, null, 2);
-    } catch (e) {
-      console.warn(e);
-    }
-  }
-
-  btnSaveProfile.addEventListener('click', async () => {
-    try {
-      const parsed = JSON.parse(profileEditor.value);
-      await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(parsed)
-      });
-      alert('Master profile saved successfully!');
-    } catch (err) {
-      alert(`Invalid JSON: ${err.message}`);
-    }
-  });
 
   // Initial Load
   loadStatus();

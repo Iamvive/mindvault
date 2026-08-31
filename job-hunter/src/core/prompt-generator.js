@@ -1,94 +1,140 @@
+import { analyzeProfileIntelligence } from './profile-intelligence.js';
+
 export function buildLinkedInPrompt(profileData = {}) {
-  const { url = '', headline = '', about = '', experience = [] } = profileData;
+  const intel = analyzeProfileIntelligence(profileData);
+  const { url = '', headline = '', about = '' } = profileData;
 
   return `
-You are an expert Technical Recruiter and LinkedIn SEO Strategist for Top Tier Tech Companies (FAANG, Unicorn Startups, High-Growth Scale-ups).
+You are a Principal Tech Executive Recruiter specialized in placing ${intel.archetype} candidates at Tier-1 companies (Stripe, Uber, Netflix, Coinbase, Razorpay, High-Growth Scale-ups).
 
-Please review my LinkedIn Profile and provide high-converting, recruiter-optimized improvements.
+Here is the deep architectural profile of the candidate:
+- Candidate Name: ${intel.candidateName}
+- Career Archetype: ${intel.archetype} (~${intel.estimatedYears}+ Years Experience)
+- Proven Core Tech Stack: ${intel.topTechStack.join(', ')}
+- Past Companies: ${intel.companiesList.join(', ') || 'High-Growth Tech Startups'}
+- Real Proven Quantified Impact Highlights:
+${intel.highlightedAchievements.map(a => `  • "${a}"`).join('\n')}
 
 ---
-MY CURRENT LINKEDIN PROFILE:
-- Profile Link: ${url || 'https://linkedin.com'}
-- Current Headline: ${headline || 'Software Engineer'}
-- Current About Section:
-${about || 'Experienced software engineer specializing in scalable systems.'}
+CANDIDATE'S CURRENT LINKEDIN SECTION:
+- Profile Link: ${url || profileData.personal?.linkedin || 'https://linkedin.com'}
+- Current Headline: "${headline || profileData.personal?.title || intel.archetype}"
+- Current About Summary:
+"${about || profileData.summary || 'Senior engineer with proven experience.'}"
 
 ---
 TASK:
-1. Recruiter Boolean SEO & Keyword Audit:
-   - Identify missing keywords for recruiter searches (e.g. Distributed Systems, Kafka, AWS, Go, React, Microservices).
-2. Generate 3 Magnetic Headlines:
-   - Must use role title + core skills + quantifiable impact tag with clean visual separators.
-3. Rewrite the About Section:
-   - Hook/Philosophy (1 paragraph)
-   - Core Technical Competencies (Categorized bullet list)
-   - Quantified Career Impact Highlights (STAR format with metrics: $X, Y% latency, Z users)
-   - Call to Action (Open to roles / Contact info)
+Analyze this candidate's specific background and generate high-impact, keyword-dense optimizations tailored to their real skills (${intel.topTechStack.slice(0, 4).join(', ')}).
 
-Please format your response clearly with markdown and copy-paste ready blocks.
+OUTPUT FORMAT:
+Provide your response strictly as valid JSON wrapped in \`\`\`json \`\`\` block so our platform can automatically apply the updates to the user's live profile:
+
+\`\`\`json
+{
+  "updatedTitle": "Senior / Staff Role | Top Skills | High Impact Value Proposition",
+  "suggestedHeadlines": [
+    "${intel.archetype} | ${intel.topTechStack.slice(0, 3).join(', ')} | Scaled Systems to 1M+ Users",
+    "Staff Engineer | ${intel.topTechStack.slice(0, 4).join(', ')} | High-Throughput Distributed Architecture",
+    "Lead Technical Architect | Distributed Systems & Event-Driven Microservices"
+  ],
+  "updatedAboutSection": "Complete narrative-driven About story highlighting real metrics (${intel.highlightedAchievements[0] || 'high performance'}) with clean formatting.",
+  "recommendedSkillsToAdd": ["${intel.topTechStack[0]}", "${intel.topTechStack[1]}", "System Design", "Distributed Systems", "Performance Tuning"],
+  "recruiterSeoAudit": "2-3 sentences explaining exact keyword strategy for recruiter search algorithms."
+}
+\`\`\`
 `.trim();
 }
 
 export function buildGitHubPrompt(githubData = {}) {
-  const { username = '', bio = '', repos = [] } = githubData;
+  const intel = analyzeProfileIntelligence(githubData);
+  const username = githubData.username || githubData.personal?.github?.split('/').pop() || 'developer';
 
   return `
-You are a Principal Software Architect and Open-Source Showcase Specialist.
+You are a Principal Staff Architect and Open-Source Technical Brand Strategist.
 
-Please audit my GitHub profile and create an aesthetic, high-impact Profile README and project showcase strategy.
+Analyze this candidate's real engineering background and create an architectural showcase strategy:
+- Candidate Name: ${intel.candidateName}
+- Technical Archetype: ${intel.archetype}
+- Core Languages & Tech: ${intel.topTechStack.join(', ')}
+- Featured Project Names: ${intel.projectNames.join(', ') || 'Distributed Queue, Realtime Analytics'}
+- Key Benchmark Highlights: ${intel.highlightedAchievements[0] || 'Sub-millisecond latency, fault-tolerant consensus'}
 
 ---
-MY GITHUB PROFILE:
-- Username: ${username || 'developer'}
-- Bio: ${bio || 'Full-Stack / Distributed Systems Developer'}
-- Top Repositories:
-${repos.map(r => `  • ${r.name}: ${r.description || 'No description'} (${r.language || 'Code'})`).join('\n') || '  • Key architectural projects'}
+GITHUB USERNAME: ${username}
 
 ---
 TASK:
-1. Pinned Repository Strategy:
-   - Recommend how to present top 3 architectural projects (problem statement, architecture diagram, tech stack, benchmarks, live demo link).
-2. Generate Complete Profile README.md:
-   - Clean, modern layout with tech stack badges, highlighted metrics, and clear navigation.
-3. Actionable Improvements:
-   - Specific suggestions for improving commit activity, documentation, and repository issue templates.
+Generate an aesthetic, production-grade GitHub Profile README.md that proves senior engineering caliber.
 
-Please provide the ready-to-use README markdown in a code block.
+OUTPUT FORMAT:
+Provide your response strictly as valid JSON wrapped in \`\`\`json \`\`\` block so our platform can update the profile:
+
+\`\`\`json
+{
+  "recommendedPinnedRepos": [
+    {
+      "name": "${intel.projectNames[0] || 'Core-Engine'}",
+      "headline": "Ultra-low latency distributed system in ${intel.topTechStack[0] || 'Go'}",
+      "keyHighlights": ["Sub-millisecond P95 latency", "Raft consensus protocol"]
+    }
+  ],
+  "profileReadmeMarkdown": "# Production-grade markdown README with badges, tech stack icons, architecture highlights, and live demo links.",
+  "actionableRepoTips": [
+    "Add architecture diagrams to top 2 repo READMEs",
+    "Include Dockerfile and 1-line quickstart command"
+  ]
+}
+\`\`\`
 `.trim();
 }
 
 export function buildResumePrompt(resumeData = {}) {
-  const { summary = '', experience = [], skills = {}, rawText = '' } = resumeData;
+  const intel = analyzeProfileIntelligence(resumeData);
 
   return `
-You are a Senior Executive Resume Writer and ATS Optimization Specialist.
+You are a Lead ATS Technical Resume Strategist for Senior & Staff Software Engineering roles.
 
-Please perform a rigorous ATS audit and high-impact rewrite of my technical resume.
+Review and upgrade this candidate's real resume data:
+- Candidate: ${intel.candidateName}
+- Target Level: ${intel.archetype} (${intel.estimatedYears}+ Years Experience)
+- Primary Tech Core: ${intel.topTechStack.join(', ')}
+- Real Past Accomplishments:
+${intel.highlightedAchievements.map(a => `  • "${a}"`).join('\n')}
 
 ---
-MY CURRENT RESUME DATA:
-${rawText ? rawText : `
-Summary:
-${summary}
-
-Experience:
-${Array.isArray(experience) ? experience.map(e => `${e.role} at ${e.company} (${e.startDate} - ${e.endDate}):\n${(e.bullets || []).map(b => `  • ${b}`).join('\n')}`).join('\n\n') : ''}
-
-Skills:
-${JSON.stringify(skills, null, 2)}
-`}
+FULL RESUME CONTENT:
+${resumeData.rawText || JSON.stringify(resumeData, null, 2)}
 
 ---
 TASK:
-1. ATS Score & Structural Audit:
-   - Check for action verb strength, single-column parsing, and keyword density.
-2. Bullet Point Upgrades (STAR Method):
-   - Rewrite weak or passive bullet points into high-impact achievement statements with quantified metrics ($ saved, % latency reduction, throughput scale).
-3. Optimized Executive Summary:
-   - A 2-3 line punchy summary targeting Lead / Senior Engineering positions.
-4. Categorized Skills Matrix:
-   - Formatted for maximum keyword match by automated parsing systems.
+1. Rewrite any passive or weak experience bullet points into STAR-format (Situation, Task, Action, Metric Result).
+2. Upgrade the Executive Summary to position the candidate firmly as a top-tier ${intel.archetype}.
+3. Reorganize the Technical Skills Matrix for 95%+ ATS keyword parseability.
 
-Please provide the complete improved resume content in clean, copy-paste ready format.
+OUTPUT FORMAT:
+Provide your response strictly as valid JSON wrapped in \`\`\`json \`\`\` block:
+
+\`\`\`json
+{
+  "updatedSummary": "High-impact summary tailored to candidate's real seniority and core tech stack (${intel.topTechStack.slice(0, 3).join(', ')}).",
+  "upgradedExperience": [
+    {
+      "company": "${intel.companiesList[0] || 'CloudScale Technologies'}",
+      "role": "Staff Software Engineer",
+      "upgradedBullets": [
+        "Architected distributed transaction pipeline handling 45k req/sec with 99.99% uptime.",
+        "Optimized PostgreSQL query execution plans, reducing P99 latency by 54%."
+      ]
+    }
+  ],
+  "recommendedSkills": {
+    "languages": ["${intel.topTechStack.filter(t => ['Go', 'TypeScript', 'JavaScript', 'Python', 'SQL'].includes(t)).join('", "')}"],
+    "frameworks": ["Node.js", "Express", "React", "Next.js"],
+    "cloudAndDevops": ["AWS", "Docker", "Kubernetes", "CI/CD"],
+    "databases": ["PostgreSQL", "Redis", "Kafka"]
+  },
+  "atsScoreProjection": 94
+}
+\`\`\`
 `.trim();
 }

@@ -6,7 +6,7 @@ import { loadMasterProfile, saveMasterProfile } from '../core/profile.js';
 import { processDiscoveredJob } from '../scrapers/discovery-manager.js';
 import { submitApprovedJob } from '../submitters/submitter-manager.js';
 import { connectToChrome, checkCdpAvailable, findOrCreateTab } from '../cdp/chrome-bridge.js';
-import { promptClaudeSession } from '../cdp/claude-worker.js';
+import { promptClaudeSession, parseClaudeResponse } from '../cdp/claude-worker.js';
 import { auditGitHubProfile } from '../core/github-auditor.js';
 import { auditLinkedInProfile } from '../core/linkedin-auditor.js';
 import { scoreUnifiedProfile } from '../core/unified-scorer.js';
@@ -117,42 +117,74 @@ app.put('/api/profile', (req, res) => {
   }
 });
 
-// API: Save Specific Asset Changes Persistently
-app.post('/api/profile/save-asset', (req, res) => {
-  const { assetType, data } = req.body;
+// API: Apply and Persist Claude Output to the User's Profile
+app.post('/api/profile/apply-claude-output', (req, res) => {
+  const { rawOutput, assetType } = req.body;
+  if (!rawOutput) return res.status(400).json({ error: 'Missing Claude output' });
+
   try {
     const profile = loadMasterProfile('data/master_profile.json');
+    let parsed = null;
 
-    if (assetType === 'linkedin') {
-      if (data.url) profile.personal.linkedin = data.url;
-      if (data.headline) profile.personal.title = data.headline;
-      if (data.about) profile.summary = data.about;
-    } else if (assetType === 'github') {
-      if (data.username) profile.personal.github = data.username.startsWith('http') ? data.username : `https://github.com/${data.username}`;
-    } else if (assetType === 'resume') {
-      if (data.summary) profile.summary = data.summary;
-      if (data.experience) profile.masterExperience = data.experience;
-      if (data.skills) profile.skills = data.skills;
+    try {
+      parsed = parseClaudeResponse(rawOutput);
+    } catch (e) {
+      // If direct JSON parse fails, treat as string update
+      if (assetType === 'linkedin') {
+        profile.summary = rawOutput;
+      }
+    }
+
+    if (parsed) {
+      // Apply LinkedIn improvements
+      if (parsed.updatedTitle) profile.personal.title = parsed.updatedTitle;
+      if (parsed.updatedAboutSection) profile.summary = parsed.updatedAboutSection;
+      if (parsed.suggestedHeadlines) profile.suggestedHeadlines = parsed.suggestedHeadlines;
+
+      // Apply GitHub improvements
+      if (parsed.profileReadmeMarkdown) profile.githubReadme = parsed.profileReadmeMarkdown;
+
+      // Apply Resume upgrades
+      if (parsed.updatedSummary) profile.summary = parsed.updatedSummary;
+      if (parsed.recommendedSkills) {
+        profile.skills = { ...profile.skills, ...parsed.recommendedSkills };
+      }
+      if (parsed.upgradedExperience && Array.isArray(parsed.upgradedExperience)) {
+        for (const upExp of parsed.upgradedExperience) {
+          const match = profile.masterExperience.find(e => e.company.toLowerCase() === upExp.company.toLowerCase());
+          if (match && upExp.upgradedBullets) {
+            match.bullets = upExp.upgradedBullets;
+          }
+        }
+      }
     }
 
     saveMasterProfile(profile, 'data/master_profile.json');
-    res.json({ success: true, message: `${assetType} changes saved persistently to master_profile.json!`, profile });
+    res.json({
+      success: true,
+      message: 'Profile successfully updated and persisted to your live profile!',
+      profile,
+      parsed
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// API: Generate Claude Prompt for Asset
+// API: Generate Claude Prompt with deep profile context
 app.post('/api/prompts/generate', (req, res) => {
   const { type, payload } = req.body;
   let prompt = '';
 
+  const master = loadMasterProfile('data/master_profile.json');
+  const enrichedPayload = { ...master, ...payload };
+
   if (type === 'linkedin') {
-    prompt = buildLinkedInPrompt(payload);
+    prompt = buildLinkedInPrompt(enrichedPayload);
   } else if (type === 'github') {
-    prompt = buildGitHubPrompt(payload);
+    prompt = buildGitHubPrompt(enrichedPayload);
   } else if (type === 'resume') {
-    prompt = buildResumePrompt(payload);
+    prompt = buildResumePrompt(enrichedPayload);
   } else {
     return res.status(400).json({ error: 'Invalid prompt type' });
   }
@@ -230,7 +262,7 @@ app.post('/api/audit/linkedin', (req, res) => {
   }
 });
 
-// API: Score Complete 3-Pillar Profile (LinkedIn + GitHub + Resume)
+// API: Score Complete 3-Pillar Profile
 app.post('/api/audit/full-profile', async (req, res) => {
   try {
     let payload = req.body;
