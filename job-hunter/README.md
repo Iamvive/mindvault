@@ -1,90 +1,60 @@
-# 🎯 MindHunt — Zero-Cost AI Job Search & Application Engine
+# ⚡ CareerCraft — Unified AI Career Profile & ATS Resume Studio
 
-> **Zero API Billing.** Connects directly to your active Google Chrome browser session via Chrome DevTools Protocol (CDP), using your logged-in Claude session for ATS resume tailoring, keyword optimization, and screening answers with **0 extra cost**.
+> **Autonomous, zero-API-cost career engineering platform that unifies your GitHub, LinkedIn, and ATS Resume into a persistent, high-converting career presence.**
 
 ---
 
-## 🌟 Key Features
+## 🌟 Why CareerCraft?
 
-1. **Zero-Cost AI Worker:** Leverages your active Claude web session (or local runner) via CDP — no expensive OpenAI/Anthropic API bills.
-2. **Persistent Master Presence vs. Per-Job Tailoring:**
-   - **LinkedIn & GitHub:** Global profile optimization templates (recruiter SEO, boolean tags, README project showcase).
-   - **Master Profile JSON:** Single source of truth for all your achievements, metrics, and skills.
-   - **ATS PDF Generator:** Compiles single-page, ATS-compliant HTML/CSS resumes to PDF per JD.
-3. **Semi-Automated Approval Queue Cockpit:**
-   - Live web dashboard displaying discovered jobs, ATS match percentage (0-100%), and tailored summary.
-   - Side-by-side PDF preview modal.
-   - 1-click **"Approve & Apply"** and **"Batch Apply"** buttons.
-4. **Platform Connectors:** Instahyre & LinkedIn Easy Apply with humanized delays and anti-detection protection.
+Most job seekers struggle with disjointed career narratives across GitHub, LinkedIn, and their ATS Resumes. **CareerCraft** solves this by creating a single persistent source of truth with 3-pillar AI readiness scoring, live ATS single-column PDF compilation, instant cover letter synthesis, and autonomous multi-platform job application tracking.
+
+### Key Highlights:
+- 🏆 **3-Pillar Unified Readiness Scorecard:** Evaluates your GitHub code depth, LinkedIn profile completeness, and ATS resume keyword strength on a single unified scale.
+- 📄 **Master ATS Resume Studio:** Live single-column ATS resume editor with sub-second headless Chromium PDF compilation.
+- ✉️ **Cover Letter Studio & AI Improver:** Upload, parse, and tailor human-sounding, metric-dense cover letters without AI clichés.
+- ⚡ **Zero API Cost Architecture:** Harnesses your active Chrome browser via Chrome DevTools Protocol (CDP port 9222) to run Claude / LLM workflows directly without external API keys or token billing.
+- 🛡️ **100% Offline-Safe & Persistent:** All profiles, resumes, and tracked applications are stored locally on your hard drive with native SQLite ACID persistence.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+- **Backend:** Node.js (ESM), Express, SQLite (`node:sqlite`)
+- **PDF Engine:** Playwright-Core / Headless Chromium (A4 print layout, sub-second compile)
+- **AI Automation:** Chrome DevTools Protocol (CDP) WebSocket Bridge
+- **PDF Extraction:** `unpdf` (ESM-native Uint8Array binary extraction)
+- **Frontend:** Vanilla JS, Subtle Gradient Design System, Responsive Split-Screen Studio
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Launch Chrome with Remote Debugging (One-time or daily)
-Open your terminal and launch Google Chrome with your profile:
-
+### 1. Launch Chrome with CDP Enabled
 ```bash
-# macOS:
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222 --user-data-dir="/tmp/chrome-job-hunter-profile"
+# macOS
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 &
 ```
-*(Log in to Claude, Instahyre, and LinkedIn once in this browser window).*
 
-### 2. Launch MindHunt Cockpit
-In another terminal:
-
+### 2. Start CareerCraft
 ```bash
-cd job-hunter
+git clone git@github.com:Iamvive/mindvault.git
+cd mindvault/job-hunter
+npm install
 npm start
 ```
 
-Open your browser at **`http://localhost:4200`** to access the Cockpit.
+### 3. Open the Studio
+Navigate to **[http://localhost:4200](http://localhost:4200)** in your browser.
 
 ---
 
-## 🛠️ Project Structure
-
-```
-job-hunter/
-├── bin/
-│   └── job-hunter.js           # CLI Launcher
-├── data/
-│   ├── master_profile.json     # Master candidate data (Skills, metrics, roles)
-│   └── jobs.db                 # SQLite database tracking queued & applied jobs
-├── public/                     # Cockpit Web UI (Subtle Gradient Design)
-│   ├── index.html
-│   ├── style.css
-│   └── app.js
-├── src/
-│   ├── cdp/
-│   │   ├── chrome-bridge.js    # Chrome DevTools Protocol connection
-│   │   └── claude-worker.js    # Zero-cost Claude web session prompter
-│   ├── core/
-│   │   ├── profile.js          # Master profile loader & validator
-│   │   └── ats.js              # Keyword extraction & ATS scoring engine
-│   ├── db/
-│   │   └── database.js         # Native node:sqlite storage
-│   ├── pdf/
-│   │   ├── resume-renderer.js  # HTML/CSS to PDF compiler
-│   │   └── templates/          # ATS-friendly responsive print template
-│   ├── scrapers/
-│   │   ├── instahyre.js        # Instahyre job card extractor
-│   │   ├── linkedin.js         # LinkedIn Easy Apply scraper
-│   │   └── discovery-manager.js# Discovery & tailoring pipeline
-│   ├── submitters/
-│   │   ├── instahyre-submitter.js
-│   │   ├── linkedin-submitter.js
-│   │   └── submitter-manager.js
-│   └── server/
-│       └── server.js           # Express REST API
-└── tests/                      # Full test suite (16 tests)
-```
+## 🎯 Candidate Focus: Senior Android & Mobile Engineering
+Engineered with production configurations for high-impact tech talent:
+- Kotlin Multiplatform (KMP), Jetpack Compose, Coroutines & Flow
+- Clean Architecture, Modular SDK integrations, Performance Benchmarking (ANR reduction, cold launch optimization)
+- Real metric tracking (e.g. 99.8% latency slashing, 92% ANR drop)
 
 ---
 
-## 🧪 Running Tests
-
-```bash
-cd job-hunter
-npm test
-```
+## 📄 License
+MIT © Vivek Kumar
