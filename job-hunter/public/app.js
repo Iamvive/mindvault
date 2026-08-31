@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentFilter = 'all';
   let loadedProfile = null;
   let currentResumeMode = 'upload';
-  let uploadedResumeText = '';
-  let uploadedResumeName = '';
+  let uploadedResumeText = localStorage.getItem('mindhunt_resume_text') || '';
+  let uploadedResumeName = localStorage.getItem('mindhunt_resume_name') || '';
   let activePromptType = 'linkedin';
 
   // DOM Elements
@@ -110,41 +110,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSendPromptCdp = document.getElementById('btn-send-prompt-cdp');
   const btnApplyClaudeProfile = document.getElementById('btn-apply-claude-profile');
 
-  // Navigation Tabs
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      navBtns.forEach(b => b.classList.remove('active'));
-      tabPanes.forEach(p => p.classList.remove('active'));
+  // --- AUTOMATED PERSISTENCE FOR 3 PILLARS ---
+  function autoSaveGitHub() {
+    const val = scGithub.value.trim();
+    if (!val) return;
+    localStorage.setItem('mindhunt_gh', val);
+    fetch('/api/profile/save-asset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assetType: 'github', data: { username: val } })
+    }).then(() => {
+      if (loadedProfile?.personal) loadedProfile.personal.github = val;
+      if (liveProfGithub) liveProfGithub.value = val;
+    }).catch(console.warn);
+  }
 
-      btn.classList.add('active');
-      const targetTab = btn.getAttribute('data-tab');
-      document.getElementById(targetTab).classList.add('active');
+  function autoSaveLinkedIn() {
+    const val = scLinkedinUrl.value.trim();
+    if (!val) return;
+    localStorage.setItem('mindhunt_li', val);
+    fetch('/api/profile/save-asset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assetType: 'linkedin', data: { url: val } })
+    }).then(() => {
+      if (loadedProfile?.personal) loadedProfile.personal.linkedin = val;
+      if (liveProfLinkedin) liveProfLinkedin.value = val;
+    }).catch(console.warn);
+  }
 
-      if (targetTab === 'tab-scorecard') {
-        pageTitle.innerText = 'My Profile & 3-Pillar AI Scorecard';
-        pageSubtitle.innerText = 'Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.';
-      } else if (targetTab === 'tab-resume-studio') {
-        pageTitle.innerText = 'Master ATS Resume Studio & PDF Viewer';
-        pageSubtitle.innerText = 'Live single-column ATS preview, real-time section editor, and instant PDF download.';
-        renderResumeStudio();
-      } else if (targetTab === 'tab-live-profile') {
-        pageTitle.innerText = 'Live Candidate Profile Workspace';
-        pageSubtitle.innerText = 'The persistent, evolving source of truth for your applications and audits.';
-        renderLiveProfile();
-      } else if (targetTab === 'tab-queue') {
-        pageTitle.innerText = 'Approval Queue';
-        pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
-        loadQueue();
-      } else if (targetTab === 'tab-tailor') {
-        pageTitle.innerText = 'Instant JD Tailor';
-        pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
-      } else if (targetTab === 'tab-history') {
-        pageTitle.innerText = 'Application Tracker';
-        pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
-        loadHistory();
-      }
-    });
-  });
+  scGithub.addEventListener('change', autoSaveGitHub);
+  scGithub.addEventListener('blur', autoSaveGitHub);
+  scLinkedinUrl.addEventListener('change', autoSaveLinkedIn);
+  scLinkedinUrl.addEventListener('blur', autoSaveLinkedIn);
 
   // Resume Mode Switcher
   btnResumeModes.forEach(btn => {
@@ -194,9 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
     e.stopPropagation();
     uploadedResumeText = '';
     uploadedResumeName = '';
+    localStorage.removeItem('mindhunt_resume_text');
+    localStorage.removeItem('mindhunt_resume_name');
     resumeFileInput.value = '';
     dropZoneCta.style.display = 'block';
     resumeFileInfo.style.display = 'none';
+
+    fetch('/api/profile/save-asset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assetType: 'resume', data: { filename: '', text: '' } })
+    });
   });
 
   function handleResumeFile(file) {
@@ -205,13 +211,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
     reader.onload = (evt) => {
       uploadedResumeText = evt.target.result;
+      localStorage.setItem('mindhunt_resume_text', uploadedResumeText);
+      localStorage.setItem('mindhunt_resume_name', uploadedResumeName);
+
       dropZoneCta.style.display = 'none';
       resumeFileName.innerText = `📄 ${file.name} (${Math.round(file.size / 1024)} KB)`;
       resumeFileInfo.style.display = 'block';
+
+      // Auto-save to master profile
+      fetch('/api/profile/save-asset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          assetType: 'resume',
+          data: { filename: uploadedResumeName, text: uploadedResumeText }
+        })
+      });
     };
 
     reader.readAsText(file);
   }
+
+  // Restore saved resume if present
+  if (uploadedResumeName && uploadedResumeText) {
+    dropZoneCta.style.display = 'none';
+    resumeFileName.innerText = `📄 ${uploadedResumeName} (Saved & Active)`;
+    resumeFileInfo.style.display = 'block';
+  }
+
+  // Navigation Tabs
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navBtns.forEach(b => b.classList.remove('active'));
+      tabPanes.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetTab = btn.getAttribute('data-tab');
+      document.getElementById(targetTab).classList.add('active');
+
+      if (targetTab === 'tab-scorecard') {
+        pageTitle.innerText = 'My Profile & 3-Pillar AI Scorecard';
+        pageSubtitle.innerText = 'Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.';
+      } else if (targetTab === 'tab-resume-studio') {
+        pageTitle.innerText = 'Master ATS Resume Studio & PDF Viewer';
+        pageSubtitle.innerText = 'Live single-column ATS preview, real-time section editor, and instant PDF download.';
+        renderResumeStudio();
+      } else if (targetTab === 'tab-live-profile') {
+        pageTitle.innerText = 'Live Candidate Profile Workspace';
+        pageSubtitle.innerText = 'The persistent, evolving source of truth for your applications and audits.';
+        renderLiveProfile();
+      } else if (targetTab === 'tab-queue') {
+        pageTitle.innerText = 'Approval Queue';
+        pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
+        loadQueue();
+      } else if (targetTab === 'tab-tailor') {
+        pageTitle.innerText = 'Instant JD Tailor';
+        pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
+      } else if (targetTab === 'tab-history') {
+        pageTitle.innerText = 'Application Tracker';
+        pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
+        loadHistory();
+      }
+    });
+  });
 
   // Filter Buttons
   filterPills.forEach(pill => {
@@ -251,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('/api/profile');
       loadedProfile = await res.json();
       renderCandidateSnapshot(loadedProfile);
+      prefillAssets(loadedProfile);
       return loadedProfile;
     } catch (e) {
       console.warn(e);
@@ -270,18 +333,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function prefillAssets(prof) {
     if (!prof) return;
-    if (prof.personal?.github) scGithub.value = prof.personal.github;
-    if (prof.personal?.linkedin) scLinkedinUrl.value = prof.personal.linkedin;
-    if (prof.personal?.title) scLinkedinHeadline.value = prof.personal.title;
-    if (prof.summary) scLinkedinAbout.value = prof.summary;
+    const cachedGh = localStorage.getItem('mindhunt_gh');
+    const cachedLi = localStorage.getItem('mindhunt_li');
+
+    if (scGithub) scGithub.value = cachedGh || prof.personal?.github || '';
+    if (scLinkedinUrl) scLinkedinUrl.value = cachedLi || prof.personal?.linkedin || '';
+    if (scLinkedinHeadline) scLinkedinHeadline.value = prof.personal?.title || '';
+    if (scLinkedinAbout) scLinkedinAbout.value = prof.summary || '';
+
+    // Check if resume was saved on profile
+    if (prof.uploadedResumeFileName && prof.uploadedResumeText) {
+      uploadedResumeName = prof.uploadedResumeFileName;
+      uploadedResumeText = prof.uploadedResumeText;
+      dropZoneCta.style.display = 'none';
+      resumeFileName.innerText = `📄 ${uploadedResumeName} (Saved & Active)`;
+      resumeFileInfo.style.display = 'block';
+    }
   }
 
-  fetchProfileData().then(prof => {
-    if (prof) {
-      prefillAssets(prof);
-      renderLiveProfile();
-    }
-  });
+  fetchProfileData();
 
   btnPrefillAll.addEventListener('click', async () => {
     const prof = await fetchProfileData();
@@ -634,6 +704,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Score All 3 Pillars
   btnScoreAll.addEventListener('click', async () => {
+    autoSaveGitHub();
+    autoSaveLinkedIn();
+
     btnScoreAll.innerText = 'Auditing 3 Pillars with AI...';
     btnScoreAll.disabled = true;
 

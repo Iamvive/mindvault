@@ -118,6 +118,37 @@ app.put('/api/profile', (req, res) => {
   }
 });
 
+// API: Instant Auto-Save of any Asset Pillar (GitHub, LinkedIn, Resume)
+app.post('/api/profile/save-asset', (req, res) => {
+  const { assetType, data } = req.body;
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+    if (!profile.personal) profile.personal = {};
+
+    if (assetType === 'linkedin') {
+      if (data.url !== undefined) profile.personal.linkedin = data.url;
+      if (data.headline) profile.personal.title = data.headline;
+      if (data.about) profile.summary = data.about;
+    } else if (assetType === 'github') {
+      if (data.username !== undefined) {
+        const val = data.username.trim();
+        profile.personal.github = val.startsWith('http') ? val : (val ? `https://github.com/${val}` : '');
+      }
+    } else if (assetType === 'resume') {
+      if (data.filename) profile.uploadedResumeFileName = data.filename;
+      if (data.text) profile.uploadedResumeText = data.text;
+      if (data.summary) profile.summary = data.summary;
+      if (data.experience) profile.masterExperience = data.experience;
+      if (data.skills) profile.skills = data.skills;
+    }
+
+    saveMasterProfile(profile, 'data/master_profile.json');
+    res.json({ success: true, message: `${assetType} updated and persisted!`, profile });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // API: Update Candidate Snapshot
 app.post('/api/profile/snapshot', (req, res) => {
   try {
@@ -156,6 +187,7 @@ app.post('/api/profile/extract-linkedin-snapshot', async (req, res) => {
     if (data.location) profile.personal.location = data.location;
     if (data.headline) profile.personal.title = data.headline;
     if (data.about) profile.summary = data.about;
+    if (linkedinUrl) profile.personal.linkedin = linkedinUrl;
 
     saveMasterProfile(profile, 'data/master_profile.json');
     res.json({ success: true, extracted: data, profile });
