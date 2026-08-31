@@ -1,57 +1,102 @@
 {
   "personal": {
     "name": "Vivek Kumar",
-    "title": "Software Engineer | Android & Full-Stack",
-    "email": "androdevvivek@gmail.com",
-    "phone": "+91 9876543210",
+    "title": "Senior Android Engineer (SDE-2)",
+    "email": "vicky.chaudhary67@gmail.com",
+    "phone": "+91 9058666306",
     "location": "Bengaluru, India",
-    "linkedin": "https://www.linkedin.com/in/androdevvivek/",
+    "linkedin": "https://www.linkedin.com/in/androdevvivek",
     "github": "https://github.com/Iamvive",
     "portfolio": "https://github.com/Iamvive",
-    "currentRole": "Software Engineer",
-    "currentCompany": "Tech Enterprise",
-    "totalYearsExperience": 6.0,
-    "targetSeniority": "Senior / Staff Software Engineer"
+    "currentRole": "Senior Android Engineer (SDE-2)",
+    "currentCompany": "Porter",
+    "totalYearsExperience": 7.0,
+    "targetSeniority": "Lead / Staff Android Engineer"
   },
-  "summary": "Full-Stack and Mobile/Android Software Engineer with 6+ years of experience engineering high-performance mobile architectures, distributed Node.js/Go backends, modern reactive frontends, and automated toolchains.",
+  "summary": "Senior Android Engineer with 7+ years of experience building scalable, high-performance apps for millions of users. Expert in Kotlin Multiplatform (KMP), modern Android architectures (MVVM, RIBs), and modular SDK integration. Proven track record of optimizing app performance, reducing latency, and delivering impactful technical solutions with measurable results.",
   "masterExperience": [
     {
-      "company": "Tech Innovations",
-      "role": "Senior Software Engineer",
+      "company": "Porter",
+      "role": "Senior Android Engineer (SDE-2)",
       "location": "Bengaluru, India",
-      "startDate": "2022-03",
+      "startDate": "Dec 2021",
       "endDate": "Present",
       "techStack": [
-        "Android",
         "Kotlin",
-        "TypeScript",
-        "Node.js",
-        "PostgreSQL",
-        "Docker",
-        "AWS"
+        "KMP",
+        "Coroutines",
+        "Flows",
+        "Jetpack Compose",
+        "MVVM",
+        "Uber RIBs",
+        "Mixpanel",
+        "Truecaller SDK"
       ],
       "bullets": [
-        "Architected scalable mobile and backend systems supporting over 500k active users with 99.9% availability.",
-        "Optimized application startup performance and memory allocation, reducing app cold launch latency by 42%.",
-        "Engineered robust RESTful and event-driven APIs with automated CI/CD deployment pipelines."
+        "Engineered an in-house events SDK using Kotlin Multiplatform (KMP), matching Mixpanel performance and outperforming Kinesis.",
+        "Architected app localization and vernacularization framework, enabling code-free expansion into new international markets.",
+        "Optimized performance for a multi-country customer app (10M+ downloads), maintaining a 4.8+ Play Store rating.",
+        "Reduced critical API latency by 70% by refactoring high-latency monolithic endpoints into efficient micro-services.",
+        "Integrated Truecaller SDK delivering 99.8% faster logins (10s → 0.017s) and a 57% increase in signup success rates.",
+        "Developed a modular SDK strategy for Netcore, Apxor, and MoEngage, reducing integration time to under 3 days.",
+        "Slashed daily ANR incidents by 92% (5,000 → 400) and optimized app launch stability across diverse device environments.",
+        "Directed app release management and conducted peer code reviews to ensure high-quality code and team scalability."
       ]
     },
     {
-      "company": "Digital Mobility Labs",
-      "role": "Software Engineer",
+      "company": "Finnovation Tech Pvt. Ltd. (KreditBee)",
+      "role": "Software Engineer (Android)",
       "location": "Bengaluru, India",
-      "startDate": "2019-06",
-      "endDate": "2022-02",
+      "startDate": "Aug 2021",
+      "endDate": "Dec 2021",
       "techStack": [
-        "Java",
         "Kotlin",
         "Android SDK",
-        "JavaScript",
+        "CI/CD",
+        "GitHub Actions",
         "REST APIs"
       ],
       "bullets": [
-        "Developed end-to-end mobile applications with complex offline-first sync architecture and reactive UI.",
-        "Integrated secure payment gateways and OAuth2 authentication flows compliant with industry security standards."
+        "Contributed to the KreditBee customer app, supporting a user base of 100M+ downloads and a 4.6+ Play Store rating.",
+        "Built CI/CD GitHub Actions to automate app deployment, streamlining release workflows and reducing manual steps."
+      ]
+    },
+    {
+      "company": "TalentBridge Technologies Pvt. Ltd.",
+      "role": "Android Application Developer",
+      "location": "Bengaluru, India",
+      "startDate": "May 2019",
+      "endDate": "Aug 2021",
+      "techStack": [
+        "Kotlin",
+        "Coroutines",
+        "Flows",
+        "MQTT",
+        "Room DB",
+        "Android Architecture Components"
+      ],
+      "bullets": [
+        "Developed and maintained ODIGOLIVE, a real-time collaboration app for distributed teams (10k+ downloads).",
+        "Modernized app architecture by introducing Kotlin, Coroutines, and Flows for robust asynchronous data handling.",
+        "Implemented real-time messaging by integrating MQTT protocol and Room DB for reliable local data persistence.",
+        "Engineered a custom Attendance feature from the ground up to enhance enterprise user utility and tracking."
+      ]
+    },
+    {
+      "company": "Viva Books Pvt. Ltd.",
+      "role": "Android Application Developer",
+      "location": "Delhi, India",
+      "startDate": "Jun 2018",
+      "endDate": "May 2019",
+      "techStack": [
+        "Java",
+        "Android SDK",
+        "Custom Layouts",
+        "Google Play Services"
+      ],
+      "bullets": [
+        "Developed multiple educational applications for early learning on the Google Play Store (Mini KG to Class 7).",
+        "Delivered interactive content for English and Mathematics using native Android frameworks and optimized layouts."
       ]
     }
   ],
@@ -72,11 +117,12 @@
     },
     {
       "name": "bt-manager",
-      "summary": "Bluetooth connection and device automation manager.",
+      "summary": "Bluetooth connection and device automation manager for Android.",
       "techStack": [
         "Kotlin",
         "Android",
-        "Bluetooth LE"
+        "Bluetooth LE",
+        "Coroutines"
       ],
       "github": "https://github.com/Iamvive/bt-manager",
       "highlights": [
@@ -88,65 +134,74 @@
     "languages": [
       "Kotlin",
       "Java",
+      "Swift",
       "TypeScript",
       "JavaScript",
-      "Go",
-      "Python",
       "SQL"
     ],
     "frameworks": [
-      "Android SDK",
+      "KMP (Kotlin Multiplatform)",
       "Jetpack Compose",
-      "Node.js",
-      "React",
-      "Express",
-      "Next.js"
+      "Coroutines & Flows",
+      "WorkManager",
+      "Ktor",
+      "Retrofit",
+      "Epoxy",
+      "Node.js"
     ],
     "cloudAndDevops": [
-      "AWS",
-      "Docker",
       "GitHub Actions",
       "CI/CD",
-      "Gradle"
+      "Git",
+      "Android Studio",
+      "AWS",
+      "Snowflake",
+      "Docker"
     ],
     "databases": [
+      "Room DB",
+      "SQLite",
       "PostgreSQL",
-      "SQLite / Room",
-      "Redis",
-      "MongoDB"
+      "Redis"
     ],
     "architecture": [
-      "Clean Architecture / MVVM / MVI",
-      "Distributed Systems",
-      "REST APIs",
-      "Event-Driven Architecture"
+      "MVVM",
+      "Clean Architecture",
+      "Uber RIBs",
+      "Modularization",
+      "SOLID Principles",
+      "Dagger / Hilt",
+      "MQTT"
     ]
   },
   "education": [
     {
-      "institution": "Technical Institute",
-      "degree": "Bachelor of Technology in Computer Science & Engineering",
-      "location": "India",
-      "year": "2019"
+      "institution": "G.L. Bajaj Group of Institutions, Mathura",
+      "degree": "Bachelor of Technology - Computer Science",
+      "location": "Mathura, India",
+      "year": "2012 – 2016"
     }
   ],
   "preferences": {
     "targetTitles": [
-      "Senior Software Engineer",
-      "Lead Android / Full-Stack Engineer",
-      "Staff Software Engineer"
+      "Senior Android Engineer",
+      "Lead Android Engineer",
+      "Staff Mobile Architect",
+      "Principal Mobile Engineer"
     ],
-    "minSalaryInLPA": 40,
+    "minSalaryInLPA": 45,
     "workMode": [
       "Remote",
       "Hybrid"
     ],
     "locations": [
       "Bengaluru",
-      "Remote"
+      "Remote",
+      "Hyderabad",
+      "Pune"
     ],
     "blacklistCompanies": []
   },
   "uploadedResumeFileName": "Vivek Kumar Resume.pdf",
-  "uploadedResumeText": "Vivek Kumar\nSoftware Engineer | Android & Full-Stack\nGitHub: https://github.com/Iamvive | LinkedIn: https://www.linkedin.com/in/androdevvivek/\n\nSUMMARY\nSoftware Engineer with 6+ years of experience in mobile architectures, Android, Kotlin, Node.js, distributed backend systems, and modern web applications.\n\nEXPERIENCE\nSenior Software Engineer | Tech Innovations (2022 - Present)\n• Architected scalable mobile and backend systems supporting over 500k active users.\n• Optimized startup performance and memory allocation, reducing launch latency by 42%.\n\nSoftware Engineer | Digital Mobility Labs (2019 - 2022)\n• Developed end-to-end applications with offline-first sync architecture.\n• Integrated secure payment gateways and OAuth2 authentication flows.\n\nSKILLS\nLanguages: Kotlin, Java, TypeScript, JavaScript, Go, Python, SQL\nFrameworks: Android SDK, Jetpack Compose, Node.js, React, Express\nCloud & Tools: AWS, Docker, GitHub Actions, SQLite / Room, PostgreSQL, Git\n\nPROJECTS\n• mindvault: Agentic knowledge graph and personal intelligence engine\n• bt-manager: Bluetooth connection and device telemetry manager"
+  "uploadedResumeText": "VIVEK KUMAR\nSenior Android Engineer\nBengaluru, India | +91 9058666306 | vicky.chaudhary67@gmail.com\nLinkedin: linkedin.com/in/androdevvivek | GitHub: github.com/appworkd\n\nSUMMARY\nSenior Android Engineer with 7+ years of experience building scalable, high-performance apps for millions of users. Expert in Kotlin Multiplatform (KMP), modern Android architectures (MVVM, RIBs), and modular SDK integration. Proven track record of optimizing app performance, reducing latency, and delivering impactful technical solutions with measurable results.\n\nTECHNICAL SKILLS\nLanguages: Kotlin, Java, Swift\nFrameworks: KMP, Coroutines, Flows, Jetpack Compose, WorkManager, Ktor, Retrofit, Epoxy\nArchitecture: MVVM, Clean Architecture, Uber RIBs, SOLID Principles, Modularization\nAnalytics: Mixpanel, MoEngage, DataDog, Firebase, Kinesis, Apxor\nDevOps: GitHub Actions, CI/CD, Git, Jira, Android Studio, Snowflake, AWS\nOthers: Dagger/Hilt, Room DB, MQTT, Google Maps API, Truecaller SDK\n\nPROFESSIONAL EXPERIENCE\nSenior Android Engineer (SDE-2) - Porter\nBengaluru | Dec 2021 – Present\n• Engineered an in-house events SDK using Kotlin Multiplatform (KMP), matching Mixpanel performance and outperforming Kinesis.\n• Architected app localization and vernacularization framework, enabling code-free expansion into new international markets.\n• Optimized performance for a multi-country customer app (10M+ downloads), maintaining a 4.8+ Play Store rating.\n• Reduced critical API latency by 70% by refactoring high-latency monolithic endpoints into efficient micro-services.\n• Integrated Truecaller SDK delivering 99.8% faster logins (10s → 0.017s) and a 57% increase in signup success rates.\n• Developed a modular SDK strategy for Netcore, Apxor, and MoEngage, reducing integration time to under 3 days.\n• Slashed daily ANR incidents by 92% (5,000 → 400) and optimized app launch stability across diverse device environments.\n• Directed app release management and conducted peer code reviews to ensure high-quality code and team scalability.\n\nSoftware Engineer (Android) - Finnovation Tech Pvt. Ltd. (KreditBee)\nBengaluru | Aug 2021 – Dec 2021\n• Contributed to the KreditBee customer app, supporting a user base of 100M+ downloads and a 4.6+ Play Store rating.\n• Built CI/CD GitHub Actions to automate app deployment, streamlining release workflows and reducing manual steps.\n\nAndroid Application Developer - TalentBridge Technologies Pvt. Ltd.\nBengaluru | May 2019 – Aug 2021\n• Developed and maintained ODIGOLIVE, a real-time collaboration app for distributed teams (10k+ downloads).\n• Modernized app architecture by introducing Kotlin, Coroutines, and Flows for robust asynchronous data handling.\n• Implemented real-time messaging by integrating MQTT protocol and Room DB for reliable local data persistence.\n• Engineered a custom Attendance feature from the ground up to enhance enterprise user utility and tracking.\n\nAndroid Application Developer - Viva Books Pvt. Ltd.\nDelhi | Jun 2018 – May 2019\n• Developed multiple educational applications for early learning on the Google Play Store (Mini KG to Class 7).\n• Delivered interactive content for English and Mathematics using native Android frameworks and optimized layouts.\n\nEDUCATION\nBachelor of Technology - Computer Science\nG.L. Bajaj Group of Institutions, Mathura 2012 – 2016"
 }
