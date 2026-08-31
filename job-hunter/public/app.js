@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let allQueuedJobs = [];
   let currentFilter = 'all';
   let loadedProfile = null;
+  let currentResumeMode = 'upload';
+  let uploadedResumeText = '';
+  let uploadedResumeName = '';
 
   // DOM Elements
   const navBtns = document.querySelectorAll('.nav-item');
@@ -30,8 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const scLinkedinUrl = document.getElementById('sc-linkedin-url');
   const scLinkedinHeadline = document.getElementById('sc-linkedin-headline');
   const scLinkedinAbout = document.getElementById('sc-linkedin-about');
-  const scResumeSource = document.getElementById('sc-resume-source');
-  const customResumeWrapper = document.getElementById('custom-resume-wrapper');
+
+  const btnResumeModes = document.querySelectorAll('.btn-resume-mode');
+  const resumeUploadZone = document.getElementById('resume-upload-zone');
+  const resumePasteZone = document.getElementById('resume-paste-zone');
+  const resumeMasterZone = document.getElementById('resume-master-zone');
+  const resumeFileInput = document.getElementById('resume-file-input');
+  const dropZoneCta = document.getElementById('drop-zone-cta');
+  const resumeFileInfo = document.getElementById('resume-file-info');
+  const resumeFileName = document.getElementById('resume-file-name');
+  const btnRemoveResume = document.getElementById('btn-remove-resume');
   const scResumeText = document.getElementById('sc-resume-text');
 
   const btnPrefillAll = document.getElementById('btn-prefill-all');
@@ -53,14 +64,72 @@ document.addEventListener('DOMContentLoaded', () => {
   const pdfIframe = document.getElementById('pdf-iframe');
   const btnCloseModal = document.getElementById('btn-close-modal');
 
-  // Resume source switcher
-  scResumeSource.addEventListener('change', () => {
-    if (scResumeSource.value === 'custom') {
-      customResumeWrapper.style.display = 'block';
-    } else {
-      customResumeWrapper.style.display = 'none';
+  // Resume Mode Switcher
+  btnResumeModes.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btnResumeModes.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentResumeMode = btn.getAttribute('data-mode');
+
+      resumeUploadZone.style.display = currentResumeMode === 'upload' ? 'block' : 'none';
+      resumePasteZone.style.display = currentResumeMode === 'paste' ? 'block' : 'none';
+      resumeMasterZone.style.display = currentResumeMode === 'master' ? 'block' : 'none';
+    });
+  });
+
+  // Resume File Drop Zone
+  resumeUploadZone.addEventListener('click', (e) => {
+    if (e.target !== btnRemoveResume) {
+      resumeFileInput.click();
     }
   });
+
+  resumeUploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    resumeUploadZone.classList.add('dragover');
+  });
+
+  resumeUploadZone.addEventListener('dragleave', () => {
+    resumeUploadZone.classList.remove('dragover');
+  });
+
+  resumeUploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    resumeUploadZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+      handleResumeFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  resumeFileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      handleResumeFile(e.target.files[0]);
+    }
+  });
+
+  btnRemoveResume.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    uploadedResumeText = '';
+    uploadedResumeName = '';
+    resumeFileInput.value = '';
+    dropZoneCta.style.display = 'block';
+    resumeFileInfo.style.display = 'none';
+  });
+
+  function handleResumeFile(file) {
+    uploadedResumeName = file.name;
+    const reader = new FileReader();
+
+    reader.onload = (evt) => {
+      uploadedResumeText = evt.target.result;
+      dropZoneCta.style.display = 'none';
+      resumeFileName.innerText = `📄 ${file.name} (${Math.round(file.size / 1024)} KB)`;
+      resumeFileInfo.style.display = 'block';
+    };
+
+    reader.readAsText(file);
+  }
 
   // Navigation Tabs
   navBtns.forEach(btn => {
@@ -165,7 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btnScoreAll.disabled = true;
 
     let resumeData = null;
-    if (scResumeSource.value === 'custom' && scResumeText.value.trim()) {
+    if (currentResumeMode === 'upload' && uploadedResumeText) {
+      resumeData = { text: uploadedResumeText, filename: uploadedResumeName };
+    } else if (currentResumeMode === 'paste' && scResumeText.value.trim()) {
       resumeData = { text: scResumeText.value.trim() };
     } else {
       resumeData = loadedProfile || await fetchProfileData();

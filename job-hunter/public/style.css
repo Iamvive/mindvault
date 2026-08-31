@@ -430,6 +430,40 @@ body {
   border-color: var(--text-muted);
 }
 
+.btn-resume-mode {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-resume-mode.active {
+  background: var(--text-primary);
+  color: #fff;
+  border-color: var(--text-primary);
+}
+
+/* Drop Zone */
+.drop-zone {
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--bg-app);
+  transition: all 0.15s ease;
+}
+
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--sg-primary);
+  background: var(--sg-primary-light);
+}
+
 .major-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);

@@ -86,11 +86,11 @@
             <div>
               <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">The 3-Pillar Profile Rater & Fixer</h3>
               <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
-                Share your <strong>GitHub Link</strong>, <strong>LinkedIn Details</strong>, and <strong>Resume</strong> to get an instant comprehensive AI score & 1-click fixes.
+                Share your <strong>GitHub Link</strong>, <strong>LinkedIn Details</strong>, and <strong>Resume (PDF or Text)</strong> to get an instant comprehensive AI score & 1-click fixes.
               </p>
             </div>
             <div style="display: flex; gap: 10px;">
-              <button class="btn-secondary" id="btn-prefill-all">📥 Load Saved Assets</button>
+              <button class="btn-secondary" id="btn-prefill-all">📥 Auto-Fill from Profile</button>
               <button class="btn-primary" id="btn-score-all">⚡ Score My 3-Pillar Profile</button>
             </div>
           </div>
@@ -105,7 +105,7 @@
               <h4 style="font-size: 15px; font-weight: 700;">1. GitHub Presence</h4>
             </div>
             <div class="form-field">
-              <label for="sc-github">Username or Profile URL</label>
+              <label for="sc-github">GitHub Username or URL</label>
               <input type="text" id="sc-github" placeholder="e.g. alexmercer-dev or https://github.com/...">
             </div>
             <p style="font-size: 11.5px; color: var(--text-muted);">Audits public repositories, project documentation depth, live demos, and README polish.</p>
@@ -131,24 +131,45 @@
             </div>
           </div>
 
-          <!-- Pillar 3: Resume -->
+          <!-- Pillar 3: Resume (Upload PDF / Paste / Master) -->
           <div class="major-card" style="padding: 20px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
               <span style="font-size: 20px;">📄</span>
-              <h4 style="font-size: 15px; font-weight: 700;">3. Master Resume</h4>
+              <h4 style="font-size: 15px; font-weight: 700;">3. Add Resume</h4>
             </div>
-            <div class="form-field">
-              <label for="sc-resume-source">Resume Source</label>
-              <select id="sc-resume-source">
-                <option value="master">Use Master Profile JSON</option>
-                <option value="custom">Paste Custom Text</option>
-              </select>
+
+            <!-- Resume Mode Tabs -->
+            <div class="resume-mode-pills" style="display: flex; gap: 6px; margin-bottom: 12px;">
+              <button type="button" class="btn-resume-mode active" data-mode="upload">📁 Upload File</button>
+              <button type="button" class="btn-resume-mode" data-mode="paste">📝 Paste Text</button>
+              <button type="button" class="btn-resume-mode" data-mode="master">💾 Master Profile</button>
             </div>
-            <div class="form-field" id="custom-resume-wrapper" style="display: none;">
-              <label for="sc-resume-text">Paste Resume Text</label>
-              <textarea id="sc-resume-text" rows="4" placeholder="Paste your resume text here..."></textarea>
+
+            <!-- Upload Zone -->
+            <div id="resume-upload-zone" class="drop-zone">
+              <input type="file" id="resume-file-input" accept=".pdf,.txt,.docx,.json" style="display: none;">
+              <div class="drop-zone-content" id="drop-zone-cta">
+                <span style="font-size: 24px;">📄</span>
+                <div style="font-size: 12px; font-weight: 600; margin-top: 4px;">Click or Drag Resume PDF / File</div>
+                <div style="font-size: 10.5px; color: var(--text-muted);">Supports PDF, DOCX, TXT, JSON</div>
+              </div>
+              <div id="resume-file-info" style="display: none; font-size: 11.5px; padding: 6px 10px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; color: #065f46; margin-top: 6px;">
+                <span id="resume-file-name">filename.pdf</span> • <a href="#" id="btn-remove-resume" style="color: var(--sg-primary); text-decoration: none; font-weight: 600;">Remove</a>
+              </div>
             </div>
-            <p style="font-size: 11.5px; color: var(--text-muted);">Evaluates metric density, strong action verbs, and ATS formatting structure.</p>
+
+            <!-- Paste Zone -->
+            <div id="resume-paste-zone" style="display: none;">
+              <div class="form-field">
+                <label for="sc-resume-text">Paste Resume Text</label>
+                <textarea id="sc-resume-text" rows="4" placeholder="Paste your resume text or bullet points here..."></textarea>
+              </div>
+            </div>
+
+            <!-- Master Profile Zone -->
+            <div id="resume-master-zone" style="display: none; padding: 10px; background: var(--bg-sidebar); border-radius: 8px; font-size: 11.5px; color: var(--text-secondary);">
+              ✅ Using saved <strong>master_profile.json</strong> with exhaustive work experience and skills.
+            </div>
           </div>
         </div>
 
