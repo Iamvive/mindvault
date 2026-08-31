@@ -31,13 +31,17 @@
           <span class="icon">✨</span>
           <span>Instant JD Tailor</span>
         </button>
+        <button class="nav-item" data-tab="tab-auditor" id="nav-auditor-btn">
+          <span class="icon">⭐</span>
+          <span>Profile Rater (LI/GH)</span>
+        </button>
         <button class="nav-item" data-tab="tab-history" id="nav-history-btn">
           <span class="icon">📊</span>
           <span>Application Tracker</span>
         </button>
         <button class="nav-item" data-tab="tab-profile" id="nav-profile-btn">
           <span class="icon">👤</span>
-          <span>Master Profile & Audit</span>
+          <span>Master Profile JSON</span>
         </button>
       </nav>
 
@@ -132,7 +136,56 @@
         </div>
       </section>
 
-      <!-- TAB 3: Application Tracker -->
+      <!-- TAB 3: Profile Rater (LinkedIn & GitHub) -->
+      <section class="tab-pane" id="tab-auditor">
+        <div class="profile-grid">
+          <!-- LinkedIn Auditor Card -->
+          <div class="major-card">
+            <h3 class="card-heading">👔 LinkedIn Profile Rater</h3>
+            <p class="card-subheading">Evaluates recruiter SEO, keyword density, and magnetic headline formulation.</p>
+
+            <form id="linkedin-audit-form">
+              <div class="form-field">
+                <label for="li-headline">Current Headline</label>
+                <input type="text" id="li-headline" placeholder="e.g. Software Engineer at TechCorp" required>
+              </div>
+              <div class="form-field">
+                <label for="li-about">About / Summary Section</label>
+                <textarea id="li-about" rows="5" placeholder="Paste your current LinkedIn About section..." required></textarea>
+              </div>
+              <button type="submit" class="btn-primary" id="btn-audit-li">
+                <span>⚡ Rate LinkedIn Profile</span>
+              </button>
+            </form>
+
+            <div id="li-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- GitHub Auditor Card -->
+          <div class="major-card">
+            <h3 class="card-heading">💻 GitHub Presence Rater</h3>
+            <p class="card-subheading">Audits public repos, demo links, documentation, and generates a ready-to-use profile README.</p>
+
+            <form id="github-audit-form">
+              <div class="form-field">
+                <label for="gh-username">GitHub Username or Profile URL</label>
+                <input type="text" id="gh-username" placeholder="e.g. alexmercer-dev or https://github.com/..." required>
+              </div>
+              <button type="submit" class="btn-primary" id="btn-audit-gh">
+                <span>⚡ Rate GitHub Profile</span>
+              </button>
+            </form>
+
+            <div id="gh-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Application Tracker -->
       <section class="tab-pane" id="tab-history">
         <div class="table-container major-card">
           <table class="jobs-table" id="history-table">
@@ -152,34 +205,15 @@
         </div>
       </section>
 
-      <!-- TAB 4: Master Profile & Global Audit -->
+      <!-- TAB 5: Master Profile JSON -->
       <section class="tab-pane" id="tab-profile">
-        <div class="profile-grid">
-          <div class="major-card">
-            <div class="card-header-flex">
-              <h3 class="card-heading">Master Profile JSON</h3>
-              <button class="btn-secondary" id="btn-save-profile">💾 Save Profile</button>
-            </div>
-            <p class="card-subheading">The single source of truth used for generating all tailored ATS resumes.</p>
-            <textarea id="profile-editor" rows="22" class="code-editor"></textarea>
+        <div class="major-card">
+          <div class="card-header-flex">
+            <h3 class="card-heading">Master Profile JSON</h3>
+            <button class="btn-secondary" id="btn-save-profile">💾 Save Profile</button>
           </div>
-
-          <div class="major-card">
-            <h3 class="card-heading">Global Presence Optimization</h3>
-            <p class="card-subheading">Prompts and recommendations to supercharge your public profiles.</p>
-
-            <div class="audit-section">
-              <h4>LinkedIn Recruiter SEO</h4>
-              <p class="audit-tip">Recruiters search via Boolean keywords. Keep target job titles in Headline and technical skills listed in top 5.</p>
-              <button class="btn-pill" id="btn-copy-linkedin-prompt">📋 Copy LinkedIn Audit Prompt</button>
-            </div>
-
-            <div class="audit-section" style="margin-top: 18px;">
-              <h4>GitHub Profile README</h4>
-              <p class="audit-tip">Pin top 3 architectural projects with live demo links, clean README diagrams, and performance benchmarks.</p>
-              <button class="btn-pill" id="btn-copy-github-prompt">📋 Copy GitHub Showcase Prompt</button>
-            </div>
-          </div>
+          <p class="card-subheading">The single source of truth used for generating all tailored ATS resumes.</p>
+          <textarea id="profile-editor" rows="22" class="code-editor"></textarea>
         </div>
       </section>
     </main>

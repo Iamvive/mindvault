@@ -6,6 +6,8 @@ import { loadMasterProfile, saveMasterProfile } from '../core/profile.js';
 import { processDiscoveredJob } from '../scrapers/discovery-manager.js';
 import { submitApprovedJob } from '../submitters/submitter-manager.js';
 import { connectToChrome, checkCdpAvailable } from '../cdp/chrome-bridge.js';
+import { auditGitHubProfile } from '../core/github-auditor.js';
+import { auditLinkedInProfile } from '../core/linkedin-auditor.js';
 
 const app = express();
 const PORT = process.env.PORT || 4200;
@@ -53,7 +55,6 @@ app.post('/api/jobs/:id/approve', async (req, res) => {
     }
 
     if (!browser) {
-      // If CDP not running, simulate/mark as applied or manual review
       updateJobStatus(db, jobId, 'applied', {
         submittedAt: new Date().toISOString(),
         notes: 'Approved via Cockpit (Simulated / Local Mode)'
@@ -136,6 +137,27 @@ app.post('/api/jobs/tailor-new', async (req, res) => {
     res.json({ success: true, job: saved });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Audit & Rate GitHub Profile
+app.post('/api/audit/github', async (req, res) => {
+  const { usernameOrUrl } = req.body;
+  try {
+    const result = await auditGitHubProfile(usernameOrUrl);
+    res.json({ success: true, audit: result });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// API: Audit & Rate LinkedIn Profile
+app.post('/api/audit/linkedin', (req, res) => {
+  try {
+    const result = auditLinkedInProfile(req.body);
+    res.json({ success: true, audit: result });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 

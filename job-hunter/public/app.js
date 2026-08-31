@@ -24,13 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSaveProfile = document.getElementById('btn-save-profile');
   const historyTableBody = document.getElementById('history-table-body');
 
+  const linkedinAuditForm = document.getElementById('linkedin-audit-form');
+  const liAuditResult = document.getElementById('li-audit-result');
+  const githubAuditForm = document.getElementById('github-audit-form');
+  const ghAuditResult = document.getElementById('gh-audit-result');
+
   const pdfModal = document.getElementById('pdf-modal');
   const modalPdfTitle = document.getElementById('modal-pdf-title');
   const pdfIframe = document.getElementById('pdf-iframe');
   const btnCloseModal = document.getElementById('btn-close-modal');
-
-  const btnCopyLinkedin = document.getElementById('btn-copy-linkedin-prompt');
-  const btnCopyGithub = document.getElementById('btn-copy-github-prompt');
 
   // Navigation Tabs
   navBtns.forEach(btn => {
@@ -49,13 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (targetTab === 'tab-tailor') {
         pageTitle.innerText = 'Instant JD Tailor';
         pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
+      } else if (targetTab === 'tab-auditor') {
+        pageTitle.innerText = 'Profile Rater & Optimizer';
+        pageSubtitle.innerText = 'Audit your LinkedIn and GitHub profiles for recruiter SEO and maximum impact.';
       } else if (targetTab === 'tab-history') {
         pageTitle.innerText = 'Application Tracker';
         pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
         loadHistory();
       } else if (targetTab === 'tab-profile') {
-        pageTitle.innerText = 'Master Profile & Global Audit';
-        pageSubtitle.innerText = 'Edit your single source of truth and optimize LinkedIn / GitHub presence.';
+        pageTitle.innerText = 'Master Profile JSON';
+        pageSubtitle.innerText = 'Edit your single source of truth used for generating all ATS resumes.';
         loadProfile();
       }
     });
@@ -260,6 +265,136 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // LinkedIn Audit Form
+  linkedinAuditForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-audit-li');
+    btn.innerText = 'Analyzing...';
+    btn.disabled = true;
+
+    const payload = {
+      headline: document.getElementById('li-headline').value,
+      about: document.getElementById('li-about').value
+    };
+
+    try {
+      const res = await fetch('/api/audit/linkedin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        const audit = data.audit;
+        liAuditResult.style.display = 'block';
+        liAuditResult.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-weight: 700; font-size: 15px;">Rating Result: Grade ${audit.grade}</span>
+            <div class="ats-score-chip">
+              <span class="ats-val">${audit.score}/100</span>
+              <span class="ats-tag">SEO Score</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <strong style="font-size: 12px; color: #065f46;">✅ Strengths:</strong>
+            <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+              ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+          </div>
+
+          ${audit.improvements.length > 0 ? `
+            <div style="margin-bottom: 12px;">
+              <strong style="font-size: 12px; color: var(--sg-primary);">⚠️ Critical Improvements:</strong>
+              <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+                ${audit.improvements.map(imp => `<li>${imp}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light);">
+            <strong style="font-size: 12px;">✨ Recommended Magnetic Headlines:</strong>
+            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+              ${audit.generatedHeadlines.map(h => `
+                <div style="font-size: 11.5px; background: var(--bg-sidebar); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border-light);">
+                  ${h}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+    } catch (err) {
+      alert(`Audit failed: ${err.message}`);
+    } finally {
+      btn.innerText = '⚡ Rate LinkedIn Profile';
+      btn.disabled = false;
+    }
+  });
+
+  // GitHub Audit Form
+  githubAuditForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-audit-gh');
+    btn.innerText = 'Auditing Repos...';
+    btn.disabled = true;
+
+    const usernameOrUrl = document.getElementById('gh-username').value;
+
+    try {
+      const res = await fetch('/api/audit/github', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usernameOrUrl })
+      });
+      const data = await res.json();
+      if (data.success) {
+        const audit = data.audit;
+        ghAuditResult.style.display = 'block';
+        ghAuditResult.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              ${audit.avatarUrl ? `<img src="${audit.avatarUrl}" style="width: 32px; height: 32px; border-radius: 50%;">` : ''}
+              <span style="font-weight: 700; font-size: 15px;">${audit.name} (Grade ${audit.grade})</span>
+            </div>
+            <div class="ats-score-chip">
+              <span class="ats-val">${audit.score}/100</span>
+              <span class="ats-tag">Presence Score</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <strong style="font-size: 12px; color: #065f46;">✅ Strengths:</strong>
+            <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+              ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+          </div>
+
+          ${audit.improvements.length > 0 ? `
+            <div style="margin-bottom: 12px;">
+              <strong style="font-size: 12px; color: var(--sg-primary);">⚠️ Gaps to Fix:</strong>
+              <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+                ${audit.improvements.map(imp => `<li>${imp}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light);">
+            <strong style="font-size: 12px;">📄 Suggested Profile README:</strong>
+            <textarea readonly rows="6" style="width: 100%; margin-top: 6px; font-size: 11px; font-family: monospace; background: var(--bg-sidebar); border: 1px solid var(--border-light); border-radius: 8px; padding: 8px;">${audit.recommendedReadme}</textarea>
+          </div>
+        `;
+      } else {
+        alert(data.error || 'Failed to audit GitHub profile');
+      }
+    } catch (err) {
+      alert(`GitHub audit error: ${err.message}`);
+    } finally {
+      btn.innerText = '⚡ Rate GitHub Profile';
+      btn.disabled = false;
+    }
+  });
+
   // Load History
   async function loadHistory() {
     try {
@@ -307,19 +442,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       alert(`Invalid JSON: ${err.message}`);
     }
-  });
-
-  // Copy Prompts
-  btnCopyLinkedin.addEventListener('click', () => {
-    const prompt = `Review my current profile against top Senior/Lead Engineer profiles. Give me 3 high-impact headlines with Boolean keywords, an engaging About section with impact metrics, and 5 top skills to highlight.`;
-    navigator.clipboard.writeText(prompt);
-    alert('LinkedIn audit prompt copied to clipboard!');
-  });
-
-  btnCopyGithub.addEventListener('click', () => {
-    const prompt = `Write a clean GitHub Profile README.md for my username highlighting my top 3 distributed systems projects, live demos, tech stack icons, and engineering philosophy.`;
-    navigator.clipboard.writeText(prompt);
-    alert('GitHub showcase prompt copied to clipboard!');
   });
 
   // Initial Load
