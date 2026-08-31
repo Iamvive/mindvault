@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let allQueuedJobs = [];
   let currentFilter = 'all';
   let loadedProfile = null;
+  let liScore = 0;
+  let ghScore = 0;
 
   // DOM Elements
   const navBtns = document.querySelectorAll('.nav-item');
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const statQueued = document.getElementById('stat-queued');
   const statApplied = document.getElementById('stat-applied');
-  const statReview = document.getElementById('stat-review');
+  const statBrandScore = document.getElementById('stat-brand-score');
   const sidebarQueueCount = document.getElementById('sidebar-queue-count');
 
   const queueContainer = document.getElementById('queue-cards-container');
@@ -36,11 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const ghAuditResult = document.getElementById('gh-audit-result');
   const btnGhLoadMaster = document.getElementById('btn-gh-load-master');
   const ghUsername = document.getElementById('gh-username');
+  const btnRunFullAudit = document.getElementById('btn-run-full-audit');
 
   const pdfModal = document.getElementById('pdf-modal');
   const modalPdfTitle = document.getElementById('modal-pdf-title');
   const pdfIframe = document.getElementById('pdf-iframe');
   const btnCloseModal = document.getElementById('btn-close-modal');
+
+  function updateBrandHealth() {
+    if (liScore > 0 && ghScore > 0) {
+      const avg = Math.round((liScore + ghScore) / 2);
+      statBrandScore.innerText = `${avg}%`;
+    } else if (liScore > 0) {
+      statBrandScore.innerText = `${liScore}%`;
+    } else if (ghScore > 0) {
+      statBrandScore.innerText = `${ghScore}%`;
+    }
+  }
 
   // Navigation Tabs
   navBtns.forEach(btn => {
@@ -52,16 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetTab = btn.getAttribute('data-tab');
       document.getElementById(targetTab).classList.add('active');
 
-      if (targetTab === 'tab-queue') {
+      if (targetTab === 'tab-auditor') {
+        pageTitle.innerText = 'Profile Rater & Fixer';
+        pageSubtitle.innerText = 'Standalone evaluation for your LinkedIn & GitHub presence — zero JD required.';
+      } else if (targetTab === 'tab-queue') {
         pageTitle.innerText = 'Approval Queue';
         pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
         loadQueue();
       } else if (targetTab === 'tab-tailor') {
         pageTitle.innerText = 'Instant JD Tailor';
         pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
-      } else if (targetTab === 'tab-auditor') {
-        pageTitle.innerText = 'Profile Rater & Interactive Fixer';
-        pageSubtitle.innerText = 'Audit your LinkedIn and GitHub profiles for recruiter SEO and apply 1-click fixes.';
       } else if (targetTab === 'tab-history') {
         pageTitle.innerText = 'Application Tracker';
         pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
@@ -100,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       statQueued.innerText = data.queuedCount || 0;
       statApplied.innerText = data.appliedCount || 0;
-      statReview.innerText = data.manualReviewCount || 0;
       sidebarQueueCount.innerText = data.queuedCount || 0;
     } catch (e) {
       console.warn('Status error:', e);
@@ -118,6 +131,22 @@ document.addEventListener('DOMContentLoaded', () => {
       return null;
     }
   }
+
+  // Auto pre-fill on first load if inputs are empty
+  fetchProfileData().then(prof => {
+    if (prof) {
+      if (!liUrl.value && prof.personal?.linkedin) liUrl.value = prof.personal.linkedin;
+      if (!liHeadline.value && prof.personal?.title) liHeadline.value = prof.personal.title;
+      if (!liAbout.value && prof.summary) liAbout.value = prof.summary;
+      if (!ghUsername.value && prof.personal?.github) ghUsername.value = prof.personal.github;
+    }
+  });
+
+  // Run Both Audits
+  btnRunFullAudit.addEventListener('click', () => {
+    document.getElementById('btn-audit-li').click();
+    document.getElementById('btn-audit-gh').click();
+  });
 
   // Load Queue
   async function loadQueue() {
@@ -292,7 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
       liUrl.value = prof.personal?.linkedin || '';
       liHeadline.value = prof.personal?.title || '';
       liAbout.value = prof.summary || '';
-      // Auto-trigger rate
       document.getElementById('btn-audit-li').click();
     }
   });
@@ -301,7 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const prof = await fetchProfileData();
     if (prof) {
       ghUsername.value = prof.personal?.github || '';
-      // Auto-trigger rate
       document.getElementById('btn-audit-gh').click();
     }
   });
@@ -328,6 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.success) {
         const audit = data.audit;
+        liScore = audit.score;
+        updateBrandHealth();
         renderLinkedInAudit(audit);
       }
     } catch (err) {
@@ -406,7 +435,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Attach fix listeners
     document.querySelectorAll('.btn-apply-headline-direct').forEach(b => {
       b.addEventListener('click', (e) => {
         const text = decodeURIComponent(e.currentTarget.getAttribute('data-headline'));
@@ -462,6 +490,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.success) {
         const audit = data.audit;
+        ghScore = audit.score;
+        updateBrandHealth();
         renderGitHubAudit(audit);
       } else {
         alert(data.error || 'Failed to audit GitHub profile');

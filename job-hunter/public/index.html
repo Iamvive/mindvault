@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindHunt — Zero-Cost AI Job Application Cockpit</title>
+  <title>MindHunt — Zero-Cost AI Job Application & Profile Cockpit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,7 +22,11 @@
       </div>
 
       <nav class="nav-menu">
-        <button class="nav-item active" data-tab="tab-queue" id="nav-queue-btn">
+        <button class="nav-item active" data-tab="tab-auditor" id="nav-auditor-btn">
+          <span class="icon">⭐</span>
+          <span>Profile Rater & Fixer</span>
+        </button>
+        <button class="nav-item" data-tab="tab-queue" id="nav-queue-btn">
           <span class="icon">📋</span>
           <span>Approval Queue</span>
           <span class="counter-badge" id="sidebar-queue-count">0</span>
@@ -30,10 +34,6 @@
         <button class="nav-item" data-tab="tab-tailor" id="nav-tailor-btn">
           <span class="icon">✨</span>
           <span>Instant JD Tailor</span>
-        </button>
-        <button class="nav-item" data-tab="tab-auditor" id="nav-auditor-btn">
-          <span class="icon">⭐</span>
-          <span>Profile Rater & Fixer</span>
         </button>
         <button class="nav-item" data-tab="tab-history" id="nav-history-btn">
           <span class="icon">📊</span>
@@ -59,27 +59,101 @@
       <!-- Top Metrics Header -->
       <header class="top-header">
         <div class="header-title">
-          <h2 id="page-title">Approval Queue</h2>
-          <p id="page-subtitle">Review ATS tailored resumes and approve 1-click applications.</p>
+          <h2 id="page-title">Profile Rater & Fixer</h2>
+          <p id="page-subtitle">Standalone evaluation for your LinkedIn & GitHub presence — zero JD required.</p>
         </div>
         <div class="header-stats">
           <div class="stat-pill">
+            <span class="stat-num" id="stat-brand-score">—</span>
+            <span class="stat-label">Brand Health</span>
+          </div>
+          <div class="stat-pill">
             <span class="stat-num" id="stat-queued">0</span>
-            <span class="stat-label">Queued</span>
+            <span class="stat-label">Queued Jobs</span>
           </div>
           <div class="stat-pill">
             <span class="stat-num" id="stat-applied">0</span>
             <span class="stat-label">Applied</span>
           </div>
-          <div class="stat-pill">
-            <span class="stat-num" id="stat-review">0</span>
-            <span class="stat-label">Manual Attention</span>
-          </div>
         </div>
       </header>
 
-      <!-- TAB 1: Approval Queue -->
-      <section class="tab-pane active" id="tab-queue">
+      <!-- DEDICATED SECTION 1: Standalone Profile Rater & Fixer (LinkedIn + GitHub) -->
+      <section class="tab-pane active" id="tab-auditor">
+        <!-- Hero Header -->
+        <div class="major-card" style="margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #fbfbfd 100%);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">Global Presence Health Check</h3>
+              <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
+                Audit your public profiles against top 1% engineering talent. Recruiter SEO, magnetic hooks, metrics & portfolio polish.
+              </p>
+            </div>
+            <button class="btn-primary" id="btn-run-full-audit">
+              <span>⚡ Audit Both (LinkedIn & GitHub)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <!-- LinkedIn Card -->
+          <div class="major-card">
+            <div class="card-header-flex">
+              <h3 class="card-heading">👔 LinkedIn Profile Optimizer</h3>
+              <button class="btn-pill" id="btn-li-load-master">📥 Load Saved Profile</button>
+            </div>
+            <p class="card-subheading">Evaluates recruiter SEO, boolean keywords, narrative hook, and quantifiable achievements.</p>
+
+            <form id="linkedin-audit-form">
+              <div class="form-field">
+                <label for="li-url">LinkedIn Profile URL</label>
+                <input type="text" id="li-url" placeholder="https://linkedin.com/in/your-profile">
+              </div>
+              <div class="form-field">
+                <label for="li-headline">Current Headline</label>
+                <input type="text" id="li-headline" placeholder="e.g. Software Engineer at TechCorp" required>
+              </div>
+              <div class="form-field">
+                <label for="li-about">About / Summary Section</label>
+                <textarea id="li-about" rows="5" placeholder="Paste your current LinkedIn About section..." required></textarea>
+              </div>
+              <button type="submit" class="btn-primary" id="btn-audit-li">
+                <span>⚡ Rate LinkedIn Profile</span>
+              </button>
+            </form>
+
+            <div id="li-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
+              <!-- Populated with score, gaps, and 1-click fixes -->
+            </div>
+          </div>
+
+          <!-- GitHub Card -->
+          <div class="major-card">
+            <div class="card-header-flex">
+              <h3 class="card-heading">💻 GitHub Presence Optimizer</h3>
+              <button class="btn-pill" id="btn-gh-load-master">📥 Load Saved Username</button>
+            </div>
+            <p class="card-subheading">Audits public repositories, project documentation, demo links, and generates a profile README.</p>
+
+            <form id="github-audit-form">
+              <div class="form-field">
+                <label for="gh-username">GitHub Username or Profile URL</label>
+                <input type="text" id="gh-username" placeholder="e.g. alexmercer-dev or https://github.com/..." required>
+              </div>
+              <button type="submit" class="btn-primary" id="btn-audit-gh">
+                <span>⚡ Rate GitHub Profile</span>
+              </button>
+            </form>
+
+            <div id="gh-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
+              <!-- Populated with score, gaps, and README template -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Approval Queue -->
+      <section class="tab-pane" id="tab-queue">
         <div class="pane-actions">
           <div class="filter-group">
             <span class="filter-label">Filter:</span>
@@ -98,7 +172,7 @@
         </div>
       </section>
 
-      <!-- TAB 2: Instant JD Tailor -->
+      <!-- TAB 3: Instant JD Tailor -->
       <section class="tab-pane" id="tab-tailor">
         <div class="tailor-card major-card">
           <h3 class="card-heading">Paste Any Job Description</h3>
@@ -133,67 +207,6 @@
               <span>✨ Tailor Resume & Queue Job</span>
             </button>
           </form>
-        </div>
-      </section>
-
-      <!-- TAB 3: Profile Rater & Interactive Fixer -->
-      <section class="tab-pane" id="tab-auditor">
-        <div class="profile-grid">
-          <!-- LinkedIn Auditor Card -->
-          <div class="major-card">
-            <div class="card-header-flex">
-              <h3 class="card-heading">👔 LinkedIn Profile Rater & Fixer</h3>
-              <button class="btn-pill" id="btn-li-load-master">📥 Load from Master Profile</button>
-            </div>
-            <p class="card-subheading">Enter your LinkedIn URL / details to rate your recruiter SEO and apply instant 1-click fixes.</p>
-
-            <form id="linkedin-audit-form">
-              <div class="form-field">
-                <label for="li-url">LinkedIn Profile URL</label>
-                <input type="text" id="li-url" placeholder="https://linkedin.com/in/your-profile">
-              </div>
-              <div class="form-field">
-                <label for="li-headline">Current Headline</label>
-                <input type="text" id="li-headline" placeholder="e.g. Software Engineer at TechCorp" required>
-              </div>
-              <div class="form-field">
-                <label for="li-about">About / Summary Section</label>
-                <textarea id="li-about" rows="4" placeholder="Paste your current LinkedIn About section..." required></textarea>
-              </div>
-              <div style="display: flex; gap: 10px;">
-                <button type="submit" class="btn-primary" id="btn-audit-li">
-                  <span>⚡ Rate LinkedIn Profile</span>
-                </button>
-              </div>
-            </form>
-
-            <div id="li-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
-              <!-- Dynamically populated with score, strengths, fixes, and apply buttons -->
-            </div>
-          </div>
-
-          <!-- GitHub Auditor Card -->
-          <div class="major-card">
-            <div class="card-header-flex">
-              <h3 class="card-heading">💻 GitHub Presence Rater & Fixer</h3>
-              <button class="btn-pill" id="btn-gh-load-master">📥 Load from Master Profile</button>
-            </div>
-            <p class="card-subheading">Audits public repos, project documentation, and provides 1-click README generators.</p>
-
-            <form id="github-audit-form">
-              <div class="form-field">
-                <label for="gh-username">GitHub Username or Profile URL</label>
-                <input type="text" id="gh-username" placeholder="e.g. alexmercer-dev or https://github.com/..." required>
-              </div>
-              <button type="submit" class="btn-primary" id="btn-audit-gh">
-                <span>⚡ Rate GitHub Profile</span>
-              </button>
-            </form>
-
-            <div id="gh-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
         </div>
       </section>
 
