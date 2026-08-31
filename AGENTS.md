@@ -115,6 +115,12 @@ Usage notes:
 </skill>
 
 <skill>
+<name>job-skill</name>
+<description>AI-powered job search assistant for Indian professionals. Searches 12+ Indian and global job platforms (Naukri, LinkedIn, Instahyre, Cutshort, Hirist, Indeed India, Foundit, Shine, TimesJobs, Glassdoor, WeWorkRemotely, AngelList), generates ATS-optimized resumes and cover letters.</description>
+<location>project</location>
+</skill>
+
+<skill>
 <name>writing-skills</name>
 <description>Use when creating new skills, editing existing skills, or verifying skills work before deployment</description>
 <location>project</location>
