@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright-core';
-import { connectToChrome, checkCdpAvailable } from '../cdp/chrome-bridge.js';
 
 export function generateCoverLetterHtml(profile, target = {}) {
   const pers = profile.personal || {};
@@ -64,21 +63,6 @@ export async function renderCoverLetterPdf(profile, outPath, target = {}) {
   const dir = path.dirname(fullOutPath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-  const isCdp = await checkCdpAvailable();
-  if (isCdp) {
-    try {
-      const browser = await connectToChrome();
-      const page = await browser.newPage();
-      await page.setContent(html, { waitUntil: 'load' });
-      await page.pdf({ path: fullOutPath, format: 'A4', printBackground: true, margin: { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' } });
-      await page.close();
-      return fullOutPath;
-    } catch (e) {
-      console.warn('CDP cover letter render fallback:', e.message);
-    }
-  }
-
-  // Standalone Playwright fallback
   const chromePaths = [
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
@@ -93,7 +77,12 @@ export async function renderCoverLetterPdf(profile, outPath, target = {}) {
   });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'load' });
-  await page.pdf({ path: fullOutPath, format: 'A4', printBackground: true });
+  await page.pdf({
+    path: fullOutPath,
+    format: 'A4',
+    printBackground: true,
+    margin: { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' }
+  });
   await browser.close();
 
   return fullOutPath;

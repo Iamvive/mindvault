@@ -648,6 +648,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Blob Download Handlers for 100% Reliable PDF Downloading
+  const btnDownloadResume = document.getElementById('btn-download-ats-pdf');
+  if (btnDownloadResume) {
+    btnDownloadResume.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const originalText = btnDownloadResume.innerText;
+      btnDownloadResume.innerText = 'Compiling PDF...';
+      try {
+        const res = await fetch('/api/resume/download-pdf');
+        if (!res.ok) throw new Error('PDF generation failed');
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Master_Resume_${(loadedProfile?.personal?.name || 'Vivek_Kumar').replace(/\s+/g, '_')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      } catch (err) {
+        window.location.href = '/api/resume/download-pdf';
+      } finally {
+        btnDownloadResume.innerText = originalText;
+      }
+    });
+  }
+
+  if (btnDownloadCoverLetter) {
+    btnDownloadCoverLetter.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const originalText = btnDownloadCoverLetter.innerText;
+      btnDownloadCoverLetter.innerText = 'Compiling PDF...';
+      try {
+        const comp = encodeURIComponent(clTargetCompany?.value || '');
+        const role = encodeURIComponent(clTargetRole?.value || '');
+        const res = await fetch(`/api/cover-letter/download-pdf?company=${comp}&role=${role}`);
+        if (!res.ok) throw new Error('Cover letter PDF failed');
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Cover_Letter_${(loadedProfile?.personal?.name || 'Vivek_Kumar').replace(/\s+/g, '_')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      } catch (err) {
+        window.location.href = '/api/cover-letter/download-pdf';
+      } finally {
+        btnDownloadCoverLetter.innerText = originalText;
+      }
+    });
+  }
+
   if (btnAiImproveCl) {
     btnAiImproveCl.addEventListener('click', async () => {
       activePromptType = 'cover-letter';
