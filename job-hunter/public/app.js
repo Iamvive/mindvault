@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   let allQueuedJobs = [];
   let currentFilter = 'all';
+  let loadedProfile = null;
 
   // DOM Elements
   const navBtns = document.querySelectorAll('.nav-item');
@@ -26,8 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const linkedinAuditForm = document.getElementById('linkedin-audit-form');
   const liAuditResult = document.getElementById('li-audit-result');
+  const btnLiLoadMaster = document.getElementById('btn-li-load-master');
+  const liUrl = document.getElementById('li-url');
+  const liHeadline = document.getElementById('li-headline');
+  const liAbout = document.getElementById('li-about');
+
   const githubAuditForm = document.getElementById('github-audit-form');
   const ghAuditResult = document.getElementById('gh-audit-result');
+  const btnGhLoadMaster = document.getElementById('btn-gh-load-master');
+  const ghUsername = document.getElementById('gh-username');
 
   const pdfModal = document.getElementById('pdf-modal');
   const modalPdfTitle = document.getElementById('modal-pdf-title');
@@ -52,8 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pageTitle.innerText = 'Instant JD Tailor';
         pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
       } else if (targetTab === 'tab-auditor') {
-        pageTitle.innerText = 'Profile Rater & Optimizer';
-        pageSubtitle.innerText = 'Audit your LinkedIn and GitHub profiles for recruiter SEO and maximum impact.';
+        pageTitle.innerText = 'Profile Rater & Interactive Fixer';
+        pageSubtitle.innerText = 'Audit your LinkedIn and GitHub profiles for recruiter SEO and apply 1-click fixes.';
       } else if (targetTab === 'tab-history') {
         pageTitle.innerText = 'Application Tracker';
         pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
@@ -96,6 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebarQueueCount.innerText = data.queuedCount || 0;
     } catch (e) {
       console.warn('Status error:', e);
+    }
+  }
+
+  // Load Master Profile
+  async function fetchProfileData() {
+    try {
+      const res = await fetch('/api/profile');
+      loadedProfile = await res.json();
+      return loadedProfile;
+    } catch (e) {
+      console.warn(e);
+      return null;
     }
   }
 
@@ -265,6 +285,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Pre-fill from Master Profile
+  btnLiLoadMaster.addEventListener('click', async () => {
+    const prof = await fetchProfileData();
+    if (prof) {
+      liUrl.value = prof.personal?.linkedin || '';
+      liHeadline.value = prof.personal?.title || '';
+      liAbout.value = prof.summary || '';
+      // Auto-trigger rate
+      document.getElementById('btn-audit-li').click();
+    }
+  });
+
+  btnGhLoadMaster.addEventListener('click', async () => {
+    const prof = await fetchProfileData();
+    if (prof) {
+      ghUsername.value = prof.personal?.github || '';
+      // Auto-trigger rate
+      document.getElementById('btn-audit-gh').click();
+    }
+  });
+
   // LinkedIn Audit Form
   linkedinAuditForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -273,8 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.disabled = true;
 
     const payload = {
-      headline: document.getElementById('li-headline').value,
-      about: document.getElementById('li-about').value
+      headline: liHeadline.value,
+      about: liAbout.value,
+      profileUrl: liUrl.value
     };
 
     try {
@@ -286,43 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.success) {
         const audit = data.audit;
-        liAuditResult.style.display = 'block';
-        liAuditResult.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span style="font-weight: 700; font-size: 15px;">Rating Result: Grade ${audit.grade}</span>
-            <div class="ats-score-chip">
-              <span class="ats-val">${audit.score}/100</span>
-              <span class="ats-tag">SEO Score</span>
-            </div>
-          </div>
-
-          <div style="margin-bottom: 10px;">
-            <strong style="font-size: 12px; color: #065f46;">✅ Strengths:</strong>
-            <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-              ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
-            </ul>
-          </div>
-
-          ${audit.improvements.length > 0 ? `
-            <div style="margin-bottom: 12px;">
-              <strong style="font-size: 12px; color: var(--sg-primary);">⚠️ Critical Improvements:</strong>
-              <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-                ${audit.improvements.map(imp => `<li>${imp}</li>`).join('')}
-              </ul>
-            </div>
-          ` : ''}
-
-          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light);">
-            <strong style="font-size: 12px;">✨ Recommended Magnetic Headlines:</strong>
-            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
-              ${audit.generatedHeadlines.map(h => `
-                <div style="font-size: 11.5px; background: var(--bg-sidebar); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border-light);">
-                  ${h}
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
+        renderLinkedInAudit(audit);
       }
     } catch (err) {
       alert(`Audit failed: ${err.message}`);
@@ -332,6 +338,112 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  function renderLinkedInAudit(audit) {
+    liAuditResult.style.display = 'block';
+    liAuditResult.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: var(--bg-sidebar); padding: 12px 16px; border-radius: var(--radius-card);">
+        <div>
+          <div style="font-weight: 700; font-size: 16px;">LinkedIn Health: Grade ${audit.grade}</div>
+          <span style="font-size: 12px; color: var(--text-muted);">${audit.score >= 85 ? '🌟 Recruiter SEO Optimized' : '⚠️ Has optimization opportunities'}</span>
+        </div>
+        <div class="ats-score-chip">
+          <span class="ats-val">${audit.score}/100</span>
+          <span class="ats-tag">Recruiter Score</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <strong style="font-size: 12px; color: #065f46;">✅ Profile Strengths:</strong>
+        <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+          ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+      </div>
+
+      ${audit.improvements.length > 0 ? `
+        <div style="margin-bottom: 16px;">
+          <strong style="font-size: 12px; color: var(--sg-primary);">🛠️ Actionable Gaps & 1-Click Fixes:</strong>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+            ${audit.improvements.map((imp, idx) => `
+              <div style="background: var(--bg-app); border: 1px solid var(--border-light); padding: 10px 14px; border-radius: var(--radius-card); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 13px;">${imp.title}</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">${imp.description}</div>
+                </div>
+                <button class="btn-primary btn-apply-li-fix" data-type="${imp.replacementType}" data-idx="${idx}" style="font-size: 11px; padding: 5px 12px;">
+                  ✨ ${imp.actionLabel}
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 13px;">✨ Recommended Magnetic Headlines:</strong>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+          ${audit.generatedHeadlines.map((h, idx) => `
+            <div style="font-size: 12px; background: var(--bg-sidebar); padding: 10px 14px; border-radius: var(--radius-card); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+              <span>${h}</span>
+              <button class="btn-secondary btn-apply-headline-direct" data-headline="${encodeURIComponent(h)}" style="font-size: 11px; padding: 4px 10px; margin-left: 10px;">
+                Apply
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 13px;">📝 Optimized About Story Rewrite:</strong>
+          <button class="btn-pill" id="btn-copy-about-story">📋 Copy Story</button>
+        </div>
+        <textarea id="li-generated-about-text" readonly rows="7" style="width: 100%; margin-top: 8px; font-size: 12px; background: var(--bg-sidebar); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 10px;">${audit.generatedAbout}</textarea>
+        <button class="btn-primary" id="btn-apply-about-story" style="margin-top: 8px; font-size: 12px; width: 100%;">
+          ✨ Adopt This About Story & Re-Rate
+        </button>
+      </div>
+    `;
+
+    // Attach fix listeners
+    document.querySelectorAll('.btn-apply-headline-direct').forEach(b => {
+      b.addEventListener('click', (e) => {
+        const text = decodeURIComponent(e.currentTarget.getAttribute('data-headline'));
+        liHeadline.value = text;
+        document.getElementById('btn-audit-li').click();
+      });
+    });
+
+    document.querySelectorAll('.btn-apply-li-fix').forEach(b => {
+      b.addEventListener('click', (e) => {
+        const type = e.currentTarget.getAttribute('data-type');
+        if (type === 'headline' && audit.generatedHeadlines.length > 0) {
+          liHeadline.value = audit.generatedHeadlines[0];
+        } else if ((type === 'about' || type === 'metrics' || type === 'keywords') && audit.generatedAbout) {
+          liAbout.value = audit.generatedAbout;
+        }
+        document.getElementById('btn-audit-li').click();
+      });
+    });
+
+    const btnCopyStory = document.getElementById('btn-copy-about-story');
+    if (btnCopyStory) {
+      btnCopyStory.addEventListener('click', () => {
+        navigator.clipboard.writeText(audit.generatedAbout);
+        alert('Optimized About Section copied to clipboard!');
+      });
+    }
+
+    const btnApplyAboutStory = document.getElementById('btn-apply-about-story');
+    if (btnApplyAboutStory) {
+      btnApplyAboutStory.addEventListener('click', () => {
+        liAbout.value = audit.generatedAbout;
+        document.getElementById('btn-audit-li').click();
+      });
+    }
+  }
+
   // GitHub Audit Form
   githubAuditForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -339,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.innerText = 'Auditing Repos...';
     btn.disabled = true;
 
-    const usernameOrUrl = document.getElementById('gh-username').value;
+    const usernameOrUrl = ghUsername.value;
 
     try {
       const res = await fetch('/api/audit/github', {
@@ -350,40 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.success) {
         const audit = data.audit;
-        ghAuditResult.style.display = 'block';
-        ghAuditResult.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              ${audit.avatarUrl ? `<img src="${audit.avatarUrl}" style="width: 32px; height: 32px; border-radius: 50%;">` : ''}
-              <span style="font-weight: 700; font-size: 15px;">${audit.name} (Grade ${audit.grade})</span>
-            </div>
-            <div class="ats-score-chip">
-              <span class="ats-val">${audit.score}/100</span>
-              <span class="ats-tag">Presence Score</span>
-            </div>
-          </div>
-
-          <div style="margin-bottom: 10px;">
-            <strong style="font-size: 12px; color: #065f46;">✅ Strengths:</strong>
-            <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-              ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
-            </ul>
-          </div>
-
-          ${audit.improvements.length > 0 ? `
-            <div style="margin-bottom: 12px;">
-              <strong style="font-size: 12px; color: var(--sg-primary);">⚠️ Gaps to Fix:</strong>
-              <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-                ${audit.improvements.map(imp => `<li>${imp}</li>`).join('')}
-              </ul>
-            </div>
-          ` : ''}
-
-          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light);">
-            <strong style="font-size: 12px;">📄 Suggested Profile README:</strong>
-            <textarea readonly rows="6" style="width: 100%; margin-top: 6px; font-size: 11px; font-family: monospace; background: var(--bg-sidebar); border: 1px solid var(--border-light); border-radius: 8px; padding: 8px;">${audit.recommendedReadme}</textarea>
-          </div>
-        `;
+        renderGitHubAudit(audit);
       } else {
         alert(data.error || 'Failed to audit GitHub profile');
       }
@@ -394,6 +473,54 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = false;
     }
   });
+
+  function renderGitHubAudit(audit) {
+    ghAuditResult.style.display = 'block';
+    ghAuditResult.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: var(--bg-sidebar); padding: 12px 16px; border-radius: var(--radius-card);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          ${audit.avatarUrl ? `<img src="${audit.avatarUrl}" style="width: 36px; height: 36px; border-radius: 50%;">` : ''}
+          <div>
+            <div style="font-weight: 700; font-size: 15px;">${audit.name} (Grade ${audit.grade})</div>
+            <span style="font-size: 11px; color: var(--text-muted);">${audit.publicRepos} Public Repos • ${audit.followers} Followers</span>
+          </div>
+        </div>
+        <div class="ats-score-chip">
+          <span class="ats-val">${audit.score}/100</span>
+          <span class="ats-tag">Presence Score</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <strong style="font-size: 12px; color: #065f46;">✅ Strengths:</strong>
+        <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+          ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+      </div>
+
+      ${audit.improvements.length > 0 ? `
+        <div style="margin-bottom: 14px;">
+          <strong style="font-size: 12px; color: var(--sg-primary);">⚠️ Gaps to Fix:</strong>
+          <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+            ${audit.improvements.map(imp => `<li>${imp}</li>`).join('')}
+          </ul>
+        </div>
+      ` : ''}
+
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 13px;">📄 Suggested Profile README:</strong>
+          <button class="btn-pill" id="btn-copy-gh-readme">📋 Copy README</button>
+        </div>
+        <textarea readonly rows="8" style="width: 100%; margin-top: 8px; font-size: 11.5px; font-family: monospace; background: var(--bg-sidebar); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 10px;">${audit.recommendedReadme}</textarea>
+      </div>
+    `;
+
+    document.getElementById('btn-copy-gh-readme').addEventListener('click', () => {
+      navigator.clipboard.writeText(audit.recommendedReadme);
+      alert('GitHub Profile README markdown copied to clipboard!');
+    });
+  }
 
   // Load History
   async function loadHistory() {

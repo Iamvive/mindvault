@@ -1,84 +1,121 @@
 export function auditLinkedInProfile(profileInput = {}) {
   const { headline = '', about = '', experience = '', profileUrl = '' } = profileInput;
 
-  let score = 50; // Base score
+  let score = 45; // Base score
   const strengths = [];
   const improvements = [];
 
-  // 1. Headline Evaluation (Weight: 25%)
+  // 1. Headline Evaluation
   const hasRole = /engineer|architect|developer|lead|staff|principal|manager|cto/i.test(headline);
-  const hasKeywords = /go|typescript|react|python|node|distributed|aws|cloud|kafka|sql|microservices|java/i.test(headline);
+  const hasKeywords = /go|typescript|react|python|node|distributed|aws|cloud|kafka|sql|microservices|java|system design/i.test(headline);
   const hasDivider = /[|•\-\/]/.test(headline);
+  const hasMetricOrImpact = /10x|scale|1m|500k|high-throughput|latency|cloud/i.test(headline);
 
   if (hasRole && hasKeywords && hasDivider) {
-    score += 15;
-    strengths.push('Headline is recruiter-optimized with role titles, skill keywords, and clean visual separators.');
+    score += 20;
+    strengths.push('Headline is recruiter-optimized with clear role titles, skill keywords, and separator structure.');
   } else if (hasRole) {
-    score += 8;
-    improvements.push('Improve Headline: Replace generic titles (e.g. "Software Engineer at X") with target role + top 3 skills + value proposition (e.g. "Senior Backend Engineer | Go, Kafka, AWS | Scaled Systems to 1M+ DAU").');
+    score += 10;
+    improvements.push({
+      id: 'fix-headline',
+      title: 'Weak Headline',
+      description: 'Your headline is too generic. Recruiters search by Boolean skills.',
+      actionLabel: 'Apply Magnetic Headline',
+      replacementType: 'headline'
+    });
   } else {
-    improvements.push('Headline is missing target role and technical keywords that recruiters search for.');
+    improvements.push({
+      id: 'fix-headline',
+      title: 'Missing Target Role & Keywords in Headline',
+      description: 'Add your primary role + top 3 skills + value proposition.',
+      actionLabel: 'Apply Magnetic Headline',
+      replacementType: 'headline'
+    });
   }
 
-  // 2. About / Summary Evaluation (Weight: 35%)
+  // 2. About / Summary Evaluation
   if (about.length > 250) {
-    score += 15;
-    strengths.push('About section has thorough detail and narrative depth.');
+    score += 18;
+    strengths.push('About section has strong narrative depth and background detail.');
   } else if (about.length > 50) {
     score += 8;
-    improvements.push('Expand your About section into 3 paragraphs: Hook/Background, Core Technical Mastery, and Key Business Impact.');
+    improvements.push({
+      id: 'fix-about-length',
+      title: 'Short About Section',
+      description: 'Expand your About section into a 3-part narrative: Hook, Core Tech Stack, and Business Impact.',
+      actionLabel: 'Apply Structured About Story',
+      replacementType: 'about'
+    });
   } else {
-    improvements.push('About section is missing or too brief. Add a strong 3-part career story highlighting quantified results.');
+    improvements.push({
+      id: 'fix-about-empty',
+      title: 'Missing / Minimal About Section',
+      description: 'A strong About section boosts recruiter inmail response rates by 3x.',
+      actionLabel: 'Generate High-Converting About Story',
+      replacementType: 'about'
+    });
   }
 
-  // Check for quantifiable impact metrics ($ or % or numbers)
-  const hasMetrics = /\d+[%kKmM\$]|saved|reduced|scaled|boosted/i.test(about + ' ' + experience);
+  // 3. Metric & Quantifiable Impact Evaluation
+  const hasMetrics = /\d+[%kKmM\$]|saved|reduced|scaled|boosted|optimized/i.test(about + ' ' + experience);
   if (hasMetrics) {
     score += 12;
-    strengths.push('Demonstrates quantifiable impact (metrics, percentages, performance gains).');
+    strengths.push('Demonstrates quantifiable metrics and measurable business results.');
   } else {
-    improvements.push('Add quantifiable achievements (e.g., "Reduced latency by 45%", "Managed $50k cloud budget", "Scaled from 10k to 500k users").');
+    improvements.push({
+      id: 'fix-metrics',
+      title: 'Missing Quantifiable Metrics',
+      description: 'Add specific percentages, request volumes, or dollar savings to your accomplishments.',
+      actionLabel: 'Inject Impact Metrics',
+      replacementType: 'metrics'
+    });
   }
 
-  // 3. Technical Keyword Density (Weight: 15%)
-  const techMatches = (about + ' ' + headline + ' ' + experience).match(/(?:Go|TypeScript|React|Node|AWS|PostgreSQL|Docker|Kubernetes|Kafka|Python|GraphQL)/gi) || [];
+  // 4. Recruiter Boolean Keywords
+  const techMatches = (about + ' ' + headline + ' ' + experience).match(/(?:Go|TypeScript|React|Node|AWS|PostgreSQL|Docker|Kubernetes|Kafka|Python|GraphQL|Microservices|Distributed Systems)/gi) || [];
   if (techMatches.length >= 4) {
-    score += 8;
+    score += 10;
     strengths.push('High density of indexed technical keywords for recruiter search filters.');
   } else {
-    improvements.push('Add indexed tech keywords across your About and Experience sections to match Boolean recruiter searches.');
+    improvements.push({
+      id: 'fix-keywords',
+      title: 'Low Keyword Density',
+      description: 'Add core frameworks, cloud platforms, and architecture terms to match recruiter filters.',
+      actionLabel: 'Optimize Keyword Density',
+      replacementType: 'keywords'
+    });
   }
 
-  score = Math.min(98, Math.max(45, score));
+  score = Math.min(98, Math.max(40, score));
 
-  // Generate 3 High-Impact Headline Alternatives
+  // 3 Ready-to-apply Magnetic Headlines
   const generatedHeadlines = [
-    'Senior Full-Stack Engineer | React, TypeScript, Node.js | Scaled Distributed Systems to 1M+ Users',
+    'Senior Full-Stack Engineer | React, TypeScript, Node.js, AWS | Scaled Distributed Systems to 1M+ Users',
     'Staff Backend Architect | Go, Kafka, PostgreSQL, AWS | High-Throughput & Event-Driven Systems',
-    'Lead Software Engineer | Cloud-Native Microservices & High-Scale FinTech Architecture'
+    'Lead Software Engineer | Microservices, Cloud Architecture & Scalable Web Applications'
   ];
 
-  // Generate Structured About Rewrite
+  // Ready-to-apply Structured About Rewrite
   const generatedAbout = `
 🚀 **About Me:**
 Results-driven Senior Software Engineer with 6+ years specializing in distributed systems, event-driven architectures, and high-performance web applications. Passionate about solving complex scaling bottlenecks and writing resilient, test-driven code.
 
-🛠️ **Core Competencies:**
-- **Languages:** TypeScript, JavaScript, Go, Python, SQL
-- **Frameworks & Libs:** Node.js, Express, React, Next.js, GraphQL
-- **Infrastructure & Data:** AWS, Docker, Kubernetes, PostgreSQL, Redis, Kafka
+🛠️ **Core Technical Expertise:**
+• **Languages:** TypeScript, JavaScript, Go, Python, SQL
+• **Frameworks & Libs:** Node.js, Express, React, Next.js, GraphQL
+• **Cloud & Infrastructure:** AWS, Docker, Kubernetes, PostgreSQL, Redis, Kafka
 
-📈 **Key Impact Highlights:**
+📈 **Key Career Impact:**
 • Architected payment microservices processing 45k+ req/sec with 99.99% reliability.
-• Reduced database query latency by 54% through optimized execution plans.
+• Reduced database query latency by 54% through optimized PostgreSQL query execution.
 • Mentored 8+ engineers and championed automated CI/CD and rigorous code review standards.
 
-📫 Open to Staff & Lead Software Engineering opportunities (Remote / Bengaluru).
+📫 Open to Staff & Lead Software Engineering opportunities (Remote / Hybrid).
 `.trim();
 
   return {
     platform: 'linkedin',
-    profileUrl: profileUrl || 'https://linkedin.com',
+    profileUrl: profileUrl || '',
     score,
     grade: score >= 85 ? 'A+' : (score >= 75 ? 'A' : (score >= 60 ? 'B' : 'C')),
     strengths,

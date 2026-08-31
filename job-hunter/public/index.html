@@ -33,7 +33,7 @@
         </button>
         <button class="nav-item" data-tab="tab-auditor" id="nav-auditor-btn">
           <span class="icon">⭐</span>
-          <span>Profile Rater (LI/GH)</span>
+          <span>Profile Rater & Fixer</span>
         </button>
         <button class="nav-item" data-tab="tab-history" id="nav-history-btn">
           <span class="icon">📊</span>
@@ -136,37 +136,49 @@
         </div>
       </section>
 
-      <!-- TAB 3: Profile Rater (LinkedIn & GitHub) -->
+      <!-- TAB 3: Profile Rater & Interactive Fixer -->
       <section class="tab-pane" id="tab-auditor">
         <div class="profile-grid">
           <!-- LinkedIn Auditor Card -->
           <div class="major-card">
-            <h3 class="card-heading">👔 LinkedIn Profile Rater</h3>
-            <p class="card-subheading">Evaluates recruiter SEO, keyword density, and magnetic headline formulation.</p>
+            <div class="card-header-flex">
+              <h3 class="card-heading">👔 LinkedIn Profile Rater & Fixer</h3>
+              <button class="btn-pill" id="btn-li-load-master">📥 Load from Master Profile</button>
+            </div>
+            <p class="card-subheading">Enter your LinkedIn URL / details to rate your recruiter SEO and apply instant 1-click fixes.</p>
 
             <form id="linkedin-audit-form">
+              <div class="form-field">
+                <label for="li-url">LinkedIn Profile URL</label>
+                <input type="text" id="li-url" placeholder="https://linkedin.com/in/your-profile">
+              </div>
               <div class="form-field">
                 <label for="li-headline">Current Headline</label>
                 <input type="text" id="li-headline" placeholder="e.g. Software Engineer at TechCorp" required>
               </div>
               <div class="form-field">
                 <label for="li-about">About / Summary Section</label>
-                <textarea id="li-about" rows="5" placeholder="Paste your current LinkedIn About section..." required></textarea>
+                <textarea id="li-about" rows="4" placeholder="Paste your current LinkedIn About section..." required></textarea>
               </div>
-              <button type="submit" class="btn-primary" id="btn-audit-li">
-                <span>⚡ Rate LinkedIn Profile</span>
-              </button>
+              <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn-primary" id="btn-audit-li">
+                  <span>⚡ Rate LinkedIn Profile</span>
+                </button>
+              </div>
             </form>
 
             <div id="li-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
-              <!-- Dynamically populated -->
+              <!-- Dynamically populated with score, strengths, fixes, and apply buttons -->
             </div>
           </div>
 
           <!-- GitHub Auditor Card -->
           <div class="major-card">
-            <h3 class="card-heading">💻 GitHub Presence Rater</h3>
-            <p class="card-subheading">Audits public repos, demo links, documentation, and generates a ready-to-use profile README.</p>
+            <div class="card-header-flex">
+              <h3 class="card-heading">💻 GitHub Presence Rater & Fixer</h3>
+              <button class="btn-pill" id="btn-gh-load-master">📥 Load from Master Profile</button>
+            </div>
+            <p class="card-subheading">Audits public repos, project documentation, and provides 1-click README generators.</p>
 
             <form id="github-audit-form">
               <div class="form-field">
