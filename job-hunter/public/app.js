@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentResumeMode = 'upload';
   let uploadedResumeText = '';
   let uploadedResumeName = '';
+  let activePromptType = 'linkedin';
 
   // DOM Elements
   const navBtns = document.querySelectorAll('.nav-item');
@@ -59,6 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardLiBreakdown = document.getElementById('card-li-breakdown');
   const cardResumeBreakdown = document.getElementById('card-resume-breakdown');
 
+  // Prompt Modal Elements
+  const promptModal = document.getElementById('prompt-modal');
+  const promptModalTitle = document.getElementById('prompt-modal-title');
+  const btnClosePromptModal = document.getElementById('btn-close-prompt-modal');
+  const promptTextDisplay = document.getElementById('prompt-text-display');
+  const promptResponseDisplay = document.getElementById('prompt-response-display');
+  const btnCopyGeneratedPrompt = document.getElementById('btn-copy-generated-prompt');
+  const btnSendPromptCdp = document.getElementById('btn-send-prompt-cdp');
+  const btnPersistAssetChanges = document.getElementById('btn-persist-asset-changes');
+
   const pdfModal = document.getElementById('pdf-modal');
   const modalPdfTitle = document.getElementById('modal-pdf-title');
   const pdfIframe = document.getElementById('pdf-iframe');
@@ -77,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Resume File Drop Zone
+  // Resume Drop Zone
   resumeUploadZone.addEventListener('click', (e) => {
     if (e.target !== btnRemoveResume) {
       resumeFileInput.click();
@@ -225,6 +236,128 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prof) {
       prefillAssets(prof);
       alert('Pre-filled GitHub, LinkedIn, and Master Resume from saved profile!');
+    }
+  });
+
+  // Generate Prompt Buttons
+  document.querySelectorAll('.btn-gen-prompt').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const type = e.currentTarget.getAttribute('data-type');
+      activePromptType = type;
+      promptModalTitle.innerText = `🤖 Claude Prompt for ${type.toUpperCase()}`;
+
+      let payload = {};
+      const prof = loadedProfile || await fetchProfileData();
+
+      if (type === 'linkedin') {
+        payload = {
+          url: scLinkedinUrl.value || prof?.personal?.linkedin,
+          headline: scLinkedinHeadline.value || prof?.personal?.title,
+          about: scLinkedinAbout.value || prof?.summary
+        };
+      } else if (type === 'github') {
+        payload = {
+          username: scGithub.value || prof?.personal?.github,
+          bio: prof?.personal?.title || prof?.summary
+        };
+      } else if (type === 'resume') {
+        if (currentResumeMode === 'upload' && uploadedResumeText) {
+          payload = { rawText: uploadedResumeText };
+        } else if (currentResumeMode === 'paste' && scResumeText.value.trim()) {
+          payload = { rawText: scResumeText.value.trim() };
+        } else {
+          payload = prof || {};
+        }
+      }
+
+      try {
+        const res = await fetch('/api/prompts/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type, payload })
+        });
+        const data = await res.json();
+        promptTextDisplay.value = data.prompt;
+        promptResponseDisplay.value = '';
+        promptModal.style.display = 'flex';
+      } catch (err) {
+        alert(`Error generating prompt: ${err.message}`);
+      }
+    });
+  });
+
+  btnClosePromptModal.addEventListener('click', () => {
+    promptModal.style.display = 'none';
+  });
+
+  btnCopyGeneratedPrompt.addEventListener('click', () => {
+    navigator.clipboard.writeText(promptTextDisplay.value);
+    alert('Claude prompt copied to clipboard!');
+  });
+
+  btnSendPromptCdp.addEventListener('click', async () => {
+    btnSendPromptCdp.innerText = 'Dispatching to Claude in Chrome...';
+    btnSendPromptCdp.disabled = true;
+
+    try {
+      const res = await fetch('/api/prompts/send-claude', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptTextDisplay.value })
+      });
+      const data = await res.json();
+      if (data.success) {
+        promptResponseDisplay.value = data.response;
+        alert('Received response from Claude!');
+      } else {
+        alert(data.error || 'Failed to dispatch to Claude');
+      }
+    } catch (err) {
+      alert(`Error sending to Claude: ${err.message}`);
+    } finally {
+      btnSendPromptCdp.innerText = '⚡ Send to Claude (CDP)';
+      btnSendPromptCdp.disabled = false;
+    }
+  });
+
+  // Save & Persist Asset Changes
+  btnPersistAssetChanges.addEventListener('click', async () => {
+    const responseText = promptResponseDisplay.value.trim();
+    if (!responseText) {
+      alert('Please paste Claude’s response or make changes in the Response box first.');
+      return;
+    }
+
+    let assetData = {};
+    if (activePromptType === 'linkedin') {
+      assetData = {
+        url: scLinkedinUrl.value,
+        about: responseText
+      };
+    } else if (activePromptType === 'github') {
+      assetData = {
+        username: scGithub.value
+      };
+    } else if (activePromptType === 'resume') {
+      assetData = {
+        summary: responseText
+      };
+    }
+
+    try {
+      const res = await fetch('/api/profile/save-asset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assetType: activePromptType, data: assetData })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`✅ Changes persistently saved to master_profile.json!`);
+        promptModal.style.display = 'none';
+        fetchProfileData();
+      }
+    } catch (err) {
+      alert(`Save error: ${err.message}`);
     }
   });
 
@@ -428,7 +561,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
 
-        // Smooth scroll to results
         scorecardResultsArea.scrollIntoView({ behavior: 'smooth' });
       }
     } catch (err) {

@@ -5,15 +5,17 @@ import { initDatabase, getQueuedJobs, getAllJobs, getJobById, updateJobStatus } 
 import { loadMasterProfile, saveMasterProfile } from '../core/profile.js';
 import { processDiscoveredJob } from '../scrapers/discovery-manager.js';
 import { submitApprovedJob } from '../submitters/submitter-manager.js';
-import { connectToChrome, checkCdpAvailable } from '../cdp/chrome-bridge.js';
+import { connectToChrome, checkCdpAvailable, findOrCreateTab } from '../cdp/chrome-bridge.js';
+import { promptClaudeSession } from '../cdp/claude-worker.js';
 import { auditGitHubProfile } from '../core/github-auditor.js';
 import { auditLinkedInProfile } from '../core/linkedin-auditor.js';
 import { scoreUnifiedProfile } from '../core/unified-scorer.js';
+import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt } from '../core/prompt-generator.js';
 
 const app = express();
 const PORT = process.env.PORT || 4200;
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.resolve(process.cwd(), 'public')));
 app.use('/data/generated_resumes', express.static(path.resolve(process.cwd(), 'data/generated_resumes')));
 
@@ -115,6 +117,72 @@ app.put('/api/profile', (req, res) => {
   }
 });
 
+// API: Save Specific Asset Changes Persistently
+app.post('/api/profile/save-asset', (req, res) => {
+  const { assetType, data } = req.body;
+  try {
+    const profile = loadMasterProfile('data/master_profile.json');
+
+    if (assetType === 'linkedin') {
+      if (data.url) profile.personal.linkedin = data.url;
+      if (data.headline) profile.personal.title = data.headline;
+      if (data.about) profile.summary = data.about;
+    } else if (assetType === 'github') {
+      if (data.username) profile.personal.github = data.username.startsWith('http') ? data.username : `https://github.com/${data.username}`;
+    } else if (assetType === 'resume') {
+      if (data.summary) profile.summary = data.summary;
+      if (data.experience) profile.masterExperience = data.experience;
+      if (data.skills) profile.skills = data.skills;
+    }
+
+    saveMasterProfile(profile, 'data/master_profile.json');
+    res.json({ success: true, message: `${assetType} changes saved persistently to master_profile.json!`, profile });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Generate Claude Prompt for Asset
+app.post('/api/prompts/generate', (req, res) => {
+  const { type, payload } = req.body;
+  let prompt = '';
+
+  if (type === 'linkedin') {
+    prompt = buildLinkedInPrompt(payload);
+  } else if (type === 'github') {
+    prompt = buildGitHubPrompt(payload);
+  } else if (type === 'resume') {
+    prompt = buildResumePrompt(payload);
+  } else {
+    return res.status(400).json({ error: 'Invalid prompt type' });
+  }
+
+  res.json({ success: true, prompt });
+});
+
+// API: Send Prompt Directly to Claude in Chrome via CDP
+app.post('/api/prompts/send-claude', async (req, res) => {
+  const { prompt } = req.body;
+  if (!prompt) return res.status(400).json({ error: 'Missing prompt text' });
+
+  try {
+    const isCdp = await checkCdpAvailable();
+    if (!isCdp) {
+      return res.status(400).json({
+        error: 'Chrome CDP not detected on port 9222. Please copy prompt to Claude or launch Chrome with debugging.'
+      });
+    }
+
+    const browser = await connectToChrome();
+    const claudePage = await findOrCreateTab(browser, 'claude.ai', 'https://claude.ai/new');
+    const response = await promptClaudeSession(claudePage, prompt);
+
+    res.json({ success: true, response });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // API: Manually ingest / paste a JD to tailor & queue
 app.post('/api/jobs/tailor-new', async (req, res) => {
   const { title, company, location, url, jdText } = req.body;
@@ -166,7 +234,6 @@ app.post('/api/audit/linkedin', (req, res) => {
 app.post('/api/audit/full-profile', async (req, res) => {
   try {
     let payload = req.body;
-    // If resumeData is empty, fallback to master_profile.json
     if (!payload.resumeData || Object.keys(payload.resumeData).length === 0) {
       try {
         payload.resumeData = loadMasterProfile('data/master_profile.json');
