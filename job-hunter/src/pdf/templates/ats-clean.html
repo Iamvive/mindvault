@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{CANDIDATE_NAME}} - Resume</title>
+  <style>
+    {{STYLESHEET}}
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <!-- Header -->
+    <header class="resume-header">
+      <h1 class="candidate-name">{{CANDIDATE_NAME}}</h1>
+      <div class="candidate-title">{{CANDIDATE_TITLE}}</div>
+      <div class="contact-links">
+        <span>📧 {{EMAIL}}</span>
+        <span>📱 {{PHONE}}</span>
+        <span>📍 {{LOCATION}}</span>
+        {{#LINKEDIN}}<span>🔗 <a href="{{LINKEDIN}}">LinkedIn</a></span>{{/LINKEDIN}}
+        {{#GITHUB}}<span>💻 <a href="{{GITHUB}}">GitHub</a></span>{{/GITHUB}}
+        {{#PORTFOLIO}}<span>🌐 <a href="{{PORTFOLIO}}">Portfolio</a></span>{{/PORTFOLIO}}
+      </div>
+    </header>
+
+    <!-- Professional Summary -->
+    <section class="section">
+      <h2 class="section-title">Professional Summary</h2>
+      <p class="summary-text">{{SUMMARY}}</p>
+    </section>
+
+    <!-- Core Technical Skills -->
+    <section class="section">
+      <h2 class="section-title">Technical Expertise</h2>
+      <div class="skills-grid">
+        {{SKILLS_ROWS}}
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="section">
+      <h2 class="section-title">Work Experience</h2>
+      {{EXPERIENCE_ITEMS}}
+    </section>
+
+    <!-- Featured Projects -->
+    {{#PROJECTS_SECTION}}
+    <section class="section">
+      <h2 class="section-title">Key Projects</h2>
+      {{PROJECT_ITEMS}}
+    </section>
+    {{/PROJECTS_SECTION}}
+
+    <!-- Education -->
+    <section class="section">
+      <h2 class="section-title">Education</h2>
+      {{EDUCATION_ITEMS}}
+    </section>
+  </div>
+</body>
+</html>

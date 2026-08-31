@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@page {
+  size: A4 portrait;
+  margin: 12mm 14mm 12mm 14mm;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #111827;
+  background: #ffffff;
+  line-height: 1.35;
+  font-size: 9.5pt;
+  -webkit-font-smoothing: antialiased;
+}
+
+.resume-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header */
+.resume-header {
+  border-bottom: 1.5px solid #111827;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.candidate-name {
+  font-size: 18pt;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #111827;
+  text-transform: uppercase;
+}
+
+.candidate-title {
+  font-size: 11pt;
+  font-weight: 600;
+  color: #4b5563;
+  margin-top: 2px;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 8.5pt;
+  color: #4b5563;
+}
+
+.contact-links a, .contact-links span {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 2px;
+  margin-bottom: 6px;
+}
+
+.summary-text {
+  font-size: 9pt;
+  color: #374151;
+  line-height: 1.4;
+}
+
+/* Experience */
+.experience-item, .project-item {
+  margin-bottom: 8px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.item-title {
+  font-weight: 700;
+  font-size: 9.5pt;
+  color: #111827;
+}
+
+.item-company {
+  font-weight: 600;
+  color: #374151;
+}
+
+.item-date, .item-location {
+  font-size: 8.5pt;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.bullet-list {
+  list-style-type: disc;
+  margin-left: 16px;
+  margin-top: 3px;
+}
+
+.bullet-list li {
+  margin-bottom: 2px;
+  font-size: 8.8pt;
+  color: #374151;
+  line-height: 1.35;
+}
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  row-gap: 3px;
+  font-size: 8.8pt;
+}
+
+.skill-category {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.skill-values {
+  color: #374151;
+}
+
+/* Education */
+.education-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9pt;
+}
+
+@media print {
+  body {
+    background: transparent;
+  }
+  .resume-container {
+    padding: 0;
+  }
+}
