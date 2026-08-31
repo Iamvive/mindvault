@@ -8,6 +8,7 @@ import { submitApprovedJob } from '../submitters/submitter-manager.js';
 import { connectToChrome, checkCdpAvailable } from '../cdp/chrome-bridge.js';
 import { auditGitHubProfile } from '../core/github-auditor.js';
 import { auditLinkedInProfile } from '../core/linkedin-auditor.js';
+import { scoreUnifiedProfile } from '../core/unified-scorer.js';
 
 const app = express();
 const PORT = process.env.PORT || 4200;
@@ -158,6 +159,25 @@ app.post('/api/audit/linkedin', (req, res) => {
     res.json({ success: true, audit: result });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+// API: Score Complete 3-Pillar Profile (LinkedIn + GitHub + Resume)
+app.post('/api/audit/full-profile', async (req, res) => {
+  try {
+    let payload = req.body;
+    // If resumeData is empty, fallback to master_profile.json
+    if (!payload.resumeData || Object.keys(payload.resumeData).length === 0) {
+      try {
+        payload.resumeData = loadMasterProfile('data/master_profile.json');
+      } catch (e) {
+        // ignore
+      }
+    }
+    const result = await scoreUnifiedProfile(payload);
+    res.json({ success: true, scorecard: result });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

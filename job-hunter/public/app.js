@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let allQueuedJobs = [];
   let currentFilter = 'all';
   let loadedProfile = null;
-  let liScore = 0;
-  let ghScore = 0;
 
   // DOM Elements
   const navBtns = document.querySelectorAll('.nav-item');
@@ -27,34 +25,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSaveProfile = document.getElementById('btn-save-profile');
   const historyTableBody = document.getElementById('history-table-body');
 
-  const linkedinAuditForm = document.getElementById('linkedin-audit-form');
-  const liAuditResult = document.getElementById('li-audit-result');
-  const btnLiLoadMaster = document.getElementById('btn-li-load-master');
-  const liUrl = document.getElementById('li-url');
-  const liHeadline = document.getElementById('li-headline');
-  const liAbout = document.getElementById('li-about');
+  // 3-Pillar Scorecard Elements
+  const scGithub = document.getElementById('sc-github');
+  const scLinkedinUrl = document.getElementById('sc-linkedin-url');
+  const scLinkedinHeadline = document.getElementById('sc-linkedin-headline');
+  const scLinkedinAbout = document.getElementById('sc-linkedin-about');
+  const scResumeSource = document.getElementById('sc-resume-source');
+  const customResumeWrapper = document.getElementById('custom-resume-wrapper');
+  const scResumeText = document.getElementById('sc-resume-text');
 
-  const githubAuditForm = document.getElementById('github-audit-form');
-  const ghAuditResult = document.getElementById('gh-audit-result');
-  const btnGhLoadMaster = document.getElementById('btn-gh-load-master');
-  const ghUsername = document.getElementById('gh-username');
-  const btnRunFullAudit = document.getElementById('btn-run-full-audit');
+  const btnPrefillAll = document.getElementById('btn-prefill-all');
+  const btnScoreAll = document.getElementById('btn-score-all');
+
+  const scorecardResultsArea = document.getElementById('scorecard-results-area');
+  const scOverallTitle = document.getElementById('sc-overall-title');
+  const scOverallSubtitle = document.getElementById('sc-overall-subtitle');
+  const scHeroScore = document.getElementById('sc-hero-score');
+  const scHeroGrade = document.getElementById('sc-hero-grade');
+  const scCrossInsights = document.getElementById('sc-cross-insights');
+
+  const cardGhBreakdown = document.getElementById('card-gh-breakdown');
+  const cardLiBreakdown = document.getElementById('card-li-breakdown');
+  const cardResumeBreakdown = document.getElementById('card-resume-breakdown');
 
   const pdfModal = document.getElementById('pdf-modal');
   const modalPdfTitle = document.getElementById('modal-pdf-title');
   const pdfIframe = document.getElementById('pdf-iframe');
   const btnCloseModal = document.getElementById('btn-close-modal');
 
-  function updateBrandHealth() {
-    if (liScore > 0 && ghScore > 0) {
-      const avg = Math.round((liScore + ghScore) / 2);
-      statBrandScore.innerText = `${avg}%`;
-    } else if (liScore > 0) {
-      statBrandScore.innerText = `${liScore}%`;
-    } else if (ghScore > 0) {
-      statBrandScore.innerText = `${ghScore}%`;
+  // Resume source switcher
+  scResumeSource.addEventListener('change', () => {
+    if (scResumeSource.value === 'custom') {
+      customResumeWrapper.style.display = 'block';
+    } else {
+      customResumeWrapper.style.display = 'none';
     }
-  }
+  });
 
   // Navigation Tabs
   navBtns.forEach(btn => {
@@ -66,9 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetTab = btn.getAttribute('data-tab');
       document.getElementById(targetTab).classList.add('active');
 
-      if (targetTab === 'tab-auditor') {
-        pageTitle.innerText = 'Profile Rater & Fixer';
-        pageSubtitle.innerText = 'Standalone evaluation for your LinkedIn & GitHub presence — zero JD required.';
+      if (targetTab === 'tab-scorecard') {
+        pageTitle.innerText = 'My Profile & 3-Pillar AI Scorecard';
+        pageSubtitle.innerText = 'Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.';
       } else if (targetTab === 'tab-queue') {
         pageTitle.innerText = 'Approval Queue';
         pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
@@ -132,20 +138,234 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Auto pre-fill on first load if inputs are empty
+  function prefillAssets(prof) {
+    if (!prof) return;
+    if (prof.personal?.github) scGithub.value = prof.personal.github;
+    if (prof.personal?.linkedin) scLinkedinUrl.value = prof.personal.linkedin;
+    if (prof.personal?.title) scLinkedinHeadline.value = prof.personal.title;
+    if (prof.summary) scLinkedinAbout.value = prof.summary;
+  }
+
+  // Auto pre-fill on start
   fetchProfileData().then(prof => {
+    if (prof) prefillAssets(prof);
+  });
+
+  btnPrefillAll.addEventListener('click', async () => {
+    const prof = await fetchProfileData();
     if (prof) {
-      if (!liUrl.value && prof.personal?.linkedin) liUrl.value = prof.personal.linkedin;
-      if (!liHeadline.value && prof.personal?.title) liHeadline.value = prof.personal.title;
-      if (!liAbout.value && prof.summary) liAbout.value = prof.summary;
-      if (!ghUsername.value && prof.personal?.github) ghUsername.value = prof.personal.github;
+      prefillAssets(prof);
+      alert('Pre-filled GitHub, LinkedIn, and Master Resume from saved profile!');
     }
   });
 
-  // Run Both Audits
-  btnRunFullAudit.addEventListener('click', () => {
-    document.getElementById('btn-audit-li').click();
-    document.getElementById('btn-audit-gh').click();
+  // Score All 3 Pillars
+  btnScoreAll.addEventListener('click', async () => {
+    btnScoreAll.innerText = 'Auditing 3 Pillars with AI...';
+    btnScoreAll.disabled = true;
+
+    let resumeData = null;
+    if (scResumeSource.value === 'custom' && scResumeText.value.trim()) {
+      resumeData = { text: scResumeText.value.trim() };
+    } else {
+      resumeData = loadedProfile || await fetchProfileData();
+    }
+
+    const payload = {
+      githubUsernameOrUrl: scGithub.value.trim(),
+      linkedinUrl: scLinkedinUrl.value.trim(),
+      linkedinHeadline: scLinkedinHeadline.value.trim(),
+      linkedinAbout: scLinkedinAbout.value.trim(),
+      resumeData
+    };
+
+    try {
+      const res = await fetch('/api/audit/full-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        const sc = data.scorecard;
+        statBrandScore.innerText = `${sc.overallScore}%`;
+
+        // Render Hero
+        scorecardResultsArea.style.display = 'block';
+        scHeroScore.innerText = `${sc.overallScore}%`;
+        scHeroGrade.innerText = `Grade ${sc.overallGrade}`;
+        scOverallTitle.innerText = `Overall Readiness: ${sc.overallScore}/100 (Grade ${sc.overallGrade})`;
+        scOverallSubtitle.innerText = sc.overallScore >= 85 ?
+          'Your 3 assets (GitHub, LinkedIn, and Resume) are in the top tier for senior tech roles.' :
+          'Good foundation with immediate actionable optimization opportunities across your 3 pillars.';
+
+        // Render Cross Insights
+        if (sc.crossAssetInsights && sc.crossAssetInsights.length > 0) {
+          scCrossInsights.innerHTML = `
+            <strong style="font-size: 12px; color: var(--text-primary);">🔄 Cross-Asset Alignment Gaps:</strong>
+            <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 6px;">
+              ${sc.crossAssetInsights.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          `;
+        } else {
+          scCrossInsights.innerHTML = `
+            <div style="font-size: 12px; color: #065f46;">
+              ✅ <strong>High Consistency:</strong> Your GitHub projects, LinkedIn skills, and Resume experience are mutually aligned.
+            </div>
+          `;
+        }
+
+        // 1. Render GitHub Pillar
+        const gh = sc.pillars.github;
+        if (gh && !gh.error) {
+          cardGhBreakdown.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h4 style="font-size: 15px; font-weight: 700;">💻 1. GitHub Score</h4>
+              <div class="ats-score-chip" style="padding: 4px 10px;">
+                <span class="ats-val" style="font-size: 14px;">${gh.score}/100</span>
+              </div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Grade ${gh.grade} • ${gh.publicRepos || 0} Public Repos</div>
+
+            <div style="margin-bottom: 10px;">
+              <strong style="font-size: 11.5px; color: #065f46;">Strengths:</strong>
+              <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
+                ${(gh.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+
+            ${(gh.improvements || []).length > 0 ? `
+              <div style="margin-bottom: 12px;">
+                <strong style="font-size: 11.5px; color: var(--sg-primary);">Fixes:</strong>
+                <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
+                  ${gh.improvements.slice(0, 2).map(i => `<li>${i}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+
+            <button class="btn-pill btn-copy-gh-readme" data-readme="${encodeURIComponent(gh.recommendedReadme || '')}" style="width: 100%; margin-top: 8px;">
+              📋 Copy Profile README
+            </button>
+          `;
+        } else {
+          cardGhBreakdown.innerHTML = `<div style="font-size: 12px; color: var(--text-muted);">GitHub not scored or rate limited.</div>`;
+        }
+
+        // 2. Render LinkedIn Pillar
+        const li = sc.pillars.linkedin;
+        if (li) {
+          cardLiBreakdown.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h4 style="font-size: 15px; font-weight: 700;">👔 2. LinkedIn Score</h4>
+              <div class="ats-score-chip" style="padding: 4px 10px;">
+                <span class="ats-val" style="font-size: 14px;">${li.score}/100</span>
+              </div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Grade ${li.grade} • Recruiter SEO Index</div>
+
+            <div style="margin-bottom: 10px;">
+              <strong style="font-size: 11.5px; color: #065f46;">Strengths:</strong>
+              <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
+                ${(li.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+
+            ${(li.improvements || []).length > 0 ? `
+              <div style="margin-bottom: 12px;">
+                <strong style="font-size: 11.5px; color: var(--sg-primary);">Fixes:</strong>
+                <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
+                  ${li.improvements.slice(0, 2).map(i => `<li>${typeof i === 'object' ? i.title : i}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+
+            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+              <button class="btn-primary btn-apply-li-head" data-head="${encodeURIComponent(li.generatedHeadlines?.[0] || '')}" style="font-size: 11.5px; padding: 6px 12px;">
+                ✨ Apply Magnetic Headline
+              </button>
+              <button class="btn-secondary btn-apply-li-about" data-about="${encodeURIComponent(li.generatedAbout || '')}" style="font-size: 11.5px; padding: 6px 12px;">
+                ✨ Adopt High-Impact About Story
+              </button>
+            </div>
+          `;
+        }
+
+        // 3. Render Resume Pillar
+        const resPillar = sc.pillars.resume;
+        if (resPillar) {
+          cardResumeBreakdown.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h4 style="font-size: 15px; font-weight: 700;">📄 3. Resume ATS Score</h4>
+              <div class="ats-score-chip" style="padding: 4px 10px;">
+                <span class="ats-val" style="font-size: 14px;">${resPillar.score}/100</span>
+              </div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Grade ${resPillar.grade} • ${resPillar.metricsCount || 0} Metrics Found</div>
+
+            <div style="margin-bottom: 10px;">
+              <strong style="font-size: 11.5px; color: #065f46;">Strengths:</strong>
+              <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
+                ${(resPillar.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+
+            ${(resPillar.improvements || []).length > 0 ? `
+              <div style="margin-bottom: 12px;">
+                <strong style="font-size: 11.5px; color: var(--sg-primary);">Fixes:</strong>
+                <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
+                  ${resPillar.improvements.slice(0, 2).map(i => `<li>${i}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+
+            <button class="btn-primary" id="btn-goto-tailor" style="width: 100%; margin-top: 8px; font-size: 11.5px; padding: 6px 12px;">
+              ✨ Generate ATS Single-Page PDF
+            </button>
+          `;
+        }
+
+        // Attach dynamic button listeners
+        document.querySelectorAll('.btn-copy-gh-readme').forEach(b => {
+          b.addEventListener('click', (e) => {
+            const readme = decodeURIComponent(e.currentTarget.getAttribute('data-readme'));
+            navigator.clipboard.writeText(readme);
+            alert('Profile README copied to clipboard!');
+          });
+        });
+
+        document.querySelectorAll('.btn-apply-li-head').forEach(b => {
+          b.addEventListener('click', (e) => {
+            const head = decodeURIComponent(e.currentTarget.getAttribute('data-head'));
+            scLinkedinHeadline.value = head;
+            btnScoreAll.click();
+          });
+        });
+
+        document.querySelectorAll('.btn-apply-li-about').forEach(b => {
+          b.addEventListener('click', (e) => {
+            const about = decodeURIComponent(e.currentTarget.getAttribute('data-about'));
+            scLinkedinAbout.value = about;
+            btnScoreAll.click();
+          });
+        });
+
+        const btnGotoTailor = document.getElementById('btn-goto-tailor');
+        if (btnGotoTailor) {
+          btnGotoTailor.addEventListener('click', () => {
+            document.getElementById('nav-tailor-btn').click();
+          });
+        }
+
+        // Smooth scroll to results
+        scorecardResultsArea.scrollIntoView({ behavior: 'smooth' });
+      }
+    } catch (err) {
+      alert(`Scorecard Error: ${err.message}`);
+    } finally {
+      btnScoreAll.innerText = '⚡ Score My 3-Pillar Profile';
+      btnScoreAll.disabled = false;
+    }
   });
 
   // Load Queue
@@ -313,244 +533,6 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = false;
     }
   });
-
-  // Pre-fill from Master Profile
-  btnLiLoadMaster.addEventListener('click', async () => {
-    const prof = await fetchProfileData();
-    if (prof) {
-      liUrl.value = prof.personal?.linkedin || '';
-      liHeadline.value = prof.personal?.title || '';
-      liAbout.value = prof.summary || '';
-      document.getElementById('btn-audit-li').click();
-    }
-  });
-
-  btnGhLoadMaster.addEventListener('click', async () => {
-    const prof = await fetchProfileData();
-    if (prof) {
-      ghUsername.value = prof.personal?.github || '';
-      document.getElementById('btn-audit-gh').click();
-    }
-  });
-
-  // LinkedIn Audit Form
-  linkedinAuditForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('btn-audit-li');
-    btn.innerText = 'Analyzing...';
-    btn.disabled = true;
-
-    const payload = {
-      headline: liHeadline.value,
-      about: liAbout.value,
-      profileUrl: liUrl.value
-    };
-
-    try {
-      const res = await fetch('/api/audit/linkedin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (data.success) {
-        const audit = data.audit;
-        liScore = audit.score;
-        updateBrandHealth();
-        renderLinkedInAudit(audit);
-      }
-    } catch (err) {
-      alert(`Audit failed: ${err.message}`);
-    } finally {
-      btn.innerText = '⚡ Rate LinkedIn Profile';
-      btn.disabled = false;
-    }
-  });
-
-  function renderLinkedInAudit(audit) {
-    liAuditResult.style.display = 'block';
-    liAuditResult.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: var(--bg-sidebar); padding: 12px 16px; border-radius: var(--radius-card);">
-        <div>
-          <div style="font-weight: 700; font-size: 16px;">LinkedIn Health: Grade ${audit.grade}</div>
-          <span style="font-size: 12px; color: var(--text-muted);">${audit.score >= 85 ? '🌟 Recruiter SEO Optimized' : '⚠️ Has optimization opportunities'}</span>
-        </div>
-        <div class="ats-score-chip">
-          <span class="ats-val">${audit.score}/100</span>
-          <span class="ats-tag">Recruiter Score</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 14px;">
-        <strong style="font-size: 12px; color: #065f46;">✅ Profile Strengths:</strong>
-        <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-          ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
-        </ul>
-      </div>
-
-      ${audit.improvements.length > 0 ? `
-        <div style="margin-bottom: 16px;">
-          <strong style="font-size: 12px; color: var(--sg-primary);">🛠️ Actionable Gaps & 1-Click Fixes:</strong>
-          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-            ${audit.improvements.map((imp, idx) => `
-              <div style="background: var(--bg-app); border: 1px solid var(--border-light); padding: 10px 14px; border-radius: var(--radius-card); display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; font-size: 13px;">${imp.title}</div>
-                  <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">${imp.description}</div>
-                </div>
-                <button class="btn-primary btn-apply-li-fix" data-type="${imp.replacementType}" data-idx="${idx}" style="font-size: 11px; padding: 5px 12px;">
-                  ✨ ${imp.actionLabel}
-                </button>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      ` : ''}
-
-      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="font-size: 13px;">✨ Recommended Magnetic Headlines:</strong>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
-          ${audit.generatedHeadlines.map((h, idx) => `
-            <div style="font-size: 12px; background: var(--bg-sidebar); padding: 10px 14px; border-radius: var(--radius-card); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
-              <span>${h}</span>
-              <button class="btn-secondary btn-apply-headline-direct" data-headline="${encodeURIComponent(h)}" style="font-size: 11px; padding: 4px 10px; margin-left: 10px;">
-                Apply
-              </button>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-
-      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="font-size: 13px;">📝 Optimized About Story Rewrite:</strong>
-          <button class="btn-pill" id="btn-copy-about-story">📋 Copy Story</button>
-        </div>
-        <textarea id="li-generated-about-text" readonly rows="7" style="width: 100%; margin-top: 8px; font-size: 12px; background: var(--bg-sidebar); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 10px;">${audit.generatedAbout}</textarea>
-        <button class="btn-primary" id="btn-apply-about-story" style="margin-top: 8px; font-size: 12px; width: 100%;">
-          ✨ Adopt This About Story & Re-Rate
-        </button>
-      </div>
-    `;
-
-    document.querySelectorAll('.btn-apply-headline-direct').forEach(b => {
-      b.addEventListener('click', (e) => {
-        const text = decodeURIComponent(e.currentTarget.getAttribute('data-headline'));
-        liHeadline.value = text;
-        document.getElementById('btn-audit-li').click();
-      });
-    });
-
-    document.querySelectorAll('.btn-apply-li-fix').forEach(b => {
-      b.addEventListener('click', (e) => {
-        const type = e.currentTarget.getAttribute('data-type');
-        if (type === 'headline' && audit.generatedHeadlines.length > 0) {
-          liHeadline.value = audit.generatedHeadlines[0];
-        } else if ((type === 'about' || type === 'metrics' || type === 'keywords') && audit.generatedAbout) {
-          liAbout.value = audit.generatedAbout;
-        }
-        document.getElementById('btn-audit-li').click();
-      });
-    });
-
-    const btnCopyStory = document.getElementById('btn-copy-about-story');
-    if (btnCopyStory) {
-      btnCopyStory.addEventListener('click', () => {
-        navigator.clipboard.writeText(audit.generatedAbout);
-        alert('Optimized About Section copied to clipboard!');
-      });
-    }
-
-    const btnApplyAboutStory = document.getElementById('btn-apply-about-story');
-    if (btnApplyAboutStory) {
-      btnApplyAboutStory.addEventListener('click', () => {
-        liAbout.value = audit.generatedAbout;
-        document.getElementById('btn-audit-li').click();
-      });
-    }
-  }
-
-  // GitHub Audit Form
-  githubAuditForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('btn-audit-gh');
-    btn.innerText = 'Auditing Repos...';
-    btn.disabled = true;
-
-    const usernameOrUrl = ghUsername.value;
-
-    try {
-      const res = await fetch('/api/audit/github', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usernameOrUrl })
-      });
-      const data = await res.json();
-      if (data.success) {
-        const audit = data.audit;
-        ghScore = audit.score;
-        updateBrandHealth();
-        renderGitHubAudit(audit);
-      } else {
-        alert(data.error || 'Failed to audit GitHub profile');
-      }
-    } catch (err) {
-      alert(`GitHub audit error: ${err.message}`);
-    } finally {
-      btn.innerText = '⚡ Rate GitHub Profile';
-      btn.disabled = false;
-    }
-  });
-
-  function renderGitHubAudit(audit) {
-    ghAuditResult.style.display = 'block';
-    ghAuditResult.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: var(--bg-sidebar); padding: 12px 16px; border-radius: var(--radius-card);">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          ${audit.avatarUrl ? `<img src="${audit.avatarUrl}" style="width: 36px; height: 36px; border-radius: 50%;">` : ''}
-          <div>
-            <div style="font-weight: 700; font-size: 15px;">${audit.name} (Grade ${audit.grade})</div>
-            <span style="font-size: 11px; color: var(--text-muted);">${audit.publicRepos} Public Repos • ${audit.followers} Followers</span>
-          </div>
-        </div>
-        <div class="ats-score-chip">
-          <span class="ats-val">${audit.score}/100</span>
-          <span class="ats-tag">Presence Score</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 14px;">
-        <strong style="font-size: 12px; color: #065f46;">✅ Strengths:</strong>
-        <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-          ${audit.strengths.map(s => `<li>${s}</li>`).join('')}
-        </ul>
-      </div>
-
-      ${audit.improvements.length > 0 ? `
-        <div style="margin-bottom: 14px;">
-          <strong style="font-size: 12px; color: var(--sg-primary);">⚠️ Gaps to Fix:</strong>
-          <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-            ${audit.improvements.map(imp => `<li>${imp}</li>`).join('')}
-          </ul>
-        </div>
-      ` : ''}
-
-      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="font-size: 13px;">📄 Suggested Profile README:</strong>
-          <button class="btn-pill" id="btn-copy-gh-readme">📋 Copy README</button>
-        </div>
-        <textarea readonly rows="8" style="width: 100%; margin-top: 8px; font-size: 11.5px; font-family: monospace; background: var(--bg-sidebar); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 10px;">${audit.recommendedReadme}</textarea>
-      </div>
-    `;
-
-    document.getElementById('btn-copy-gh-readme').addEventListener('click', () => {
-      navigator.clipboard.writeText(audit.recommendedReadme);
-      alert('GitHub Profile README markdown copied to clipboard!');
-    });
-  }
 
   // Load History
   async function loadHistory() {

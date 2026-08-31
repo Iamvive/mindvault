@@ -22,9 +22,9 @@
       </div>
 
       <nav class="nav-menu">
-        <button class="nav-item active" data-tab="tab-auditor" id="nav-auditor-btn">
-          <span class="icon">⭐</span>
-          <span>Profile Rater & Fixer</span>
+        <button class="nav-item active" data-tab="tab-scorecard" id="nav-scorecard-btn">
+          <span class="icon">🏆</span>
+          <span>My Profile & Scorecard</span>
         </button>
         <button class="nav-item" data-tab="tab-queue" id="nav-queue-btn">
           <span class="icon">📋</span>
@@ -59,13 +59,13 @@
       <!-- Top Metrics Header -->
       <header class="top-header">
         <div class="header-title">
-          <h2 id="page-title">Profile Rater & Fixer</h2>
-          <p id="page-subtitle">Standalone evaluation for your LinkedIn & GitHub presence — zero JD required.</p>
+          <h2 id="page-title">My Profile & 3-Pillar AI Scorecard</h2>
+          <p id="page-subtitle">Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.</p>
         </div>
         <div class="header-stats">
           <div class="stat-pill">
             <span class="stat-num" id="stat-brand-score">—</span>
-            <span class="stat-label">Brand Health</span>
+            <span class="stat-label">Readiness Score</span>
           </div>
           <div class="stat-pill">
             <span class="stat-num" id="stat-queued">0</span>
@@ -78,75 +78,117 @@
         </div>
       </header>
 
-      <!-- DEDICATED SECTION 1: Standalone Profile Rater & Fixer (LinkedIn + GitHub) -->
-      <section class="tab-pane active" id="tab-auditor">
-        <!-- Hero Header -->
+      <!-- SECTION 1: Unified 3-Pillar Scorecard (GitHub + LinkedIn + Resume) -->
+      <section class="tab-pane active" id="tab-scorecard">
+        <!-- Hero Action Card -->
         <div class="major-card" style="margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #fbfbfd 100%);">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
             <div>
-              <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">Global Presence Health Check</h3>
+              <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">The 3-Pillar Profile Rater & Fixer</h3>
               <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
-                Audit your public profiles against top 1% engineering talent. Recruiter SEO, magnetic hooks, metrics & portfolio polish.
+                Share your <strong>GitHub Link</strong>, <strong>LinkedIn Details</strong>, and <strong>Resume</strong> to get an instant comprehensive AI score & 1-click fixes.
               </p>
             </div>
-            <button class="btn-primary" id="btn-run-full-audit">
-              <span>⚡ Audit Both (LinkedIn & GitHub)</span>
-            </button>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-secondary" id="btn-prefill-all">📥 Load Saved Assets</button>
+              <button class="btn-primary" id="btn-score-all">⚡ Score My 3-Pillar Profile</button>
+            </div>
           </div>
         </div>
 
-        <div class="profile-grid">
-          <!-- LinkedIn Card -->
-          <div class="major-card">
-            <div class="card-header-flex">
-              <h3 class="card-heading">👔 LinkedIn Profile Optimizer</h3>
-              <button class="btn-pill" id="btn-li-load-master">📥 Load Saved Profile</button>
+        <!-- 3 Input Cards Grid -->
+        <div class="three-col-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px;">
+          <!-- Pillar 1: GitHub -->
+          <div class="major-card" style="padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 20px;">💻</span>
+              <h4 style="font-size: 15px; font-weight: 700;">1. GitHub Presence</h4>
             </div>
-            <p class="card-subheading">Evaluates recruiter SEO, boolean keywords, narrative hook, and quantifiable achievements.</p>
+            <div class="form-field">
+              <label for="sc-github">Username or Profile URL</label>
+              <input type="text" id="sc-github" placeholder="e.g. alexmercer-dev or https://github.com/...">
+            </div>
+            <p style="font-size: 11.5px; color: var(--text-muted);">Audits public repositories, project documentation depth, live demos, and README polish.</p>
+          </div>
 
-            <form id="linkedin-audit-form">
-              <div class="form-field">
-                <label for="li-url">LinkedIn Profile URL</label>
-                <input type="text" id="li-url" placeholder="https://linkedin.com/in/your-profile">
-              </div>
-              <div class="form-field">
-                <label for="li-headline">Current Headline</label>
-                <input type="text" id="li-headline" placeholder="e.g. Software Engineer at TechCorp" required>
-              </div>
-              <div class="form-field">
-                <label for="li-about">About / Summary Section</label>
-                <textarea id="li-about" rows="5" placeholder="Paste your current LinkedIn About section..." required></textarea>
-              </div>
-              <button type="submit" class="btn-primary" id="btn-audit-li">
-                <span>⚡ Rate LinkedIn Profile</span>
-              </button>
-            </form>
-
-            <div id="li-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
-              <!-- Populated with score, gaps, and 1-click fixes -->
+          <!-- Pillar 2: LinkedIn -->
+          <div class="major-card" style="padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 20px;">👔</span>
+              <h4 style="font-size: 15px; font-weight: 700;">2. LinkedIn Profile</h4>
+            </div>
+            <div class="form-field">
+              <label for="sc-linkedin-url">LinkedIn Profile URL</label>
+              <input type="text" id="sc-linkedin-url" placeholder="https://linkedin.com/in/...">
+            </div>
+            <div class="form-field">
+              <label for="sc-linkedin-headline">Headline</label>
+              <input type="text" id="sc-linkedin-headline" placeholder="e.g. Senior Backend Engineer | Go, AWS">
+            </div>
+            <div class="form-field">
+              <label for="sc-linkedin-about">About Section</label>
+              <textarea id="sc-linkedin-about" rows="2" placeholder="Paste your About section..."></textarea>
             </div>
           </div>
 
-          <!-- GitHub Card -->
-          <div class="major-card">
-            <div class="card-header-flex">
-              <h3 class="card-heading">💻 GitHub Presence Optimizer</h3>
-              <button class="btn-pill" id="btn-gh-load-master">📥 Load Saved Username</button>
+          <!-- Pillar 3: Resume -->
+          <div class="major-card" style="padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span style="font-size: 20px;">📄</span>
+              <h4 style="font-size: 15px; font-weight: 700;">3. Master Resume</h4>
             </div>
-            <p class="card-subheading">Audits public repositories, project documentation, demo links, and generates a profile README.</p>
+            <div class="form-field">
+              <label for="sc-resume-source">Resume Source</label>
+              <select id="sc-resume-source">
+                <option value="master">Use Master Profile JSON</option>
+                <option value="custom">Paste Custom Text</option>
+              </select>
+            </div>
+            <div class="form-field" id="custom-resume-wrapper" style="display: none;">
+              <label for="sc-resume-text">Paste Resume Text</label>
+              <textarea id="sc-resume-text" rows="4" placeholder="Paste your resume text here..."></textarea>
+            </div>
+            <p style="font-size: 11.5px; color: var(--text-muted);">Evaluates metric density, strong action verbs, and ATS formatting structure.</p>
+          </div>
+        </div>
 
-            <form id="github-audit-form">
-              <div class="form-field">
-                <label for="gh-username">GitHub Username or Profile URL</label>
-                <input type="text" id="gh-username" placeholder="e.g. alexmercer-dev or https://github.com/..." required>
+        <!-- Dynamic Results Scorecard -->
+        <div id="scorecard-results-area" style="display: none;">
+          <!-- Overall Hero Badge -->
+          <div class="major-card" style="margin-bottom: 24px; background: #fff; border: 2px solid var(--border-light);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+              <div>
+                <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Career Readiness Scorecard</span>
+                <h3 style="font-size: 24px; font-weight: 800; letter-spacing: -0.8px; margin-top: 2px;" id="sc-overall-title">Overall Score: 88/100 (Grade A)</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;" id="sc-overall-subtitle">Your public presence and master resume are in the top tier for senior tech roles.</p>
               </div>
-              <button type="submit" class="btn-primary" id="btn-audit-gh">
-                <span>⚡ Rate GitHub Profile</span>
-              </button>
-            </form>
+              <div class="ats-score-chip" style="padding: 12px 24px;">
+                <div class="ats-val" style="font-size: 28px;" id="sc-hero-score">88%</div>
+                <div class="ats-tag" id="sc-hero-grade">Grade A</div>
+              </div>
+            </div>
 
-            <div id="gh-audit-result" class="audit-result-box" style="display: none; margin-top: 20px;">
-              <!-- Populated with score, gaps, and README template -->
+            <!-- Cross Asset Insights -->
+            <div id="sc-cross-insights" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-light);">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+          <!-- 3 Pillar Detailed Breakdown Grid -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <!-- Pillar Breakdown 1: GitHub -->
+            <div class="major-card" id="card-gh-breakdown">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Pillar Breakdown 2: LinkedIn -->
+            <div class="major-card" id="card-li-breakdown">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Pillar Breakdown 3: Resume -->
+            <div class="major-card" id="card-resume-breakdown">
+              <!-- Dynamically populated -->
             </div>
           </div>
         </div>
