@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
       if (data.success) {
-        alert('🎉 Live Candidate Profile persistently updated on MindHunt platform!');
+        alert('🎉 Live Candidate Profile persistently updated on CareerCraft platform!');
         loadedProfile = data.profile;
         renderCandidateSnapshot(loadedProfile);
         renderLiveProfile();

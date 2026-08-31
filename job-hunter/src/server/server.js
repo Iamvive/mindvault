@@ -502,7 +502,7 @@ app.post('/api/audit/full-profile', async (req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`🚀 MindHunt Cockpit running at http://localhost:${PORT}`);
+    console.log(`⚡ CareerCraft Cockpit running at http://localhost:${PORT}`);
   });
 }
 
