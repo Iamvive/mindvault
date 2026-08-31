@@ -23,9 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const queueContainer = document.getElementById('queue-cards-container');
   const filterPills = document.querySelectorAll('.filter-pill');
   const btnBatchApply = document.getElementById('btn-batch-apply');
-
   const tailorForm = document.getElementById('tailor-form');
   const historyTableBody = document.getElementById('history-table-body');
+
+  // Candidate Snapshot Elements
+  const snapRole = document.getElementById('snap-role');
+  const snapCompany = document.getElementById('snap-company');
+  const snapYoe = document.getElementById('snap-yoe');
+  const snapTarget = document.getElementById('snap-target');
+  const snapLocation = document.getElementById('snap-location');
+  const btnEditSnapshot = document.getElementById('btn-edit-snapshot');
+  const btnSyncLinkedinSnapshot = document.getElementById('btn-sync-linkedin-snapshot');
+
+  // Snapshot Modal Elements
+  const snapshotModal = document.getElementById('snapshot-modal');
+  const btnCloseSnapshotModal = document.getElementById('btn-close-snapshot-modal');
+  const editSnapRole = document.getElementById('edit-snap-role');
+  const editSnapCompany = document.getElementById('edit-snap-company');
+  const editSnapYoe = document.getElementById('edit-snap-yoe');
+  const editSnapTarget = document.getElementById('edit-snap-target');
+  const editSnapLocation = document.getElementById('edit-snap-location');
+  const btnSaveSnapshotModal = document.getElementById('btn-save-snapshot-modal');
+
+  // Resume Studio Elements
+  const studioName = document.getElementById('studio-name');
+  const studioTitle = document.getElementById('studio-title');
+  const studioEmail = document.getElementById('studio-email');
+  const studioPhone = document.getElementById('studio-phone');
+  const studioLocation = document.getElementById('studio-location');
+  const studioSummary = document.getElementById('studio-summary');
+  const studioExperienceList = document.getElementById('studio-experience-list');
+  const studioPreviewIframe = document.getElementById('studio-preview-iframe');
+  const btnRefreshPreview = document.getElementById('btn-refresh-preview');
+  const btnSaveStudioEdits = document.getElementById('btn-save-studio-edits');
+  const btnCopyPlainResume = document.getElementById('btn-copy-plain-resume');
 
   // 3-Pillar Scorecard Elements
   const scGithub = document.getElementById('sc-github');
@@ -79,10 +110,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSendPromptCdp = document.getElementById('btn-send-prompt-cdp');
   const btnApplyClaudeProfile = document.getElementById('btn-apply-claude-profile');
 
-  const pdfModal = document.getElementById('pdf-modal');
-  const modalPdfTitle = document.getElementById('modal-pdf-title');
-  const pdfIframe = document.getElementById('pdf-iframe');
-  const btnCloseModal = document.getElementById('btn-close-modal');
+  // Navigation Tabs
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navBtns.forEach(b => b.classList.remove('active'));
+      tabPanes.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetTab = btn.getAttribute('data-tab');
+      document.getElementById(targetTab).classList.add('active');
+
+      if (targetTab === 'tab-scorecard') {
+        pageTitle.innerText = 'My Profile & 3-Pillar AI Scorecard';
+        pageSubtitle.innerText = 'Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.';
+      } else if (targetTab === 'tab-resume-studio') {
+        pageTitle.innerText = 'Master ATS Resume Studio & PDF Viewer';
+        pageSubtitle.innerText = 'Live single-column ATS preview, real-time section editor, and instant PDF download.';
+        renderResumeStudio();
+      } else if (targetTab === 'tab-live-profile') {
+        pageTitle.innerText = 'Live Candidate Profile Workspace';
+        pageSubtitle.innerText = 'The persistent, evolving source of truth for your applications and audits.';
+        renderLiveProfile();
+      } else if (targetTab === 'tab-queue') {
+        pageTitle.innerText = 'Approval Queue';
+        pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
+        loadQueue();
+      } else if (targetTab === 'tab-tailor') {
+        pageTitle.innerText = 'Instant JD Tailor';
+        pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
+      } else if (targetTab === 'tab-history') {
+        pageTitle.innerText = 'Application Tracker';
+        pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
+        loadHistory();
+      }
+    });
+  });
 
   // Resume Mode Switcher
   btnResumeModes.forEach(btn => {
@@ -151,38 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsText(file);
   }
 
-  // Navigation Tabs
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      navBtns.forEach(b => b.classList.remove('active'));
-      tabPanes.forEach(p => p.classList.remove('active'));
-
-      btn.classList.add('active');
-      const targetTab = btn.getAttribute('data-tab');
-      document.getElementById(targetTab).classList.add('active');
-
-      if (targetTab === 'tab-scorecard') {
-        pageTitle.innerText = 'My Profile & 3-Pillar AI Scorecard';
-        pageSubtitle.innerText = 'Unified career readiness evaluation across GitHub, LinkedIn, and Resume — zero JD required.';
-      } else if (targetTab === 'tab-live-profile') {
-        pageTitle.innerText = 'Live Candidate Profile Workspace';
-        pageSubtitle.innerText = 'The persistent, evolving source of truth for your applications and audits.';
-        renderLiveProfile();
-      } else if (targetTab === 'tab-queue') {
-        pageTitle.innerText = 'Approval Queue';
-        pageSubtitle.innerText = 'Review ATS tailored resumes and approve 1-click applications.';
-        loadQueue();
-      } else if (targetTab === 'tab-tailor') {
-        pageTitle.innerText = 'Instant JD Tailor';
-        pageSubtitle.innerText = 'Paste any job description to generate a tailored ATS resume in seconds.';
-      } else if (targetTab === 'tab-history') {
-        pageTitle.innerText = 'Application Tracker';
-        pageSubtitle.innerText = 'Track the live lifecycle of your submitted and queued job applications.';
-        loadHistory();
-      }
-    });
-  });
-
   // Filter Buttons
   filterPills.forEach(pill => {
     pill.addEventListener('click', () => {
@@ -215,16 +245,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load Master Profile
+  // Load Master Profile & Snapshot
   async function fetchProfileData() {
     try {
       const res = await fetch('/api/profile');
       loadedProfile = await res.json();
+      renderCandidateSnapshot(loadedProfile);
       return loadedProfile;
     } catch (e) {
       console.warn(e);
       return null;
     }
+  }
+
+  function renderCandidateSnapshot(p) {
+    if (!p) return;
+    const pers = p.personal || {};
+    snapRole.innerText = pers.currentRole || pers.title || 'Senior Software Engineer';
+    snapCompany.innerText = pers.currentCompany ? `at ${pers.currentCompany}` : 'Tech Company';
+    snapYoe.innerText = `${pers.totalYearsExperience || 6.0} Years Experience`;
+    snapTarget.innerText = pers.targetSeniority || 'Staff / Lead Engineer';
+    snapLocation.innerText = pers.location || 'Remote / Hybrid';
   }
 
   function prefillAssets(prof) {
@@ -235,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prof.summary) scLinkedinAbout.value = prof.summary;
   }
 
-  // Auto pre-fill on start
   fetchProfileData().then(prof => {
     if (prof) {
       prefillAssets(prof);
@@ -251,6 +291,159 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Snapshot Edit Handlers
+  btnEditSnapshot.addEventListener('click', () => {
+    if (!loadedProfile) return;
+    const pers = loadedProfile.personal || {};
+    editSnapRole.value = pers.currentRole || pers.title || '';
+    editSnapCompany.value = pers.currentCompany || '';
+    editSnapYoe.value = pers.totalYearsExperience || 6.0;
+    editSnapTarget.value = pers.targetSeniority || 'Staff / Lead Software Engineer';
+    editSnapLocation.value = pers.location || 'Bengaluru, India';
+    snapshotModal.style.display = 'flex';
+  });
+
+  btnCloseSnapshotModal.addEventListener('click', () => {
+    snapshotModal.style.display = 'none';
+  });
+
+  btnSaveSnapshotModal.addEventListener('click', async () => {
+    const payload = {
+      currentRole: editSnapRole.value,
+      currentCompany: editSnapCompany.value,
+      totalYearsExperience: parseFloat(editSnapYoe.value) || 5.0,
+      targetSeniority: editSnapTarget.value,
+      location: editSnapLocation.value
+    };
+
+    try {
+      const res = await fetch('/api/profile/snapshot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        loadedProfile = data.profile;
+        renderCandidateSnapshot(loadedProfile);
+        snapshotModal.style.display = 'none';
+        alert('Candidate Snapshot saved persistently!');
+      }
+    } catch (err) {
+      alert(`Save error: ${err.message}`);
+    }
+  });
+
+  // Auto-Sync Snapshot from LinkedIn
+  btnSyncLinkedinSnapshot.addEventListener('click', async () => {
+    const url = scLinkedinUrl.value || loadedProfile?.personal?.linkedin;
+    if (!url) {
+      alert('Please enter your LinkedIn Profile URL in Pillar 2 first.');
+      return;
+    }
+
+    btnSyncLinkedinSnapshot.innerText = 'Extracting from LinkedIn...';
+    btnSyncLinkedinSnapshot.disabled = true;
+
+    try {
+      const res = await fetch('/api/profile/extract-linkedin-snapshot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ linkedinUrl: url })
+      });
+      const data = await res.json();
+      if (data.success) {
+        loadedProfile = data.profile;
+        renderCandidateSnapshot(loadedProfile);
+        alert(`Successfully extracted experience from LinkedIn! Total YoE calculated: ${data.profile.personal.totalYearsExperience} yrs.`);
+      }
+    } catch (e) {
+      alert(`LinkedIn sync error: ${e.message}`);
+    } finally {
+      btnSyncLinkedinSnapshot.innerText = '⚡ Auto-Sync LinkedIn';
+      btnSyncLinkedinSnapshot.disabled = false;
+    }
+  });
+
+  // Render Resume Studio
+  function renderResumeStudio() {
+    if (!loadedProfile) return;
+    const p = loadedProfile;
+    const pers = p.personal || {};
+
+    studioName.value = pers.name || '';
+    studioTitle.value = pers.title || '';
+    studioEmail.value = pers.email || '';
+    studioPhone.value = pers.phone || '';
+    studioLocation.value = pers.location || '';
+    studioSummary.value = p.summary || '';
+
+    const expList = p.masterExperience || [];
+    studioExperienceList.innerHTML = expList.map((exp, idx) => `
+      <div style="background: var(--bg-app); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 12px;">
+        <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">${exp.role} | ${exp.company}</div>
+        <textarea class="studio-exp-bullets code-editor" data-idx="${idx}" rows="${Math.max(3, (exp.bullets || []).length * 2)}" style="font-family: inherit; font-size: 11.5px;">${(exp.bullets || []).join('\n')}</textarea>
+      </div>
+    `).join('');
+
+    studioPreviewIframe.src = '/api/resume/preview-html?' + Date.now();
+  }
+
+  btnRefreshPreview.addEventListener('click', () => {
+    studioPreviewIframe.src = '/api/resume/preview-html?' + Date.now();
+  });
+
+  btnSaveStudioEdits.addEventListener('click', async () => {
+    if (!loadedProfile) return;
+
+    loadedProfile.personal.name = studioName.value;
+    loadedProfile.personal.title = studioTitle.value;
+    loadedProfile.personal.email = studioEmail.value;
+    loadedProfile.personal.phone = studioPhone.value;
+    loadedProfile.personal.location = studioLocation.value;
+    loadedProfile.summary = studioSummary.value;
+
+    document.querySelectorAll('.studio-exp-bullets').forEach(t => {
+      const idx = parseInt(t.getAttribute('data-idx'), 10);
+      const lines = t.value.split('\n').map(l => l.trim()).filter(Boolean);
+      if (loadedProfile.masterExperience[idx]) {
+        loadedProfile.masterExperience[idx].bullets = lines;
+      }
+    });
+
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loadedProfile)
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('✅ Master Resume edits saved!');
+        btnRefreshPreview.click();
+      }
+    } catch (e) {
+      alert(`Save error: ${e.message}`);
+    }
+  });
+
+  btnCopyPlainResume.addEventListener('click', () => {
+    if (!loadedProfile) return;
+    const p = loadedProfile;
+    const pers = p.personal || {};
+
+    let text = `${pers.name}\n${pers.title}\n${pers.email} | ${pers.phone} | ${pers.location}\n\nSUMMARY\n${p.summary}\n\nEXPERIENCE\n`;
+    for (const exp of p.masterExperience || []) {
+      text += `\n${exp.role} | ${exp.company} (${exp.startDate} - ${exp.endDate})\n`;
+      for (const b of exp.bullets || []) {
+        text += `• ${b}\n`;
+      }
+    }
+
+    navigator.clipboard.writeText(text);
+    alert('Plain text resume copied to clipboard!');
+  });
+
   // Render Live Candidate Profile Workspace
   function renderLiveProfile() {
     if (!loadedProfile) return;
@@ -262,7 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
     liveProfLinkedin.value = p.personal?.linkedin || '';
     liveProfGithub.value = p.personal?.github || '';
 
-    // Render Experience Bullets
     const expList = p.masterExperience || [];
     liveProfExperienceContainer.innerHTML = expList.map((exp, idx) => `
       <div style="background: var(--bg-app); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 16px;">
@@ -278,7 +470,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `).join('');
 
-    // Render Skills Tags
     const skills = p.skills || {};
     const allSkills = [
       ...(skills.languages || []),
@@ -294,7 +485,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Save Live Profile
   btnSaveLiveProfile.addEventListener('click', async () => {
     if (!loadedProfile) return;
 
@@ -431,9 +621,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.success) {
         alert('🎉 Live Candidate Profile persistently updated on MindHunt platform!');
         loadedProfile = data.profile;
+        renderCandidateSnapshot(loadedProfile);
         renderLiveProfile();
         promptModal.style.display = 'none';
-        document.getElementById('nav-live-profile-btn').click();
       } else {
         alert(`Error: ${data.error}`);
       }
@@ -499,7 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
         }
 
-        // 1. Render GitHub Pillar
+        // GitHub Pillar Breakdown
         const gh = sc.pillars.github;
         if (gh && !gh.error) {
           cardGhBreakdown.innerHTML = `
@@ -526,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
           cardGhBreakdown.innerHTML = `<div style="font-size: 12px; color: var(--text-muted);">GitHub not scored or rate limited.</div>`;
         }
 
-        // 2. Render LinkedIn Pillar
+        // LinkedIn Pillar Breakdown
         const li = sc.pillars.linkedin;
         if (li) {
           cardLiBreakdown.innerHTML = `
@@ -556,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
         }
 
-        // 3. Render Resume Pillar
+        // Resume Pillar Breakdown
         const resPillar = sc.pillars.resume;
         if (resPillar) {
           cardResumeBreakdown.innerHTML = `
@@ -575,8 +765,8 @@ document.addEventListener('DOMContentLoaded', () => {
               </ul>
             </div>
 
-            <button class="btn-primary" id="btn-goto-tailor" style="width: 100%; margin-top: 8px; font-size: 11.5px; padding: 6px 12px;">
-              ✨ Generate ATS Single-Page PDF
+            <button class="btn-primary" id="btn-goto-studio" style="width: 100%; margin-top: 8px; font-size: 11.5px; padding: 6px 12px;">
+              📄 Open Resume Studio & PDF Viewer
             </button>
           `;
         }
@@ -605,10 +795,10 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
-        const btnGotoTailor = document.getElementById('btn-goto-tailor');
-        if (btnGotoTailor) {
-          btnGotoTailor.addEventListener('click', () => {
-            document.getElementById('nav-tailor-btn').click();
+        const btnGotoStudio = document.getElementById('btn-goto-studio');
+        if (btnGotoStudio) {
+          btnGotoStudio.addEventListener('click', () => {
+            document.getElementById('nav-resume-studio-btn').click();
           });
         }
 
@@ -684,23 +874,13 @@ document.addEventListener('DOMContentLoaded', () => {
           ${kwHtml ? `<div class="keywords-row">${kwHtml}</div>` : ''}
 
           <div class="job-card-actions">
-            ${job.pdfPath ? `<button class="btn-secondary btn-preview-pdf" data-pdf="${job.pdfPath}" data-title="${job.company} - ${job.title}">👁️ Preview PDF</button>` : ''}
+            ${job.pdfPath ? `<a href="/${job.pdfPath}" target="_blank" class="btn-secondary" style="text-decoration:none;">👁️ View PDF</a>` : ''}
             <button class="btn-secondary btn-dismiss-job" data-id="${job.id}">❌ Dismiss</button>
             <button class="btn-primary btn-apply-job" data-id="${job.id}">🚀 Approve & Apply</button>
           </div>
         </div>
       `;
     }).join('');
-
-    document.querySelectorAll('.btn-preview-pdf').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const pdf = e.currentTarget.getAttribute('data-pdf');
-        const title = e.currentTarget.getAttribute('data-title');
-        modalPdfTitle.innerText = `Tailored Resume: ${title}`;
-        pdfIframe.src = `/${pdf}`;
-        pdfModal.style.display = 'flex';
-      });
-    });
 
     document.querySelectorAll('.btn-dismiss-job').forEach(btn => {
       btn.addEventListener('click', async (e) => {
@@ -742,11 +922,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnBatchApply.innerText = '🚀 Batch Apply All';
     btnBatchApply.disabled = false;
     loadQueue();
-  });
-
-  btnCloseModal.addEventListener('click', () => {
-    pdfModal.style.display = 'none';
-    pdfIframe.src = '';
   });
 
   tailorForm.addEventListener('submit', async (e) => {
