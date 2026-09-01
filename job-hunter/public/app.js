@@ -1212,6 +1212,134 @@ document.addEventListener('DOMContentLoaded', () => {
     loadQueue();
   });
 
+  // --- Instant JD Tailor & URL Fetcher ---
+  const tailorUrlInput = document.getElementById('tailor-url-input');
+  const btnTailorFetchUrl = document.getElementById('btn-tailor-fetch-url');
+  const tailorFetchIcon = document.getElementById('tailor-fetch-icon');
+  const tailorFetchText = document.getElementById('tailor-fetch-text');
+  const tailorTitle = document.getElementById('tailor-title');
+  const tailorCompany = document.getElementById('tailor-company');
+  const tailorLocation = document.getElementById('tailor-location');
+  const tailorPlatform = document.getElementById('tailor-platform');
+  const tailorJd = document.getElementById('tailor-jd');
+  const tailorJdLength = document.getElementById('tailor-jd-length');
+  const tailorInsightsBar = document.getElementById('tailor-insights-bar');
+  const tailorInsightsChips = document.getElementById('tailor-insights-chips');
+  const btnClearTailorForm = document.getElementById('btn-clear-tailor-form');
+
+  function updateJdWordCount() {
+    if (!tailorJd || !tailorJdLength) return;
+    const words = tailorJd.value.trim().split(/\s+/).filter(Boolean).length;
+    tailorJdLength.innerText = `${words} words`;
+  }
+
+  if (tailorJd) {
+    tailorJd.addEventListener('input', updateJdWordCount);
+  }
+
+  if (btnClearTailorForm) {
+    btnClearTailorForm.addEventListener('click', () => {
+      tailorForm.reset();
+      if (tailorUrlInput) tailorUrlInput.value = '';
+      if (tailorInsightsBar) tailorInsightsBar.style.display = 'none';
+      updateJdWordCount();
+    });
+  }
+
+  async function fetchJobDetailsFromUrl() {
+    const url = tailorUrlInput ? tailorUrlInput.value.trim() : '';
+    if (!url) {
+      alert('Please paste a job opening link (e.g. LinkedIn, Naukri, Instahyre, Greenhouse, Lever, Ashby, or company career URL).');
+      if (tailorUrlInput) tailorUrlInput.focus();
+      return;
+    }
+
+    if (btnTailorFetchUrl) {
+      btnTailorFetchUrl.disabled = true;
+      if (tailorFetchIcon) tailorFetchIcon.innerText = '⏳';
+      if (tailorFetchText) tailorFetchText.innerText = 'Fetching via Chrome...';
+    }
+
+    try {
+      const res = await fetch('/api/jobs/fetch-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      const data = await res.json();
+
+      if (data.success && data.data) {
+        const item = data.data;
+        if (tailorTitle && item.title) {
+          tailorTitle.value = item.title;
+          tailorTitle.classList.add('field-highlight');
+          setTimeout(() => tailorTitle.classList.remove('field-highlight'), 1500);
+        }
+        if (tailorCompany && item.company) {
+          tailorCompany.value = item.company;
+          tailorCompany.classList.add('field-highlight');
+          setTimeout(() => tailorCompany.classList.remove('field-highlight'), 1500);
+        }
+        if (tailorLocation && item.location) {
+          tailorLocation.value = item.location;
+          tailorLocation.classList.add('field-highlight');
+          setTimeout(() => tailorLocation.classList.remove('field-highlight'), 1500);
+        }
+        if (tailorPlatform && item.platform) {
+          const opt = tailorPlatform.querySelector(`option[value="${item.platform}"]`);
+          if (opt) tailorPlatform.value = item.platform;
+          else tailorPlatform.value = 'custom';
+        }
+        if (tailorJd && item.jdText) {
+          tailorJd.value = item.jdText;
+          tailorJd.classList.add('field-highlight');
+          setTimeout(() => tailorJd.classList.remove('field-highlight'), 1500);
+          updateJdWordCount();
+        }
+
+        // Render Insight Badges
+        if (tailorInsightsBar && tailorInsightsChips) {
+          const chips = [];
+          if (item.platform) chips.push(`<span class="insight-badge">🌐 ${item.platform.toUpperCase()}</span>`);
+          if (item.location) chips.push(`<span class="insight-badge">📍 ${item.location}</span>`);
+          if (item.experience) chips.push(`<span class="insight-badge">⏳ ${item.experience}</span>`);
+          if (item.salary) chips.push(`<span class="insight-badge">💰 ${item.salary}</span>`);
+
+          if (chips.length > 0) {
+            tailorInsightsChips.innerHTML = `
+              <strong style="color: var(--sg-primary); font-size: 11px;">Extracted Insights:</strong>
+              ${chips.join('')}
+            `;
+            tailorInsightsBar.style.display = 'block';
+          }
+        }
+      } else {
+        alert(`Extraction Notice: ${data.error || 'Could not auto-extract all details.'} You can manually fill or paste the description below.`);
+      }
+    } catch (err) {
+      alert(`Network Error: ${err.message}. Please check connection.`);
+    } finally {
+      if (btnTailorFetchUrl) {
+        btnTailorFetchUrl.disabled = false;
+        if (tailorFetchIcon) tailorFetchIcon.innerText = '⚡';
+        if (tailorFetchText) tailorFetchText.innerText = 'Auto-Fetch Details';
+      }
+    }
+  }
+
+  if (btnTailorFetchUrl) {
+    btnTailorFetchUrl.addEventListener('click', fetchJobDetailsFromUrl);
+  }
+
+  if (tailorUrlInput) {
+    tailorUrlInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        fetchJobDetailsFromUrl();
+      }
+    });
+  }
+
   tailorForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('btn-tailor-submit');
@@ -1221,6 +1349,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const payload = {
       title: document.getElementById('tailor-title').value,
       company: document.getElementById('tailor-company').value,
+      location: document.getElementById('tailor-location')?.value || 'Remote',
+      url: document.getElementById('tailor-url-input')?.value || '',
       platform: document.getElementById('tailor-platform').value,
       jdText: document.getElementById('tailor-jd').value
     };
@@ -1234,6 +1364,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.success) {
         tailorForm.reset();
+        if (tailorUrlInput) tailorUrlInput.value = '';
+        if (tailorInsightsBar) tailorInsightsBar.style.display = 'none';
         alert(`Successfully generated tailored resume for ${payload.company}! Added to Approval Queue with ATS score: ${data.job.atsScore}%.`);
         document.getElementById('nav-queue-btn').click();
       } else {

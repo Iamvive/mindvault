@@ -14,6 +14,7 @@ import { buildLinkedInPrompt, buildGitHubPrompt, buildResumePrompt, buildCoverLe
 import { generateResumeHtml, renderResumePdf } from '../pdf/resume-renderer.js';
 import { generateCoverLetterHtml, renderCoverLetterPdf } from '../pdf/cover-letter-renderer.js';
 import { extractText } from 'unpdf';
+import { extractJobFromUrl } from '../scrapers/url-extractor.js';
 
 const app = express();
 const PORT = process.env.PORT || 4200;
@@ -34,6 +35,7 @@ app.get('/api/status', async (req, res) => {
     cdpConnected: cdpActive,
     queuedCount: queued.length,
     appliedCount: all.filter(j => j.status === 'applied').length,
+    approvedManualCount: all.filter(j => j.status === 'approved_manual').length,
     manualReviewCount: all.filter(j => j.status === 'manual_review').length,
     totalTracked: all.length
   };
@@ -61,11 +63,10 @@ app.post('/api/jobs/:id/approve', async (req, res) => {
     }
 
     if (!browser) {
-      updateJobStatus(db, jobId, 'applied', {
-        submittedAt: new Date().toISOString(),
-        notes: 'Approved via Cockpit (Simulated / Local Mode)'
+      updateJobStatus(db, jobId, 'approved_manual', {
+        notes: 'Approved via Cockpit — no CDP connection detected, submit manually'
       });
-      return res.json({ success: true, jobId, message: 'Job marked as applied' });
+      return res.json({ success: true, jobId, status: 'approved_manual', message: 'Job approved. No CDP connection detected — please submit this application manually.' });
     }
 
     const result = await submitApprovedJob(db, jobId, browser, { dryRun: req.body.dryRun || false });
@@ -89,16 +90,26 @@ app.post('/api/jobs/batch-approve', async (req, res) => {
     return res.status(400).json({ error: 'Expected array of jobIds' });
   }
 
-  const results = [];
-  for (const id of jobIds) {
-    updateJobStatus(db, id, 'applied', {
-      submittedAt: new Date().toISOString(),
-      notes: 'Batch approved via Cockpit'
-    });
-    results.push({ id, status: 'applied' });
+  const isCdp = await checkCdpAvailable();
+  let browser = null;
+  if (isCdp) {
+    browser = await connectToChrome();
   }
 
-  res.json({ success: true, processed: results.length });
+  const results = [];
+  for (const id of jobIds) {
+    if (browser) {
+      const result = await submitApprovedJob(db, id, browser, { dryRun: req.body.dryRun || false });
+      results.push({ id, status: result.status });
+    } else {
+      updateJobStatus(db, id, 'approved_manual', {
+        notes: 'Batch approved via Cockpit — no CDP connection detected, submit manually'
+      });
+      results.push({ id, status: 'approved_manual' });
+    }
+  }
+
+  res.json({ success: true, processed: results.length, results });
 });
 
 // API: Master Profile
@@ -432,6 +443,27 @@ app.post('/api/prompts/send-claude', async (req, res) => {
     res.json({ success: true, response });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// API: Auto-fetch and extract job details from any URL
+app.post('/api/jobs/fetch-url', async (req, res) => {
+  const { url } = req.body;
+  if (!url || typeof url !== 'string') {
+    return res.status(400).json({ success: false, error: 'Job URL is required' });
+  }
+
+  try {
+    const isCdp = await checkCdpAvailable();
+    let browser = null;
+    if (isCdp) {
+      browser = await connectToChrome();
+    }
+    const data = await extractJobFromUrl(url, browser);
+    res.json({ success: true, data });
+  } catch (err) {
+    console.error('Error extracting job URL:', err);
+    res.status(500).json({ success: false, error: err.message || 'Failed to extract job details from URL' });
   }
 });
 

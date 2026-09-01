@@ -485,33 +485,86 @@
 
       <!-- SECTION 5: Instant JD Tailor -->
       <section class="tab-pane" id="tab-tailor">
+        <!-- Quick URL Import Bar -->
+        <div class="major-card url-import-card" style="margin-bottom: 20px; background: linear-gradient(135deg, #ffffff 0%, #fbfbfd 100%);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span style="font-size: 18px;">⚡</span>
+            <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">Quick Import from Job Opening Link</h3>
+          </div>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 14px;">
+            Paste any job posting URL — AI auto-fetches the <strong>Job Title, Company, Location, Experience, Salary</strong>, and <strong>Full Clean Description</strong>.
+          </p>
+
+          <div class="url-import-input-row" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px; position: relative;">
+              <input type="url" id="tailor-url-input" class="pill-input" placeholder="Paste link (LinkedIn, Naukri, Instahyre, Greenhouse, Lever, Ashby, Company Career URL...)" style="width: 100%; padding: 12px 18px; border-radius: 9999px; border: 1.5px solid var(--border-light); font-family: inherit; font-size: 13px;">
+            </div>
+            <button type="button" class="btn-primary" id="btn-tailor-fetch-url" style="padding: 10px 22px; border-radius: 9999px; font-weight: 600; display: flex; align-items: center; gap: 6px; font-size: 13px; white-space: nowrap;">
+              <span id="tailor-fetch-icon">⚡</span>
+              <span id="tailor-fetch-text">Auto-Fetch Details</span>
+            </button>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; font-size: 11px; color: var(--text-muted);">
+            <span>Supported:</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">LinkedIn</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">Naukri</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">Instahyre</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">Greenhouse</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">Lever</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">Ashby</span>
+            <span class="badge-zero-cost" style="font-size: 10px;">Custom Career Sites</span>
+          </div>
+        </div>
+
         <div class="tailor-card major-card">
-          <h3 class="card-heading">Paste Any Job Description</h3>
-          <p class="card-subheading">Instantly calculates ATS score, matches master profile bullet points, and generates a print-ready tailored PDF.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+              <h3 class="card-heading" style="margin-bottom: 2px;">Review & Tailor Job Description</h3>
+              <p class="card-subheading">Review extracted fields or edit manually, then generate a single-column ATS tailored PDF.</p>
+            </div>
+            <button type="button" class="btn-secondary" id="btn-clear-tailor-form" style="font-size: 11px; padding: 4px 10px;">Clear Form</button>
+          </div>
+
+          <!-- Metadata Insights Container (Auto-populated on URL fetch) -->
+          <div id="tailor-insights-bar" style="display: none; margin-bottom: 16px; padding: 10px 14px; background: rgba(230, 0, 35, 0.04); border: 1px solid rgba(230, 0, 35, 0.12); border-radius: 12px; font-size: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;" id="tailor-insights-chips"></div>
+          </div>
 
           <form id="tailor-form" class="tailor-form">
             <div class="form-row">
-              <div class="form-field">
+              <div class="form-field" style="flex: 2;">
                 <label for="tailor-title">Job Title</label>
-                <input type="text" id="tailor-title" placeholder="e.g. Senior Backend Engineer" required>
+                <input type="text" id="tailor-title" placeholder="e.g. Senior Android Engineer" required>
               </div>
-              <div class="form-field">
+              <div class="form-field" style="flex: 2;">
                 <label for="tailor-company">Company</label>
-                <input type="text" id="tailor-company" placeholder="e.g. Razorpay" required>
+                <input type="text" id="tailor-company" placeholder="e.g. Swiggy" required>
               </div>
-              <div class="form-field">
+              <div class="form-field" style="flex: 2;">
+                <label for="tailor-location">Location</label>
+                <input type="text" id="tailor-location" placeholder="e.g. Bengaluru, India (Remote / Hybrid)">
+              </div>
+              <div class="form-field" style="flex: 1.5;">
                 <label for="tailor-platform">Platform</label>
                 <select id="tailor-platform">
-                  <option value="instahyre">Instahyre</option>
                   <option value="linkedin">LinkedIn</option>
+                  <option value="naukri">Naukri</option>
+                  <option value="instahyre">Instahyre</option>
+                  <option value="greenhouse">Greenhouse</option>
+                  <option value="lever">Lever</option>
+                  <option value="ashby">Ashby</option>
+                  <option value="cutshort">Cutshort</option>
                   <option value="custom">Direct / Other</option>
                 </select>
               </div>
             </div>
 
             <div class="form-field">
-              <label for="tailor-jd">Job Description Text</label>
-              <textarea id="tailor-jd" rows="8" placeholder="Paste the full job description here..." required></textarea>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label for="tailor-jd" style="margin-bottom: 0;">Job Description Text</label>
+                <span id="tailor-jd-length" style="font-size: 11px; color: var(--text-muted);">0 words</span>
+              </div>
+              <textarea id="tailor-jd" rows="10" placeholder="Extracted full job description will appear here, or you can paste directly..." required></textarea>
             </div>
 
             <button type="submit" class="btn-primary" id="btn-tailor-submit">
