@@ -56,5 +56,15 @@ Engineered with production configurations for high-impact tech talent:
 
 ---
 
+## 🗺️ Product Evolution & Roadmap
+Check out **[ROADMAP.md](./ROADMAP.md)** for our 5-phase execution plan:
+1. **Phase 1:** Dynamic User Onboarding & Multi-Profile Vault
+2. **Phase 2:** Drafter-Critic Tailoring & Relevance-Weighted Bullet Trimmer
+3. **Phase 3:** AI Interview Prep Pack & STAR Story Simulator
+4. **Phase 4:** Application Lifecycle CRM & Smart Outreach Copilot
+5. **Phase 5:** Skill Gap Heatmap & 30-Day Upskilling Roadmap
+
+---
+
 ## 📄 License
 MIT © Vivek Kumar
