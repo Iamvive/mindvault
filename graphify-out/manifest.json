@@ -85,13 +85,13 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard.py": {
-    "mtime": 1785489320.2921503,
-    "ast_hash": "01844c0adc287c646882e6de04308e5b",
+    "mtime": 1787995113.1567907,
+    "ast_hash": "0376e632c299d62af75a2d88b55cef4f",
     "semantic_hash": ""
   },
   "telegram-finance-bot/db.py": {
-    "mtime": 1787989244.322207,
-    "ast_hash": "77227a0155efd55cdf8976ddb3f0baa1",
+    "mtime": 1787993216.8956487,
+    "ast_hash": "cb3044f2f7cc83600bd1752dd9bf761d",
     "semantic_hash": ""
   },
   "telegram-finance-bot/llm_extract.py": {
@@ -110,8 +110,8 @@
     "semantic_hash": "6d4d3c2796c944904d2b986505bca8f8"
   },
   "telegram-finance-bot/sync_to_vps.sh": {
-    "mtime": 1787595315.5793917,
-    "ast_hash": "22ce64a802fa04ed21b85ac02dbb9097",
+    "mtime": 1787993385.0297775,
+    "ast_hash": "749cb96616a5c750f9c2ca0b756783c0",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_pipeline.py": {
@@ -260,12 +260,12 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1787989103.4382763,
+    "mtime": 1788192555.990807,
     "ast_hash": "617ac8e30c289add419a7b6fa2b8dfaa",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1787989108.3810217,
+    "mtime": 1788192555.9914045,
     "ast_hash": "617ac8e30c289add419a7b6fa2b8dfaa",
     "semantic_hash": ""
   },
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard/template.html": {
-    "mtime": 1786192042.312697,
-    "ast_hash": "7675925096c29d550ef85e8efea7dc34",
+    "mtime": 1787995465.4445148,
+    "ast_hash": "bf61018fa78a4fb683e1943393694d86",
     "semantic_hash": ""
   },
   "telegram-finance-bot/docker-compose.yml": {
@@ -510,8 +510,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/requirements.txt": {
-    "mtime": 1785343420.5675702,
-    "ast_hash": "a2fda0a08c1140b2eb92706df01ba628",
+    "mtime": 1787993086.1882484,
+    "ast_hash": "ebf11a3d00a394532070ae75b9d5e909",
     "semantic_hash": ""
   },
   "frontend/public/favicon.svg": {
@@ -820,8 +820,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/http_server.py": {
-    "mtime": 1786194492.6147745,
-    "ast_hash": "8a1220a369105a9f2557fdedf618f9b3",
+    "mtime": 1787994204.4948883,
+    "ast_hash": "50fc676bebc0374896ae6797c4ea1eb5",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/messages.py": {
@@ -965,8 +965,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/mcp_server.py": {
-    "mtime": 1787989311.429679,
-    "ast_hash": "e63a24be2e0ae7a6b34767fb76411891",
+    "mtime": 1787990502.4961138,
+    "ast_hash": "1c4f98fa44cc538889ad34fb9a1d3a76",
     "semantic_hash": ""
   },
   "telegram-finance-bot/test_mcp_server.py": {
@@ -1115,8 +1115,8 @@
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/BTManagerApp.swift": {
-    "mtime": 1787592687.4703617,
-    "ast_hash": "d6916c7066dccb88749098ab64f18002",
+    "mtime": 1788025877.2223723,
+    "ast_hash": "a7255dff8d4c525a36e239dbab863b1c",
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/Models/BluetoothDevice.swift": {
@@ -1140,8 +1140,8 @@
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/Services/BluetoothService.swift": {
-    "mtime": 1787592687.4735873,
-    "ast_hash": "ca1b823e6d5d439dc56a4a4c751a7ead",
+    "mtime": 1788026214.9817219,
+    "ast_hash": "47deacf3ac817bc880936ecb4a14a638",
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift": {
@@ -1160,8 +1160,8 @@
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/Views/DeviceRowView.swift": {
-    "mtime": 1787592687.4749553,
-    "ast_hash": "ab79ff6c37d17bd2782bea818ab5197c",
+    "mtime": 1788026233.915995,
+    "ast_hash": "0072f14d399e4427a568fdbb277d14c5",
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/Views/DiagnosticCardView.swift": {
@@ -1170,8 +1170,8 @@
     "semantic_hash": ""
   },
   "bt-manager/Sources/BTManager/Views/MainPopoverView.swift": {
-    "mtime": 1787592687.4759815,
-    "ast_hash": "26cf75e00995e14db95645ab92d0bbe7",
+    "mtime": 1788025773.9650323,
+    "ast_hash": "4af30cb128ece27fa4b0038c15016358",
     "semantic_hash": ""
   },
   "bt-manager/Tests/BTManagerTests/AudioRoutingServiceTests.swift": {
@@ -1265,8 +1265,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1787592686.6964293,
-    "ast_hash": "614c6843d2e15dbf13dd2146b36477f6",
+    "mtime": 1788200446.1801968,
+    "ast_hash": "8b8ffb6408a7f8b81c83ffce9e07c529",
     "semantic_hash": ""
   },
   "bt-manager/README.md": {
@@ -1562,6 +1562,291 @@
   "apple-cockpit/EcoApp.app/Contents/MacOS/EcoApp": {
     "mtime": 1787654207.8927822,
     "ast_hash": "167997afcafd673a9317ad39e953b1f1",
+    "semantic_hash": ""
+  },
+  "bt-manager/Sources/BTManager/Views/DiscoveredDeviceRowView.swift": {
+    "mtime": 1788025757.3928578,
+    "ast_hash": "7f0b68637a203878b2c22dd83f558d29",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/statement_parser.py": {
+    "mtime": 1787994597.9515166,
+    "ast_hash": "54a4fdd43a53246b423a4d6ef87c0f7a",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_sso_cookie_auth.py": {
+    "mtime": 1787993886.7860913,
+    "ast_hash": "a8f25edd0138100bd4e05d68cb6f58ec",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_statement_api.py": {
+    "mtime": 1787993302.2190018,
+    "ast_hash": "7359adda6d79e9e023c00b5125cd11a9",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_statement_dedup.py": {
+    "mtime": 1787993231.1153617,
+    "ast_hash": "887abb2c8a136e19cc30c6f93a3187f6",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_statement_parser.py": {
+    "mtime": 1787993143.853891,
+    "ast_hash": "d5ceaaac023017ce077877ea38ce8c6f",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/plans/2026-08-29-bluetooth-device-discovery.md": {
+    "mtime": 1788025670.4025402,
+    "ast_hash": "c2ebf5be4ca845fe82364f03fa0a862e",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/specs/2026-08-29-bluetooth-device-discovery-design.md": {
+    "mtime": 1788025629.7923527,
+    "ast_hash": "913f4ad067431e3355f5dacdb5e95613",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-29-bank-statement-import.md": {
+    "mtime": 1787993044.230067,
+    "ast_hash": "dec5c35bdf45778e841d487763f72c8e",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/plans/2026-08-29-standalone-web-sso.md": {
+    "mtime": 1787993840.1176465,
+    "ast_hash": "3b92d52e8e56d6cb3f9589304f857251",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/docs/superpowers/specs/2026-08-29-bank-statement-import-design.md": {
+    "mtime": 1787992818.39256,
+    "ast_hash": "b37095327f39d86b93dde87efb744ecb",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/plans/2026-08-29-akg-turbo-link-grabber.md": {
+    "mtime": 1788026197.250612,
+    "ast_hash": "455cb4b21cc657ff245e63a5c814ad1b",
+    "semantic_hash": ""
+  },
+  "bt-manager/docs/superpowers/specs/2026-08-29-akg-turbo-link-grabber-design.md": {
+    "mtime": 1788026189.6003342,
+    "ast_hash": "5d48cfdbce591b9a8683744c4ad7d81a",
+    "semantic_hash": ""
+  },
+  "job-hunter/bin/job-hunter.js": {
+    "mtime": 1788195497.1540053,
+    "ast_hash": "ad80662b3e5a53debd1a90932094b5b3",
+    "semantic_hash": ""
+  },
+  "job-hunter/data/master_profile.json": {
+    "mtime": 1788201430.9724076,
+    "ast_hash": "658acfb675b3f096aaac32e442ba5916",
+    "semantic_hash": ""
+  },
+  "job-hunter/package.json": {
+    "mtime": 1788199457.6273108,
+    "ast_hash": "3379fe59152f81c14e4e1561c2a183bb",
+    "semantic_hash": ""
+  },
+  "job-hunter/public/app.js": {
+    "mtime": 1788202538.3062055,
+    "ast_hash": "9aaa6c016db597ba122f85af8b56ce2e",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/cdp/chrome-bridge.js": {
+    "mtime": 1788195363.2233663,
+    "ast_hash": "056bdd193373244bc7616ff69b426b66",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/cdp/claude-worker.js": {
+    "mtime": 1788195370.8983243,
+    "ast_hash": "7860a7d8f53ef281cea158673e3cf48a",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/ats.js": {
+    "mtime": 1788195316.0455587,
+    "ast_hash": "171e2f7e50d368d67927c14b1e03937b",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/profile.js": {
+    "mtime": 1788195309.2538989,
+    "ast_hash": "463dbf726e1ef56cb1621338e3d57ab3",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/db/database.js": {
+    "mtime": 1788195286.1601458,
+    "ast_hash": "ca69f89988576d8dfc6ff5526557a7c9",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/pdf/resume-renderer.js": {
+    "mtime": 1788195341.454483,
+    "ast_hash": "739fb85e33b6a283e8c3003e53abd19c",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/scrapers/discovery-manager.js": {
+    "mtime": 1788195400.1660526,
+    "ast_hash": "1d9e0f55c81d0ea05e76a84f947463e4",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/scrapers/instahyre.js": {
+    "mtime": 1788195388.145606,
+    "ast_hash": "cd51d2b0427220f9949640c973bb811d",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/scrapers/linkedin.js": {
+    "mtime": 1788195394.1521993,
+    "ast_hash": "ed5fc8fce8fcb010e9ffff15a4d13139",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/server/server.js": {
+    "mtime": 1788202533.55076,
+    "ast_hash": "33371a724b507ccd355be39254ec09d1",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/submitters/instahyre-submitter.js": {
+    "mtime": 1788195420.3449774,
+    "ast_hash": "383628d6547564825c29a7d10f4dbf51",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/submitters/linkedin-submitter.js": {
+    "mtime": 1788195426.2496157,
+    "ast_hash": "c2699d665b11e9b40eb729954e44bc78",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/submitters/submitter-manager.js": {
+    "mtime": 1788195432.1946867,
+    "ast_hash": "a67d5a0e1f11b7b5dca5a96b89812fab",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/cdp/claude-worker.test.js": {
+    "mtime": 1788195376.7946126,
+    "ast_hash": "50fde09d10bd9e4c44a289ca3cbc6303",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/ats.test.js": {
+    "mtime": 1788195303.3693628,
+    "ast_hash": "dd981e20ce73eb477d80034853bc8090",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/db/database.test.js": {
+    "mtime": 1788195291.7100701,
+    "ast_hash": "40abe6abcd8ef5ca0cc295ec82adbdb6",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/e2e/workflow.test.js": {
+    "mtime": 1788195506.1062732,
+    "ast_hash": "66ee01ba489b26bae56d07e8b1365f1f",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/pdf/resume-renderer.test.js": {
+    "mtime": 1788195346.6392186,
+    "ast_hash": "d9784d11b125f9520ac7d7de8f9698da",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/scrapers/discovery.test.js": {
+    "mtime": 1788195405.7253733,
+    "ast_hash": "489265be96f005c7212b87371f6308f0",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/submitters/submitter.test.js": {
+    "mtime": 1788195437.897488,
+    "ast_hash": "0d5fcb946f6315c773c57d6a68454b0a",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-31-zero-cost-ai-job-agent.md": {
+    "mtime": 1788195196.2038174,
+    "ast_hash": "cdec6630b42f7383c122bf459de148cf",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-31-zero-cost-ai-job-agent-design.md": {
+    "mtime": 1788195167.7933016,
+    "ast_hash": "569d924cd23c948e2648b78fadea1829",
+    "semantic_hash": ""
+  },
+  "job-hunter/README.md": {
+    "mtime": 1788202651.4651704,
+    "ast_hash": "c08d55b347b1d864ed62617635b11204",
+    "semantic_hash": ""
+  },
+  "job-hunter/public/index.html": {
+    "mtime": 1788202526.1170874,
+    "ast_hash": "d41581cb5ba86712176271ce14383640",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/pdf/templates/ats-clean.html": {
+    "mtime": 1788195335.365505,
+    "ast_hash": "5beb437fa65a63ef49539e14f28f6933",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/github-auditor.js": {
+    "mtime": 1788195999.4370646,
+    "ast_hash": "b1c923ea467aff4d5331013c7e0d0bb2",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/linkedin-auditor.js": {
+    "mtime": 1788198730.8105867,
+    "ast_hash": "1dde6f83bc0d7325fca21cfa8bdb7fe0",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/profile-auditors.test.js": {
+    "mtime": 1788196013.765538,
+    "ast_hash": "e6f83f917766f582f85d4de223d81c9e",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/profile-intelligence.js": {
+    "mtime": 1788197911.290931,
+    "ast_hash": "701436dec612d150de371386404fe0b9",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/prompt-generator.js": {
+    "mtime": 1788200761.5863814,
+    "ast_hash": "369be1a5c816b747e47e443397179d19",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/resume-auditor.js": {
+    "mtime": 1788196674.6799698,
+    "ast_hash": "14c6784c2190169e1985e13797e83b6c",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/resume-ingester.js": {
+    "mtime": 1788200624.542278,
+    "ast_hash": "220024f05a25aad8882addb5f98f390f",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/unified-scorer.js": {
+    "mtime": 1788197198.7884064,
+    "ast_hash": "d2247cafeeb04a9fd352c047aa00b751",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/pdf/cover-letter-renderer.js": {
+    "mtime": 1788201140.5427923,
+    "ast_hash": "51306f58b02dbe72057a606091f6817a",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/linkedin-timeline.test.js": {
+    "mtime": 1788198722.000612,
+    "ast_hash": "f9ac90b4edce70e2267e8bc1eb2382a4",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/unified-scorer.test.js": {
+    "mtime": 1788196719.125734,
+    "ast_hash": "fb0f9b6859c39387e0ec2894d128e043",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/server/resume-studio.test.js": {
+    "mtime": 1788198813.6553879,
+    "ast_hash": "1597e7187e15cc4576f63115af473f67",
+    "semantic_hash": ""
+  },
+  ".agent/skills/job-skill/SKILL.md": {
+    "mtime": 1788200438.9531887,
+    "ast_hash": "7400e0d285de23171c2ba69284da6a98",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-31-candidate-snapshot-and-resume-studio.md": {
+    "mtime": 1788198690.8682268,
+    "ast_hash": "1274f6fab57c3419dbebd2c5ed931a11",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-31-candidate-snapshot-linkedin-experience-design.md": {
+    "mtime": 1788198654.8305447,
+    "ast_hash": "ee0181953c42656372c5a9b0d2187503",
     "semantic_hash": ""
   }
 }
