@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardGhBreakdown = document.getElementById('card-gh-breakdown');
   const cardLiBreakdown = document.getElementById('card-li-breakdown');
   const cardResumeBreakdown = document.getElementById('card-resume-breakdown');
+  const badgePillarGh = document.getElementById('badge-pillar-gh');
+  const badgePillarLi = document.getElementById('badge-pillar-li');
+  const badgePillarResume = document.getElementById('badge-pillar-resume');
 
   // Live Candidate Profile Elements
   const liveProfName = document.getElementById('live-prof-name');
@@ -386,7 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  fetchProfileData();
+  fetchProfileData().then(prof => {
+    if (prof) {
+      btnScoreAll.click();
+    }
+  });
 
   btnPrefillAll.addEventListener('click', async () => {
     const prof = await fetchProfileData();
@@ -985,6 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sc = data.scorecard;
         statBrandScore.innerText = `${sc.overallScore}%`;
 
+        scorecardResultsArea.classList.remove('hidden');
         scorecardResultsArea.style.display = 'block';
         scHeroScore.innerText = `${sc.overallScore}%`;
         scHeroGrade.innerText = `Grade ${sc.overallGrade}`;
@@ -1010,6 +1018,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // GitHub Pillar Breakdown
         const gh = sc.pillars.github;
+        if (badgePillarGh && gh) {
+          badgePillarGh.innerText = `${gh.score || 0}/100`;
+          badgePillarGh.className = `status-badge ${gh.score >= 80 ? 'status-applied' : (gh.score >= 60 ? 'status-manual_review' : 'status-queued')} font-bold text-xs`;
+        }
         if (gh && !gh.error) {
           cardGhBreakdown.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -1037,6 +1049,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // LinkedIn Pillar Breakdown
         const li = sc.pillars.linkedin;
+        if (badgePillarLi && li) {
+          badgePillarLi.innerText = `${li.score || 0}/100`;
+          badgePillarLi.className = `status-badge ${li.score >= 80 ? 'status-applied' : (li.score >= 60 ? 'status-manual_review' : 'status-queued')} font-bold text-xs`;
+        }
         if (li) {
           cardLiBreakdown.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -1067,6 +1083,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Resume Pillar Breakdown
         const resPillar = sc.pillars.resume;
+        if (badgePillarResume && resPillar) {
+          badgePillarResume.innerText = `${resPillar.score || 0}/100`;
+          badgePillarResume.className = `status-badge ${resPillar.score >= 80 ? 'status-applied' : (resPillar.score >= 60 ? 'status-manual_review' : 'status-queued')} font-bold text-xs`;
+        }
         if (resPillar) {
           cardResumeBreakdown.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">

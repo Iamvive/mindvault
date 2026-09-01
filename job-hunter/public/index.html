@@ -14,7 +14,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-logo">⚡</div>
+        <div class="brand-logo"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="brand-text">
           <h1>CareerCraft</h1>
           <span class="badge-zero-cost">Profile & ATS Studio</span>
@@ -23,32 +23,32 @@
 
       <nav class="nav-menu">
         <button class="nav-item active" data-tab="tab-scorecard" id="nav-scorecard-btn">
-          <span class="icon">🏆</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 5H4a2 2 0 0 0 0 4h1"/><path d="M17 5h3a2 2 0 0 1 0 4h-1"/></svg></span>
           <span>My Profile & Scorecard</span>
         </button>
         <button class="nav-item" data-tab="tab-resume-studio" id="nav-resume-studio-btn">
-          <span class="icon">📄</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span>
           <span>Resume Studio & PDF</span>
         </button>
         <button class="nav-item" data-tab="tab-cover-letter" id="nav-cover-letter-btn">
-          <span class="icon">✉️</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
           <span>Cover Letter Studio</span>
         </button>
         <button class="nav-item" data-tab="tab-live-profile" id="nav-live-profile-btn">
-          <span class="icon">👤</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></span>
           <span>Live Candidate Profile</span>
         </button>
         <button class="nav-item" data-tab="tab-queue" id="nav-queue-btn">
-          <span class="icon">📋</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3v2h6V3"/><path d="M9 11h6"/><path d="M9 15h6"/></svg></span>
           <span>Approval Queue</span>
           <span class="counter-badge" id="sidebar-queue-count">0</span>
         </button>
         <button class="nav-item" data-tab="tab-tailor" id="nav-tailor-btn">
-          <span class="icon">✨</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="m6 6 2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg></span>
           <span>Instant JD Tailor</span>
         </button>
         <button class="nav-item" data-tab="tab-history" id="nav-history-btn">
-          <span class="icon">📊</span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span>
           <span>Application Tracker</span>
         </button>
       </nav>
@@ -87,48 +87,57 @@
       </header>
 
       <!-- PINNED CANDIDATE SNAPSHOT BAR -->
-      <div class="snapshot-bar major-card" id="candidate-snapshot-bar" style="margin-bottom: 24px; padding: 16px 24px; background: #fff;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 20px;">👤</span>
+      <div class="major-card mb-24" id="candidate-snapshot-bar">
+        <div class="flex justify-between items-center flex-wrap gap-14">
+          <div class="flex items-center flex-wrap gap-16">
+            <div class="flex items-center gap-8">
+              <span class="icon icon-lg text-muted"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></span>
               <div>
-                <strong style="font-size: 14px; color: var(--text-primary);" id="snap-role">Senior Backend Engineer</strong>
-                <div style="font-size: 11px; color: var(--text-muted);" id="snap-company">Razorpay</div>
+                <strong class="text-md font-semibold" id="snap-role">Senior Backend Engineer</strong>
+                <div class="text-xs text-muted" id="snap-company">Razorpay</div>
               </div>
             </div>
 
-            <div class="snap-divider" style="width: 1px; height: 28px; background: var(--border-light);"></div>
+            <div class="snap-divider"></div>
 
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 18px;">⏳</span>
+            <div class="flex items-center gap-6">
+              <span class="icon text-muted"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
               <div>
-                <strong style="font-size: 13px; color: var(--text-primary);" id="snap-yoe">6.5 Years Experience</strong>
-                <span class="badge-zero-cost" style="background: rgba(16, 185, 129, 0.1); color: #065f46; font-size: 10px;">✓ LinkedIn Synced</span>
+                <strong class="text-md font-semibold" id="snap-yoe">6.5 Years Experience</strong>
+                <span class="badge-zero-cost success">
+                  <span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span>
+                  LinkedIn Synced
+                </span>
               </div>
             </div>
 
-            <div class="snap-divider" style="width: 1px; height: 28px; background: var(--border-light);"></div>
+            <div class="snap-divider"></div>
 
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 18px;">🎯</span>
+            <div class="flex items-center gap-6">
+              <span class="icon text-muted"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
               <div>
-                <div style="font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Target Level</div>
-                <strong style="font-size: 12.5px; color: var(--sg-primary);" id="snap-target">Staff / Lead Engineer</strong>
+                <div class="text-xs uppercase font-bold text-muted">Target Level</div>
+                <strong class="text-accent" style="font-size: 12.5px;" id="snap-target">Staff / Lead Engineer</strong>
               </div>
             </div>
 
-            <div class="snap-divider" style="width: 1px; height: 28px; background: var(--border-light);"></div>
+            <div class="snap-divider"></div>
 
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 18px;">📍</span>
-              <div style="font-size: 12px; color: var(--text-secondary);" id="snap-location">Bengaluru (Remote / Hybrid)</div>
+            <div class="flex items-center gap-6">
+              <span class="icon text-muted"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <div class="text-sm text-secondary" id="snap-location">Bengaluru (Remote / Hybrid)</div>
             </div>
           </div>
 
-          <div style="display: flex; gap: 8px;">
-            <button class="btn-secondary" id="btn-edit-snapshot" style="font-size: 11.5px; padding: 6px 12px;">✏️ Edit Snapshot</button>
-            <button class="btn-primary" id="btn-sync-linkedin-snapshot" style="font-size: 11.5px; padding: 6px 12px;">⚡ Auto-Sync LinkedIn</button>
+          <div class="flex gap-8">
+            <button class="btn-secondary" id="btn-edit-snapshot">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+              Edit Snapshot
+            </button>
+            <button class="btn-primary" id="btn-sync-linkedin-snapshot">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+              Auto-Sync LinkedIn
+            </button>
           </div>
         </div>
       </div>
@@ -136,129 +145,157 @@
       <!-- SECTION 1: Unified 3-Pillar Scorecard (GitHub + LinkedIn + Resume) -->
       <section class="tab-pane active" id="tab-scorecard">
         <!-- Hero Action Card -->
-        <div class="major-card" style="margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #fbfbfd 100%);">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div class="major-card mb-24">
+          <div class="flex justify-between items-center flex-wrap gap-16">
             <div>
-              <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">The 3-Pillar Profile Rater & Fixer</h3>
-              <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
+              <h3 class="card-heading">The 3-Pillar Profile Rater & Fixer</h3>
+              <p class="text-sm text-muted mt-4">
                 Share your <strong>GitHub Link</strong>, <strong>LinkedIn Link</strong>, and <strong>Resume</strong> — AI auto-fetches, rates, and generates contextual Claude prompts to update your live profile.
               </p>
             </div>
-            <div style="display: flex; gap: 10px;">
-              <button class="btn-secondary" id="btn-prefill-all">📥 Auto-Fill from Profile</button>
-              <button class="btn-primary" id="btn-score-all">⚡ Score My 3-Pillar Profile</button>
+            <div class="flex gap-10">
+              <button class="btn-secondary" id="btn-prefill-all">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+                Auto-Fill from Profile
+              </button>
+              <button class="btn-primary" id="btn-score-all">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+                Score My 3-Pillar Profile
+              </button>
             </div>
           </div>
         </div>
 
         <!-- 3 Input Cards Grid -->
-        <div class="three-col-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px;">
+        <div class="grid-3 mb-24">
           <!-- Pillar 1: GitHub -->
-          <div class="major-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="major-card flex flex-col justify-between" style="padding: 20px;">
             <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                <span style="font-size: 20px;">💻</span>
-                <h4 style="font-size: 15px; font-weight: 700;">1. GitHub Link</h4>
+              <div class="section-title-row flex justify-between items-center mb-10">
+                <div class="flex items-center gap-6">
+                  <span class="icon icon-lg text-muted"><svg viewBox="0 0 24 24"><path d="m8 6-6 6 6 6"/><path d="m16 6 6 6-6 6"/></svg></span>
+                  <h4 class="text-heading-sm">1. GitHub Link</h4>
+                </div>
+                <span class="status-badge status-queued font-bold text-xs" id="badge-pillar-gh">—/100</span>
               </div>
               <div class="form-field">
                 <label for="sc-github">GitHub Username or URL</label>
                 <input type="text" id="sc-github" placeholder="e.g. alexmercer-dev or https://github.com/...">
               </div>
-              <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 14px;">
+              <p class="text-xs text-muted mb-14">
                 Audits public repositories, project documentation depth, live demos, and README polish.
               </p>
             </div>
-            <button class="btn-secondary btn-gen-prompt" data-type="github" style="width: 100%; font-size: 12px;">
-              🤖 Generate Claude Prompt for GitHub
+            <button class="btn-secondary btn-gen-prompt w-full" data-type="github">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M2 14h2M20 14h2"/></svg></span>
+              Generate Claude Prompt for GitHub
             </button>
           </div>
 
           <!-- Pillar 2: LinkedIn -->
-          <div class="major-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="major-card flex flex-col justify-between" style="padding: 20px;">
             <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                <span style="font-size: 20px;">👔</span>
-                <h4 style="font-size: 15px; font-weight: 700;">2. LinkedIn Link</h4>
+              <div class="section-title-row flex justify-between items-center mb-10">
+                <div class="flex items-center gap-6">
+                  <span class="icon icon-lg text-muted"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+                  <h4 class="text-heading-sm">2. LinkedIn Link</h4>
+                </div>
+                <span class="status-badge status-queued font-bold text-xs" id="badge-pillar-li">—/100</span>
               </div>
               <div class="form-field">
                 <label for="sc-linkedin-url">LinkedIn Profile URL</label>
                 <input type="text" id="sc-linkedin-url" placeholder="https://linkedin.com/in/your-username">
               </div>
-              <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 14px;">
+              <p class="text-xs text-muted mb-14">
                 Auto-inspects Headline, About section, and experience metrics directly via your active Chrome session.
               </p>
               <input type="hidden" id="sc-linkedin-headline">
               <input type="hidden" id="sc-linkedin-about">
             </div>
-            <button class="btn-secondary btn-gen-prompt" data-type="linkedin" style="width: 100%; font-size: 12px;">
-              🤖 Generate Claude Prompt for LinkedIn
+            <button class="btn-secondary btn-gen-prompt w-full" data-type="linkedin">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M2 14h2M20 14h2"/></svg></span>
+              Generate Claude Prompt for LinkedIn
             </button>
           </div>
 
           <!-- Pillar 3: Resume -->
-          <div class="major-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="major-card flex flex-col justify-between" style="padding: 20px;">
             <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                <span style="font-size: 20px;">📄</span>
-                <h4 style="font-size: 15px; font-weight: 700;">3. Add Resume</h4>
+              <div class="section-title-row flex justify-between items-center mb-10">
+                <div class="flex items-center gap-6">
+                  <span class="icon icon-lg text-muted"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span>
+                  <h4 class="text-heading-sm">3. Add Resume</h4>
+                </div>
+                <span class="status-badge status-queued font-bold text-xs" id="badge-pillar-resume">—/100</span>
               </div>
 
               <!-- Resume Mode Tabs -->
-              <div class="resume-mode-pills" style="display: flex; gap: 6px; margin-bottom: 10px;">
-                <button type="button" class="btn-resume-mode active" data-mode="upload">📁 Upload File</button>
-                <button type="button" class="btn-resume-mode" data-mode="paste">📝 Paste Text</button>
-                <button type="button" class="btn-resume-mode" data-mode="master">💾 Master Profile</button>
+              <div class="flex gap-6 mb-10">
+                <button type="button" class="btn-resume-mode active" data-mode="upload">
+                  <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></svg></span>
+                  Upload File
+                </button>
+                <button type="button" class="btn-resume-mode" data-mode="paste">
+                  <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+                  Paste Text
+                </button>
+                <button type="button" class="btn-resume-mode" data-mode="master">
+                  <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg></span>
+                  Master Profile
+                </button>
               </div>
 
               <!-- Upload Zone -->
-              <div id="resume-upload-zone" class="drop-zone" style="margin-bottom: 14px;">
-                <input type="file" id="resume-file-input" accept=".pdf,.txt,.docx,.json" style="display: none;">
+              <div id="resume-upload-zone" class="drop-zone mb-14">
+                <input type="file" id="resume-file-input" accept=".pdf,.txt,.docx,.json" class="hidden">
                 <div class="drop-zone-content" id="drop-zone-cta">
-                  <span style="font-size: 20px;">📄</span>
-                  <div style="font-size: 11.5px; font-weight: 600; margin-top: 2px;">Click or Drag Resume File</div>
+                  <span class="icon icon-lg text-muted"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span>
+                  <div class="text-xs font-semibold mt-2">Click or Drag Resume File</div>
                 </div>
-                <div id="resume-file-info" style="display: none; font-size: 11px; padding: 4px 8px; background: rgba(16, 185, 129, 0.1); border-radius: 6px; color: #065f46;">
-                  <span id="resume-file-name">filename.pdf</span> • <a href="#" id="btn-remove-resume" style="color: var(--sg-primary); text-decoration: none; font-weight: 600;">Remove</a>
+                <div id="resume-file-info" class="notice-success hidden">
+                  <span id="resume-file-name">filename.pdf</span> • <a href="#" id="btn-remove-resume" class="text-accent no-underline font-semibold">Remove</a>
                 </div>
               </div>
 
               <!-- Paste Zone -->
-              <div id="resume-paste-zone" style="display: none; margin-bottom: 14px;">
+              <div id="resume-paste-zone" class="hidden mb-14">
                 <textarea id="sc-resume-text" rows="3" placeholder="Paste resume text or bullets here..." style="font-size: 12px;"></textarea>
               </div>
 
               <!-- Master Profile Zone -->
-              <div id="resume-master-zone" style="display: none; padding: 8px; background: var(--bg-sidebar); border-radius: 8px; font-size: 11px; color: var(--text-secondary); margin-bottom: 14px;">
-                ✅ Using saved <strong>master_profile.json</strong>.
+              <div id="resume-master-zone" class="notice-subtle hidden mb-14">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span>
+                Using saved <strong>master_profile.json</strong>.
               </div>
             </div>
-            <button class="btn-secondary btn-gen-prompt" data-type="resume" style="width: 100%; font-size: 12px;">
-              🤖 Generate Claude Prompt for Resume
+            <button class="btn-secondary btn-gen-prompt w-full" data-type="resume">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M2 14h2M20 14h2"/></svg></span>
+              Generate Claude Prompt for Resume
             </button>
           </div>
         </div>
 
         <!-- Dynamic Results Scorecard -->
-        <div id="scorecard-results-area" style="display: none;">
+        <div id="scorecard-results-area" class="hidden">
           <!-- Overall Hero Badge -->
-          <div class="major-card" style="margin-bottom: 24px; background: #fff; border: 2px solid var(--border-light);">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <div class="major-card mb-24">
+            <div class="flex justify-between items-center flex-wrap">
               <div>
-                <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Career Readiness Scorecard</span>
-                <h3 style="font-size: 24px; font-weight: 800; letter-spacing: -0.8px; margin-top: 2px;" id="sc-overall-title">Overall Score: 88/100 (Grade A)</h3>
-                <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;" id="sc-overall-subtitle">Your public presence and master resume are in the top tier for senior tech roles.</p>
+                <span class="text-xs font-bold uppercase text-muted">Career Readiness Scorecard</span>
+                <h3 style="font-size: 20px; font-weight: 700; letter-spacing: -0.4px; margin-top: 2px;" id="sc-overall-title">Overall Score: 88/100 (Grade A)</h3>
+                <p class="text-sm text-secondary mt-4" id="sc-overall-subtitle">Your public presence and master resume are in the top tier for senior tech roles.</p>
               </div>
               <div class="ats-score-chip" style="padding: 12px 24px;">
-                <div class="ats-val" style="font-size: 28px;" id="sc-hero-score">88%</div>
+                <div class="ats-val" style="font-size: 24px;" id="sc-hero-score">88%</div>
                 <div class="ats-tag" id="sc-hero-grade">Grade A</div>
               </div>
             </div>
 
-            <div id="sc-cross-insights" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-light);"></div>
+            <div id="sc-cross-insights" style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border);"></div>
           </div>
 
           <!-- 3 Pillar Detailed Breakdown Grid -->
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+          <div class="grid-3">
             <div class="major-card" id="card-gh-breakdown"></div>
             <div class="major-card" id="card-li-breakdown"></div>
             <div class="major-card" id="card-resume-breakdown"></div>
@@ -268,29 +305,39 @@
 
       <!-- SECTION 2: Interactive Resume Studio & PDF Viewer -->
       <section class="tab-pane" id="tab-resume-studio">
-        <div class="major-card" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div class="major-card mb-20 flex justify-between items-center flex-wrap gap-12">
           <div>
-            <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">Master ATS Resume Studio</h3>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 2px;">
+            <h3 class="card-heading">Master ATS Resume Studio</h3>
+            <p class="text-sm text-muted mt-2">
               Live ATS-compliant single-column resume viewer, editor, and instant PDF compiler.
             </p>
           </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn-secondary btn-gen-prompt" data-type="resume">⚡ AI Re-Generate Bullets</button>
-            <button class="btn-secondary" id="btn-copy-plain-resume">📋 Copy Plain Text</button>
-            <a href="/api/resume/download-pdf" target="_blank" download="Master_Resume_Vivek_Kumar.pdf" class="btn-primary" id="btn-download-ats-pdf" style="text-decoration: none; cursor: pointer;">
-              📥 Download ATS PDF
+          <div class="flex gap-8 flex-wrap">
+            <button class="btn-secondary btn-gen-prompt" data-type="resume">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+              AI Re-Generate Bullets
+            </button>
+            <button class="btn-secondary" id="btn-copy-plain-resume">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+              Copy Plain Text
+            </button>
+            <a href="/api/resume/download-pdf" target="_blank" download="Master_Resume_Vivek_Kumar.pdf" class="btn-primary no-underline" id="btn-download-ats-pdf">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+              Download ATS PDF
             </a>
           </div>
         </div>
 
         <!-- Split-Screen Studio -->
-        <div style="display: grid; grid-template-columns: 1.1fr 1.3fr; gap: 24px; min-height: 75vh;">
+        <div class="grid-2" style="grid-template-columns: 1.1fr 1.3fr; min-height: 75vh;">
           <!-- Left: Live Section Editor -->
           <div class="major-card" style="overflow-y: auto; max-height: 80vh;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-              <h4 style="font-size: 16px; font-weight: 700;">Live Section Editor</h4>
-              <button class="btn-secondary" id="btn-save-studio-edits" style="font-size: 11.5px; padding: 4px 10px;">💾 Save Edits</button>
+            <div class="flex justify-between items-center mb-14">
+              <h4 class="text-heading-sm">Live Section Editor</h4>
+              <button class="btn-pill" id="btn-save-studio-edits">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg></span>
+                Save Edits
+              </button>
             </div>
 
             <!-- Edit Contact Info -->
@@ -327,9 +374,9 @@
             </div>
 
             <!-- Edit Experience Bullets -->
-            <div style="margin-top: 16px;">
-              <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Experience Bullets</label>
-              <div id="studio-experience-list" style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px;">
+            <div class="mt-16">
+              <label class="text-sm font-bold uppercase text-secondary">Experience Bullets</label>
+              <div id="studio-experience-list" class="flex flex-col gap-14 mt-8">
                 <!-- Injected dynamically -->
               </div>
             </div>
@@ -337,9 +384,12 @@
 
           <!-- Right: Live Visual ATS Preview -->
           <div class="major-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 80vh;">
-            <div style="padding: 12px 18px; border-bottom: 1px solid var(--border-light); background: #fbfbfd; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Live Single-Column ATS Preview</span>
-              <button class="btn-pill" id="btn-refresh-preview" style="font-size: 11px; padding: 3px 8px;">🔄 Refresh Preview</button>
+            <div class="flex justify-between items-center" style="padding: 12px 18px; border-bottom: 1px solid var(--border); background: var(--bg-subtle);">
+              <span class="text-xs font-bold uppercase text-muted">Live Single-Column ATS Preview</span>
+              <button class="btn-pill" id="btn-refresh-preview">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M3 16v4h4"/><path d="M21 8V4h-4"/></svg></span>
+                Refresh Preview
+              </button>
             </div>
             <iframe id="studio-preview-iframe" src="/api/resume/preview-html" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
           </div>
@@ -348,36 +398,45 @@
 
       <!-- SECTION 2.5: Master Cover Letter Studio & AI Improver -->
       <section class="tab-pane" id="tab-cover-letter">
-        <div class="major-card" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div class="major-card mb-24 flex justify-between items-center flex-wrap gap-14">
           <div>
-            <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;">Master Cover Letter Studio</h3>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 2px;">Upload, edit, and use AI to tailor high-converting, human-sounding cover letters.</p>
+            <h3 class="card-heading">Master Cover Letter Studio</h3>
+            <p class="text-sm text-muted mt-2">Upload, edit, and use AI to tailor high-converting, human-sounding cover letters.</p>
           </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="btn-secondary" id="btn-copy-cover-letter">📋 Copy Plain Text</button>
-            <button class="btn-secondary" id="btn-save-cover-letter">💾 Save Edits</button>
-            <a href="/api/cover-letter/download-pdf" target="_blank" download="Cover_Letter_Vivek_Kumar.pdf" class="btn-primary" id="btn-download-cover-letter" style="text-decoration: none; cursor: pointer;">📥 Download PDF</a>
+          <div class="flex gap-10 flex-wrap">
+            <button class="btn-secondary" id="btn-copy-cover-letter">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+              Copy Plain Text
+            </button>
+            <button class="btn-secondary" id="btn-save-cover-letter">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg></span>
+              Save Edits
+            </button>
+            <a href="/api/cover-letter/download-pdf" target="_blank" download="Cover_Letter_Vivek_Kumar.pdf" class="btn-primary no-underline" id="btn-download-cover-letter">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+              Download PDF
+            </a>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="grid-2">
           <!-- Left: Upload & Live Editor -->
-          <div class="major-card" style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="major-card flex flex-col gap-16">
             <!-- Upload Zone -->
-            <div style="padding: 16px; border: 2px dashed var(--border-color); border-radius: var(--radius-card); background: #fafafa; text-align: center; cursor: pointer;" id="cover-letter-upload-zone">
-              <input type="file" id="cover-letter-file-input" accept=".pdf,.docx,.doc,.txt" style="display: none;">
+            <div class="drop-zone" id="cover-letter-upload-zone">
+              <input type="file" id="cover-letter-file-input" accept=".pdf,.docx,.doc,.txt" class="hidden">
               <div id="cl-drop-cta">
-                <span style="font-size: 24px;">✉️</span>
-                <div style="font-weight: 700; font-size: 13px; margin-top: 4px;">Upload Existing Cover Letter</div>
-                <div style="font-size: 11px; color: var(--text-muted);">Drop PDF, DOCX, or TXT file here to parse & improve</div>
+                <span class="icon icon-lg text-muted"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+                <div class="text-md font-bold mt-4">Upload Existing Cover Letter</div>
+                <div class="text-xs text-muted">Drop PDF, DOCX, or TXT file here to parse & improve</div>
               </div>
-              <div id="cl-file-info" style="display: none;">
-                <span id="cl-file-name" style="font-weight: 700; font-size: 13px; color: #065f46;"></span>
+              <div id="cl-file-info" class="hidden">
+                <span id="cl-file-name" class="text-md font-bold text-success"></span>
               </div>
             </div>
 
             <!-- Target Company & Role -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="grid-2" style="gap: 12px;">
               <div class="form-field">
                 <label>Target Company</label>
                 <input type="text" id="cl-target-company" placeholder="e.g. Uber / Razorpay / Google">
@@ -389,17 +448,18 @@
             </div>
 
             <!-- AI Improvement Actions -->
-            <div style="display: flex; gap: 10px;">
-              <button class="btn-primary" id="btn-ai-improve-cl" style="flex: 1; font-size: 12px; padding: 9px 12px;">
-                🤖 ✨ AI Improve & Polish (Claude)
+            <div class="flex gap-10">
+              <button class="btn-primary flex-1" id="btn-ai-improve-cl" style="font-size: 12px; padding: 9px 12px;">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M2 14h2M20 14h2"/></svg></span>
+                AI Improve & Polish (Claude)
               </button>
             </div>
 
             <!-- Cover Letter Text Editor -->
-            <div class="form-field" style="display: flex; flex-direction: column; flex: 1;">
-              <label style="display: flex; justify-content: space-between;">
+            <div class="form-field flex flex-col" style="flex: 1;">
+              <label class="flex justify-between">
                 <span>Cover Letter Body</span>
-                <span style="font-weight: normal; color: var(--text-muted); font-size: 11px;">Paragraphs auto-formatted</span>
+                <span class="text-xs text-muted" style="font-weight: normal;">Paragraphs auto-formatted</span>
               </label>
               <textarea id="cl-body-editor" rows="16" class="code-editor" style="font-family: inherit; font-size: 12.5px; line-height: 1.6;"></textarea>
             </div>
@@ -407,9 +467,12 @@
 
           <!-- Right: Live Visual Preview -->
           <div class="major-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 80vh;">
-            <div style="padding: 12px 18px; border-bottom: 1px solid var(--border-light); background: #fbfbfd; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Live Formatted Preview</span>
-              <button class="btn-pill" id="btn-refresh-cl-preview" style="font-size: 11px; padding: 3px 8px;">🔄 Refresh Preview</button>
+            <div class="flex justify-between items-center" style="padding: 12px 18px; border-bottom: 1px solid var(--border); background: var(--bg-subtle);">
+              <span class="text-xs font-bold uppercase text-muted">Live Formatted Preview</span>
+              <button class="btn-pill" id="btn-refresh-cl-preview">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M3 16v4h4"/><path d="M21 8V4h-4"/></svg></span>
+                Refresh Preview
+              </button>
             </div>
             <iframe id="cl-preview-iframe" src="/api/cover-letter/preview-html" style="width: 100%; height: 100%; border: none; background: #fff;"></iframe>
           </div>
@@ -418,40 +481,46 @@
 
       <!-- SECTION 3: Live Candidate Profile Workspace -->
       <section class="tab-pane" id="tab-live-profile">
-        <div class="major-card" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="major-card mb-24 flex justify-between items-center">
           <div>
-            <h3 style="font-size: 20px; font-weight: 800; letter-spacing: -0.6px;" id="live-prof-name">Candidate Profile</h3>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 2px;" id="live-prof-title">Staff Software Engineer</p>
+            <h3 class="card-heading" id="live-prof-name">Candidate Profile</h3>
+            <p class="text-sm text-muted mt-2" id="live-prof-title">Staff Software Engineer</p>
           </div>
-          <div style="display: flex; gap: 10px;">
-            <button class="btn-secondary" id="btn-reload-live-profile">🔄 Refresh</button>
-            <button class="btn-primary" id="btn-save-live-profile">💾 Save Profile</button>
+          <div class="flex gap-10">
+            <button class="btn-secondary" id="btn-reload-live-profile">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M3 16v4h4"/><path d="M21 8V4h-4"/></svg></span>
+              Refresh
+            </button>
+            <button class="btn-primary" id="btn-save-live-profile">
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg></span>
+              Save Profile
+            </button>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+        <div class="grid-2" style="grid-template-columns: 2fr 1fr;">
           <!-- Left Column: Summary & Work Experience Bullets -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="flex flex-col gap-20">
             <div class="major-card">
-              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">Executive Summary / LinkedIn About</h4>
+              <h4 class="text-heading-sm mb-8">Executive Summary / LinkedIn About</h4>
               <textarea id="live-prof-summary" rows="4" class="code-editor" style="font-family: inherit; font-size: 13px;"></textarea>
             </div>
 
             <div class="major-card">
-              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">Verified Work Experience & Quantified Impact</h4>
-              <div id="live-prof-experience-container" style="display: flex; flex-direction: column; gap: 16px;"></div>
+              <h4 class="text-heading-sm mb-12">Verified Work Experience & Quantified Impact</h4>
+              <div id="live-prof-experience-container" class="flex flex-col gap-16"></div>
             </div>
           </div>
 
           <!-- Right Column: Skills & Links -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="flex flex-col gap-20">
             <div class="major-card">
-              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">Core Skills Matrix</h4>
+              <h4 class="text-heading-sm mb-12">Core Skills Matrix</h4>
               <div id="live-prof-skills-container"></div>
             </div>
 
             <div class="major-card">
-              <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">Persistent Profile Links</h4>
+              <h4 class="text-heading-sm mb-12">Persistent Profile Links</h4>
               <div class="form-field">
                 <label>LinkedIn</label>
                 <input type="text" id="live-prof-linkedin">
@@ -476,7 +545,8 @@
             <button class="filter-pill" data-filter="linkedin">LinkedIn</button>
           </div>
           <button class="btn-primary" id="btn-batch-apply">
-            <span>🚀 Batch Apply All</span>
+            <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 2c3 2 5 6 5 10 0 2-1 4-2 5l-3 3-3-3c-1-1-2-3-2-5 0-4 2-8 5-10Z"/><circle cx="12" cy="10" r="1.5"/><path d="M8 17c-2 1-3 3-3 5 2 0 4-1 5-3"/><path d="M16 17c2 1 3 3 3 5-2 0-4-1-5-3"/></svg></span>
+            <span>Batch Apply All</span>
           </button>
         </div>
 
@@ -486,48 +556,48 @@
       <!-- SECTION 5: Instant JD Tailor -->
       <section class="tab-pane" id="tab-tailor">
         <!-- Quick URL Import Bar -->
-        <div class="major-card url-import-card" style="margin-bottom: 20px; background: linear-gradient(135deg, #ffffff 0%, #fbfbfd 100%);">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-            <span style="font-size: 18px;">⚡</span>
-            <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">Quick Import from Job Opening Link</h3>
+        <div class="major-card url-import-card mb-20">
+          <div class="flex items-center gap-8 mb-8">
+            <span class="icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Quick Import from Job Opening Link</h3>
           </div>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 14px;">
+          <p class="text-sm text-muted mb-14">
             Paste any job posting URL — AI auto-fetches the <strong>Job Title, Company, Location, Experience, Salary</strong>, and <strong>Full Clean Description</strong>.
           </p>
 
-          <div class="url-import-input-row" style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 280px; position: relative;">
-              <input type="url" id="tailor-url-input" class="pill-input" placeholder="Paste link (LinkedIn, Naukri, Instahyre, Greenhouse, Lever, Ashby, Company Career URL...)" style="width: 100%; padding: 12px 18px; border-radius: 9999px; border: 1.5px solid var(--border-light); font-family: inherit; font-size: 13px;">
+          <div class="flex gap-10 flex-wrap">
+            <div style="flex: 1; min-width: 280px;">
+              <input type="url" id="tailor-url-input" class="pill-input" placeholder="Paste link (LinkedIn, Naukri, Instahyre, Greenhouse, Lever, Ashby, Company Career URL...)">
             </div>
-            <button type="button" class="btn-primary" id="btn-tailor-fetch-url" style="padding: 10px 22px; border-radius: 9999px; font-weight: 600; display: flex; align-items: center; gap: 6px; font-size: 13px; white-space: nowrap;">
-              <span id="tailor-fetch-icon">⚡</span>
+            <button type="button" class="btn-primary" id="btn-tailor-fetch-url" style="white-space: nowrap;">
+              <span class="icon icon-sm" id="tailor-fetch-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
               <span id="tailor-fetch-text">Auto-Fetch Details</span>
             </button>
           </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; font-size: 11px; color: var(--text-muted);">
+          <div class="flex gap-8 flex-wrap mt-10 text-xs text-muted">
             <span>Supported:</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">LinkedIn</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">Naukri</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">Instahyre</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">Greenhouse</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">Lever</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">Ashby</span>
-            <span class="badge-zero-cost" style="font-size: 10px;">Custom Career Sites</span>
+            <span class="badge-zero-cost">LinkedIn</span>
+            <span class="badge-zero-cost">Naukri</span>
+            <span class="badge-zero-cost">Instahyre</span>
+            <span class="badge-zero-cost">Greenhouse</span>
+            <span class="badge-zero-cost">Lever</span>
+            <span class="badge-zero-cost">Ashby</span>
+            <span class="badge-zero-cost">Custom Career Sites</span>
           </div>
         </div>
 
         <div class="tailor-card major-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div class="flex justify-between items-center mb-12">
             <div>
               <h3 class="card-heading" style="margin-bottom: 2px;">Review & Tailor Job Description</h3>
               <p class="card-subheading">Review extracted fields or edit manually, then generate a single-column ATS tailored PDF.</p>
             </div>
-            <button type="button" class="btn-secondary" id="btn-clear-tailor-form" style="font-size: 11px; padding: 4px 10px;">Clear Form</button>
+            <button type="button" class="btn-pill" id="btn-clear-tailor-form">Clear Form</button>
           </div>
 
           <!-- Metadata Insights Container (Auto-populated on URL fetch) -->
-          <div id="tailor-insights-bar" style="display: none; margin-bottom: 16px; padding: 10px 14px; background: rgba(230, 0, 35, 0.04); border: 1px solid rgba(230, 0, 35, 0.12); border-radius: 12px; font-size: 12px;">
-            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;" id="tailor-insights-chips"></div>
+          <div id="tailor-insights-bar" class="hidden mb-16 text-sm" style="padding: 10px 14px; background: var(--accent-subtle); border: 1px solid rgba(230, 0, 35, 0.12); border-radius: var(--radius-control);">
+            <div class="flex items-center gap-8 flex-wrap" id="tailor-insights-chips"></div>
           </div>
 
           <form id="tailor-form" class="tailor-form">
@@ -560,15 +630,16 @@
             </div>
 
             <div class="form-field">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <div class="flex justify-between items-center mb-6">
                 <label for="tailor-jd" style="margin-bottom: 0;">Job Description Text</label>
-                <span id="tailor-jd-length" style="font-size: 11px; color: var(--text-muted);">0 words</span>
+                <span id="tailor-jd-length" class="text-xs text-muted">0 words</span>
               </div>
               <textarea id="tailor-jd" rows="10" placeholder="Extracted full job description will appear here, or you can paste directly..." required></textarea>
             </div>
 
             <button type="submit" class="btn-primary" id="btn-tailor-submit">
-              <span>✨ Tailor Resume & Queue Job</span>
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="m6 6 2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg></span>
+              <span>Tailor Resume & Queue Job</span>
             </button>
           </form>
         </div>
@@ -595,13 +666,18 @@
   </div>
 
   <!-- Snapshot Edit Modal -->
-  <div class="modal-backdrop" id="snapshot-modal" style="display: none;">
-    <div class="modal-card" style="width: 500px; height: auto; max-height: 80vh;">
+  <div class="modal-backdrop hidden" id="snapshot-modal">
+    <div class="modal-card modal-card-sm">
       <div class="modal-header">
-        <h3>✏️ Edit Candidate Snapshot</h3>
-        <button class="modal-close" id="btn-close-snapshot-modal">✕</button>
+        <h3>
+          <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          Edit Candidate Snapshot
+        </h3>
+        <button class="modal-close" id="btn-close-snapshot-modal">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+        </button>
       </div>
-      <div class="modal-body" style="padding: 20px;">
+      <div class="modal-body modal-body-padded">
         <div class="form-field">
           <label>Current Role / Title</label>
           <input type="text" id="edit-snap-role">
@@ -622,37 +698,50 @@
           <label>Location & Work Mode</label>
           <input type="text" id="edit-snap-location">
         </div>
-        <button class="btn-primary" id="btn-save-snapshot-modal" style="width: 100%; margin-top: 10px;">
-          💾 Save Candidate Snapshot
+        <button class="btn-primary w-full mt-10" id="btn-save-snapshot-modal">
+          <span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg></span>
+          Save Candidate Snapshot
         </button>
       </div>
     </div>
   </div>
 
   <!-- Claude Prompt & Sync Modal -->
-  <div class="modal-backdrop" id="prompt-modal" style="display: none;">
-    <div class="modal-card" style="width: 860px; height: 85vh;">
+  <div class="modal-backdrop hidden" id="prompt-modal">
+    <div class="modal-card" style="width: 860px;">
       <div class="modal-header">
-        <h3 id="prompt-modal-title">🤖 Context-Rich Claude Prompt & Live Sync</h3>
-        <button class="modal-close" id="btn-close-prompt-modal">✕</button>
+        <h3 id="prompt-modal-title">
+          <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M2 14h2M20 14h2"/></svg></span>
+          Context-Rich Claude Prompt & Live Sync
+        </h3>
+        <button class="modal-close" id="btn-close-prompt-modal">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+        </button>
       </div>
-      <div class="modal-body" style="padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto;">
+      <div class="modal-body flex flex-col gap-16" style="padding: 24px; overflow-y: auto;">
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Contextual Claude Prompt</label>
-            <div style="display: flex; gap: 8px;">
-              <button class="btn-pill" id="btn-copy-generated-prompt">📋 Copy Prompt</button>
-              <button class="btn-primary" id="btn-send-prompt-cdp" style="font-size: 11px; padding: 4px 12px;">⚡ Send to Claude (CDP)</button>
+          <div class="flex justify-between items-center mb-6">
+            <label class="text-xs font-bold uppercase text-secondary">Contextual Claude Prompt</label>
+            <div class="flex gap-8">
+              <button class="btn-pill" id="btn-copy-generated-prompt">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+                Copy Prompt
+              </button>
+              <button class="btn-primary" id="btn-send-prompt-cdp" style="font-size: 11px; padding: 4px 12px;">
+                <span class="icon icon-sm"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+                Send to Claude (CDP)
+              </button>
             </div>
           </div>
           <textarea id="prompt-text-display" rows="8" class="code-editor" style="background: var(--bg-app);"></textarea>
         </div>
 
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Claude Response / Structured Output</label>
+          <div class="flex justify-between items-center mb-6">
+            <label class="text-xs font-bold uppercase text-secondary">Claude Response / Structured Output</label>
             <button class="btn-primary" id="btn-apply-claude-profile" style="background-color: #059669; font-size: 11px; padding: 6px 14px;">
-              ⚡ Apply Updates to My Live Profile (Persistent)
+              <span class="icon icon-sm"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+              Apply Updates to My Live Profile (Persistent)
             </button>
           </div>
           <textarea id="prompt-response-display" rows="8" class="code-editor" placeholder="Paste Claude's response here or click 'Send to Claude (CDP)' to auto-stream. Then click 'Apply Updates to My Live Profile' to update your platform profile!"></textarea>
