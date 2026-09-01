@@ -202,13 +202,14 @@
   "200": "linkedin.js",
   "201": "Job Search Assistant (India Edition)",
   "202": "resolve_user_uuid",
-  "203": "DeviceDiagnosticReport",
+  "203": "Instant JD Link Fetcher & Auto-Parser Design Specification",
   "204": "get_llm_client",
-  "205": ".executeFix",
+  "205": "dependencies",
   "206": "3. Detailed Component Design",
   "207": "test_auth_sso.py",
   "208": "Candidate Snapshot & Interactive Resume Studio Implementation Plan",
   "209": "test_token_db.py",
   "210": "TestDatabaseSecurityMigration",
-  "211": "resume-ingester.js"
+  "211": "resume-ingester.js",
+  "212": "TestFinanceBotQueryQA"
 }

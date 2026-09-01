@@ -1,3 +1,27 @@
+const ICONS = {
+  zap: '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  bot: '<svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M2 14h2M20 14h2"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M3 16v4h4"/><path d="M21 8V4h-4"/></svg>',
+  rocket: '<svg viewBox="0 0 24 24"><path d="M12 2c3 2 5 6 5 10 0 2-1 4-2 5l-3 3-3-3c-1-1-2-3-2-5 0-4 2-8 5-10Z"/><circle cx="12" cy="10" r="1.5"/><path d="M8 17c-2 1-3 3-3 5 2 0 4-1 5-3"/><path d="M16 17c2 1 3 3 3 5-2 0-4-1-5-3"/></svg>',
+  x: '<svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
+  eye: '<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>',
+  globe: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>',
+  dollarSign: '<svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 6.5c0-1.9-2.2-3.5-5-3.5s-5 1.4-5 3.5S9.2 10 12 10s5 1.6 5 3.5-2.2 3.5-5 3.5-5-1.6-5-3.5"/></svg>',
+  clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  mapPin: '<svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+  copy: '<svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  sparkles: '<svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="m6 6 2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>',
+  checkCircle: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg>',
+  inbox: '<svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3 7v7a2 2 0 0 1-2 2H4.5a2 2 0 0 1-2-2v-7l3-7Z"/></svg>',
+  fileText: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>',
+  code: '<svg viewBox="0 0 24 24"><path d="m8 6-6 6 6 6"/><path d="m16 6 6 6-6 6"/></svg>',
+  briefcase: '<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>'
+};
+
+function icon(name, extraClass) {
+  return `<span class="icon${extraClass ? ' ' + extraClass : ''}">${ICONS[name] || ''}</span>`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   let allQueuedJobs = [];
   let currentFilter = 'all';
@@ -213,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const dataUrl = evt.target.result;
 
       dropZoneCta.style.display = 'none';
-      resumeFileName.innerText = `📄 ${file.name} (Extracting text...)`;
+      resumeFileName.innerText = `${file.name} (Extracting text...)`;
       resumeFileInfo.style.display = 'block';
 
       try {
@@ -230,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
           uploadedResumeText = data.profile?.uploadedResumeText || '';
           localStorage.setItem('mindhunt_resume_text', uploadedResumeText);
           localStorage.setItem('mindhunt_resume_name', file.name);
-          resumeFileName.innerText = `📄 ${file.name} (Parsed & Active)`;
+          resumeFileName.innerText = `${file.name} (Parsed & Active)`;
         }
       } catch (err) {
         console.warn('PDF parse error:', err);
@@ -243,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Restore saved resume if present
   if (uploadedResumeName) {
     dropZoneCta.style.display = 'none';
-    resumeFileName.innerText = `📄 ${uploadedResumeName} (Saved & Active)`;
+    resumeFileName.innerText = `${uploadedResumeName} (Saved & Active)`;
     resumeFileInfo.style.display = 'block';
   }
 
@@ -357,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
       uploadedResumeName = prof.uploadedResumeFileName;
       uploadedResumeText = prof.uploadedResumeText || '';
       dropZoneCta.style.display = 'none';
-      resumeFileName.innerText = `📄 ${uploadedResumeName} (Saved & Active)`;
+      resumeFileName.innerText = `${uploadedResumeName} (Saved & Active)`;
       resumeFileInfo.style.display = 'block';
     }
   }
@@ -381,10 +405,12 @@ document.addEventListener('DOMContentLoaded', () => {
     editSnapYoe.value = pers.totalYearsExperience || 6.0;
     editSnapTarget.value = pers.targetSeniority || 'Staff / Lead Software Engineer';
     editSnapLocation.value = pers.location || 'Bengaluru, India';
+    snapshotModal.classList.remove('hidden');
     snapshotModal.style.display = 'flex';
   });
 
   btnCloseSnapshotModal.addEventListener('click', () => {
+    snapshotModal.classList.add('hidden');
     snapshotModal.style.display = 'none';
   });
 
@@ -407,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.success) {
         loadedProfile = data.profile;
         renderCandidateSnapshot(loadedProfile);
+        snapshotModal.classList.add('hidden');
         snapshotModal.style.display = 'none';
         alert('Candidate Snapshot saved persistently!');
       }
@@ -423,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    btnSyncLinkedinSnapshot.innerText = 'Extracting from LinkedIn...';
+    btnSyncLinkedinSnapshot.textContent = 'Extracting from LinkedIn...';
     btnSyncLinkedinSnapshot.disabled = true;
 
     try {
@@ -441,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       alert(`LinkedIn sync error: ${e.message}`);
     } finally {
-      btnSyncLinkedinSnapshot.innerText = '⚡ Auto-Sync LinkedIn';
+      btnSyncLinkedinSnapshot.innerHTML = icon('zap') + ' Auto-Sync LinkedIn';
       btnSyncLinkedinSnapshot.disabled = false;
     }
   });
@@ -461,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const expList = p.masterExperience || [];
     studioExperienceList.innerHTML = expList.map((exp, idx) => `
-      <div style="background: var(--bg-app); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 12px;">
+      <div style="background: var(--bg-app); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 12px;">
         <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">${exp.role} | ${exp.company}</div>
         <textarea class="studio-exp-bullets code-editor" data-idx="${idx}" rows="${Math.max(3, (exp.bullets || []).length * 2)}" style="font-family: inherit; font-size: 11.5px;">${(exp.bullets || []).join('\n')}</textarea>
       </div>
@@ -500,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
       if (data.success) {
-        alert('✅ Master Resume edits saved!');
+        alert('Master Resume edits saved!');
         btnRefreshPreview.click();
       }
     } catch (e) {
@@ -551,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (p.uploadedCoverLetterFileName && clFileName) {
       clDropCta.style.display = 'none';
-      clFileName.innerText = `📄 ${p.uploadedCoverLetterFileName} (Active)`;
+      clFileName.innerText = `${p.uploadedCoverLetterFileName} (Active)`;
       clFileInfo.style.display = 'block';
     }
 
@@ -589,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.onload = async (evt) => {
       const dataUrl = evt.target.result;
       clDropCta.style.display = 'none';
-      clFileName.innerText = `📄 ${file.name} (Parsing text...)`;
+      clFileName.innerText = `${file.name} (Parsing text...)`;
       clFileInfo.style.display = 'block';
 
       try {
@@ -601,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
         if (data.success) {
           loadedProfile = data.profile;
-          clFileName.innerText = `📄 ${file.name} (Parsed & Active)`;
+          clFileName.innerText = `${file.name} (Parsed & Active)`;
           clBodyEditor.value = data.coverLetterText || clBodyEditor.value;
           updateCoverLetterPreview();
         }
@@ -632,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const data = await res.json();
         if (data.success) {
-          alert('✅ Cover Letter saved persistently!');
+          alert('Cover Letter saved persistently!');
           updateCoverLetterPreview();
         }
       } catch (e) {
@@ -653,8 +680,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnDownloadResume) {
     btnDownloadResume.addEventListener('click', async (e) => {
       e.preventDefault();
-      const originalText = btnDownloadResume.innerText;
-      btnDownloadResume.innerText = 'Compiling PDF...';
+      const originalHTML = btnDownloadResume.innerHTML;
+      btnDownloadResume.innerHTML = 'Compiling PDF...';
       try {
         const res = await fetch('/api/resume/download-pdf');
         if (!res.ok) throw new Error('PDF generation failed');
@@ -670,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (err) {
         window.location.href = '/api/resume/download-pdf';
       } finally {
-        btnDownloadResume.innerText = originalText;
+        btnDownloadResume.innerHTML = originalHTML;
       }
     });
   }
@@ -678,8 +705,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnDownloadCoverLetter) {
     btnDownloadCoverLetter.addEventListener('click', async (e) => {
       e.preventDefault();
-      const originalText = btnDownloadCoverLetter.innerText;
-      btnDownloadCoverLetter.innerText = 'Compiling PDF...';
+      const originalHTML = btnDownloadCoverLetter.innerHTML;
+      btnDownloadCoverLetter.innerHTML = 'Compiling PDF...';
       try {
         const comp = encodeURIComponent(clTargetCompany?.value || '');
         const role = encodeURIComponent(clTargetRole?.value || '');
@@ -697,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (err) {
         window.location.href = '/api/cover-letter/download-pdf';
       } finally {
-        btnDownloadCoverLetter.innerText = originalText;
+        btnDownloadCoverLetter.innerHTML = originalHTML;
       }
     });
   }
@@ -705,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnAiImproveCl) {
     btnAiImproveCl.addEventListener('click', async () => {
       activePromptType = 'cover-letter';
-      promptModalTitle.innerText = '🤖 ✨ Context-Rich Claude Prompt for Cover Letter';
+      promptModalTitle.innerHTML = icon('bot') + ' Context-Rich Claude Prompt for Cover Letter';
 
       const payload = {
         masterCoverLetter: clBodyEditor.value,
@@ -742,7 +769,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const expList = p.masterExperience || [];
     liveProfExperienceContainer.innerHTML = expList.map((exp, idx) => `
-      <div style="background: var(--bg-app); border: 1px solid var(--border-light); border-radius: var(--radius-card); padding: 16px;">
+      <div style="background: var(--bg-app); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
           <div>
             <strong style="font-size: 14px; color: var(--text-primary);">${exp.role}</strong> • <span style="font-weight: 600; color: var(--text-secondary);">${exp.company}</span>
@@ -793,7 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
       if (data.success) {
-        alert('✅ Live Candidate Profile persistently saved!');
+        alert('Live Candidate Profile persistently saved!');
         renderLiveProfile();
       }
     } catch (e) {
@@ -812,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', async (e) => {
       const type = e.currentTarget.getAttribute('data-type');
       activePromptType = type;
-      promptModalTitle.innerText = `🤖 Context-Rich Claude Prompt for ${type.toUpperCase()}`;
+      promptModalTitle.innerHTML = icon('bot') + ` Context-Rich Claude Prompt for ${type.toUpperCase()}`;
 
       let payload = {};
       const prof = loadedProfile || await fetchProfileData();
@@ -883,46 +910,50 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       alert(`Error sending to Claude: ${err.message}`);
     } finally {
-      btnSendPromptCdp.innerText = '⚡ Send to Claude (CDP)';
+      btnSendPromptCdp.innerHTML = icon('zap') + ' Send to Claude (CDP)';
       btnSendPromptCdp.disabled = false;
     }
   });
 
-  // Apply Claude Output to Live Platform Profile
-  btnApplyClaudeProfile.addEventListener('click', async () => {
-    const rawOutput = promptResponseDisplay.value.trim();
-    if (!rawOutput) {
-      alert('Please paste Claude’s response or click "Send to Claude (CDP)" first.');
-      return;
-    }
+    if (btnApplyClaudeProfile) {
+      btnApplyClaudeProfile.addEventListener('click', async () => {
+        const text = promptResponseDisplay.value.trim();
+        if (!text) {
+          alert('Please paste Claude response or fetch via CDP first.');
+          return;
+        }
 
-    try {
-      const res = await fetch('/api/profile/apply-claude-output', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rawOutput, assetType: activePromptType })
+        try {
+          const res = await fetch('/api/profile/apply-claude-output', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rawOutput: text, assetType: activePromptType })
+          });
+          const data = await res.json();
+          if (data.success) {
+            loadedProfile = data.profile;
+            renderCandidateSnapshot(loadedProfile);
+            prefillAssets(loadedProfile);
+            renderLiveProfile();
+            promptModal.classList.add('hidden');
+            promptModal.style.display = 'none';
+            alert('Live Candidate Profile successfully updated and persisted to disk!');
+            btnScoreAll.click();
+          } else {
+            alert(`Update Error: ${data.error}`);
+          }
+        } catch (e) {
+          alert(`Network error applying Claude update: ${e.message}`);
+        }
       });
-      const data = await res.json();
-      if (data.success) {
-        alert('🎉 Live Candidate Profile persistently updated on CareerCraft platform!');
-        loadedProfile = data.profile;
-        renderCandidateSnapshot(loadedProfile);
-        renderLiveProfile();
-        promptModal.style.display = 'none';
-      } else {
-        alert(`Error: ${data.error}`);
-      }
-    } catch (err) {
-      alert(`Update Error: ${err.message}`);
     }
-  });
 
   // Score All 3 Pillars
   btnScoreAll.addEventListener('click', async () => {
     autoSaveGitHub();
     autoSaveLinkedIn();
 
-    btnScoreAll.innerText = 'Auditing 3 Pillars with AI...';
+    btnScoreAll.textContent = 'Auditing 3 Pillars with AI...';
     btnScoreAll.disabled = true;
 
     let resumeData = null;
@@ -964,15 +995,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (sc.crossAssetInsights && sc.crossAssetInsights.length > 0) {
           scCrossInsights.innerHTML = `
-            <strong style="font-size: 12px; color: var(--text-primary);">🔄 Cross-Asset Alignment Gaps:</strong>
+            <strong class="text-sm font-semibold flex items-center gap-6">${icon('refresh', 'icon-sm')} Cross-Asset Alignment Gaps:</strong>
             <ul style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); margin-top: 6px;">
               ${sc.crossAssetInsights.map(item => `<li>${item}</li>`).join('')}
             </ul>
           `;
         } else {
           scCrossInsights.innerHTML = `
-            <div style="font-size: 12px; color: #065f46;">
-              ✅ <strong>High Consistency:</strong> Your GitHub projects, LinkedIn skills, and Resume experience are mutually aligned.
+            <div class="text-sm text-success flex items-center gap-6">
+              ${icon('checkCircle', 'icon-sm')} <strong>High Consistency:</strong> Your GitHub projects, LinkedIn skills, and Resume experience are mutually aligned.
             </div>
           `;
         }
@@ -982,7 +1013,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gh && !gh.error) {
           cardGhBreakdown.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h4 style="font-size: 15px; font-weight: 700;">💻 1. GitHub Score</h4>
+              <h4 class="text-heading-sm flex items-center gap-6">${icon('code', 'icon-sm')} 1. GitHub Score</h4>
               <div class="ats-score-chip" style="padding: 4px 10px;">
                 <span class="ats-val" style="font-size: 14px;">${gh.score}/100</span>
               </div>
@@ -990,14 +1021,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Grade ${gh.grade} • ${gh.publicRepos || 0} Public Repos</div>
 
             <div style="margin-bottom: 10px;">
-              <strong style="font-size: 11.5px; color: #065f46;">Strengths:</strong>
+              <strong class="text-xs text-success">Strengths:</strong>
               <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
                 ${(gh.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
               </ul>
             </div>
 
-            <button class="btn-pill btn-copy-gh-readme" data-readme="${encodeURIComponent(gh.recommendedReadme || '')}" style="width: 100%; margin-top: 8px;">
-              📋 Copy Profile README
+            <button class="btn-pill btn-copy-gh-readme w-full mt-8" data-readme="${encodeURIComponent(gh.recommendedReadme || '')}">
+              ${icon('copy', 'icon-sm')} Copy Profile README
             </button>
           `;
         } else {
@@ -1009,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (li) {
           cardLiBreakdown.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h4 style="font-size: 15px; font-weight: 700;">👔 2. LinkedIn Score</h4>
+              <h4 class="text-heading-sm flex items-center gap-6">${icon('briefcase', 'icon-sm')} 2. LinkedIn Score</h4>
               <div class="ats-score-chip" style="padding: 4px 10px;">
                 <span class="ats-val" style="font-size: 14px;">${li.score}/100</span>
               </div>
@@ -1017,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Grade ${li.grade} • Recruiter SEO Index</div>
 
             <div style="margin-bottom: 10px;">
-              <strong style="font-size: 11.5px; color: #065f46;">Strengths:</strong>
+              <strong class="text-xs text-success">Strengths:</strong>
               <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
                 ${(li.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
               </ul>
@@ -1025,10 +1056,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
               <button class="btn-primary btn-apply-li-head" data-head="${encodeURIComponent(li.generatedHeadlines?.[0] || '')}" style="font-size: 11.5px; padding: 6px 12px;">
-                ✨ Apply Magnetic Headline
+                ${icon('sparkles', 'icon-sm')} Apply Magnetic Headline
               </button>
               <button class="btn-secondary btn-apply-li-about" data-about="${encodeURIComponent(li.generatedAbout || '')}" style="font-size: 11.5px; padding: 6px 12px;">
-                ✨ Adopt High-Impact About Story
+                ${icon('sparkles', 'icon-sm')} Adopt High-Impact About Story
               </button>
             </div>
           `;
@@ -1039,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resPillar) {
           cardResumeBreakdown.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h4 style="font-size: 15px; font-weight: 700;">📄 3. Resume ATS Score</h4>
+              <h4 class="text-heading-sm flex items-center gap-6">${icon('fileText', 'icon-sm')} 3. Resume ATS Score</h4>
               <div class="ats-score-chip" style="padding: 4px 10px;">
                 <span class="ats-val" style="font-size: 14px;">${resPillar.score}/100</span>
               </div>
@@ -1047,14 +1078,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Grade ${resPillar.grade} • ${resPillar.metricsCount || 0} Metrics Found</div>
 
             <div style="margin-bottom: 10px;">
-              <strong style="font-size: 11.5px; color: #065f46;">Strengths:</strong>
+              <strong class="text-xs text-success">Strengths:</strong>
               <ul style="margin-left: 16px; font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
                 ${(resPillar.strengths || []).slice(0, 2).map(s => `<li>${s}</li>`).join('')}
               </ul>
             </div>
 
-            <button class="btn-primary" id="btn-goto-studio" style="width: 100%; margin-top: 8px; font-size: 11.5px; padding: 6px 12px;">
-              📄 Open Resume Studio & PDF Viewer
+            <button class="btn-primary w-full mt-8" id="btn-goto-studio" style="font-size: 11.5px; padding: 6px 12px;">
+              ${icon('fileText', 'icon-sm')} Open Resume Studio & PDF Viewer
             </button>
           `;
         }
@@ -1095,7 +1126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       alert(`Scorecard Error: ${err.message}`);
     } finally {
-      btnScoreAll.innerText = '⚡ Score My 3-Pillar Profile';
+      btnScoreAll.innerHTML = icon('zap') + ' Score My 3-Pillar Profile';
       btnScoreAll.disabled = false;
     }
   });
@@ -1124,9 +1155,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (filtered.length === 0) {
       queueContainer.innerHTML = `
-        <div class="job-card" style="text-align: center; padding: 48px 20px;">
-          <div style="font-size: 32px; margin-bottom: 8px;">🎉</div>
-          <h3 style="font-weight: 700; font-size: 16px;">Queue is Clean!</h3>
+        <div class="job-card text-center" style="padding: 48px 20px;">
+          <div class="icon icon-lg text-muted mb-8" style="justify-content: center;">${ICONS.inbox}</div>
+          <h3 style="font-weight: 600; font-size: 15px;">Queue is Clean</h3>
           <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
             No applications waiting for review. Paste a new JD in "Instant JD Tailor" or run daily discovery.
           </p>
@@ -1147,7 +1178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div>
               <div class="job-meta-title">${job.title}</div>
               <div class="job-meta-company">${job.company} • <span class="job-meta-location">${job.location || 'Remote'}</span></div>
-              <span style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Platform: ${job.platform}</span>
+              <span class="job-meta-platform">Platform: ${job.platform}</span>
             </div>
             <div class="ats-score-chip">
               <div class="ats-val">${job.atsScore || 85}%</div>
@@ -1162,9 +1193,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ${kwHtml ? `<div class="keywords-row">${kwHtml}</div>` : ''}
 
           <div class="job-card-actions">
-            ${job.pdfPath ? `<a href="/${job.pdfPath}" target="_blank" class="btn-secondary" style="text-decoration:none;">👁️ View PDF</a>` : ''}
-            <button class="btn-secondary btn-dismiss-job" data-id="${job.id}">❌ Dismiss</button>
-            <button class="btn-primary btn-apply-job" data-id="${job.id}">🚀 Approve & Apply</button>
+            ${job.pdfPath ? `<a href="/${job.pdfPath}" target="_blank" class="btn-secondary no-underline">${icon('eye', 'icon-sm')} View PDF</a>` : ''}
+            <button class="btn-secondary btn-dismiss-job" data-id="${job.id}">${icon('x', 'icon-sm')} Dismiss</button>
+            <button class="btn-primary btn-apply-job" data-id="${job.id}">${icon('rocket', 'icon-sm')} Approve & Apply</button>
           </div>
         </div>
       `;
@@ -1200,14 +1231,14 @@ document.addEventListener('DOMContentLoaded', () => {
   btnBatchApply.addEventListener('click', async () => {
     if (allQueuedJobs.length === 0) return;
     const ids = allQueuedJobs.map(j => j.id);
-    btnBatchApply.innerText = 'Applying all...';
+    btnBatchApply.textContent = 'Applying all...';
     btnBatchApply.disabled = true;
     await fetch('/api/jobs/batch-approve', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ jobIds: ids })
     });
-    btnBatchApply.innerText = '🚀 Batch Apply All';
+    btnBatchApply.innerHTML = icon('rocket', 'icon-sm') + ' <span>Batch Apply All</span>';
     btnBatchApply.disabled = false;
     loadQueue();
   });
@@ -1256,7 +1287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnTailorFetchUrl) {
       btnTailorFetchUrl.disabled = true;
-      if (tailorFetchIcon) tailorFetchIcon.innerText = '⏳';
+      if (tailorFetchIcon) tailorFetchIcon.innerHTML = ICONS.clock;
       if (tailorFetchText) tailorFetchText.innerText = 'Fetching via Chrome...';
     }
 
@@ -1307,9 +1338,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (chips.length > 0) {
             tailorInsightsChips.innerHTML = `
-              <strong style="color: var(--sg-primary); font-size: 11px;">Extracted Insights:</strong>
+              <strong style="color: var(--accent); font-size: 11px;">Extracted Insights:</strong>
               ${chips.join('')}
             `;
+            tailorInsightsBar.classList.remove('hidden');
             tailorInsightsBar.style.display = 'block';
           }
         }
@@ -1321,7 +1353,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       if (btnTailorFetchUrl) {
         btnTailorFetchUrl.disabled = false;
-        if (tailorFetchIcon) tailorFetchIcon.innerText = '⚡';
+        if (tailorFetchIcon) tailorFetchIcon.innerHTML = ICONS.zap;
         if (tailorFetchText) tailorFetchText.innerText = 'Auto-Fetch Details';
       }
     }
@@ -1343,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tailorForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('btn-tailor-submit');
-    btn.innerText = 'Tailoring with AI...';
+    btn.textContent = 'Tailoring with AI...';
     btn.disabled = true;
 
     const payload = {
@@ -1374,7 +1406,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       alert(`Error: ${err.message}`);
     } finally {
-      btn.innerText = '✨ Tailor Resume & Queue Job';
+      btn.innerHTML = icon('sparkles', 'icon-sm') + ' <span>Tailor Resume & Queue Job</span>';
       btn.disabled = false;
     }
   });

@@ -260,13 +260,13 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1788192555.990807,
-    "ast_hash": "617ac8e30c289add419a7b6fa2b8dfaa",
+    "mtime": 1788269659.2371364,
+    "ast_hash": "7dfcd8d2da654c57c58bee7a5573ca42",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1788192555.9914045,
-    "ast_hash": "617ac8e30c289add419a7b6fa2b8dfaa",
+    "mtime": 1788269659.2375855,
+    "ast_hash": "7dfcd8d2da654c57c58bee7a5573ca42",
     "semantic_hash": ""
   },
   ".agent/skills/brainstorming/SKILL.md": {
@@ -1100,8 +1100,8 @@
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1787594450.9100077,
-    "ast_hash": "d26cc6e281021ca97bfa914dd75b4392",
+    "mtime": 1788268358.5589159,
+    "ast_hash": "a4ac44c1df2198d9375e71ba58ed8299",
     "semantic_hash": ""
   },
   ".codex/hooks.json": {
@@ -1635,8 +1635,8 @@
     "semantic_hash": ""
   },
   "job-hunter/data/master_profile.json": {
-    "mtime": 1788201430.9724076,
-    "ast_hash": "658acfb675b3f096aaac32e442ba5916",
+    "mtime": 1788283085.7071764,
+    "ast_hash": "3052b34e88e5846fcc54b3d771da5987",
     "semantic_hash": ""
   },
   "job-hunter/package.json": {
@@ -1645,8 +1645,8 @@
     "semantic_hash": ""
   },
   "job-hunter/public/app.js": {
-    "mtime": 1788202538.3062055,
-    "ast_hash": "9aaa6c016db597ba122f85af8b56ce2e",
+    "mtime": 1788284522.9621582,
+    "ast_hash": "748cf01e5fca271988c1101e7bb3e634",
     "semantic_hash": ""
   },
   "job-hunter/src/cdp/chrome-bridge.js": {
@@ -1655,8 +1655,8 @@
     "semantic_hash": ""
   },
   "job-hunter/src/cdp/claude-worker.js": {
-    "mtime": 1788195370.8983243,
-    "ast_hash": "7860a7d8f53ef281cea158673e3cf48a",
+    "mtime": 1788271435.8223894,
+    "ast_hash": "41adbbc703760d32930824f1fc0a898d",
     "semantic_hash": ""
   },
   "job-hunter/src/core/ats.js": {
@@ -1695,8 +1695,8 @@
     "semantic_hash": ""
   },
   "job-hunter/src/server/server.js": {
-    "mtime": 1788202533.55076,
-    "ast_hash": "33371a724b507ccd355be39254ec09d1",
+    "mtime": 1788284660.2939372,
+    "ast_hash": "9c53b84eb7e2b47add716f26d77a61e5",
     "semantic_hash": ""
   },
   "job-hunter/src/submitters/instahyre-submitter.js": {
@@ -1715,13 +1715,13 @@
     "semantic_hash": ""
   },
   "job-hunter/tests/cdp/claude-worker.test.js": {
-    "mtime": 1788195376.7946126,
-    "ast_hash": "50fde09d10bd9e4c44a289ca3cbc6303",
+    "mtime": 1788270294.3730936,
+    "ast_hash": "8afd1c6b9b5e3f5717a8d33d0d2f96b5",
     "semantic_hash": ""
   },
   "job-hunter/tests/core/ats.test.js": {
-    "mtime": 1788195303.3693628,
-    "ast_hash": "dd981e20ce73eb477d80034853bc8090",
+    "mtime": 1788270292.7525907,
+    "ast_hash": "253b1e9f78e05300293cd08a0a7f2edb",
     "semantic_hash": ""
   },
   "job-hunter/tests/db/database.test.js": {
@@ -1735,8 +1735,8 @@
     "semantic_hash": ""
   },
   "job-hunter/tests/pdf/resume-renderer.test.js": {
-    "mtime": 1788195346.6392186,
-    "ast_hash": "d9784d11b125f9520ac7d7de8f9698da",
+    "mtime": 1788270296.8254652,
+    "ast_hash": "87523e82523eb5d9941cec5128714470",
     "semantic_hash": ""
   },
   "job-hunter/tests/scrapers/discovery.test.js": {
@@ -1765,8 +1765,8 @@
     "semantic_hash": ""
   },
   "job-hunter/public/index.html": {
-    "mtime": 1788202526.1170874,
-    "ast_hash": "d41581cb5ba86712176271ce14383640",
+    "mtime": 1788284502.9788365,
+    "ast_hash": "957572cd9d33c068c2d41289a5ddd7a0",
     "semantic_hash": ""
   },
   "job-hunter/src/pdf/templates/ats-clean.html": {
@@ -1847,6 +1847,26 @@
   "docs/superpowers/specs/2026-08-31-candidate-snapshot-linkedin-experience-design.md": {
     "mtime": 1788198654.8305447,
     "ast_hash": "ee0181953c42656372c5a9b0d2187503",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/fixtures/test-profile.json": {
+    "mtime": 1788270282.6855497,
+    "ast_hash": "26c0eaf2467aea07756eea37ba5f32ab",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/scrapers/url-extractor.js": {
+    "mtime": 1788284667.0385027,
+    "ast_hash": "4fe31fd866120b0421b7c3ef2076f6c7",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-01-instant-jd-url-fetcher.md": {
+    "mtime": 1788284412.233265,
+    "ast_hash": "8524da1ac917b8b349ca10554edf7bd7",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-01-instant-jd-url-fetcher-design.md": {
+    "mtime": 1788284344.442363,
+    "ast_hash": "1a0939d6125cadc29b254ca2704dc7c2",
     "semantic_hash": ""
   }
 }

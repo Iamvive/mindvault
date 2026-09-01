@@ -1,16 +1,16 @@
 # Graph Report - ai-play-ground  (2026-09-01)
 
 ## Corpus Check
-- 354 files · ~257,995 words
+- 358 files · ~261,767 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2771 nodes · 3777 edges · 212 communities (187 shown, 25 thin omitted)
+- 2800 nodes · 3815 edges · 213 communities (188 shown, 25 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 123 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3ff2ed7f`
+- Built from commit: `7bfdb805`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -209,12 +209,15 @@
 - app.js
 - Job Search Assistant (India Edition)
 - resolve_user_uuid
-- DeviceDiagnosticReport
+- Instant JD Link Fetcher & Auto-Parser Design Specification
 - get_llm_client
-- .executeFix
+- dependencies
 - 3. Detailed Component Design
+- test_auth_sso.py
 - Candidate Snapshot & Interactive Resume Studio Implementation Plan
+- test_token_db.py
 - TestDatabaseSecurityMigration
+- TestFinanceBotQueryQA
 
 ## God Nodes (most connected - your core abstractions)
 1. `get_connection()` - 46 edges
@@ -229,21 +232,21 @@
 10. `TestFinanceBotPipeline` - 22 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `DummyGeminiUsage` --uses--> `TokenUsage`  [INFERRED]
+  telegram-finance-bot/test_token_tracker.py → telegram-finance-bot/token_tracker.py
+- `DummyOpenAIUsage` --uses--> `TokenUsage`  [INFERRED]
+  telegram-finance-bot/test_token_tracker.py → telegram-finance-bot/token_tracker.py
+- `DummyClaudeUsage` --uses--> `TokenUsage`  [INFERRED]
+  telegram-finance-bot/test_token_tracker.py → telegram-finance-bot/token_tracker.py
 - `BTManagerApp` --calls--> `BluetoothService`  [INFERRED]
   bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/BluetoothService.swift
 - `BTManagerApp` --calls--> `PreferencesStore`  [INFERRED]
   bt-manager/Sources/BTManager/BTManagerApp.swift → bt-manager/Sources/BTManager/Services/PreferencesStore.swift
-- `MainPopoverView` --calls--> `AudioControlService`  [INFERRED]
-  bt-manager/Sources/BTManager/Views/MainPopoverView.swift → bt-manager/Sources/BTManager/Services/AudioControlService.swift
-- `MainPopoverView` --calls--> `DeviceDiagnosticService`  [INFERRED]
-  bt-manager/Sources/BTManager/Views/MainPopoverView.swift → bt-manager/Sources/BTManager/Services/DeviceDiagnosticService.swift
-- `DummyGeminiUsage` --uses--> `TokenUsage`  [INFERRED]
-  telegram-finance-bot/test_token_tracker.py → telegram-finance-bot/token_tracker.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (212 total, 25 thin omitted)
+## Communities (213 total, 25 thin omitted)
 
 ### Community 0 - "Backend AI Initialization"
 Cohesion: 0.06
@@ -270,8 +273,8 @@ Cohesion: 0.08
 Nodes (10): get_client_ip(), Any, RateLimiter, TestFinanceBotPipeline, DummyHandler, test_get_client_ip_fallback(), test_get_client_ip_forwarded_for(), test_get_client_ip_real_ip() (+2 more)
 
 ### Community 6 - "TestFinanceBotQueryQA"
-Cohesion: 0.07
-Nodes (28): @google/genai, dependencies, dotenv, express, @google/genai, react, react-dom, three (+20 more)
+Cohesion: 0.12
+Nodes (15): devDependencies, supertest, vite, @vitejs/plugin-react, vite, @vitejs/plugin-react, name, scripts (+7 more)
 
 ### Community 7 - "llm_extract.py"
 Cohesion: 0.06
@@ -567,8 +570,8 @@ Cohesion: 0.40
 Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
 
 ### Community 96 - "db.py"
-Cohesion: 0.14
-Nodes (26): check_duplicate(), create_temp_login_code(), create_user_pat(), delete_user_session(), exchange_login_code(), get_connection(), get_or_create_user_by_identity(), get_or_create_user_token() (+18 more)
+Cohesion: 0.06
+Nodes (55): add_debt(), add_pending_bill(), add_recurring(), bulk_insert_transactions(), check_duplicate(), clear_debts_for_person(), create_temp_login_code(), create_user_pat() (+47 more)
 
 ### Community 97 - "Evaluation and iteration"
 Cohesion: 0.07
@@ -663,8 +666,8 @@ Cohesion: 0.12
 Nodes (16): BluetoothDevice, DeviceType, headphones, keyboard, mouse, speaker, unknown, Bool (+8 more)
 
 ### Community 122 - "llm_extract.py"
-Cohesion: 0.16
-Nodes (29): _extract_claude(), _extract_gemini(), _extract_local(), _extract_openai(), extract_transaction(), BaseModel, Calls the LLM to extract transaction details from either text or image.     Uses, TransactionExtraction (+21 more)
+Cohesion: 0.19
+Nodes (20): DummyClaudeResponse, DummyClaudeUsage, DummyGeminiResponse, DummyGeminiUsage, DummyOpenAIResponse, DummyOpenAIUsage, test_calculate_cost_gemini_flash(), test_calculate_cost_gemini_flash_lite() (+12 more)
 
 ### Community 123 - "Global Constraints"
 Cohesion: 0.29
@@ -831,8 +834,8 @@ Cohesion: 0.33
 Nodes (5): AKG Turbo Link Grabber Implementation Plan, Global Constraints, Task 1: Add Turbo Link Grabber Engine to `BluetoothService.swift`, Task 2: Update `DeviceRowView.swift` with Interactive Turbo Button & Countdown UI, Task 3: Build, Package & Deploy
 
 ### Community 168 - "server/server.js"
-Cohesion: 0.07
-Nodes (50): __dirname, __filename, main(), checkCdpAvailable(), connectToChrome(), findOrCreateTab(), formatTailorPrompt(), parseClaudeResponse() (+42 more)
+Cohesion: 0.06
+Nodes (54): __dirname, __filename, main(), checkCdpAvailable(), connectToChrome(), findOrCreateTab(), formatTailorPrompt(), parseClaudeResponse() (+46 more)
 
 ### Community 169 - "update_transaction"
 Cohesion: 0.50
@@ -927,56 +930,68 @@ Cohesion: 0.18
 Nodes (10): 1. Launch Chrome with CDP Enabled, 2. Start CareerCraft, 3. Open the Studio, 🎯 Candidate Focus: Senior Android & Mobile Engineering, ⚡ CareerCraft — Unified AI Career Profile & ATS Resume Studio, Key Highlights:, 📄 License, 🚀 Quick Start (+2 more)
 
 ### Community 198 - "app.js"
-Cohesion: 0.17
-Nodes (9): fetchProfileData(), handleCoverLetterUpload(), loadQueue(), loadStatus(), prefillAssets(), renderCandidateSnapshot(), renderCoverLetterStudio(), renderQueue() (+1 more)
+Cohesion: 0.16
+Nodes (11): fetchJobDetailsFromUrl(), fetchProfileData(), handleCoverLetterUpload(), loadQueue(), loadStatus(), prefillAssets(), renderCandidateSnapshot(), renderCoverLetterStudio() (+3 more)
 
 ### Community 201 - "Job Search Assistant (India Edition)"
 Cohesion: 0.07
 Nodes (29): Application Materials Bundle, Application Tracking, ATS Keyword Optimization (INTERNAL — done automatically, not shown to user), Auto-Improve on Rejection Patterns (runs automatically, part of every Gmail status check), Commands, Communication Style, Cover Letter, First-Run Setup (Profile Collection) (+21 more)
 
 ### Community 202 - "resolve_user_uuid"
-Cohesion: 0.15
-Nodes (28): add_debt(), add_pending_bill(), add_recurring(), bulk_insert_transactions(), clear_debts_for_person(), create_user_session(), delete_debt(), delete_last_transaction() (+20 more)
-
-### Community 203 - "DeviceDiagnosticReport"
 Cohesion: 0.18
 Nodes (16): DeviceDiagnosticReport, DiagnosticIssue, FixActionType, fixAudioRouting, optimizeKeyRepeat, smoothPointer, Int, EQPreset (+8 more)
 
-### Community 204 - "get_llm_client"
-Cohesion: 0.12
-Nodes (10): sqlite3, sqlite3, get_llm_client(), any, Detects API keys and returns (provider, client/url)., execute_database_qa(), is_finance_query(), Classifies if the user's message is a natural language question or query     abo (+2 more)
+### Community 203 - "Instant JD Link Fetcher & Auto-Parser Design Specification"
+Cohesion: 0.14
+Nodes (13): 1. Endpoint: `POST /api/jobs/fetch-url`, 1. `public/index.html` (Instant JD Tailor section):, 2. Module: `src/scrapers/url-extractor.js`, 2. `public/app.js`:, Architecture & Extraction Pipeline, Error Handling & Edge Cases, Execution Strategy:, Instant JD Link Fetcher & Auto-Parser Design Specification (+5 more)
 
-### Community 205 - ".executeFix"
-Cohesion: 0.33
-Nodes (4): Bool, String, Bool, AudioRoutingServiceTests
+### Community 204 - "get_llm_client"
+Cohesion: 0.24
+Nodes (8): @google/genai, get_llm_client(), any, Detects API keys and returns (provider, client/url)., execute_database_qa(), is_finance_query(), Classifies if the user's message is a natural language question or query     abo, Generates a secure SQL query to answer the user's financial question,     execut
+
+### Community 205 - "dependencies"
+Cohesion: 0.14
+Nodes (14): dependencies, dotenv, express, @google/genai, react, react-dom, sqlite3, three (+6 more)
 
 ### Community 206 - "3. Detailed Component Design"
 Cohesion: 0.20
 Nodes (9): 1. Overview, 2. Architecture & Data Flow, 3.1 LinkedIn Experience Extractor (`src/core/linkedin-auditor.js`), 3.2 Master Profile Schema Additions (`src/core/profile.js`), 3.3 Candidate Snapshot Bar Component, 3.4 Interactive Resume Studio (`public/index.html`, `app.js`, `server.js`), 3. Detailed Component Design, 4. Verification Plan (+1 more)
 
+### Community 207 - "test_auth_sso.py"
+Cohesion: 0.33
+Nodes (4): Bool, String, Bool, AudioRoutingServiceTests
+
 ### Community 208 - "Candidate Snapshot & Interactive Resume Studio Implementation Plan"
 Cohesion: 0.40
 Nodes (4): Candidate Snapshot & Interactive Resume Studio Implementation Plan, Task 1: LinkedIn Timeline Experience Extractor & YoE Calculator, Task 2: Resume Studio Endpoints (PDF Preview, Live Render & Download), Task 3: Pinned Candidate Snapshot Bar & Resume Studio UI
 
+### Community 209 - "test_token_db.py"
+Cohesion: 0.53
+Nodes (9): _extract_claude(), _extract_gemini(), _extract_local(), _extract_openai(), extract_transaction(), BaseModel, Calls the LLM to extract transaction details from either text or image.     Uses, TransactionExtraction (+1 more)
+
+### Community 210 - "TestDatabaseSecurityMigration"
+Cohesion: 0.25
+Nodes (7): Global Constraints, Instant JD Link Fetcher Implementation Plan, Task 1: Create URL Extraction Engine (`src/scrapers/url-extractor.js`), Task 2: Implement Backend API Route (`POST /api/jobs/fetch-url`), Task 3: Enhance Instant JD Tailor UI (`index.html` & `style.css`), Task 4: Wire Frontend Auto-Fetch Logic (`public/app.js`), Task 5: Manual End-to-End Verification & Walkthrough
+
 ## Knowledge Gaps
-- **1240 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1235 more)
+- **1254 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1249 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `TestFinanceBotQueryQA` to `get_llm_client`?**
+- **Why does `dependencies` connect `dependencies` to `TestFinanceBotQueryQA`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `sqlite3` connect `get_llm_client` to `db.py`, `db_wealth.py`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `sqlite3` connect `get_llm_client` to `TestFinanceBotQueryQA`?**
+- **Why does `sqlite3` connect `dependencies` to `db.py`, `get_llm_client`, `db_wealth.py`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `AudioControlService` (e.g. with `MainPopoverView` and `.testBassBoostStepCycling()`) actually correct?**
   _`AudioControlService` has 5 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
-  _1240 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1254 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend AI Initialization` be split into smaller, more focused modules?**
   _Cohesion score 0.06440677966101695 - nodes in this community are weakly interconnected._
 - **Should `bot.py` be split into smaller, more focused modules?**
   _Cohesion score 0.09899749373433583 - nodes in this community are weakly interconnected._
+- **Should `package.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
