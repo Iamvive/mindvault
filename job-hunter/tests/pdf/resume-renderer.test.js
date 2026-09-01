@@ -7,7 +7,7 @@ import path from 'node:path';
 
 describe('Resume HTML & PDF Renderer', () => {
   it('should generate valid ATS-compliant HTML with candidate data injected', () => {
-    const profile = loadMasterProfile('data/master_profile.json');
+    const profile = loadMasterProfile('tests/fixtures/test-profile.json');
     const tailored = {
       ...profile,
       tailoredSummary: 'Tailored executive summary targeting Distributed Systems Lead role.',
@@ -22,7 +22,7 @@ describe('Resume HTML & PDF Renderer', () => {
   });
 
   it('should render PDF file using Chrome / Playwright', async () => {
-    const profile = loadMasterProfile('data/master_profile.json');
+    const profile = loadMasterProfile('tests/fixtures/test-profile.json');
     const outPdf = path.resolve(process.cwd(), 'tests/pdf/test-output.pdf');
 
     try {

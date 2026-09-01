@@ -31,7 +31,7 @@ describe('ATS Scoring and Profile Engine', () => {
   });
 
   it('should calculate realistic ATS score comparing JD against candidate profile', () => {
-    const profilePath = path.resolve(process.cwd(), 'data/master_profile.json');
+    const profilePath = path.resolve(process.cwd(), 'tests/fixtures/test-profile.json');
     const profile = loadMasterProfile(profilePath);
 
     const jdMatching = `
@@ -46,7 +46,7 @@ describe('ATS Scoring and Profile Engine', () => {
   });
 
   it('should filter and rank relevant bullet points based on JD keywords', () => {
-    const profilePath = path.resolve(process.cwd(), 'data/master_profile.json');
+    const profilePath = path.resolve(process.cwd(), 'tests/fixtures/test-profile.json');
     const profile = loadMasterProfile(profilePath);
 
     const targetKeywords = ['kafka', 'go', 'postgresql', 'distributed systems'];

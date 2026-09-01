@@ -5,7 +5,7 @@ import { loadMasterProfile } from '../../src/core/profile.js';
 
 describe('Claude Worker Parser & Prompter', () => {
   it('should format structured tailoring prompt with JD and Master Profile', () => {
-    const profile = loadMasterProfile('data/master_profile.json');
+    const profile = loadMasterProfile('tests/fixtures/test-profile.json');
     const jd = 'Looking for Senior Go / Distributed Systems Engineer';
 
     const prompt = formatTailorPrompt(jd, profile);

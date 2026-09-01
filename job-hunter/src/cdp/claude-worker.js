@@ -102,8 +102,9 @@ export async function promptClaudeSession(claudePage, promptText, timeoutMs = 60
 
   while (Date.now() - startTime < timeoutMs) {
     // Select the last assistant message
-    const messages = await claudePage.$$eval('.font-claude-message, [data-testid="assistant-message"]', (nodes) =>
-      nodes.map(n => n.innerText)
+    const messages = await claudePage.$$eval(
+      'div.prose, [data-message-author-role="assistant"], [class*="msg-assistant"] .prose, .font-claude-message, [data-testid="assistant-message"]',
+      (nodes) => nodes.map(n => n.innerText).filter(t => t && t.trim().length > 0)
     );
 
     const currentText = messages.length > 0 ? messages[messages.length - 1] : '';

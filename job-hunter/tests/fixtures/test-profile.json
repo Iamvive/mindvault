@@ -1,0 +1,65 @@
+{
+  "personal": {
+    "name": "Alex Mercer",
+    "title": "Staff Software Engineer",
+    "email": "alex.mercer@example.com",
+    "phone": "+1 555-0100",
+    "location": "Remote",
+    "linkedin": "https://linkedin.com/in/alexmercer",
+    "github": "https://github.com/alexmercer",
+    "portfolio": "",
+    "currentRole": "Staff Software Engineer",
+    "currentCompany": "CloudScale Technologies",
+    "totalYearsExperience": 8,
+    "targetSeniority": "Staff / Principal Engineer"
+  },
+  "summary": "Distributed systems engineer with expertise in Go, Kafka, and event-driven architecture.",
+  "masterExperience": [
+    {
+      "company": "CloudScale Technologies",
+      "role": "Staff Software Engineer",
+      "location": "Remote",
+      "startDate": "Jan 2020",
+      "endDate": "Present",
+      "techStack": ["Go", "Kafka", "PostgreSQL", "AWS", "Kubernetes", "Distributed Systems"],
+      "bullets": [
+        "Architected a Kafka-based event pipeline backed by PostgreSQL, processing 500M+ transactions/day with sub-100ms latency.",
+        "Led migration of monolithic services to distributed Go microservices on AWS and Kubernetes.",
+        "Mentored a team of 6 engineers on distributed systems design and system reliability practices."
+      ]
+    },
+    {
+      "company": "DataForge Inc.",
+      "role": "Senior Software Engineer",
+      "location": "Remote",
+      "startDate": "Jun 2016",
+      "endDate": "Dec 2019",
+      "techStack": ["TypeScript", "Node.js", "Redis", "Docker"],
+      "bullets": [
+        "Built a real-time analytics dashboard using TypeScript and Node.js.",
+        "Reduced infrastructure costs by 30% through Docker container optimization."
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": {
+    "languages": ["Go", "TypeScript", "Python"],
+    "frameworks": ["Node.js"],
+    "cloudAndDevops": ["AWS", "Kubernetes", "Docker", "CI/CD"],
+    "databases": ["PostgreSQL", "Redis"],
+    "architecture": ["Distributed Systems", "Microservices", "Event-Driven"]
+  },
+  "education": [
+    { "institution": "State University", "degree": "B.S. Computer Science", "location": "Remote", "year": "2012 – 2016" }
+  ],
+  "preferences": {
+    "targetTitles": ["Staff Engineer", "Principal Engineer"],
+    "minSalaryInLPA": 50,
+    "workMode": ["Remote"],
+    "locations": ["Remote"],
+    "blacklistCompanies": []
+  },
+  "uploadedResumeFileName": "",
+  "uploadedResumeText": "",
+  "masterCoverLetter": ""
+}
