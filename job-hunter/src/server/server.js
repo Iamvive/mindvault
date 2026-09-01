@@ -532,6 +532,14 @@ app.post('/api/audit/full-profile', async (req, res) => {
   }
 });
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.warn('⚠️ Warning: Unhandled Rejection:', reason?.message || reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.warn('⚠️ Warning: Uncaught Exception:', err?.message || err);
+});
+
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`⚡ CareerCraft Cockpit running at http://localhost:${PORT}`);

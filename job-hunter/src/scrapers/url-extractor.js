@@ -68,6 +68,11 @@ export async function extractJobFromUrl(targetUrl, browserInstance = null) {
 
   if (browser) {
     const page = await browser.newPage();
+    page.on('dialog', async (dialog) => {
+      try {
+        await dialog.dismiss();
+      } catch (_) {}
+    });
     try {
       await page.goto(cleanUrl, { waitUntil: 'domcontentloaded', timeout: 25000 });
       // Brief wait for SPA hydration
