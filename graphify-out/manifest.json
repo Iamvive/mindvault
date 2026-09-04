@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/bot.py": {
-    "mtime": 1785854413.3080199,
-    "ast_hash": "f2269bfcdc6a00e2d0a0c072bc4fb62e",
+    "mtime": 1788513435.9038234,
+    "ast_hash": "6c339715f394722230e19665922079d8",
     "semantic_hash": ""
   },
   "telegram-finance-bot/categorize.py": {
@@ -85,13 +85,13 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard.py": {
-    "mtime": 1787995113.1567907,
-    "ast_hash": "0376e632c299d62af75a2d88b55cef4f",
+    "mtime": 1788506434.8130467,
+    "ast_hash": "87a4d42632cdfd5ab3182d3b707de558",
     "semantic_hash": ""
   },
   "telegram-finance-bot/db.py": {
-    "mtime": 1787993216.8956487,
-    "ast_hash": "cb3044f2f7cc83600bd1752dd9bf761d",
+    "mtime": 1788513341.7257562,
+    "ast_hash": "0853811427d3496b60c55ee53774e77a",
     "semantic_hash": ""
   },
   "telegram-finance-bot/llm_extract.py": {
@@ -260,13 +260,13 @@
     "semantic_hash": ""
   },
   ".cursor/mcp.json": {
-    "mtime": 1788269659.2371364,
-    "ast_hash": "7dfcd8d2da654c57c58bee7a5573ca42",
+    "mtime": 1788503934.5457294,
+    "ast_hash": "e2e4afbc6022a669939d0b22cb367b02",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
-    "mtime": 1788269659.2375855,
-    "ast_hash": "7dfcd8d2da654c57c58bee7a5573ca42",
+    "mtime": 1788503934.5461493,
+    "ast_hash": "e2e4afbc6022a669939d0b22cb367b02",
     "semantic_hash": ""
   },
   ".agent/skills/brainstorming/SKILL.md": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/dashboard/template.html": {
-    "mtime": 1787995465.4445148,
-    "ast_hash": "bf61018fa78a4fb683e1943393694d86",
+    "mtime": 1788513569.1103573,
+    "ast_hash": "b4bb75d3722e25ac2d9fe706d5a0977c",
     "semantic_hash": ""
   },
   "telegram-finance-bot/docker-compose.yml": {
@@ -810,23 +810,23 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/callbacks.py": {
-    "mtime": 1785489300.072178,
-    "ast_hash": "a0b17897d3f6d56aba1181e6dd26e342",
+    "mtime": 1788506388.690909,
+    "ast_hash": "ecf3c2141f28b1c1896d01fba378ff6f",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/commands.py": {
-    "mtime": 1786030936.5710182,
-    "ast_hash": "a03e38868ee50f204c5c0ecae62c016e",
+    "mtime": 1788513423.8378673,
+    "ast_hash": "7ac10a7f40ca61357a028a8cae9ac4f6",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/http_server.py": {
-    "mtime": 1787994204.4948883,
-    "ast_hash": "50fc676bebc0374896ae6797c4ea1eb5",
+    "mtime": 1788513396.3214784,
+    "ast_hash": "56c4b399b5d9a50fd39993636a39c779",
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/messages.py": {
-    "mtime": 1785952081.318284,
-    "ast_hash": "c7fc47d66be7791a0bafb54f77310305",
+    "mtime": 1788513449.0409749,
+    "ast_hash": "041ff1ff0ecd470ea00eb79d492eef87",
     "semantic_hash": ""
   },
   "telegram-finance-bot/rollback.sh": {
@@ -1100,8 +1100,8 @@
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1788268358.5589159,
-    "ast_hash": "a4ac44c1df2198d9375e71ba58ed8299",
+    "mtime": 1788286852.8687873,
+    "ast_hash": "0c83e6297fa2c17c270b16c4ee8b12c4",
     "semantic_hash": ""
   },
   ".codex/hooks.json": {
@@ -1225,8 +1225,8 @@
     "semantic_hash": ""
   },
   "telegram-finance-bot/handlers/wealth_server.py": {
-    "mtime": 1786193545.6357706,
-    "ast_hash": "3fe7136b92bbce6a65aa862f1483af18",
+    "mtime": 1788504773.2851214,
+    "ast_hash": "fdb08bf6e83e0a78204151601d472642",
     "semantic_hash": ""
   },
   "telegram-finance-bot/manana_wealth.py": {
@@ -1635,8 +1635,8 @@
     "semantic_hash": ""
   },
   "job-hunter/data/master_profile.json": {
-    "mtime": 1788283085.7071764,
-    "ast_hash": "3052b34e88e5846fcc54b3d771da5987",
+    "mtime": 1788371392.028375,
+    "ast_hash": "287fb7e19fc504495a2b78469e73f108",
     "semantic_hash": ""
   },
   "job-hunter/package.json": {
@@ -1645,8 +1645,8 @@
     "semantic_hash": ""
   },
   "job-hunter/public/app.js": {
-    "mtime": 1788284522.9621582,
-    "ast_hash": "748cf01e5fca271988c1101e7bb3e634",
+    "mtime": 1788370990.5965357,
+    "ast_hash": "ad0106585246d580095cae59a221cdd3",
     "semantic_hash": ""
   },
   "job-hunter/src/cdp/chrome-bridge.js": {
@@ -1660,8 +1660,8 @@
     "semantic_hash": ""
   },
   "job-hunter/src/core/ats.js": {
-    "mtime": 1788195316.0455587,
-    "ast_hash": "171e2f7e50d368d67927c14b1e03937b",
+    "mtime": 1788370703.5782583,
+    "ast_hash": "5dee8b471dc2eb068622aed10e0ee8e4",
     "semantic_hash": ""
   },
   "job-hunter/src/core/profile.js": {
@@ -1670,8 +1670,8 @@
     "semantic_hash": ""
   },
   "job-hunter/src/db/database.js": {
-    "mtime": 1788195286.1601458,
-    "ast_hash": "ca69f89988576d8dfc6ff5526557a7c9",
+    "mtime": 1788367280.4910064,
+    "ast_hash": "437e9056d1e45a6a3449656b6ffbc905",
     "semantic_hash": ""
   },
   "job-hunter/src/pdf/resume-renderer.js": {
@@ -1695,8 +1695,8 @@
     "semantic_hash": ""
   },
   "job-hunter/src/server/server.js": {
-    "mtime": 1788284660.2939372,
-    "ast_hash": "9c53b84eb7e2b47add716f26d77a61e5",
+    "mtime": 1788370922.2166903,
+    "ast_hash": "1b725ec0d254c5166a6ab335e56dd9f4",
     "semantic_hash": ""
   },
   "job-hunter/src/submitters/instahyre-submitter.js": {
@@ -1760,13 +1760,13 @@
     "semantic_hash": ""
   },
   "job-hunter/README.md": {
-    "mtime": 1788202651.4651704,
-    "ast_hash": "c08d55b347b1d864ed62617635b11204",
+    "mtime": 1788287635.339695,
+    "ast_hash": "558339d3a0e5af46adec26dbc3dedf11",
     "semantic_hash": ""
   },
   "job-hunter/public/index.html": {
-    "mtime": 1788284502.9788365,
-    "ast_hash": "957572cd9d33c068c2d41289a5ddd7a0",
+    "mtime": 1788370971.1704493,
+    "ast_hash": "e8ad01e251a4f390a1e9215c95f0724c",
     "semantic_hash": ""
   },
   "job-hunter/src/pdf/templates/ats-clean.html": {
@@ -1867,6 +1867,156 @@
   "docs/superpowers/specs/2026-09-01-instant-jd-url-fetcher-design.md": {
     "mtime": 1788284344.442363,
     "ast_hash": "1a0939d6125cadc29b254ca2704dc7c2",
+    "semantic_hash": ""
+  },
+  "job-hunter/ROADMAP.md": {
+    "mtime": 1788370999.2773645,
+    "ast_hash": "4e258e2feb35ec8113a433bad4b1968b",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/profile-importer.js": {
+    "mtime": 1788367330.8211262,
+    "ast_hash": "c0a6015b0c7c816475e11fed22469de1",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/profile-importer.test.js": {
+    "mtime": 1788367202.997319,
+    "ast_hash": "6271f6424542d1f9ed4c4b714a840cfa",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/db/profiles-db.test.js": {
+    "mtime": 1788367253.4365976,
+    "ast_hash": "914b241319e732c5faee17d19379161e",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/server/profiles-api.test.js": {
+    "mtime": 1788367296.3626988,
+    "ast_hash": "a7b80180710f091369873143bc87ff3e",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-02-phase-1-dynamic-onboarding.md": {
+    "mtime": 1788367130.527374,
+    "ast_hash": "b2d77f9b556128ab3923318ea96f1658",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-02-phase-1-dynamic-onboarding-design.md": {
+    "mtime": 1788367123.7653403,
+    "ast_hash": "eb860e9d16e9b6da19294660b9e16b17",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/bullet-trimmer.js": {
+    "mtime": 1788370659.1574063,
+    "ast_hash": "5aee81a01771a837ed814c3b6415d463",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/drafter-critic.js": {
+    "mtime": 1788370686.7974398,
+    "ast_hash": "a357c1e2c614308c0ee8bc605ab25d9e",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/bullet-trimmer.test.js": {
+    "mtime": 1788370645.4998515,
+    "ast_hash": "cef6d3ac5c00343d8608db0ebd0d50c0",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/drafter-critic.test.js": {
+    "mtime": 1788370671.0615995,
+    "ast_hash": "d38263d5efab971b31c8b2cddfbe2b92",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/server/drafter-critic-api.test.js": {
+    "mtime": 1788370713.6609862,
+    "ast_hash": "7feacd4e12682aa07b3bd84f292b2697",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-02-phase-2-drafter-critic-tailoring.md": {
+    "mtime": 1788370637.8499744,
+    "ast_hash": "df8e895dc5d5b16fc6c6a792ce05ce24",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-02-phase-2-drafter-critic-tailoring-design.md": {
+    "mtime": 1788370630.7051203,
+    "ast_hash": "56caeb2a3e5bf73d4bbf695e2e9a0799",
+    "semantic_hash": ""
+  },
+  "job-hunter/src/core/interview-prep.js": {
+    "mtime": 1788370933.2195218,
+    "ast_hash": "5f84f7a4a855b6c4e7333faa7192f8ec",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/core/interview-prep.test.js": {
+    "mtime": 1788370870.3850336,
+    "ast_hash": "57f3a4600dcc20a0ce1bb85f8957b63a",
+    "semantic_hash": ""
+  },
+  "job-hunter/tests/server/interview-api.test.js": {
+    "mtime": 1788370902.8585255,
+    "ast_hash": "8a1b1177e86ece873dee0d1759c36990",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-02-phase-3-interview-prep-and-star-simulator.md": {
+    "mtime": 1788370860.9173386,
+    "ast_hash": "a117c850c31c1b986065a1feeefc4aef",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-02-phase-3-interview-prep-and-star-simulator-design.md": {
+    "mtime": 1788370854.2052407,
+    "ast_hash": "d8ba0f314a091cd037ef4bb72d2a3f81",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_debt_paybacks.py": {
+    "mtime": 1788506455.750735,
+    "ast_hash": "6db9e6f0b9c671a6914b4af0978b418a",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-04-debt-payback-traces-and-third-party-payments.md": {
+    "mtime": 1788504505.3916962,
+    "ast_hash": "470c79804083f00828e4ab093e284e3e",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-04-debt-payback-traces-and-third-party-payments-design.md": {
+    "mtime": 1788504433.540217,
+    "ast_hash": "fe8b4175b774ba9edf51fd4b90042755",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_e2e_debt_paybacks.py": {
+    "mtime": 1788505116.9118245,
+    "ast_hash": "5e8a722381e0cf167171e01768796c3a",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/cashflow_forecast.py": {
+    "mtime": 1788513347.8401463,
+    "ast_hash": "fdd50cde38c3d2c168fdea37ef793f74",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_cashflow_api.py": {
+    "mtime": 1788513366.7595062,
+    "ast_hash": "0fdbe86fabeee7a021263c3115dcb54a",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_cashflow_commands.py": {
+    "mtime": 1788513407.3142922,
+    "ast_hash": "6c1f5953bc55d5dc096fa518576feaa1",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_cashflow_db.py": {
+    "mtime": 1788513267.1430511,
+    "ast_hash": "7472846e6c648a65292c0373f4189945",
+    "semantic_hash": ""
+  },
+  "telegram-finance-bot/tests/test_cashflow_forecast.py": {
+    "mtime": 1788513356.2018971,
+    "ast_hash": "89bd581cc1e5e713f597b31d130cdf92",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-04-cashflow-forecasting-and-liquidity-runway.md": {
+    "mtime": 1788510840.8502991,
+    "ast_hash": "1171ba66c127049f239f6c944aa77b8c",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-04-cashflow-forecasting-and-liquidity-runway-design.md": {
+    "mtime": 1788510662.1596973,
+    "ast_hash": "e8a39e9d84bc0e55b858f8ebc7f63716",
     "semantic_hash": ""
   }
 }
